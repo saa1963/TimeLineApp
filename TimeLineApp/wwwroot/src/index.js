@@ -218,7 +218,7 @@ function NewTimeLine (name, tl) {
     aY = splitWorkspace(timeLines.length + 1)
   }
   let dt = TimeLine.getCurPeriod(PERIOD_TYPE)
-  let nColor = makeColor()
+    let nColor = makeColor()
   if (tl === undefined) {
     tl = new TimeLine(ctx, dt, 0, 0, PERIOD_TYPE, name)
   }
