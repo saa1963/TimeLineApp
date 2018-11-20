@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Timeline</title>
+  <link rel="stylesheet" href="lib/fontawesome-free-5.5.0-web/css/all.min.css">
+  <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/contextmenu.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <!-- Главное меню -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">TL</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Линии времени
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <button id="newTimeline" class="dropdown-item">Новая</button>
+            <a class="dropdown-item" href="#">Another action</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </li>
+      </ul>
+      <div class="nav my-2 my-lg-0">
+        <a class="nav-link mr-sm-2" href="#">Регистрация</a>
+        <a class="nav-link my-2 my-sm-0" href="#">Вход</a>
+      </div>
+    </div>
+  </nav>
+  <!-- Холст -->
+  <canvas id="canvas"></canvas>
+  <!-- Модальное окно для ввода наименование ЛВ -->
+  <div id="tmNameModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Имя линии времени</h5>
+          <button type="button" class="close closenamemodal" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input id="tmName" type="text" value="">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary closenamemodal">Закрыть</button>
+          <button id="btnNewName" type="button" class="btn btn-primary">Сохранить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Модальное окно для редактирования настроек ЛВ -->
+  <div id="tmOptionsModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Настройки</h5>
+          <button type="button" class="close closeoptionmodal" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <label for="typePeriod">Периодичность</label>
+            <select id="typePeriod">
+              <option value="1">День</option>
+              <option value="2">Месяц</option>
+              <option value="3"">Год</option>
+              <option value="4">Десятилетие</option>
+              <option value="5">Столетие</option>
+            </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary closeoptionmodal">Закрыть</button>
+          <button id="btnOptionsOk" type="button" class="btn btn-primary">Сохранить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="lib/jquery.min.js"></script>
+<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+<script src='dist/main.js'></script>
+
+</html>
