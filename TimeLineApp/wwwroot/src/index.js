@@ -220,7 +220,8 @@ function NewTimeLine (name, tl) {
   let dt = TimeLine.getCurPeriod(PERIOD_TYPE)
     let nColor = makeColor()
   if (tl === undefined) {
-    tl = new TimeLine(ctx, dt, 0, 0, PERIOD_TYPE, name)
+      tl = new TimeLine(ctx, dt, 0, 0, PERIOD_TYPE, name)
+
   }
   timeLines.push(tl)
   for (let i = 0; i < timeLines.length; i++) {
