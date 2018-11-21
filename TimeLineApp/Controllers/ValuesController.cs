@@ -17,6 +17,12 @@ namespace TimeLineApp.Controllers
             return new string[] { "value1", "value2" };
         }
 
+        [HttpGet]
+        public ActionResult<string> List()
+        {
+            return Ok();
+        }
+
         // GET api/values/5
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
