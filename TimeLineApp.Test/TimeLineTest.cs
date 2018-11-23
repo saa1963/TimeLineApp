@@ -86,5 +86,10 @@ namespace TimeLineApp.Test
             Assert.Equal(-13, o.Month);
             Assert.Equal(-2, o.Year);
         }
+        [Fact]
+        public void PeriodTest()
+        {
+            var o = new Period("11", new EventDay("123", 2018, 1, 1), new EventDay("321", 2018, 2, 2));
+        }
     }
 }

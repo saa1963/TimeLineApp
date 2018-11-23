@@ -204,4 +204,19 @@ namespace TimeLineApp.Models
             Century = CenturyFromDecade(Decade.Value);
         }
     }
+
+    public class Period
+    {
+        public string Name { get; set; }
+        public Event Begin { get; set; }
+        public Event End { get; set; }
+
+        public Period(string name, Event begin, Event end)
+        {
+            if (begin.GetType() != end.GetType()) throw new ArgumentException("Неодинаковый тип");
+            Name = name;
+            Begin = begin;
+            End = end;
+        }
+    }
 }
