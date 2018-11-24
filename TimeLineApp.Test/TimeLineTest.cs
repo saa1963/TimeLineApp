@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using TimeLineApp.Models;
 using Xunit;
+using System.IO;
 
 namespace TimeLineApp.Test
 {
@@ -90,6 +91,15 @@ namespace TimeLineApp.Test
         public void PeriodTest()
         {
             var o = new Period("11", new EventDay("123", 2018, 1, 1), new EventDay("321", 2018, 2, 2));
+        }
+        [Fact]
+        public void TimeLine0Test()
+        {
+            var s = File.ReadAllText(@"C:\Users\Сошины\Source\Repos\TimeLineApp2\TimeLineApp\data\test.json");
+            var o = new TimeLine("11", s);
+            Assert.NotNull(o);
+            Assert.Equal(3, o.EventCount);
+            Assert.Equal(1, o.PeriodCount);
         }
     }
 }
