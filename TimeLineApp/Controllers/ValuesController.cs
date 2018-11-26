@@ -17,10 +17,10 @@ namespace TimeLineApp.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        [HttpGet]
-        public ActionResult<string> List()
+        [Route("api/values/register")]
+        public ActionResult<bool>Register(string login, string email, string pass1, string pass2)
         {
-            return Ok();
+            return true;
         }
 
         // GET api/values/5
