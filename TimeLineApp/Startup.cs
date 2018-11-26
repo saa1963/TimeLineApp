@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Serialization;
+using TimeLineApp.services;
 
 namespace TimeLineApp
 {
@@ -37,6 +38,7 @@ namespace TimeLineApp
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+            services.AddSingleton<IUserStorage, FileUserStorage>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
