@@ -25,15 +25,6 @@ namespace TimeLineApp.services
             {
                 var users = File.ReadAllText(path).ToUpper();
                 rt = rgx.IsMatch(users);
-                //foreach (var line in lines)
-                //{
-                //    var a = line.Split('^');
-                //    if (a[0].ToUpper() == login.ToUpper())
-                //    {
-                //        rt = true;
-                //        break;
-                //    }
-                //}
             }
             return rt;
         }
@@ -41,9 +32,22 @@ namespace TimeLineApp.services
         public bool Remove(string login)
         {
             bool rt = false;
-            if (Contains(login))
+            string upperLogin = login.ToUpper();
+            var rgx = new Regex(@"^" + upperLogin + @"\^");
+            if (File.Exists(path))
             {
-                //var lines = File.ReadLines(path).Where(s => s.);
+                var users = File.ReadLines(path).ToList();
+                var user = users.SingleOrDefault(s => rgx.IsMatch(s.ToUpper()));
+                if (user != null)
+                {
+                    users.Remove(user);
+                    File.WriteAllLines(path, users);
+                    rt = true;
+                }
+                else
+                {
+                    rt = false;
+                }
             }
             return rt;
         }

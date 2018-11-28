@@ -3,6 +3,7 @@ using System.Diagnostics;
 using TimeLineApp.Models;
 using Xunit;
 using System.IO;
+using System.Reflection;
 
 namespace TimeLineApp.Test
 {
@@ -95,7 +96,8 @@ namespace TimeLineApp.Test
         [Fact]
         public void TimeLine0Test()
         {
-            var s = File.ReadAllText(@"C:\Users\Сошины\Source\Repos\TimeLineApp\TimeLineApp\data\test.json");
+            var fname = Utils.getFile("test.json");
+            var s = File.ReadAllText(fname);
             var o = new TimeLine("11", s);
             Assert.NotNull(o);
             Assert.Equal(3, o.EventCount);

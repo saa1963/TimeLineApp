@@ -17,8 +17,13 @@ namespace TimeLineApp.Test
         string email = "zakryvashkrf@mail.ru";
         string password = "1";
         [Fact]
-        public void ContainTest()
+        public void CommonTest()
         {
+            var fname = Path.Combine(Utils.filesFolder(), "data", "users.dat");
+            if (File.Exists(fname))
+            {
+                File.Delete(fname);
+            }
             var o = new FileUserStorage(env);
             Assert.NotNull(o);
             var flag = o.Save(login, email, password);
@@ -32,6 +37,8 @@ namespace TimeLineApp.Test
             flag = o.Remove(login);
             Assert.True(flag);
             flag = o.Remove(login + "0");
+            Assert.False(flag);
+            flag = o.Contains(login);
             Assert.False(flag);
 
         }
@@ -48,7 +55,7 @@ namespace TimeLineApp.Test
         {
             get
             {
-                return Path.GetTempPath();
+                return Utils.filesFolder();
             }
             set => throw new NotImplementedException();
         }
