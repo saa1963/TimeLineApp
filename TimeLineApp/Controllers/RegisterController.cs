@@ -18,6 +18,7 @@ namespace TimeLineApp.Controllers
         {
             storage = _storage;
         }
+
         // POST: api/Register
         [HttpPost]
         public ActionResult Post([FromForm] Register model)

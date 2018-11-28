@@ -95,7 +95,7 @@ namespace TimeLineApp.Test
         [Fact]
         public void TimeLine0Test()
         {
-            var s = File.ReadAllText(@"C:\Users\Сошины\Source\Repos\TimeLineApp2\TimeLineApp\data\test.json");
+            var s = File.ReadAllText(@"C:\Users\Сошины\Source\Repos\TimeLineApp\TimeLineApp\data\test.json");
             var o = new TimeLine("11", s);
             Assert.NotNull(o);
             Assert.Equal(3, o.EventCount);

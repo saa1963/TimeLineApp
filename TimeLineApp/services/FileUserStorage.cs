@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace TimeLineApp.services
 {
@@ -12,38 +13,46 @@ namespace TimeLineApp.services
         private readonly string path;
         public FileUserStorage(IHostingEnvironment hostingEnvironment)
         {
-            path = Path.Combine(hostingEnvironment.ContentRootPath, "data", "users.dat");
+             path = Path.Combine(hostingEnvironment.ContentRootPath, "data", "users.dat");
         }
 
-        public bool Contains(string login, string password)
+        public bool Contains(string login)
         {
             bool rt = false;
+            string upperLogin = login.ToUpper();
+            var rgx = new Regex(@"^" + upperLogin + @"\^");
             if (File.Exists(path))
             {
-                var lines = File.ReadLines(path);
-                foreach (var line in lines)
-                {
-                    var a = line.Split('^');
-                    if (a[0].ToUpper() == login.ToUpper())
-                    {
-                        rt = true;
-                        break;
-                    }
-                }
+                var users = File.ReadAllText(path).ToUpper();
+                rt = rgx.IsMatch(users);
+                //foreach (var line in lines)
+                //{
+                //    var a = line.Split('^');
+                //    if (a[0].ToUpper() == login.ToUpper())
+                //    {
+                //        rt = true;
+                //        break;
+                //    }
+                //}
             }
             return rt;
         }
 
         public bool Remove(string login)
         {
-            throw new NotImplementedException();
+            bool rt = false;
+            if (Contains(login))
+            {
+                //var lines = File.ReadLines(path).Where(s => s.);
+            }
+            return rt;
         }
 
         public bool Save(string login, string email, string password)
         {
             bool rt = false;
             string user = $"{login}^{email}^{password}";
-            if (!Contains(login, password))
+            if (!Contains(login))
             {
                 if (!File.Exists(path))
                 {
@@ -51,8 +60,8 @@ namespace TimeLineApp.services
                 }
                 else
                 {
-                    var lines = File.ReadLines(path);
-                    lines.Append(user);
+                    var lines = File.ReadAllLines(path).ToList();
+                    lines.Add(user);
                     File.WriteAllLines(path, lines);
                 }
                 rt = true;

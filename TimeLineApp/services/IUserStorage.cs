@@ -8,7 +8,7 @@ namespace TimeLineApp.services
     public interface IUserStorage
     {
         bool Save(string login, string email, string password);
-        bool Contains(string login, string password);
+        bool Contains(string login);
         bool Remove(string login);
     }
 }
