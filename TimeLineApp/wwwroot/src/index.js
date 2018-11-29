@@ -1,7 +1,6 @@
 import { TimeLine } from './timeline'
 import { makeColor } from './colorutils'
 import { ContextMenu, DIVIDER } from './contextmenu'
-import { stringUtils } from './stringutils'
 
 const MIN_GAP = 100
 let PERIOD_TYPE = TimeLine.EnumPeriod.day
@@ -207,15 +206,24 @@ let ctx;
     alert('action01')
     })
   $('#btnReg').click((ev) => {
+
     $('#tmRegisterModal').modal()
     return false
   })
   $('#btnRegisterUser').click(ev => {
-    if ($('#regLogin')[0].reportValidity()
-        && $('#regEmail')[0].reportValidity()
-        && $('#regPassword1')[0].reportValidity()
-        && $('#regPassword2')[0].reportValidity()) {
-      $('#tmRegisterModal').modal('hide')
+    let login = $('#regLogin')
+    let email = $('#regEmail')
+    let pass1 = $('#regPassword1')
+    let pass2 = $('#regPassword2')
+    if (login[0].reportValidity()
+        && email[0].reportValidity()
+        && pass1[0].reportValidity()
+      && pass2[0].reportValidity()) {
+      if (pass1.val() === pass2.val()) {
+        $('#tmRegisterModal').modal('hide')
+      } else {
+        $('#passw_not_matches').css('display', 'unset')
+      }
     }
   })
 })()
