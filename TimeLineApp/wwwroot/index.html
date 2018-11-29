@@ -34,7 +34,7 @@
                 </li>
             </ul>
             <div class="nav my-2 my-lg-0">
-                <a class="nav-link mr-sm-2" href="Register.html">Регистрация</a>
+                <a class="nav-link mr-sm-2" id="btnReg" href="#">Регистрация</a>
                 <a class="nav-link my-2 my-sm-0" href="#">Вход</a>
             </div>
         </div>
@@ -101,24 +101,26 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="regLogin">Имя пользователя</label>
-                        <input id="regLogin" type="text" value="" placeholder="Введите имя пользователя">
+                        <input class="form-control" id="regLogin" type="text" value="" placeholder="Введите имя пользователя" required pattern="\w+">
                     </div>
                     <div class="form-group">
                         <label for="regEmail">E-Mail</label>
-                        <input id="regEmail" type="email" value="" placeholder="Введите E-Mail">
+                        <input class="form-control" id="regEmail" type="email" value="" placeholder="Введите E-Mail" required>
                     </div>
                     <div class="form-group">
                         <label for="regPassword1">Пароль</label>
-                        <input id="regPassword1" type="password" value="" placeholder="Введите пароль">
+                        <input class="form-control" id="regPassword1" type="password" value="" placeholder="Введите пароль" required>
                     </div>
                     <div class="form-group">
                         <label for="regPassword2">Повторный пароль</label>
-                        <input id="regPassword2" type="password" value="" placeholder="Введите повторный пароль">
+                        <input class="form-control" id="regPassword2" type="password" value="" placeholder="Введите повторный пароль" required>
                     </div>
+                </div>
+                <div class="alert alert-danger" role="alert" style="display:none">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary closeregistermodal">Закрыть</button>
-                    <button id="btnRegisterUser" type="button" class="btn btn-primary" disabled>Регистрировать</button>
+                    <button id="btnRegisterUser" type="button" class="btn btn-primary">Регистрировать</button>
                 </div>
             </div>
         </div>

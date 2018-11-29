@@ -1,6 +1,7 @@
 import { TimeLine } from './timeline'
 import { makeColor } from './colorutils'
 import { ContextMenu, DIVIDER } from './contextmenu'
+import { stringUtils } from './stringutils'
 
 const MIN_GAP = 100
 let PERIOD_TYPE = TimeLine.EnumPeriod.day
@@ -185,6 +186,9 @@ let ctx;
   $('.closeoptionmodal').click((ev) => {
     $('#tmOptionsModal').modal('hide')
   })
+  $('.closeregistermodal').click((ev) => {
+    $('#tmRegisterModal').modal('hide')
+  })
   $('#tmName').keyup((ev) => {
     if ($('#tmName').val().trim() !== '') {
       $('#btnNewName').prop('disabled', false)
@@ -201,6 +205,18 @@ let ctx;
   })
   $('#action01').click((ev) => {
     alert('action01')
+    })
+  $('#btnReg').click((ev) => {
+    $('#tmRegisterModal').modal()
+    return false
+  })
+  $('#btnRegisterUser').click(ev => {
+    if ($('#regLogin')[0].reportValidity()
+        && $('#regEmail')[0].reportValidity()
+        && $('#regPassword1')[0].reportValidity()
+        && $('#regPassword2')[0].reportValidity()) {
+      $('#tmRegisterModal').modal('hide')
+    }
   })
 })()
 
