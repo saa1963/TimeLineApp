@@ -81,20 +81,73 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/index.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/index.ts");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/colorutils.js":
+/***/ "./src/colorutils.ts":
 /*!***************************!*\
-  !*** ./src/colorutils.js ***!
+  !*** ./src/colorutils.ts ***!
   \***************************/
-/*! exports provided: makeColor */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"makeColor\", function() { return makeColor; });\nlet makeColor = function * () {\r\n  var index = 0\r\n  let colors = ['rgba(255, 0, 0, 1.0)', 'green', 'blue', 'magenta', 'orange']\r\n  while (true) {\r\n    yield colors[index]\r\n    if (index < 4) {\r\n      index++\r\n    } else {\r\n      index = 0\r\n    }\r\n  }\r\n}\r\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9zcmMvY29sb3J1dGlscy5qcz84ZmNjIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0FBQUE7QUFBTztBQUNQO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBLEtBQUs7QUFDTDtBQUNBO0FBQ0E7QUFDQSIsImZpbGUiOiIuL3NyYy9jb2xvcnV0aWxzLmpzLmpzIiwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0IGxldCBtYWtlQ29sb3IgPSBmdW5jdGlvbiAqICgpIHtcclxuICB2YXIgaW5kZXggPSAwXHJcbiAgbGV0IGNvbG9ycyA9IFsncmdiYSgyNTUsIDAsIDAsIDEuMCknLCAnZ3JlZW4nLCAnYmx1ZScsICdtYWdlbnRhJywgJ29yYW5nZSddXHJcbiAgd2hpbGUgKHRydWUpIHtcclxuICAgIHlpZWxkIGNvbG9yc1tpbmRleF1cclxuICAgIGlmIChpbmRleCA8IDQpIHtcclxuICAgICAgaW5kZXgrK1xyXG4gICAgfSBlbHNlIHtcclxuICAgICAgaW5kZXggPSAwXHJcbiAgICB9XHJcbiAgfVxyXG59XHJcbiJdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./src/colorutils.js\n");
+
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.makeColor = function () {
+    var index, colors;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                index = 0;
+                colors = ['green', 'rgba(255, 0, 0, 1.0)', 'blue', 'magenta', 'orange'];
+                _a.label = 1;
+            case 1:
+                if (false) {}
+                return [4 /*yield*/, colors[index]];
+            case 2:
+                _a.sent();
+                if (index < 4) {
+                    index++;
+                }
+                else {
+                    index = 0;
+                }
+                return [3 /*break*/, 1];
+            case 3: return [2 /*return*/];
+        }
+    });
+};
+
 
 /***/ }),
 
@@ -106,68 +159,949 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"ContextMenu\", function() { return ContextMenu; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"DIVIDER\", function() { return DIVIDER; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"ContextUtil\", function() { return ContextUtil; });\n/* eslint-disable eqeqeq */\r\nfunction ContextMenu (menu, options) {\r\n  var self = this\r\n  var num = ContextMenu.count++\r\n\r\n  this.menu = menu\r\n  this.contextTarget = null\r\n\r\n  if (!(menu instanceof Array)) {\r\n    throw new Error('Parameter 1 must be of type Array')\r\n  }\r\n\r\n  if (typeof options !== 'undefined') {\r\n    if (typeof options !== 'object') {\r\n      throw new Error('Parameter 2 must be of type object')\r\n    }\r\n  } else {\r\n    options = {}\r\n  }\r\n\r\n  window.addEventListener('resize', function () {\r\n    if (ContextUtil.getProperty(options, 'close_on_resize', true)) {\r\n      self.hide()\r\n    }\r\n  })\r\n\r\n  this.setOptions = function (_options) {\r\n    if (typeof _options === 'object') {\r\n      options = _options\r\n    } else {\r\n      throw new Error('Parameter 1 must be of type object')\r\n    }\r\n  }\r\n\r\n  this.changeOption = function (option, value) {\r\n    if (typeof option === 'string') {\r\n      if (typeof value !== 'undefined') {\r\n        options[option] = value\r\n      } else {\r\n        throw new Error('Parameter 2 must be set')\r\n      }\r\n    } else {\r\n      throw new Error('Parameter 1 must be of type string')\r\n    }\r\n  }\r\n\r\n  this.getOptions = function () {\r\n    return options\r\n  }\r\n\r\n  this.reload = function () {\r\n    if (document.getElementById('cm_' + num) == null) {\r\n      var cnt = document.createElement('div')\r\n      cnt.className = 'cm_container'\r\n      cnt.id = 'cm_' + num\r\n\r\n      document.body.appendChild(cnt)\r\n    }\r\n\r\n    var container = document.getElementById('cm_' + num)\r\n    container.innerHTML = ''\r\n\r\n    container.appendChild(renderLevel(menu))\r\n  }\r\n\r\n  function renderLevel (level) {\r\n    var ulOuter = document.createElement('ul')\r\n\r\n    level.forEach(function (item) {\r\n      var li = document.createElement('li')\r\n      li.menu = self\r\n\r\n      if (typeof item.type === 'undefined') {\r\n        var iconSpan = document.createElement('span')\r\n        iconSpan.className = 'cm_icon_span'\r\n\r\n        if (ContextUtil.getProperty(item, 'icon', '') != '') {\r\n          iconSpan.innerHTML = ContextUtil.getProperty(item, 'icon', '')\r\n        } else {\r\n          iconSpan.innerHTML = ContextUtil.getProperty(options, 'default_icon', '')\r\n        }\r\n\r\n        var textSpan = document.createElement('span')\r\n        textSpan.className = 'cm_text'\r\n\r\n        if (ContextUtil.getProperty(item, 'text', '') != '') {\r\n          textSpan.innerHTML = ContextUtil.getProperty(item, 'text', '')\r\n        } else {\r\n          textSpan.innerHTML = ContextUtil.getProperty(options, 'default_text', 'item')\r\n        }\r\n\r\n        var subSpan = document.createElement('span')\r\n        subSpan.className = 'cm_sub_span'\r\n\r\n        if (typeof item.sub !== 'undefined') {\r\n          if (ContextUtil.getProperty(options, 'sub_icon', '') != '') {\r\n            subSpan.innerHTML = ContextUtil.getProperty(options, 'sub_icon', '')\r\n          } else {\r\n            subSpan.innerHTML = '&#155;'\r\n          }\r\n        }\r\n\r\n        li.appendChild(iconSpan)\r\n        li.appendChild(textSpan)\r\n        li.appendChild(subSpan)\r\n\r\n        if (!ContextUtil.getProperty(item, 'enabled', true)) {\r\n          li.setAttribute('disabled', '')\r\n        } else {\r\n          if (typeof item.events === 'object') {\r\n            var keys = Object.keys(item.events)\r\n\r\n            for (var i = 0; i < keys.length; i++) {\r\n              li.addEventListener(keys[i], item.events[keys[i]])\r\n            }\r\n          }\r\n\r\n          if (typeof item.sub !== 'undefined') {\r\n            li.appendChild(renderLevel(item.sub))\r\n          }\r\n        }\r\n      } else {\r\n        if (item.type == ContextMenu.DIVIDER) {\r\n          li.className = 'cm_divider'\r\n        }\r\n      }\r\n\r\n      ulOuter.appendChild(li)\r\n    })\r\n\r\n    return ulOuter\r\n  }\r\n\r\n  this.display = function (e, target) {\r\n    if (typeof target !== 'undefined') {\r\n      self.contextTarget = target\r\n    } else {\r\n      self.contextTarget = e.target\r\n    }\r\n\r\n    var menu = document.getElementById('cm_' + num)\r\n\r\n    var clickCoords = { x: e.clientX, y: e.clientY }\r\n    var clickCoordsX = clickCoords.x\r\n    var clickCoordsY = clickCoords.y\r\n\r\n    var menuWidth = menu.offsetWidth + 4\r\n    var menuHeight = menu.offsetHeight + 4\r\n\r\n    var windowWidth = window.innerWidth\r\n    var windowHeight = window.innerHeight\r\n\r\n    var mouseOffset = parseInt(ContextUtil.getProperty(options, 'mouse_offset', 2))\r\n\r\n    if ((windowWidth - clickCoordsX) < menuWidth) {\r\n      menu.style.left = windowWidth - menuWidth + 'px'\r\n    } else {\r\n      menu.style.left = (clickCoordsX + mouseOffset) + 'px'\r\n    }\r\n\r\n    if ((windowHeight - clickCoordsY) < menuHeight) {\r\n      menu.style.top = windowHeight - menuHeight + 'px'\r\n    } else {\r\n      menu.style.top = (clickCoordsY + mouseOffset) + 'px'\r\n    }\r\n\r\n    var sizes = ContextUtil.getSizes(menu)\r\n\r\n    if ((windowWidth - clickCoordsX) < sizes.width) {\r\n      menu.classList.add('cm_border_right')\r\n    } else {\r\n      menu.classList.remove('cm_border_right')\r\n    }\r\n\r\n    if ((windowHeight - clickCoordsY) < sizes.height) {\r\n      menu.classList.add('cm_border_bottom')\r\n    } else {\r\n      menu.classList.remove('cm_border_bottom')\r\n    }\r\n\r\n    menu.classList.add('display')\r\n\r\n    if (ContextUtil.getProperty(options, 'close_on_click', true)) {\r\n      window.addEventListener('click', documentClick)\r\n    }\r\n\r\n    e.preventDefault()\r\n  }\r\n\r\n  this.hide = function () {\r\n    document.getElementById('cm_' + num).classList.remove('display')\r\n    window.removeEventListener('click', documentClick)\r\n  }\r\n\r\n  function documentClick () {\r\n    self.hide()\r\n  }\r\n\r\n  this.reload()\r\n}\r\n\r\nContextMenu.count = 0\r\nContextMenu.DIVIDER = 'cm_divider'\r\nconst DIVIDER = 'cm_divider'\r\n\r\nconst ContextUtil = {\r\n  getProperty: function (options, opt, def) {\r\n    if (typeof options[opt] !== 'undefined') {\r\n      return options[opt]\r\n    } else {\r\n      return def\r\n    }\r\n  },\r\n\r\n  getSizes: function (obj) {\r\n    var lis = obj.getElementsByTagName('li')\r\n\r\n    var widthDef = 0\r\n    var heightDef = 0\r\n\r\n    for (var i = 0; i < lis.length; i++) {\r\n      var li = lis[i]\r\n\r\n      if (li.offsetWidth > widthDef) {\r\n        widthDef = li.offsetWidth\r\n      }\r\n\r\n      if (li.offsetHeight > heightDef) {\r\n        heightDef = li.offsetHeight\r\n      }\r\n    }\r\n\r\n    var width = widthDef\r\n    var height = heightDef\r\n\r\n    for (let i = 0; i < lis.length; i++) {\r\n      let li = lis[i]\r\n\r\n      var ul = li.getElementsByTagName('ul')\r\n      if (typeof ul[0] !== 'undefined') {\r\n        var ulSize = ContextUtil.getSizes(ul[0])\r\n\r\n        if (widthDef + ulSize.width > width) {\r\n          width = widthDef + ulSize.width\r\n        }\r\n\r\n        if (heightDef + ulSize.height > height) {\r\n          height = heightDef + ulSize.height\r\n        }\r\n      }\r\n    }\r\n\r\n    return {\r\n      'width': width,\r\n      'height': height\r\n    }\r\n  }\r\n}\r\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9zcmMvY29udGV4dG1lbnUuanM/YmQyYyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQ087QUFDUDtBQUNBOztBQUVBO0FBQ0E7O0FBRUE7QUFDQTtBQUNBOztBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0EsR0FBRztBQUNIO0FBQ0E7O0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQSxHQUFHOztBQUVIO0FBQ0E7QUFDQTtBQUNBLEtBQUs7QUFDTDtBQUNBO0FBQ0E7O0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQSxPQUFPO0FBQ1A7QUFDQTtBQUNBLEtBQUs7QUFDTDtBQUNBO0FBQ0E7O0FBRUE7QUFDQTtBQUNBOztBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7O0FBRUE7QUFDQTs7QUFFQTtBQUNBOztBQUVBO0FBQ0E7O0FBRUE7QUFDQTs7QUFFQTtBQUNBO0FBQ0E7O0FBRUE7QUFDQTtBQUNBOztBQUVBO0FBQ0E7QUFDQSxTQUFTO0FBQ1Q7QUFDQTs7QUFFQTtBQUNBOztBQUVBO0FBQ0E7QUFDQSxTQUFTO0FBQ1Q7QUFDQTs7QUFFQTtBQUNBOztBQUVBO0FBQ0E7QUFDQTtBQUNBLFdBQVc7QUFDWCx1Q0FBdUM7QUFDdkM7QUFDQTs7QUFFQTtBQUNBO0FBQ0E7O0FBRUE7QUFDQTtBQUNBLFNBQVM7QUFDVDtBQUNBOztBQUVBLDJCQUEyQixpQkFBaUI7QUFDNUM7QUFDQTtBQUNBOztBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0EsT0FBTztBQUNQO0FBQ0E7QUFDQTtBQUNBOztBQUVBO0FBQ0EsS0FBSzs7QUFFTDtBQUNBOztBQUVBO0FBQ0E7QUFDQTtBQUNBLEtBQUs7QUFDTDtBQUNBOztBQUVBOztBQUVBLHVCQUF1QjtBQUN2QjtBQUNBOztBQUVBO0FBQ0E7O0FBRUE7QUFDQTs7QUFFQTs7QUFFQTtBQUNBO0FBQ0EsS0FBSztBQUNMO0FBQ0E7O0FBRUE7QUFDQTtBQUNBLEtBQUs7QUFDTDtBQUNBOztBQUVBOztBQUVBO0FBQ0E7QUFDQSxLQUFLO0FBQ0w7QUFDQTs7QUFFQTtBQUNBO0FBQ0EsS0FBSztBQUNMO0FBQ0E7O0FBRUE7O0FBRUE7QUFDQTtBQUNBOztBQUVBO0FBQ0E7O0FBRUE7QUFDQTtBQUNBO0FBQ0E7O0FBRUE7QUFDQTtBQUNBOztBQUVBO0FBQ0E7O0FBRUE7QUFDQTtBQUNPOztBQUVBO0FBQ1A7QUFDQTtBQUNBO0FBQ0EsS0FBSztBQUNMO0FBQ0E7QUFDQSxHQUFHOztBQUVIO0FBQ0E7O0FBRUE7QUFDQTs7QUFFQSxtQkFBbUIsZ0JBQWdCO0FBQ25DOztBQUVBO0FBQ0E7QUFDQTs7QUFFQTtBQUNBO0FBQ0E7QUFDQTs7QUFFQTtBQUNBOztBQUVBLG1CQUFtQixnQkFBZ0I7QUFDbkM7O0FBRUE7QUFDQTtBQUNBOztBQUVBO0FBQ0E7QUFDQTs7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUNBOztBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQSIsImZpbGUiOiIuL3NyYy9jb250ZXh0bWVudS5qcy5qcyIsInNvdXJjZXNDb250ZW50IjpbIi8qIGVzbGludC1kaXNhYmxlIGVxZXFlcSAqL1xyXG5leHBvcnQgZnVuY3Rpb24gQ29udGV4dE1lbnUgKG1lbnUsIG9wdGlvbnMpIHtcclxuICB2YXIgc2VsZiA9IHRoaXNcclxuICB2YXIgbnVtID0gQ29udGV4dE1lbnUuY291bnQrK1xyXG5cclxuICB0aGlzLm1lbnUgPSBtZW51XHJcbiAgdGhpcy5jb250ZXh0VGFyZ2V0ID0gbnVsbFxyXG5cclxuICBpZiAoIShtZW51IGluc3RhbmNlb2YgQXJyYXkpKSB7XHJcbiAgICB0aHJvdyBuZXcgRXJyb3IoJ1BhcmFtZXRlciAxIG11c3QgYmUgb2YgdHlwZSBBcnJheScpXHJcbiAgfVxyXG5cclxuICBpZiAodHlwZW9mIG9wdGlvbnMgIT09ICd1bmRlZmluZWQnKSB7XHJcbiAgICBpZiAodHlwZW9mIG9wdGlvbnMgIT09ICdvYmplY3QnKSB7XHJcbiAgICAgIHRocm93IG5ldyBFcnJvcignUGFyYW1ldGVyIDIgbXVzdCBiZSBvZiB0eXBlIG9iamVjdCcpXHJcbiAgICB9XHJcbiAgfSBlbHNlIHtcclxuICAgIG9wdGlvbnMgPSB7fVxyXG4gIH1cclxuXHJcbiAgd2luZG93LmFkZEV2ZW50TGlzdGVuZXIoJ3Jlc2l6ZScsIGZ1bmN0aW9uICgpIHtcclxuICAgIGlmIChDb250ZXh0VXRpbC5nZXRQcm9wZXJ0eShvcHRpb25zLCAnY2xvc2Vfb25fcmVzaXplJywgdHJ1ZSkpIHtcclxuICAgICAgc2VsZi5oaWRlKClcclxuICAgIH1cclxuICB9KVxyXG5cclxuICB0aGlzLnNldE9wdGlvbnMgPSBmdW5jdGlvbiAoX29wdGlvbnMpIHtcclxuICAgIGlmICh0eXBlb2YgX29wdGlvbnMgPT09ICdvYmplY3QnKSB7XHJcbiAgICAgIG9wdGlvbnMgPSBfb3B0aW9uc1xyXG4gICAgfSBlbHNlIHtcclxuICAgICAgdGhyb3cgbmV3IEVycm9yKCdQYXJhbWV0ZXIgMSBtdXN0IGJlIG9mIHR5cGUgb2JqZWN0JylcclxuICAgIH1cclxuICB9XHJcblxyXG4gIHRoaXMuY2hhbmdlT3B0aW9uID0gZnVuY3Rpb24gKG9wdGlvbiwgdmFsdWUpIHtcclxuICAgIGlmICh0eXBlb2Ygb3B0aW9uID09PSAnc3RyaW5nJykge1xyXG4gICAgICBpZiAodHlwZW9mIHZhbHVlICE9PSAndW5kZWZpbmVkJykge1xyXG4gICAgICAgIG9wdGlvbnNbb3B0aW9uXSA9IHZhbHVlXHJcbiAgICAgIH0gZWxzZSB7XHJcbiAgICAgICAgdGhyb3cgbmV3IEVycm9yKCdQYXJhbWV0ZXIgMiBtdXN0IGJlIHNldCcpXHJcbiAgICAgIH1cclxuICAgIH0gZWxzZSB7XHJcbiAgICAgIHRocm93IG5ldyBFcnJvcignUGFyYW1ldGVyIDEgbXVzdCBiZSBvZiB0eXBlIHN0cmluZycpXHJcbiAgICB9XHJcbiAgfVxyXG5cclxuICB0aGlzLmdldE9wdGlvbnMgPSBmdW5jdGlvbiAoKSB7XHJcbiAgICByZXR1cm4gb3B0aW9uc1xyXG4gIH1cclxuXHJcbiAgdGhpcy5yZWxvYWQgPSBmdW5jdGlvbiAoKSB7XHJcbiAgICBpZiAoZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2NtXycgKyBudW0pID09IG51bGwpIHtcclxuICAgICAgdmFyIGNudCA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpXHJcbiAgICAgIGNudC5jbGFzc05hbWUgPSAnY21fY29udGFpbmVyJ1xyXG4gICAgICBjbnQuaWQgPSAnY21fJyArIG51bVxyXG5cclxuICAgICAgZG9jdW1lbnQuYm9keS5hcHBlbmRDaGlsZChjbnQpXHJcbiAgICB9XHJcblxyXG4gICAgdmFyIGNvbnRhaW5lciA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdjbV8nICsgbnVtKVxyXG4gICAgY29udGFpbmVyLmlubmVySFRNTCA9ICcnXHJcblxyXG4gICAgY29udGFpbmVyLmFwcGVuZENoaWxkKHJlbmRlckxldmVsKG1lbnUpKVxyXG4gIH1cclxuXHJcbiAgZnVuY3Rpb24gcmVuZGVyTGV2ZWwgKGxldmVsKSB7XHJcbiAgICB2YXIgdWxPdXRlciA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ3VsJylcclxuXHJcbiAgICBsZXZlbC5mb3JFYWNoKGZ1bmN0aW9uIChpdGVtKSB7XHJcbiAgICAgIHZhciBsaSA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2xpJylcclxuICAgICAgbGkubWVudSA9IHNlbGZcclxuXHJcbiAgICAgIGlmICh0eXBlb2YgaXRlbS50eXBlID09PSAndW5kZWZpbmVkJykge1xyXG4gICAgICAgIHZhciBpY29uU3BhbiA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ3NwYW4nKVxyXG4gICAgICAgIGljb25TcGFuLmNsYXNzTmFtZSA9ICdjbV9pY29uX3NwYW4nXHJcblxyXG4gICAgICAgIGlmIChDb250ZXh0VXRpbC5nZXRQcm9wZXJ0eShpdGVtLCAnaWNvbicsICcnKSAhPSAnJykge1xyXG4gICAgICAgICAgaWNvblNwYW4uaW5uZXJIVE1MID0gQ29udGV4dFV0aWwuZ2V0UHJvcGVydHkoaXRlbSwgJ2ljb24nLCAnJylcclxuICAgICAgICB9IGVsc2Uge1xyXG4gICAgICAgICAgaWNvblNwYW4uaW5uZXJIVE1MID0gQ29udGV4dFV0aWwuZ2V0UHJvcGVydHkob3B0aW9ucywgJ2RlZmF1bHRfaWNvbicsICcnKVxyXG4gICAgICAgIH1cclxuXHJcbiAgICAgICAgdmFyIHRleHRTcGFuID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnc3BhbicpXHJcbiAgICAgICAgdGV4dFNwYW4uY2xhc3NOYW1lID0gJ2NtX3RleHQnXHJcblxyXG4gICAgICAgIGlmIChDb250ZXh0VXRpbC5nZXRQcm9wZXJ0eShpdGVtLCAndGV4dCcsICcnKSAhPSAnJykge1xyXG4gICAgICAgICAgdGV4dFNwYW4uaW5uZXJIVE1MID0gQ29udGV4dFV0aWwuZ2V0UHJvcGVydHkoaXRlbSwgJ3RleHQnLCAnJylcclxuICAgICAgICB9IGVsc2Uge1xyXG4gICAgICAgICAgdGV4dFNwYW4uaW5uZXJIVE1MID0gQ29udGV4dFV0aWwuZ2V0UHJvcGVydHkob3B0aW9ucywgJ2RlZmF1bHRfdGV4dCcsICdpdGVtJylcclxuICAgICAgICB9XHJcblxyXG4gICAgICAgIHZhciBzdWJTcGFuID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnc3BhbicpXHJcbiAgICAgICAgc3ViU3Bhbi5jbGFzc05hbWUgPSAnY21fc3ViX3NwYW4nXHJcblxyXG4gICAgICAgIGlmICh0eXBlb2YgaXRlbS5zdWIgIT09ICd1bmRlZmluZWQnKSB7XHJcbiAgICAgICAgICBpZiAoQ29udGV4dFV0aWwuZ2V0UHJvcGVydHkob3B0aW9ucywgJ3N1Yl9pY29uJywgJycpICE9ICcnKSB7XHJcbiAgICAgICAgICAgIHN1YlNwYW4uaW5uZXJIVE1MID0gQ29udGV4dFV0aWwuZ2V0UHJvcGVydHkob3B0aW9ucywgJ3N1Yl9pY29uJywgJycpXHJcbiAgICAgICAgICB9IGVsc2Uge1xyXG4gICAgICAgICAgICBzdWJTcGFuLmlubmVySFRNTCA9ICcmIzE1NTsnXHJcbiAgICAgICAgICB9XHJcbiAgICAgICAgfVxyXG5cclxuICAgICAgICBsaS5hcHBlbmRDaGlsZChpY29uU3BhbilcclxuICAgICAgICBsaS5hcHBlbmRDaGlsZCh0ZXh0U3BhbilcclxuICAgICAgICBsaS5hcHBlbmRDaGlsZChzdWJTcGFuKVxyXG5cclxuICAgICAgICBpZiAoIUNvbnRleHRVdGlsLmdldFByb3BlcnR5KGl0ZW0sICdlbmFibGVkJywgdHJ1ZSkpIHtcclxuICAgICAgICAgIGxpLnNldEF0dHJpYnV0ZSgnZGlzYWJsZWQnLCAnJylcclxuICAgICAgICB9IGVsc2Uge1xyXG4gICAgICAgICAgaWYgKHR5cGVvZiBpdGVtLmV2ZW50cyA9PT0gJ29iamVjdCcpIHtcclxuICAgICAgICAgICAgdmFyIGtleXMgPSBPYmplY3Qua2V5cyhpdGVtLmV2ZW50cylcclxuXHJcbiAgICAgICAgICAgIGZvciAodmFyIGkgPSAwOyBpIDwga2V5cy5sZW5ndGg7IGkrKykge1xyXG4gICAgICAgICAgICAgIGxpLmFkZEV2ZW50TGlzdGVuZXIoa2V5c1tpXSwgaXRlbS5ldmVudHNba2V5c1tpXV0pXHJcbiAgICAgICAgICAgIH1cclxuICAgICAgICAgIH1cclxuXHJcbiAgICAgICAgICBpZiAodHlwZW9mIGl0ZW0uc3ViICE9PSAndW5kZWZpbmVkJykge1xyXG4gICAgICAgICAgICBsaS5hcHBlbmRDaGlsZChyZW5kZXJMZXZlbChpdGVtLnN1YikpXHJcbiAgICAgICAgICB9XHJcbiAgICAgICAgfVxyXG4gICAgICB9IGVsc2Uge1xyXG4gICAgICAgIGlmIChpdGVtLnR5cGUgPT0gQ29udGV4dE1lbnUuRElWSURFUikge1xyXG4gICAgICAgICAgbGkuY2xhc3NOYW1lID0gJ2NtX2RpdmlkZXInXHJcbiAgICAgICAgfVxyXG4gICAgICB9XHJcblxyXG4gICAgICB1bE91dGVyLmFwcGVuZENoaWxkKGxpKVxyXG4gICAgfSlcclxuXHJcbiAgICByZXR1cm4gdWxPdXRlclxyXG4gIH1cclxuXHJcbiAgdGhpcy5kaXNwbGF5ID0gZnVuY3Rpb24gKGUsIHRhcmdldCkge1xyXG4gICAgaWYgKHR5cGVvZiB0YXJnZXQgIT09ICd1bmRlZmluZWQnKSB7XHJcbiAgICAgIHNlbGYuY29udGV4dFRhcmdldCA9IHRhcmdldFxyXG4gICAgfSBlbHNlIHtcclxuICAgICAgc2VsZi5jb250ZXh0VGFyZ2V0ID0gZS50YXJnZXRcclxuICAgIH1cclxuXHJcbiAgICB2YXIgbWVudSA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdjbV8nICsgbnVtKVxyXG5cclxuICAgIHZhciBjbGlja0Nvb3JkcyA9IHsgeDogZS5jbGllbnRYLCB5OiBlLmNsaWVudFkgfVxyXG4gICAgdmFyIGNsaWNrQ29vcmRzWCA9IGNsaWNrQ29vcmRzLnhcclxuICAgIHZhciBjbGlja0Nvb3Jkc1kgPSBjbGlja0Nvb3Jkcy55XHJcblxyXG4gICAgdmFyIG1lbnVXaWR0aCA9IG1lbnUub2Zmc2V0V2lkdGggKyA0XHJcbiAgICB2YXIgbWVudUhlaWdodCA9IG1lbnUub2Zmc2V0SGVpZ2h0ICsgNFxyXG5cclxuICAgIHZhciB3aW5kb3dXaWR0aCA9IHdpbmRvdy5pbm5lcldpZHRoXHJcbiAgICB2YXIgd2luZG93SGVpZ2h0ID0gd2luZG93LmlubmVySGVpZ2h0XHJcblxyXG4gICAgdmFyIG1vdXNlT2Zmc2V0ID0gcGFyc2VJbnQoQ29udGV4dFV0aWwuZ2V0UHJvcGVydHkob3B0aW9ucywgJ21vdXNlX29mZnNldCcsIDIpKVxyXG5cclxuICAgIGlmICgod2luZG93V2lkdGggLSBjbGlja0Nvb3Jkc1gpIDwgbWVudVdpZHRoKSB7XHJcbiAgICAgIG1lbnUuc3R5bGUubGVmdCA9IHdpbmRvd1dpZHRoIC0gbWVudVdpZHRoICsgJ3B4J1xyXG4gICAgfSBlbHNlIHtcclxuICAgICAgbWVudS5zdHlsZS5sZWZ0ID0gKGNsaWNrQ29vcmRzWCArIG1vdXNlT2Zmc2V0KSArICdweCdcclxuICAgIH1cclxuXHJcbiAgICBpZiAoKHdpbmRvd0hlaWdodCAtIGNsaWNrQ29vcmRzWSkgPCBtZW51SGVpZ2h0KSB7XHJcbiAgICAgIG1lbnUuc3R5bGUudG9wID0gd2luZG93SGVpZ2h0IC0gbWVudUhlaWdodCArICdweCdcclxuICAgIH0gZWxzZSB7XHJcbiAgICAgIG1lbnUuc3R5bGUudG9wID0gKGNsaWNrQ29vcmRzWSArIG1vdXNlT2Zmc2V0KSArICdweCdcclxuICAgIH1cclxuXHJcbiAgICB2YXIgc2l6ZXMgPSBDb250ZXh0VXRpbC5nZXRTaXplcyhtZW51KVxyXG5cclxuICAgIGlmICgod2luZG93V2lkdGggLSBjbGlja0Nvb3Jkc1gpIDwgc2l6ZXMud2lkdGgpIHtcclxuICAgICAgbWVudS5jbGFzc0xpc3QuYWRkKCdjbV9ib3JkZXJfcmlnaHQnKVxyXG4gICAgfSBlbHNlIHtcclxuICAgICAgbWVudS5jbGFzc0xpc3QucmVtb3ZlKCdjbV9ib3JkZXJfcmlnaHQnKVxyXG4gICAgfVxyXG5cclxuICAgIGlmICgod2luZG93SGVpZ2h0IC0gY2xpY2tDb29yZHNZKSA8IHNpemVzLmhlaWdodCkge1xyXG4gICAgICBtZW51LmNsYXNzTGlzdC5hZGQoJ2NtX2JvcmRlcl9ib3R0b20nKVxyXG4gICAgfSBlbHNlIHtcclxuICAgICAgbWVudS5jbGFzc0xpc3QucmVtb3ZlKCdjbV9ib3JkZXJfYm90dG9tJylcclxuICAgIH1cclxuXHJcbiAgICBtZW51LmNsYXNzTGlzdC5hZGQoJ2Rpc3BsYXknKVxyXG5cclxuICAgIGlmIChDb250ZXh0VXRpbC5nZXRQcm9wZXJ0eShvcHRpb25zLCAnY2xvc2Vfb25fY2xpY2snLCB0cnVlKSkge1xyXG4gICAgICB3aW5kb3cuYWRkRXZlbnRMaXN0ZW5lcignY2xpY2snLCBkb2N1bWVudENsaWNrKVxyXG4gICAgfVxyXG5cclxuICAgIGUucHJldmVudERlZmF1bHQoKVxyXG4gIH1cclxuXHJcbiAgdGhpcy5oaWRlID0gZnVuY3Rpb24gKCkge1xyXG4gICAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2NtXycgKyBudW0pLmNsYXNzTGlzdC5yZW1vdmUoJ2Rpc3BsYXknKVxyXG4gICAgd2luZG93LnJlbW92ZUV2ZW50TGlzdGVuZXIoJ2NsaWNrJywgZG9jdW1lbnRDbGljaylcclxuICB9XHJcblxyXG4gIGZ1bmN0aW9uIGRvY3VtZW50Q2xpY2sgKCkge1xyXG4gICAgc2VsZi5oaWRlKClcclxuICB9XHJcblxyXG4gIHRoaXMucmVsb2FkKClcclxufVxyXG5cclxuQ29udGV4dE1lbnUuY291bnQgPSAwXHJcbkNvbnRleHRNZW51LkRJVklERVIgPSAnY21fZGl2aWRlcidcclxuZXhwb3J0IGNvbnN0IERJVklERVIgPSAnY21fZGl2aWRlcidcclxuXHJcbmV4cG9ydCBjb25zdCBDb250ZXh0VXRpbCA9IHtcclxuICBnZXRQcm9wZXJ0eTogZnVuY3Rpb24gKG9wdGlvbnMsIG9wdCwgZGVmKSB7XHJcbiAgICBpZiAodHlwZW9mIG9wdGlvbnNbb3B0XSAhPT0gJ3VuZGVmaW5lZCcpIHtcclxuICAgICAgcmV0dXJuIG9wdGlvbnNbb3B0XVxyXG4gICAgfSBlbHNlIHtcclxuICAgICAgcmV0dXJuIGRlZlxyXG4gICAgfVxyXG4gIH0sXHJcblxyXG4gIGdldFNpemVzOiBmdW5jdGlvbiAob2JqKSB7XHJcbiAgICB2YXIgbGlzID0gb2JqLmdldEVsZW1lbnRzQnlUYWdOYW1lKCdsaScpXHJcblxyXG4gICAgdmFyIHdpZHRoRGVmID0gMFxyXG4gICAgdmFyIGhlaWdodERlZiA9IDBcclxuXHJcbiAgICBmb3IgKHZhciBpID0gMDsgaSA8IGxpcy5sZW5ndGg7IGkrKykge1xyXG4gICAgICB2YXIgbGkgPSBsaXNbaV1cclxuXHJcbiAgICAgIGlmIChsaS5vZmZzZXRXaWR0aCA+IHdpZHRoRGVmKSB7XHJcbiAgICAgICAgd2lkdGhEZWYgPSBsaS5vZmZzZXRXaWR0aFxyXG4gICAgICB9XHJcblxyXG4gICAgICBpZiAobGkub2Zmc2V0SGVpZ2h0ID4gaGVpZ2h0RGVmKSB7XHJcbiAgICAgICAgaGVpZ2h0RGVmID0gbGkub2Zmc2V0SGVpZ2h0XHJcbiAgICAgIH1cclxuICAgIH1cclxuXHJcbiAgICB2YXIgd2lkdGggPSB3aWR0aERlZlxyXG4gICAgdmFyIGhlaWdodCA9IGhlaWdodERlZlxyXG5cclxuICAgIGZvciAobGV0IGkgPSAwOyBpIDwgbGlzLmxlbmd0aDsgaSsrKSB7XHJcbiAgICAgIGxldCBsaSA9IGxpc1tpXVxyXG5cclxuICAgICAgdmFyIHVsID0gbGkuZ2V0RWxlbWVudHNCeVRhZ05hbWUoJ3VsJylcclxuICAgICAgaWYgKHR5cGVvZiB1bFswXSAhPT0gJ3VuZGVmaW5lZCcpIHtcclxuICAgICAgICB2YXIgdWxTaXplID0gQ29udGV4dFV0aWwuZ2V0U2l6ZXModWxbMF0pXHJcblxyXG4gICAgICAgIGlmICh3aWR0aERlZiArIHVsU2l6ZS53aWR0aCA+IHdpZHRoKSB7XHJcbiAgICAgICAgICB3aWR0aCA9IHdpZHRoRGVmICsgdWxTaXplLndpZHRoXHJcbiAgICAgICAgfVxyXG5cclxuICAgICAgICBpZiAoaGVpZ2h0RGVmICsgdWxTaXplLmhlaWdodCA+IGhlaWdodCkge1xyXG4gICAgICAgICAgaGVpZ2h0ID0gaGVpZ2h0RGVmICsgdWxTaXplLmhlaWdodFxyXG4gICAgICAgIH1cclxuICAgICAgfVxyXG4gICAgfVxyXG5cclxuICAgIHJldHVybiB7XHJcbiAgICAgICd3aWR0aCc6IHdpZHRoLFxyXG4gICAgICAnaGVpZ2h0JzogaGVpZ2h0XHJcbiAgICB9XHJcbiAgfVxyXG59XHJcbiJdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./src/contextmenu.js\n");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ContextMenu", function() { return ContextMenu; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DIVIDER", function() { return DIVIDER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ContextUtil", function() { return ContextUtil; });
+/* eslint-disable eqeqeq */
+function ContextMenu (menu, options) {
+  var self = this
+  var num = ContextMenu.count++
+
+  this.menu = menu
+  this.contextTarget = null
+
+  if (!(menu instanceof Array)) {
+    throw new Error('Parameter 1 must be of type Array')
+  }
+
+  if (typeof options !== 'undefined') {
+    if (typeof options !== 'object') {
+      throw new Error('Parameter 2 must be of type object')
+    }
+  } else {
+    options = {}
+  }
+
+  window.addEventListener('resize', function () {
+    if (ContextUtil.getProperty(options, 'close_on_resize', true)) {
+      self.hide()
+    }
+  })
+
+  this.setOptions = function (_options) {
+    if (typeof _options === 'object') {
+      options = _options
+    } else {
+      throw new Error('Parameter 1 must be of type object')
+    }
+  }
+
+  this.changeOption = function (option, value) {
+    if (typeof option === 'string') {
+      if (typeof value !== 'undefined') {
+        options[option] = value
+      } else {
+        throw new Error('Parameter 2 must be set')
+      }
+    } else {
+      throw new Error('Parameter 1 must be of type string')
+    }
+  }
+
+  this.getOptions = function () {
+    return options
+  }
+
+  this.reload = function () {
+    if (document.getElementById('cm_' + num) == null) {
+      var cnt = document.createElement('div')
+      cnt.className = 'cm_container'
+      cnt.id = 'cm_' + num
+
+      document.body.appendChild(cnt)
+    }
+
+    var container = document.getElementById('cm_' + num)
+    container.innerHTML = ''
+
+    container.appendChild(renderLevel(menu))
+  }
+
+  function renderLevel (level) {
+    var ulOuter = document.createElement('ul')
+
+    level.forEach(function (item) {
+      var li = document.createElement('li')
+      li.menu = self
+
+      if (typeof item.type === 'undefined') {
+        var iconSpan = document.createElement('span')
+        iconSpan.className = 'cm_icon_span'
+
+        if (ContextUtil.getProperty(item, 'icon', '') != '') {
+          iconSpan.innerHTML = ContextUtil.getProperty(item, 'icon', '')
+        } else {
+          iconSpan.innerHTML = ContextUtil.getProperty(options, 'default_icon', '')
+        }
+
+        var textSpan = document.createElement('span')
+        textSpan.className = 'cm_text'
+
+        if (ContextUtil.getProperty(item, 'text', '') != '') {
+          textSpan.innerHTML = ContextUtil.getProperty(item, 'text', '')
+        } else {
+          textSpan.innerHTML = ContextUtil.getProperty(options, 'default_text', 'item')
+        }
+
+        var subSpan = document.createElement('span')
+        subSpan.className = 'cm_sub_span'
+
+        if (typeof item.sub !== 'undefined') {
+          if (ContextUtil.getProperty(options, 'sub_icon', '') != '') {
+            subSpan.innerHTML = ContextUtil.getProperty(options, 'sub_icon', '')
+          } else {
+            subSpan.innerHTML = '&#155;'
+          }
+        }
+
+        li.appendChild(iconSpan)
+        li.appendChild(textSpan)
+        li.appendChild(subSpan)
+
+        if (!ContextUtil.getProperty(item, 'enabled', true)) {
+          li.setAttribute('disabled', '')
+        } else {
+          if (typeof item.events === 'object') {
+            var keys = Object.keys(item.events)
+
+            for (var i = 0; i < keys.length; i++) {
+              li.addEventListener(keys[i], item.events[keys[i]])
+            }
+          }
+
+          if (typeof item.sub !== 'undefined') {
+            li.appendChild(renderLevel(item.sub))
+          }
+        }
+      } else {
+        if (item.type == ContextMenu.DIVIDER) {
+          li.className = 'cm_divider'
+        }
+      }
+
+      ulOuter.appendChild(li)
+    })
+
+    return ulOuter
+  }
+
+  this.display = function (e, target) {
+    if (typeof target !== 'undefined') {
+      self.contextTarget = target
+    } else {
+      self.contextTarget = e.target
+    }
+
+    var menu = document.getElementById('cm_' + num)
+
+    var clickCoords = { x: e.clientX, y: e.clientY }
+    var clickCoordsX = clickCoords.x
+    var clickCoordsY = clickCoords.y
+
+    var menuWidth = menu.offsetWidth + 4
+    var menuHeight = menu.offsetHeight + 4
+
+    var windowWidth = window.innerWidth
+    var windowHeight = window.innerHeight
+
+    var mouseOffset = parseInt(ContextUtil.getProperty(options, 'mouse_offset', 2))
+
+    if ((windowWidth - clickCoordsX) < menuWidth) {
+      menu.style.left = windowWidth - menuWidth + 'px'
+    } else {
+      menu.style.left = (clickCoordsX + mouseOffset) + 'px'
+    }
+
+    if ((windowHeight - clickCoordsY) < menuHeight) {
+      menu.style.top = windowHeight - menuHeight + 'px'
+    } else {
+      menu.style.top = (clickCoordsY + mouseOffset) + 'px'
+    }
+
+    var sizes = ContextUtil.getSizes(menu)
+
+    if ((windowWidth - clickCoordsX) < sizes.width) {
+      menu.classList.add('cm_border_right')
+    } else {
+      menu.classList.remove('cm_border_right')
+    }
+
+    if ((windowHeight - clickCoordsY) < sizes.height) {
+      menu.classList.add('cm_border_bottom')
+    } else {
+      menu.classList.remove('cm_border_bottom')
+    }
+
+    menu.classList.add('display')
+
+    if (ContextUtil.getProperty(options, 'close_on_click', true)) {
+      window.addEventListener('click', documentClick)
+    }
+
+    e.preventDefault()
+  }
+
+  this.hide = function () {
+    document.getElementById('cm_' + num).classList.remove('display')
+    window.removeEventListener('click', documentClick)
+  }
+
+  function documentClick () {
+    self.hide()
+  }
+
+  this.reload()
+}
+
+ContextMenu.count = 0
+ContextMenu.DIVIDER = 'cm_divider'
+const DIVIDER = 'cm_divider'
+
+const ContextUtil = {
+  getProperty: function (options, opt, def) {
+    if (typeof options[opt] !== 'undefined') {
+      return options[opt]
+    } else {
+      return def
+    }
+  },
+
+  getSizes: function (obj) {
+    var lis = obj.getElementsByTagName('li')
+
+    var widthDef = 0
+    var heightDef = 0
+
+    for (var i = 0; i < lis.length; i++) {
+      var li = lis[i]
+
+      if (li.offsetWidth > widthDef) {
+        widthDef = li.offsetWidth
+      }
+
+      if (li.offsetHeight > heightDef) {
+        heightDef = li.offsetHeight
+      }
+    }
+
+    var width = widthDef
+    var height = heightDef
+
+    for (let i = 0; i < lis.length; i++) {
+      let li = lis[i]
+
+      var ul = li.getElementsByTagName('ul')
+      if (typeof ul[0] !== 'undefined') {
+        var ulSize = ContextUtil.getSizes(ul[0])
+
+        if (widthDef + ulSize.width > width) {
+          width = widthDef + ulSize.width
+        }
+
+        if (heightDef + ulSize.height > height) {
+          height = heightDef + ulSize.height
+        }
+      }
+    }
+
+    return {
+      'width': width,
+      'height': height
+    }
+  }
+}
+
 
 /***/ }),
 
-/***/ "./src/dateutils.js":
+/***/ "./src/dateutils.ts":
 /*!**************************!*\
-  !*** ./src/dateutils.js ***!
+  !*** ./src/dateutils.ts ***!
   \**************************/
-/*! exports provided: dateUtils */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"dateUtils\", function() { return dateUtils; });\n/* harmony import */ var _stringutils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./stringutils */ \"./src/stringutils.js\");\n\r\n\r\nlet dateUtils = (function () {\r\n  let mth = ['ЯНВ', 'ФЕВ', 'МАР', 'АПР', 'МАЙ', 'ИЮН', 'ИЮЛ', 'АВГ', 'СЕН', 'ОКТ', 'НОЯ', 'ДЕК']\r\n  return {\r\n    getCurDate: function () {\r\n      let dt = new Date()\r\n      return new Date(dt.getFullYear(), dt.getMonth(), dt.getDate())\r\n    },\r\n    getDateAgo: function (date, days) {\r\n      var dateCopy = new Date(date)\r\n      dateCopy.setDate(dateCopy.getDate() + days)\r\n      return dateCopy\r\n    },\r\n    formatDate: function (dt) {\r\n      return _stringutils__WEBPACK_IMPORTED_MODULE_0__[\"stringUtils\"].pad(dt.getDate(), 2) + '.' + _stringutils__WEBPACK_IMPORTED_MODULE_0__[\"stringUtils\"].pad(dt.getMonth() + 1, 2) + '.' + (dt.getFullYear() + '').substring(2)\r\n    },\r\n    getMonthFromDate: function (dt) {\r\n      return (dt.getFullYear() - 1) * 12 + dt.getMonth() + 1\r\n    },\r\n    getYearFromDate: function (dt) {\r\n      return dt.getFullYear()\r\n    },\r\n    getDecadeFromDate: function (dt) {\r\n      return Math.floor(dt.getFullYear() / 10) + 1\r\n    },\r\n    getCenturyFromDate: function (dt) {\r\n      return Math.floor(dt.getFullYear() / 100) + 1\r\n    },\r\n    getDecade (century, decade) {\r\n      return (century - 1) * 10 + decade + 1\r\n    },\r\n    formatMonth: function (period) {\r\n      let year = Math.floor((period - 1) / 12) + 1\r\n      let month = period - (year - 1) * 12\r\n      return mth[month - 1] + ' ' + _stringutils__WEBPACK_IMPORTED_MODULE_0__[\"stringUtils\"].pad(year, 4)\r\n    },\r\n    formatYear: function (period) {\r\n      return period\r\n    },\r\n    formatDecade: function (period) {\r\n      let century = Math.floor((period - 1) / 10) + 1\r\n      let decade = period - (century - 1) * 10\r\n      return romanize(century) + ' ' + (decade - 1) * 10 + 'е'\r\n    },\r\n    formatCentury: function (num) {\r\n      return romanize(num)\r\n    },\r\n    getDecadeComponent (decade) {\r\n      let century = Math.floor((decade - 1) / 10) + 1\r\n      return decade - (century - 1) * 10\r\n    }\r\n  }\r\n})()\r\n\r\nfunction romanize (num) {\r\n  if (!+num) { return false }\r\n  var digits = String(+num).split('')\r\n\r\n  var key = ['', 'C', 'CC', 'CCC', 'CD', 'D', 'DC', 'DCC', 'DCCC', 'CM',\r\n    '', 'X', 'XX', 'XXX', 'XL', 'L', 'LX', 'LXX', 'LXXX', 'XC',\r\n    '', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX']\r\n\r\n  var roman = ''\r\n\r\n  var i = 3\r\n  while (i--) { roman = (key[+digits.pop() + (i * 10)] || '') + roman }\r\n  return Array(+digits.join('') + 1).join('M') + roman\r\n}\r\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9zcmMvZGF0ZXV0aWxzLmpzPzZiNWEiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7QUFBQTtBQUFBO0FBQTJDOztBQUVwQztBQUNQO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQSxLQUFLO0FBQ0w7QUFDQTtBQUNBO0FBQ0E7QUFDQSxLQUFLO0FBQ0w7QUFDQSxhQUFhLHdEQUFXLDhCQUE4Qix3REFBVztBQUNqRSxLQUFLO0FBQ0w7QUFDQTtBQUNBLEtBQUs7QUFDTDtBQUNBO0FBQ0EsS0FBSztBQUNMO0FBQ0E7QUFDQSxLQUFLO0FBQ0w7QUFDQTtBQUNBLEtBQUs7QUFDTDtBQUNBO0FBQ0EsS0FBSztBQUNMO0FBQ0E7QUFDQTtBQUNBLG9DQUFvQyx3REFBVztBQUMvQyxLQUFLO0FBQ0w7QUFDQTtBQUNBLEtBQUs7QUFDTDtBQUNBO0FBQ0E7QUFDQTtBQUNBLEtBQUs7QUFDTDtBQUNBO0FBQ0EsS0FBSztBQUNMO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQSxDQUFDOztBQUVEO0FBQ0EsY0FBYztBQUNkOztBQUVBO0FBQ0E7QUFDQTs7QUFFQTs7QUFFQTtBQUNBLGVBQWU7QUFDZjtBQUNBIiwiZmlsZSI6Ii4vc3JjL2RhdGV1dGlscy5qcy5qcyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IHN0cmluZ1V0aWxzIH0gZnJvbSAnLi9zdHJpbmd1dGlscydcclxuXHJcbmV4cG9ydCBsZXQgZGF0ZVV0aWxzID0gKGZ1bmN0aW9uICgpIHtcclxuICBsZXQgbXRoID0gWyfQr9Cd0JInLCAn0KTQldCSJywgJ9Cc0JDQoCcsICfQkNCf0KAnLCAn0JzQkNCZJywgJ9CY0K7QnScsICfQmNCu0JsnLCAn0JDQktCTJywgJ9Ch0JXQnScsICfQntCa0KInLCAn0J3QntCvJywgJ9CU0JXQmiddXHJcbiAgcmV0dXJuIHtcclxuICAgIGdldEN1ckRhdGU6IGZ1bmN0aW9uICgpIHtcclxuICAgICAgbGV0IGR0ID0gbmV3IERhdGUoKVxyXG4gICAgICByZXR1cm4gbmV3IERhdGUoZHQuZ2V0RnVsbFllYXIoKSwgZHQuZ2V0TW9udGgoKSwgZHQuZ2V0RGF0ZSgpKVxyXG4gICAgfSxcclxuICAgIGdldERhdGVBZ286IGZ1bmN0aW9uIChkYXRlLCBkYXlzKSB7XHJcbiAgICAgIHZhciBkYXRlQ29weSA9IG5ldyBEYXRlKGRhdGUpXHJcbiAgICAgIGRhdGVDb3B5LnNldERhdGUoZGF0ZUNvcHkuZ2V0RGF0ZSgpICsgZGF5cylcclxuICAgICAgcmV0dXJuIGRhdGVDb3B5XHJcbiAgICB9LFxyXG4gICAgZm9ybWF0RGF0ZTogZnVuY3Rpb24gKGR0KSB7XHJcbiAgICAgIHJldHVybiBzdHJpbmdVdGlscy5wYWQoZHQuZ2V0RGF0ZSgpLCAyKSArICcuJyArIHN0cmluZ1V0aWxzLnBhZChkdC5nZXRNb250aCgpICsgMSwgMikgKyAnLicgKyAoZHQuZ2V0RnVsbFllYXIoKSArICcnKS5zdWJzdHJpbmcoMilcclxuICAgIH0sXHJcbiAgICBnZXRNb250aEZyb21EYXRlOiBmdW5jdGlvbiAoZHQpIHtcclxuICAgICAgcmV0dXJuIChkdC5nZXRGdWxsWWVhcigpIC0gMSkgKiAxMiArIGR0LmdldE1vbnRoKCkgKyAxXHJcbiAgICB9LFxyXG4gICAgZ2V0WWVhckZyb21EYXRlOiBmdW5jdGlvbiAoZHQpIHtcclxuICAgICAgcmV0dXJuIGR0LmdldEZ1bGxZZWFyKClcclxuICAgIH0sXHJcbiAgICBnZXREZWNhZGVGcm9tRGF0ZTogZnVuY3Rpb24gKGR0KSB7XHJcbiAgICAgIHJldHVybiBNYXRoLmZsb29yKGR0LmdldEZ1bGxZZWFyKCkgLyAxMCkgKyAxXHJcbiAgICB9LFxyXG4gICAgZ2V0Q2VudHVyeUZyb21EYXRlOiBmdW5jdGlvbiAoZHQpIHtcclxuICAgICAgcmV0dXJuIE1hdGguZmxvb3IoZHQuZ2V0RnVsbFllYXIoKSAvIDEwMCkgKyAxXHJcbiAgICB9LFxyXG4gICAgZ2V0RGVjYWRlIChjZW50dXJ5LCBkZWNhZGUpIHtcclxuICAgICAgcmV0dXJuIChjZW50dXJ5IC0gMSkgKiAxMCArIGRlY2FkZSArIDFcclxuICAgIH0sXHJcbiAgICBmb3JtYXRNb250aDogZnVuY3Rpb24gKHBlcmlvZCkge1xyXG4gICAgICBsZXQgeWVhciA9IE1hdGguZmxvb3IoKHBlcmlvZCAtIDEpIC8gMTIpICsgMVxyXG4gICAgICBsZXQgbW9udGggPSBwZXJpb2QgLSAoeWVhciAtIDEpICogMTJcclxuICAgICAgcmV0dXJuIG10aFttb250aCAtIDFdICsgJyAnICsgc3RyaW5nVXRpbHMucGFkKHllYXIsIDQpXHJcbiAgICB9LFxyXG4gICAgZm9ybWF0WWVhcjogZnVuY3Rpb24gKHBlcmlvZCkge1xyXG4gICAgICByZXR1cm4gcGVyaW9kXHJcbiAgICB9LFxyXG4gICAgZm9ybWF0RGVjYWRlOiBmdW5jdGlvbiAocGVyaW9kKSB7XHJcbiAgICAgIGxldCBjZW50dXJ5ID0gTWF0aC5mbG9vcigocGVyaW9kIC0gMSkgLyAxMCkgKyAxXHJcbiAgICAgIGxldCBkZWNhZGUgPSBwZXJpb2QgLSAoY2VudHVyeSAtIDEpICogMTBcclxuICAgICAgcmV0dXJuIHJvbWFuaXplKGNlbnR1cnkpICsgJyAnICsgKGRlY2FkZSAtIDEpICogMTAgKyAn0LUnXHJcbiAgICB9LFxyXG4gICAgZm9ybWF0Q2VudHVyeTogZnVuY3Rpb24gKG51bSkge1xyXG4gICAgICByZXR1cm4gcm9tYW5pemUobnVtKVxyXG4gICAgfSxcclxuICAgIGdldERlY2FkZUNvbXBvbmVudCAoZGVjYWRlKSB7XHJcbiAgICAgIGxldCBjZW50dXJ5ID0gTWF0aC5mbG9vcigoZGVjYWRlIC0gMSkgLyAxMCkgKyAxXHJcbiAgICAgIHJldHVybiBkZWNhZGUgLSAoY2VudHVyeSAtIDEpICogMTBcclxuICAgIH1cclxuICB9XHJcbn0pKClcclxuXHJcbmZ1bmN0aW9uIHJvbWFuaXplIChudW0pIHtcclxuICBpZiAoIStudW0pIHsgcmV0dXJuIGZhbHNlIH1cclxuICB2YXIgZGlnaXRzID0gU3RyaW5nKCtudW0pLnNwbGl0KCcnKVxyXG5cclxuICB2YXIga2V5ID0gWycnLCAnQycsICdDQycsICdDQ0MnLCAnQ0QnLCAnRCcsICdEQycsICdEQ0MnLCAnRENDQycsICdDTScsXHJcbiAgICAnJywgJ1gnLCAnWFgnLCAnWFhYJywgJ1hMJywgJ0wnLCAnTFgnLCAnTFhYJywgJ0xYWFgnLCAnWEMnLFxyXG4gICAgJycsICdJJywgJ0lJJywgJ0lJSScsICdJVicsICdWJywgJ1ZJJywgJ1ZJSScsICdWSUlJJywgJ0lYJ11cclxuXHJcbiAgdmFyIHJvbWFuID0gJydcclxuXHJcbiAgdmFyIGkgPSAzXHJcbiAgd2hpbGUgKGktLSkgeyByb21hbiA9IChrZXlbK2RpZ2l0cy5wb3AoKSArIChpICogMTApXSB8fCAnJykgKyByb21hbiB9XHJcbiAgcmV0dXJuIEFycmF5KCtkaWdpdHMuam9pbignJykgKyAxKS5qb2luKCdNJykgKyByb21hblxyXG59XHJcbiJdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./src/dateutils.js\n");
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var stringutils_1 = __webpack_require__(/*! ./stringutils */ "./src/stringutils.ts");
+var DateUtils = /** @class */ (function () {
+    function DateUtils() {
+    }
+    DateUtils.getCurDate = function () {
+        var dt = new Date();
+        return new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
+    };
+    DateUtils.getDateAgo = function (date, days) {
+        var dateCopy = new Date(date);
+        dateCopy.setDate(dateCopy.getDate() + days);
+        return dateCopy;
+    };
+    DateUtils.formatDate = function (dt) {
+        return stringutils_1.stringUtils.pad(dt.getDate(), 2) + '.' + stringutils_1.stringUtils.pad(dt.getMonth() + 1, 2) + '.' + (dt.getFullYear() + '').substring(2);
+    };
+    DateUtils.getMonthFromDate = function (dt) {
+        return (dt.getFullYear() - 1) * 12 + dt.getMonth() + 1;
+    };
+    DateUtils.getYearFromDate = function (dt) {
+        return dt.getFullYear();
+    };
+    DateUtils.getDecadeFromDate = function (dt) {
+        return Math.floor(dt.getFullYear() / 10) + 1;
+    };
+    DateUtils.getCenturyFromDate = function (dt) {
+        return Math.floor(dt.getFullYear() / 100) + 1;
+    };
+    DateUtils.getDecade = function (century, decade) {
+        return (century - 1) * 10 + decade + 1;
+    };
+    DateUtils.formatMonth = function (period) {
+        var year = Math.floor((period - 1) / 12) + 1;
+        var month = period - (year - 1) * 12;
+        return this.mth[month - 1] + ' ' + stringutils_1.stringUtils.pad(year, 4);
+    };
+    DateUtils.formatYear = function (period) {
+        return period.toString();
+    };
+    DateUtils.formatDecade = function (period) {
+        var century = Math.floor((period - 1) / 10) + 1;
+        var decade = period - (century - 1) * 10;
+        return romanize(century) + ' ' + (decade - 1) * 10 + 'е';
+    };
+    DateUtils.formatCentury = function (num) {
+        return romanize(num);
+    };
+    DateUtils.getDecadeComponent = function (decade) {
+        var century = Math.floor((decade - 1) / 10) + 1;
+        return decade - (century - 1) * 10;
+    };
+    DateUtils.mth = ['ЯНВ', 'ФЕВ', 'МАР', 'АПР', 'МАЙ', 'ИЮН', 'ИЮЛ', 'АВГ', 'СЕН', 'ОКТ', 'НОЯ', 'ДЕК'];
+    return DateUtils;
+}());
+exports.DateUtils = DateUtils;
+function romanize(num) {
+    if (!+num) {
+        return null;
+    }
+    var digits = String(+num).split('');
+    var key = ['', 'C', 'CC', 'CCC', 'CD', 'D', 'DC', 'DCC', 'DCCC', 'CM',
+        '', 'X', 'XX', 'XXX', 'XL', 'L', 'LX', 'LXX', 'LXXX', 'XC',
+        '', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX'];
+    var roman = '';
+    var i = 3;
+    while (i--) {
+        roman = (key[+digits.pop() + (i * 10)] || '') + roman;
+    }
+    return Array(+digits.join('') + 1).join('M') + roman;
+}
+
 
 /***/ }),
 
-/***/ "./src/index.js":
+/***/ "./src/index.ts":
 /*!**********************!*\
-  !*** ./src/index.js ***!
+  !*** ./src/index.ts ***!
   \**********************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _timeline__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./timeline */ \"./src/timeline.js\");\n/* harmony import */ var _colorutils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./colorutils */ \"./src/colorutils.js\");\n/* harmony import */ var _contextmenu__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./contextmenu */ \"./src/contextmenu.js\");\n/* harmony import */ var _stringutils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./stringutils */ \"./src/stringutils.js\");\n\r\n\r\n\r\n\r\n\r\nconst MIN_GAP = 100\r\nlet PERIOD_TYPE = _timeline__WEBPACK_IMPORTED_MODULE_0__[\"TimeLine\"].EnumPeriod.day\r\nconst HTOP = 56\r\n\r\nlet timeLines = []\r\nlet ctx;\r\n\r\n(function main () {\r\n  let isDragDrop = false\r\n  let indLine\r\n\r\n  let menuitems = [\r\n    {\r\n      'id': 'new',\r\n      'text': 'Новая',\r\n      'icon': '<i class=\"far fa-file\"></i></i>',\r\n      'events': {\r\n        'click': NewTmDialog\r\n      }\r\n    },\r\n    {\r\n      'id': 'load',\r\n      'text': 'Загрузить',\r\n      'icon': '<i class=\"far fa-folder-open\"></i>',\r\n      'events': {\r\n        'click': (e) => {\r\n          LoadTimeLine()\r\n        }\r\n      }\r\n    },\r\n    {\r\n      'id': 'save',\r\n      'text': 'Сохранить',\r\n      'icon': '<i class=\"far fa-save\"></i>',\r\n      'enabled': false\r\n    },\r\n    {\r\n      'id': 'line',\r\n      'type': _contextmenu__WEBPACK_IMPORTED_MODULE_2__[\"DIVIDER\"]\r\n    },\r\n    {\r\n      'id': 'period',\r\n      'text': 'Периодичность',\r\n      'sub': [\r\n        {\r\n          'id': _timeline__WEBPACK_IMPORTED_MODULE_0__[\"TimeLine\"].EnumPeriod.day,\r\n          'text': 'День',\r\n          'icon': '<i class=\"fas fa-angle-down\"></i>',\r\n          'events': {\r\n            'click': (e) => {\r\n              SwitchPeriod(menuCtx, _timeline__WEBPACK_IMPORTED_MODULE_0__[\"TimeLine\"].EnumPeriod.day)\r\n            }\r\n          }\r\n        },\r\n        {\r\n          'id': _timeline__WEBPACK_IMPORTED_MODULE_0__[\"TimeLine\"].EnumPeriod.month,\r\n          'text': 'Месяц',\r\n          'events': {\r\n            'click': (e) => {\r\n              SwitchPeriod(menuCtx, _timeline__WEBPACK_IMPORTED_MODULE_0__[\"TimeLine\"].EnumPeriod.month)\r\n            }\r\n          }\r\n        },\r\n        {\r\n          'id': _timeline__WEBPACK_IMPORTED_MODULE_0__[\"TimeLine\"].EnumPeriod.year,\r\n          'text': 'Год',\r\n          'events': {\r\n            'click': (e) => {\r\n              SwitchPeriod(menuCtx, _timeline__WEBPACK_IMPORTED_MODULE_0__[\"TimeLine\"].EnumPeriod.year)\r\n            }\r\n          }\r\n        },\r\n        {\r\n          'id': _timeline__WEBPACK_IMPORTED_MODULE_0__[\"TimeLine\"].EnumPeriod.decade,\r\n          'text': 'Десятилетие',\r\n          'events': {\r\n            'click': (e) => {\r\n              SwitchPeriod(menuCtx, _timeline__WEBPACK_IMPORTED_MODULE_0__[\"TimeLine\"].EnumPeriod.decade)\r\n            }\r\n          }\r\n        },\r\n        {\r\n          'id': _timeline__WEBPACK_IMPORTED_MODULE_0__[\"TimeLine\"].EnumPeriod.century,\r\n          'text': 'Век',\r\n          'events': {\r\n            'click': (e) => {\r\n              SwitchPeriod(menuCtx, _timeline__WEBPACK_IMPORTED_MODULE_0__[\"TimeLine\"].EnumPeriod.century)\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n  let menuCtx = new _contextmenu__WEBPACK_IMPORTED_MODULE_2__[\"ContextMenu\"](menuitems)\r\n\r\n  let canvas = document.getElementById('canvas')\r\n  ctx = canvas.getContext('2d')\r\n\r\n  canvas.onmousedown = (ev) => {\r\n    if (ev.button === 0) {\r\n      let pos = getMousePos(canvas, ev)\r\n      indLine = getIndexLine(pos.y)\r\n      if (indLine !== -1) {\r\n        isDragDrop = true\r\n        canvas.style.cursor = 'Pointer'\r\n      }\r\n    }\r\n  }\r\n  canvas.onmouseup = (ev) => {\r\n    isDragDrop = false\r\n    canvas.style.cursor = 'Default'\r\n  }\r\n  canvas.onmousemove = (ev) => {\r\n    let data\r\n    if (!isDragDrop) {\r\n      for (let i = 0; i < timeLines.length; i++) {\r\n        let pos = getMousePos(canvas, ev)\r\n        data = timeLines[i].getCellValue(pos.x, pos.y)\r\n        if (data !== timeLines[i].curdata) {\r\n          if (timeLines[i].curdata !== -1) {\r\n            timeLines[i].offBox()\r\n          }\r\n          if (data !== -1) {\r\n            timeLines[i].onBox(data)\r\n          }\r\n          timeLines[i].curdata = data\r\n        }\r\n      }\r\n    } else {\r\n      timeLines[indLine].shift(ev.movementX)\r\n      timeLines[indLine].draw(ctx)\r\n    }\r\n  }\r\n\r\n  (window.onresize = (_) => {\r\n    canvas.top = HTOP\r\n    canvas.width = window.innerWidth\r\n    canvas.height = window.innerHeight - HTOP\r\n    drawAll(ctx)\r\n  })()\r\n\r\n  $('#canvas').on('contextmenu', (e) => {\r\n    let pos = getMousePos(canvas, e)\r\n    indLine = getIndexLine(pos.y)\r\n    let pMenu = menuCtx.menu.find(el => el.id === 'save')\r\n    if (indLine === -1) {\r\n      pMenu.enabled = false\r\n    } else {\r\n      pMenu.enabled = true\r\n      pMenu.events = {\r\n        'click': (e) => {\r\n          timeLines[indLine].save()\r\n        }\r\n      }\r\n    }\r\n    menuCtx.reload()\r\n    menuCtx.display(e)\r\n    e.preventDefault()\r\n  })\r\n\r\n  $('#newTimeline').click((ev) => {\r\n    NewTmDialog()\r\n  })\r\n  $('#load').click((ev) => {\r\n    LoadTimeLine()\r\n  })\r\n  $('#save').click((ev) => {\r\n    alert('save')\r\n  })\r\n  $('#options').click((ev) => {\r\n    $('#typePeriod').val(_timeline__WEBPACK_IMPORTED_MODULE_0__[\"TimeLine\"].EnumPeriod.year)\r\n    $('#tmOptionsModal').modal()\r\n  })\r\n  $('#btnNewName').click((ev) => {\r\n    $('#tmNameModal').modal('hide')\r\n    NewTimeLine($('#tmName').val())\r\n  })\r\n  $('.closenamemodal').click((ev) => {\r\n    $('#tmNameModal').modal('hide')\r\n  })\r\n  $('.closeoptionmodal').click((ev) => {\r\n    $('#tmOptionsModal').modal('hide')\r\n  })\r\n  $('.closeregistermodal').click((ev) => {\r\n    $('#tmRegisterModal').modal('hide')\r\n  })\r\n  $('#tmName').keyup((ev) => {\r\n    if ($('#tmName').val().trim() !== '') {\r\n      $('#btnNewName').prop('disabled', false)\r\n      if (ev.keyCode === 13) {\r\n        $('#tmNameModal').modal('hide')\r\n        NewTimeLine($('#tmName').val())\r\n      }\r\n    } else {\r\n      $('#btnNewName').prop('disabled', true)\r\n    }\r\n  })\r\n  $('#tmNameModal').on('shown.bs.modal', function () {\r\n    $('#tmName').trigger('focus')\r\n  })\r\n  $('#action01').click((ev) => {\r\n    alert('action01')\r\n    })\r\n  $('#btnReg').click((ev) => {\r\n    $('#tmRegisterModal').modal()\r\n    return false\r\n  })\r\n  $('#btnRegisterUser').click(ev => {\r\n    if ($('#regLogin')[0].reportValidity()\r\n        && $('#regEmail')[0].reportValidity()\r\n        && $('#regPassword1')[0].reportValidity()\r\n        && $('#regPassword2')[0].reportValidity()) {\r\n      $('#tmRegisterModal').modal('hide')\r\n    }\r\n  })\r\n})()\r\n\r\nfunction LoadTimeLine () {\r\n  let tl = _timeline__WEBPACK_IMPORTED_MODULE_0__[\"TimeLine\"].load(ctx)\r\n  NewTimeLine(tl.name, tl)\r\n}\r\n\r\nfunction NewTimeLine (name, tl) {\r\n  let aY\r\n  if ((((timeLines.length + 2) * MIN_GAP) + (timeLines.length + 1) * _timeline__WEBPACK_IMPORTED_MODULE_0__[\"TimeLine\"].LINE_THICKNESS) > ctx.canvas.clientHeight) {\r\n    alert('Достигнуто максимальное количество линий времени')\r\n    return\r\n  } else {\r\n    aY = splitWorkspace(timeLines.length + 1)\r\n  }\r\n  let dt = _timeline__WEBPACK_IMPORTED_MODULE_0__[\"TimeLine\"].getCurPeriod(PERIOD_TYPE)\r\n    let nColor = Object(_colorutils__WEBPACK_IMPORTED_MODULE_1__[\"makeColor\"])()\r\n  if (tl === undefined) {\r\n    tl = new _timeline__WEBPACK_IMPORTED_MODULE_0__[\"TimeLine\"](ctx, dt, 0, 0, PERIOD_TYPE, name)\r\n  }\r\n  timeLines.push(tl)\r\n  for (let i = 0; i < timeLines.length; i++) {\r\n    timeLines[i].y = aY[i]\r\n    timeLines[i].color = nColor.next().value\r\n  }\r\n  drawAll()\r\n}\r\n\r\nfunction splitWorkspace (n) {\r\n  let rt = []\r\n  let m = (ctx.canvas.clientHeight - n * _timeline__WEBPACK_IMPORTED_MODULE_0__[\"TimeLine\"].LINE_THICKNESS) / (n + 1) + 0.5\r\n  for (let i = 0, y = m; i < n; i++, y += (m + _timeline__WEBPACK_IMPORTED_MODULE_0__[\"TimeLine\"].LINE_THICKNESS)) {\r\n    rt.push(y)\r\n  }\r\n  return rt\r\n}\r\n\r\nfunction getIndexLine (y) {\r\n  for (let i = 0; i < timeLines.length; i++) {\r\n    if (y >= timeLines[i].y && y < timeLines[i].y + _timeline__WEBPACK_IMPORTED_MODULE_0__[\"TimeLine\"].LINE_THICKNESS) {\r\n      return i\r\n    }\r\n  }\r\n  return -1\r\n}\r\n\r\nfunction drawAll () {\r\n  ctx.clearRect(0, 0, ctx.canvas.clientWidth, ctx.canvas.clientHeight)\r\n  for (let i = 0; i < timeLines.length; i++) {\r\n    timeLines[i].Period = PERIOD_TYPE\r\n    timeLines[i].draw(ctx)\r\n  }\r\n}\r\n\r\nfunction getMousePos (canvas, evt) {\r\n  let rect = canvas.getBoundingClientRect()\r\n  return {\r\n    x: evt.clientX - rect.left,\r\n    y: evt.clientY - rect.top\r\n  }\r\n}\r\n\r\nfunction NewTmDialog () {\r\n  $('#tmName').val('')\r\n  $('#btnNewName').prop('disabled', true)\r\n  $('#tmNameModal').modal()\r\n}\r\n\r\nfunction SwitchPeriod (menuCtx, idPeriod) {\r\n  menuCtx.menu.find(el => el.id === 'period').sub.forEach((el, nd, arr) => {\r\n    if (el.id === idPeriod) {\r\n      el.icon = '<i class=\"fas fa-angle-down\"></i>'\r\n    } else {\r\n      el.icon = ''\r\n    }\r\n  })\r\n  PERIOD_TYPE = idPeriod\r\n  drawAll()\r\n  menuCtx.reload()\r\n}\r\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9zcmMvaW5kZXguanM/YjYzNSJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQXFDO0FBQ0c7QUFDWTtBQUNUOztBQUUzQztBQUNBLGtCQUFrQixrREFBUTtBQUMxQjs7QUFFQTtBQUNBOztBQUVBO0FBQ0E7QUFDQTs7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0EsS0FBSztBQUNMO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBLEtBQUs7QUFDTDtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0EsS0FBSztBQUNMO0FBQ0E7QUFDQSxjQUFjLG9EQUFPO0FBQ3JCLEtBQUs7QUFDTDtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0EsZ0JBQWdCLGtEQUFRO0FBQ3hCO0FBQ0E7QUFDQTtBQUNBO0FBQ0Esb0NBQW9DLGtEQUFRO0FBQzVDO0FBQ0E7QUFDQSxTQUFTO0FBQ1Q7QUFDQSxnQkFBZ0Isa0RBQVE7QUFDeEI7QUFDQTtBQUNBO0FBQ0Esb0NBQW9DLGtEQUFRO0FBQzVDO0FBQ0E7QUFDQSxTQUFTO0FBQ1Q7QUFDQSxnQkFBZ0Isa0RBQVE7QUFDeEI7QUFDQTtBQUNBO0FBQ0Esb0NBQW9DLGtEQUFRO0FBQzVDO0FBQ0E7QUFDQSxTQUFTO0FBQ1Q7QUFDQSxnQkFBZ0Isa0RBQVE7QUFDeEI7QUFDQTtBQUNBO0FBQ0Esb0NBQW9DLGtEQUFRO0FBQzVDO0FBQ0E7QUFDQSxTQUFTO0FBQ1Q7QUFDQSxnQkFBZ0Isa0RBQVE7QUFDeEI7QUFDQTtBQUNBO0FBQ0Esb0NBQW9DLGtEQUFRO0FBQzVDO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBLG9CQUFvQix3REFBVzs7QUFFL0I7QUFDQTs7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0EscUJBQXFCLHNCQUFzQjtBQUMzQztBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQSxLQUFLO0FBQ0w7QUFDQTtBQUNBO0FBQ0E7O0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBLEdBQUc7O0FBRUg7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0EsS0FBSztBQUNMO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0EsR0FBRzs7QUFFSDtBQUNBO0FBQ0EsR0FBRztBQUNIO0FBQ0E7QUFDQSxHQUFHO0FBQ0g7QUFDQTtBQUNBLEdBQUc7QUFDSDtBQUNBLHlCQUF5QixrREFBUTtBQUNqQztBQUNBLEdBQUc7QUFDSDtBQUNBO0FBQ0E7QUFDQSxHQUFHO0FBQ0g7QUFDQTtBQUNBLEdBQUc7QUFDSDtBQUNBO0FBQ0EsR0FBRztBQUNIO0FBQ0E7QUFDQSxHQUFHO0FBQ0g7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQSxLQUFLO0FBQ0w7QUFDQTtBQUNBLEdBQUc7QUFDSDtBQUNBO0FBQ0EsR0FBRztBQUNIO0FBQ0E7QUFDQSxLQUFLO0FBQ0w7QUFDQTtBQUNBO0FBQ0EsR0FBRztBQUNIO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0EsR0FBRztBQUNILENBQUM7O0FBRUQ7QUFDQSxXQUFXLGtEQUFRO0FBQ25CO0FBQ0E7O0FBRUE7QUFDQTtBQUNBLHFFQUFxRSxrREFBUTtBQUM3RTtBQUNBO0FBQ0EsR0FBRztBQUNIO0FBQ0E7QUFDQSxXQUFXLGtEQUFRO0FBQ25CLGlCQUFpQiw2REFBUztBQUMxQjtBQUNBLGFBQWEsa0RBQVE7QUFDckI7QUFDQTtBQUNBLGlCQUFpQixzQkFBc0I7QUFDdkM7QUFDQTtBQUNBO0FBQ0E7QUFDQTs7QUFFQTtBQUNBO0FBQ0EseUNBQXlDLGtEQUFRO0FBQ2pELHdCQUF3QixPQUFPLGdCQUFnQixrREFBUTtBQUN2RDtBQUNBO0FBQ0E7QUFDQTs7QUFFQTtBQUNBLGlCQUFpQixzQkFBc0I7QUFDdkMsb0RBQW9ELGtEQUFRO0FBQzVEO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7O0FBRUE7QUFDQTtBQUNBLGlCQUFpQixzQkFBc0I7QUFDdkM7QUFDQTtBQUNBO0FBQ0E7O0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7O0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTs7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUNBLEtBQUs7QUFDTDtBQUNBO0FBQ0EsR0FBRztBQUNIO0FBQ0E7QUFDQTtBQUNBIiwiZmlsZSI6Ii4vc3JjL2luZGV4LmpzLmpzIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgVGltZUxpbmUgfSBmcm9tICcuL3RpbWVsaW5lJ1xyXG5pbXBvcnQgeyBtYWtlQ29sb3IgfSBmcm9tICcuL2NvbG9ydXRpbHMnXHJcbmltcG9ydCB7IENvbnRleHRNZW51LCBESVZJREVSIH0gZnJvbSAnLi9jb250ZXh0bWVudSdcclxuaW1wb3J0IHsgc3RyaW5nVXRpbHMgfSBmcm9tICcuL3N0cmluZ3V0aWxzJ1xyXG5cclxuY29uc3QgTUlOX0dBUCA9IDEwMFxyXG5sZXQgUEVSSU9EX1RZUEUgPSBUaW1lTGluZS5FbnVtUGVyaW9kLmRheVxyXG5jb25zdCBIVE9QID0gNTZcclxuXHJcbmxldCB0aW1lTGluZXMgPSBbXVxyXG5sZXQgY3R4O1xyXG5cclxuKGZ1bmN0aW9uIG1haW4gKCkge1xyXG4gIGxldCBpc0RyYWdEcm9wID0gZmFsc2VcclxuICBsZXQgaW5kTGluZVxyXG5cclxuICBsZXQgbWVudWl0ZW1zID0gW1xyXG4gICAge1xyXG4gICAgICAnaWQnOiAnbmV3JyxcclxuICAgICAgJ3RleHQnOiAn0J3QvtCy0LDRjycsXHJcbiAgICAgICdpY29uJzogJzxpIGNsYXNzPVwiZmFyIGZhLWZpbGVcIj48L2k+PC9pPicsXHJcbiAgICAgICdldmVudHMnOiB7XHJcbiAgICAgICAgJ2NsaWNrJzogTmV3VG1EaWFsb2dcclxuICAgICAgfVxyXG4gICAgfSxcclxuICAgIHtcclxuICAgICAgJ2lkJzogJ2xvYWQnLFxyXG4gICAgICAndGV4dCc6ICfQl9Cw0LPRgNGD0LfQuNGC0YwnLFxyXG4gICAgICAnaWNvbic6ICc8aSBjbGFzcz1cImZhciBmYS1mb2xkZXItb3BlblwiPjwvaT4nLFxyXG4gICAgICAnZXZlbnRzJzoge1xyXG4gICAgICAgICdjbGljayc6IChlKSA9PiB7XHJcbiAgICAgICAgICBMb2FkVGltZUxpbmUoKVxyXG4gICAgICAgIH1cclxuICAgICAgfVxyXG4gICAgfSxcclxuICAgIHtcclxuICAgICAgJ2lkJzogJ3NhdmUnLFxyXG4gICAgICAndGV4dCc6ICfQodC+0YXRgNCw0L3QuNGC0YwnLFxyXG4gICAgICAnaWNvbic6ICc8aSBjbGFzcz1cImZhciBmYS1zYXZlXCI+PC9pPicsXHJcbiAgICAgICdlbmFibGVkJzogZmFsc2VcclxuICAgIH0sXHJcbiAgICB7XHJcbiAgICAgICdpZCc6ICdsaW5lJyxcclxuICAgICAgJ3R5cGUnOiBESVZJREVSXHJcbiAgICB9LFxyXG4gICAge1xyXG4gICAgICAnaWQnOiAncGVyaW9kJyxcclxuICAgICAgJ3RleHQnOiAn0J/QtdGA0LjQvtC00LjRh9C90L7RgdGC0YwnLFxyXG4gICAgICAnc3ViJzogW1xyXG4gICAgICAgIHtcclxuICAgICAgICAgICdpZCc6IFRpbWVMaW5lLkVudW1QZXJpb2QuZGF5LFxyXG4gICAgICAgICAgJ3RleHQnOiAn0JTQtdC90YwnLFxyXG4gICAgICAgICAgJ2ljb24nOiAnPGkgY2xhc3M9XCJmYXMgZmEtYW5nbGUtZG93blwiPjwvaT4nLFxyXG4gICAgICAgICAgJ2V2ZW50cyc6IHtcclxuICAgICAgICAgICAgJ2NsaWNrJzogKGUpID0+IHtcclxuICAgICAgICAgICAgICBTd2l0Y2hQZXJpb2QobWVudUN0eCwgVGltZUxpbmUuRW51bVBlcmlvZC5kYXkpXHJcbiAgICAgICAgICAgIH1cclxuICAgICAgICAgIH1cclxuICAgICAgICB9LFxyXG4gICAgICAgIHtcclxuICAgICAgICAgICdpZCc6IFRpbWVMaW5lLkVudW1QZXJpb2QubW9udGgsXHJcbiAgICAgICAgICAndGV4dCc6ICfQnNC10YHRj9GGJyxcclxuICAgICAgICAgICdldmVudHMnOiB7XHJcbiAgICAgICAgICAgICdjbGljayc6IChlKSA9PiB7XHJcbiAgICAgICAgICAgICAgU3dpdGNoUGVyaW9kKG1lbnVDdHgsIFRpbWVMaW5lLkVudW1QZXJpb2QubW9udGgpXHJcbiAgICAgICAgICAgIH1cclxuICAgICAgICAgIH1cclxuICAgICAgICB9LFxyXG4gICAgICAgIHtcclxuICAgICAgICAgICdpZCc6IFRpbWVMaW5lLkVudW1QZXJpb2QueWVhcixcclxuICAgICAgICAgICd0ZXh0JzogJ9CT0L7QtCcsXHJcbiAgICAgICAgICAnZXZlbnRzJzoge1xyXG4gICAgICAgICAgICAnY2xpY2snOiAoZSkgPT4ge1xyXG4gICAgICAgICAgICAgIFN3aXRjaFBlcmlvZChtZW51Q3R4LCBUaW1lTGluZS5FbnVtUGVyaW9kLnllYXIpXHJcbiAgICAgICAgICAgIH1cclxuICAgICAgICAgIH1cclxuICAgICAgICB9LFxyXG4gICAgICAgIHtcclxuICAgICAgICAgICdpZCc6IFRpbWVMaW5lLkVudW1QZXJpb2QuZGVjYWRlLFxyXG4gICAgICAgICAgJ3RleHQnOiAn0JTQtdGB0Y/RgtC40LvQtdGC0LjQtScsXHJcbiAgICAgICAgICAnZXZlbnRzJzoge1xyXG4gICAgICAgICAgICAnY2xpY2snOiAoZSkgPT4ge1xyXG4gICAgICAgICAgICAgIFN3aXRjaFBlcmlvZChtZW51Q3R4LCBUaW1lTGluZS5FbnVtUGVyaW9kLmRlY2FkZSlcclxuICAgICAgICAgICAgfVxyXG4gICAgICAgICAgfVxyXG4gICAgICAgIH0sXHJcbiAgICAgICAge1xyXG4gICAgICAgICAgJ2lkJzogVGltZUxpbmUuRW51bVBlcmlvZC5jZW50dXJ5LFxyXG4gICAgICAgICAgJ3RleHQnOiAn0JLQtdC6JyxcclxuICAgICAgICAgICdldmVudHMnOiB7XHJcbiAgICAgICAgICAgICdjbGljayc6IChlKSA9PiB7XHJcbiAgICAgICAgICAgICAgU3dpdGNoUGVyaW9kKG1lbnVDdHgsIFRpbWVMaW5lLkVudW1QZXJpb2QuY2VudHVyeSlcclxuICAgICAgICAgICAgfVxyXG4gICAgICAgICAgfVxyXG4gICAgICAgIH1cclxuICAgICAgXVxyXG4gICAgfVxyXG4gIF1cclxuICBsZXQgbWVudUN0eCA9IG5ldyBDb250ZXh0TWVudShtZW51aXRlbXMpXHJcblxyXG4gIGxldCBjYW52YXMgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnY2FudmFzJylcclxuICBjdHggPSBjYW52YXMuZ2V0Q29udGV4dCgnMmQnKVxyXG5cclxuICBjYW52YXMub25tb3VzZWRvd24gPSAoZXYpID0+IHtcclxuICAgIGlmIChldi5idXR0b24gPT09IDApIHtcclxuICAgICAgbGV0IHBvcyA9IGdldE1vdXNlUG9zKGNhbnZhcywgZXYpXHJcbiAgICAgIGluZExpbmUgPSBnZXRJbmRleExpbmUocG9zLnkpXHJcbiAgICAgIGlmIChpbmRMaW5lICE9PSAtMSkge1xyXG4gICAgICAgIGlzRHJhZ0Ryb3AgPSB0cnVlXHJcbiAgICAgICAgY2FudmFzLnN0eWxlLmN1cnNvciA9ICdQb2ludGVyJ1xyXG4gICAgICB9XHJcbiAgICB9XHJcbiAgfVxyXG4gIGNhbnZhcy5vbm1vdXNldXAgPSAoZXYpID0+IHtcclxuICAgIGlzRHJhZ0Ryb3AgPSBmYWxzZVxyXG4gICAgY2FudmFzLnN0eWxlLmN1cnNvciA9ICdEZWZhdWx0J1xyXG4gIH1cclxuICBjYW52YXMub25tb3VzZW1vdmUgPSAoZXYpID0+IHtcclxuICAgIGxldCBkYXRhXHJcbiAgICBpZiAoIWlzRHJhZ0Ryb3ApIHtcclxuICAgICAgZm9yIChsZXQgaSA9IDA7IGkgPCB0aW1lTGluZXMubGVuZ3RoOyBpKyspIHtcclxuICAgICAgICBsZXQgcG9zID0gZ2V0TW91c2VQb3MoY2FudmFzLCBldilcclxuICAgICAgICBkYXRhID0gdGltZUxpbmVzW2ldLmdldENlbGxWYWx1ZShwb3MueCwgcG9zLnkpXHJcbiAgICAgICAgaWYgKGRhdGEgIT09IHRpbWVMaW5lc1tpXS5jdXJkYXRhKSB7XHJcbiAgICAgICAgICBpZiAodGltZUxpbmVzW2ldLmN1cmRhdGEgIT09IC0xKSB7XHJcbiAgICAgICAgICAgIHRpbWVMaW5lc1tpXS5vZmZCb3goKVxyXG4gICAgICAgICAgfVxyXG4gICAgICAgICAgaWYgKGRhdGEgIT09IC0xKSB7XHJcbiAgICAgICAgICAgIHRpbWVMaW5lc1tpXS5vbkJveChkYXRhKVxyXG4gICAgICAgICAgfVxyXG4gICAgICAgICAgdGltZUxpbmVzW2ldLmN1cmRhdGEgPSBkYXRhXHJcbiAgICAgICAgfVxyXG4gICAgICB9XHJcbiAgICB9IGVsc2Uge1xyXG4gICAgICB0aW1lTGluZXNbaW5kTGluZV0uc2hpZnQoZXYubW92ZW1lbnRYKVxyXG4gICAgICB0aW1lTGluZXNbaW5kTGluZV0uZHJhdyhjdHgpXHJcbiAgICB9XHJcbiAgfVxyXG5cclxuICAod2luZG93Lm9ucmVzaXplID0gKF8pID0+IHtcclxuICAgIGNhbnZhcy50b3AgPSBIVE9QXHJcbiAgICBjYW52YXMud2lkdGggPSB3aW5kb3cuaW5uZXJXaWR0aFxyXG4gICAgY2FudmFzLmhlaWdodCA9IHdpbmRvdy5pbm5lckhlaWdodCAtIEhUT1BcclxuICAgIGRyYXdBbGwoY3R4KVxyXG4gIH0pKClcclxuXHJcbiAgJCgnI2NhbnZhcycpLm9uKCdjb250ZXh0bWVudScsIChlKSA9PiB7XHJcbiAgICBsZXQgcG9zID0gZ2V0TW91c2VQb3MoY2FudmFzLCBlKVxyXG4gICAgaW5kTGluZSA9IGdldEluZGV4TGluZShwb3MueSlcclxuICAgIGxldCBwTWVudSA9IG1lbnVDdHgubWVudS5maW5kKGVsID0+IGVsLmlkID09PSAnc2F2ZScpXHJcbiAgICBpZiAoaW5kTGluZSA9PT0gLTEpIHtcclxuICAgICAgcE1lbnUuZW5hYmxlZCA9IGZhbHNlXHJcbiAgICB9IGVsc2Uge1xyXG4gICAgICBwTWVudS5lbmFibGVkID0gdHJ1ZVxyXG4gICAgICBwTWVudS5ldmVudHMgPSB7XHJcbiAgICAgICAgJ2NsaWNrJzogKGUpID0+IHtcclxuICAgICAgICAgIHRpbWVMaW5lc1tpbmRMaW5lXS5zYXZlKClcclxuICAgICAgICB9XHJcbiAgICAgIH1cclxuICAgIH1cclxuICAgIG1lbnVDdHgucmVsb2FkKClcclxuICAgIG1lbnVDdHguZGlzcGxheShlKVxyXG4gICAgZS5wcmV2ZW50RGVmYXVsdCgpXHJcbiAgfSlcclxuXHJcbiAgJCgnI25ld1RpbWVsaW5lJykuY2xpY2soKGV2KSA9PiB7XHJcbiAgICBOZXdUbURpYWxvZygpXHJcbiAgfSlcclxuICAkKCcjbG9hZCcpLmNsaWNrKChldikgPT4ge1xyXG4gICAgTG9hZFRpbWVMaW5lKClcclxuICB9KVxyXG4gICQoJyNzYXZlJykuY2xpY2soKGV2KSA9PiB7XHJcbiAgICBhbGVydCgnc2F2ZScpXHJcbiAgfSlcclxuICAkKCcjb3B0aW9ucycpLmNsaWNrKChldikgPT4ge1xyXG4gICAgJCgnI3R5cGVQZXJpb2QnKS52YWwoVGltZUxpbmUuRW51bVBlcmlvZC55ZWFyKVxyXG4gICAgJCgnI3RtT3B0aW9uc01vZGFsJykubW9kYWwoKVxyXG4gIH0pXHJcbiAgJCgnI2J0bk5ld05hbWUnKS5jbGljaygoZXYpID0+IHtcclxuICAgICQoJyN0bU5hbWVNb2RhbCcpLm1vZGFsKCdoaWRlJylcclxuICAgIE5ld1RpbWVMaW5lKCQoJyN0bU5hbWUnKS52YWwoKSlcclxuICB9KVxyXG4gICQoJy5jbG9zZW5hbWVtb2RhbCcpLmNsaWNrKChldikgPT4ge1xyXG4gICAgJCgnI3RtTmFtZU1vZGFsJykubW9kYWwoJ2hpZGUnKVxyXG4gIH0pXHJcbiAgJCgnLmNsb3Nlb3B0aW9ubW9kYWwnKS5jbGljaygoZXYpID0+IHtcclxuICAgICQoJyN0bU9wdGlvbnNNb2RhbCcpLm1vZGFsKCdoaWRlJylcclxuICB9KVxyXG4gICQoJy5jbG9zZXJlZ2lzdGVybW9kYWwnKS5jbGljaygoZXYpID0+IHtcclxuICAgICQoJyN0bVJlZ2lzdGVyTW9kYWwnKS5tb2RhbCgnaGlkZScpXHJcbiAgfSlcclxuICAkKCcjdG1OYW1lJykua2V5dXAoKGV2KSA9PiB7XHJcbiAgICBpZiAoJCgnI3RtTmFtZScpLnZhbCgpLnRyaW0oKSAhPT0gJycpIHtcclxuICAgICAgJCgnI2J0bk5ld05hbWUnKS5wcm9wKCdkaXNhYmxlZCcsIGZhbHNlKVxyXG4gICAgICBpZiAoZXYua2V5Q29kZSA9PT0gMTMpIHtcclxuICAgICAgICAkKCcjdG1OYW1lTW9kYWwnKS5tb2RhbCgnaGlkZScpXHJcbiAgICAgICAgTmV3VGltZUxpbmUoJCgnI3RtTmFtZScpLnZhbCgpKVxyXG4gICAgICB9XHJcbiAgICB9IGVsc2Uge1xyXG4gICAgICAkKCcjYnRuTmV3TmFtZScpLnByb3AoJ2Rpc2FibGVkJywgdHJ1ZSlcclxuICAgIH1cclxuICB9KVxyXG4gICQoJyN0bU5hbWVNb2RhbCcpLm9uKCdzaG93bi5icy5tb2RhbCcsIGZ1bmN0aW9uICgpIHtcclxuICAgICQoJyN0bU5hbWUnKS50cmlnZ2VyKCdmb2N1cycpXHJcbiAgfSlcclxuICAkKCcjYWN0aW9uMDEnKS5jbGljaygoZXYpID0+IHtcclxuICAgIGFsZXJ0KCdhY3Rpb24wMScpXHJcbiAgICB9KVxyXG4gICQoJyNidG5SZWcnKS5jbGljaygoZXYpID0+IHtcclxuICAgICQoJyN0bVJlZ2lzdGVyTW9kYWwnKS5tb2RhbCgpXHJcbiAgICByZXR1cm4gZmFsc2VcclxuICB9KVxyXG4gICQoJyNidG5SZWdpc3RlclVzZXInKS5jbGljayhldiA9PiB7XHJcbiAgICBpZiAoJCgnI3JlZ0xvZ2luJylbMF0ucmVwb3J0VmFsaWRpdHkoKVxyXG4gICAgICAgICYmICQoJyNyZWdFbWFpbCcpWzBdLnJlcG9ydFZhbGlkaXR5KClcclxuICAgICAgICAmJiAkKCcjcmVnUGFzc3dvcmQxJylbMF0ucmVwb3J0VmFsaWRpdHkoKVxyXG4gICAgICAgICYmICQoJyNyZWdQYXNzd29yZDInKVswXS5yZXBvcnRWYWxpZGl0eSgpKSB7XHJcbiAgICAgICQoJyN0bVJlZ2lzdGVyTW9kYWwnKS5tb2RhbCgnaGlkZScpXHJcbiAgICB9XHJcbiAgfSlcclxufSkoKVxyXG5cclxuZnVuY3Rpb24gTG9hZFRpbWVMaW5lICgpIHtcclxuICBsZXQgdGwgPSBUaW1lTGluZS5sb2FkKGN0eClcclxuICBOZXdUaW1lTGluZSh0bC5uYW1lLCB0bClcclxufVxyXG5cclxuZnVuY3Rpb24gTmV3VGltZUxpbmUgKG5hbWUsIHRsKSB7XHJcbiAgbGV0IGFZXHJcbiAgaWYgKCgoKHRpbWVMaW5lcy5sZW5ndGggKyAyKSAqIE1JTl9HQVApICsgKHRpbWVMaW5lcy5sZW5ndGggKyAxKSAqIFRpbWVMaW5lLkxJTkVfVEhJQ0tORVNTKSA+IGN0eC5jYW52YXMuY2xpZW50SGVpZ2h0KSB7XHJcbiAgICBhbGVydCgn0JTQvtGB0YLQuNCz0L3Rg9GC0L4g0LzQsNC60YHQuNC80LDQu9GM0L3QvtC1INC60L7Qu9C40YfQtdGB0YLQstC+INC70LjQvdC40Lkg0LLRgNC10LzQtdC90LgnKVxyXG4gICAgcmV0dXJuXHJcbiAgfSBlbHNlIHtcclxuICAgIGFZID0gc3BsaXRXb3Jrc3BhY2UodGltZUxpbmVzLmxlbmd0aCArIDEpXHJcbiAgfVxyXG4gIGxldCBkdCA9IFRpbWVMaW5lLmdldEN1clBlcmlvZChQRVJJT0RfVFlQRSlcclxuICAgIGxldCBuQ29sb3IgPSBtYWtlQ29sb3IoKVxyXG4gIGlmICh0bCA9PT0gdW5kZWZpbmVkKSB7XHJcbiAgICB0bCA9IG5ldyBUaW1lTGluZShjdHgsIGR0LCAwLCAwLCBQRVJJT0RfVFlQRSwgbmFtZSlcclxuICB9XHJcbiAgdGltZUxpbmVzLnB1c2godGwpXHJcbiAgZm9yIChsZXQgaSA9IDA7IGkgPCB0aW1lTGluZXMubGVuZ3RoOyBpKyspIHtcclxuICAgIHRpbWVMaW5lc1tpXS55ID0gYVlbaV1cclxuICAgIHRpbWVMaW5lc1tpXS5jb2xvciA9IG5Db2xvci5uZXh0KCkudmFsdWVcclxuICB9XHJcbiAgZHJhd0FsbCgpXHJcbn1cclxuXHJcbmZ1bmN0aW9uIHNwbGl0V29ya3NwYWNlIChuKSB7XHJcbiAgbGV0IHJ0ID0gW11cclxuICBsZXQgbSA9IChjdHguY2FudmFzLmNsaWVudEhlaWdodCAtIG4gKiBUaW1lTGluZS5MSU5FX1RISUNLTkVTUykgLyAobiArIDEpICsgMC41XHJcbiAgZm9yIChsZXQgaSA9IDAsIHkgPSBtOyBpIDwgbjsgaSsrLCB5ICs9IChtICsgVGltZUxpbmUuTElORV9USElDS05FU1MpKSB7XHJcbiAgICBydC5wdXNoKHkpXHJcbiAgfVxyXG4gIHJldHVybiBydFxyXG59XHJcblxyXG5mdW5jdGlvbiBnZXRJbmRleExpbmUgKHkpIHtcclxuICBmb3IgKGxldCBpID0gMDsgaSA8IHRpbWVMaW5lcy5sZW5ndGg7IGkrKykge1xyXG4gICAgaWYgKHkgPj0gdGltZUxpbmVzW2ldLnkgJiYgeSA8IHRpbWVMaW5lc1tpXS55ICsgVGltZUxpbmUuTElORV9USElDS05FU1MpIHtcclxuICAgICAgcmV0dXJuIGlcclxuICAgIH1cclxuICB9XHJcbiAgcmV0dXJuIC0xXHJcbn1cclxuXHJcbmZ1bmN0aW9uIGRyYXdBbGwgKCkge1xyXG4gIGN0eC5jbGVhclJlY3QoMCwgMCwgY3R4LmNhbnZhcy5jbGllbnRXaWR0aCwgY3R4LmNhbnZhcy5jbGllbnRIZWlnaHQpXHJcbiAgZm9yIChsZXQgaSA9IDA7IGkgPCB0aW1lTGluZXMubGVuZ3RoOyBpKyspIHtcclxuICAgIHRpbWVMaW5lc1tpXS5QZXJpb2QgPSBQRVJJT0RfVFlQRVxyXG4gICAgdGltZUxpbmVzW2ldLmRyYXcoY3R4KVxyXG4gIH1cclxufVxyXG5cclxuZnVuY3Rpb24gZ2V0TW91c2VQb3MgKGNhbnZhcywgZXZ0KSB7XHJcbiAgbGV0IHJlY3QgPSBjYW52YXMuZ2V0Qm91bmRpbmdDbGllbnRSZWN0KClcclxuICByZXR1cm4ge1xyXG4gICAgeDogZXZ0LmNsaWVudFggLSByZWN0LmxlZnQsXHJcbiAgICB5OiBldnQuY2xpZW50WSAtIHJlY3QudG9wXHJcbiAgfVxyXG59XHJcblxyXG5mdW5jdGlvbiBOZXdUbURpYWxvZyAoKSB7XHJcbiAgJCgnI3RtTmFtZScpLnZhbCgnJylcclxuICAkKCcjYnRuTmV3TmFtZScpLnByb3AoJ2Rpc2FibGVkJywgdHJ1ZSlcclxuICAkKCcjdG1OYW1lTW9kYWwnKS5tb2RhbCgpXHJcbn1cclxuXHJcbmZ1bmN0aW9uIFN3aXRjaFBlcmlvZCAobWVudUN0eCwgaWRQZXJpb2QpIHtcclxuICBtZW51Q3R4Lm1lbnUuZmluZChlbCA9PiBlbC5pZCA9PT0gJ3BlcmlvZCcpLnN1Yi5mb3JFYWNoKChlbCwgbmQsIGFycikgPT4ge1xyXG4gICAgaWYgKGVsLmlkID09PSBpZFBlcmlvZCkge1xyXG4gICAgICBlbC5pY29uID0gJzxpIGNsYXNzPVwiZmFzIGZhLWFuZ2xlLWRvd25cIj48L2k+J1xyXG4gICAgfSBlbHNlIHtcclxuICAgICAgZWwuaWNvbiA9ICcnXHJcbiAgICB9XHJcbiAgfSlcclxuICBQRVJJT0RfVFlQRSA9IGlkUGVyaW9kXHJcbiAgZHJhd0FsbCgpXHJcbiAgbWVudUN0eC5yZWxvYWQoKVxyXG59XHJcbiJdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./src/index.js\n");
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var timeline_1 = __webpack_require__(/*! ./timeline */ "./src/timeline.ts");
+var colorutils_1 = __webpack_require__(/*! ./colorutils */ "./src/colorutils.ts");
+var contextmenu_1 = __webpack_require__(/*! ./contextmenu */ "./src/contextmenu.js");
+var MIN_GAP = 100;
+var PERIOD_TYPE = timeline_1.TimeLine.EnumPeriod.day;
+var HTOP = 56;
+var timeLines = [];
+var ctx;
+(function main() {
+    var isDragDrop = false;
+    var indLine;
+    var menuitems = [
+        {
+            'id': 'new',
+            'text': 'Новая',
+            'icon': '<i class="far fa-file"></i></i>',
+            'events': {
+                'click': NewTmDialog
+            }
+        },
+        {
+            'id': 'load',
+            'text': 'Загрузить',
+            'icon': '<i class="far fa-folder-open"></i>',
+            'events': {
+                'click': function (e) {
+                    LoadTimeLine();
+                }
+            }
+        },
+        {
+            'id': 'save',
+            'text': 'Сохранить',
+            'icon': '<i class="far fa-save"></i>',
+            'enabled': false
+        },
+        {
+            'id': 'line',
+            'type': contextmenu_1.DIVIDER
+        },
+        {
+            'id': 'period',
+            'text': 'Периодичность',
+            'sub': [
+                {
+                    'id': timeline_1.TimeLine.EnumPeriod.day,
+                    'text': 'День',
+                    'icon': '<i class="fas fa-angle-down"></i>',
+                    'events': {
+                        'click': function (e) {
+                            SwitchPeriod(menuCtx, timeline_1.TimeLine.EnumPeriod.day);
+                        }
+                    }
+                },
+                {
+                    'id': timeline_1.TimeLine.EnumPeriod.month,
+                    'text': 'Месяц',
+                    'events': {
+                        'click': function (e) {
+                            SwitchPeriod(menuCtx, timeline_1.TimeLine.EnumPeriod.month);
+                        }
+                    }
+                },
+                {
+                    'id': timeline_1.TimeLine.EnumPeriod.year,
+                    'text': 'Год',
+                    'events': {
+                        'click': function (e) {
+                            SwitchPeriod(menuCtx, timeline_1.TimeLine.EnumPeriod.year);
+                        }
+                    }
+                },
+                {
+                    'id': timeline_1.TimeLine.EnumPeriod.decade,
+                    'text': 'Десятилетие',
+                    'events': {
+                        'click': function (e) {
+                            SwitchPeriod(menuCtx, timeline_1.TimeLine.EnumPeriod.decade);
+                        }
+                    }
+                },
+                {
+                    'id': timeline_1.TimeLine.EnumPeriod.century,
+                    'text': 'Век',
+                    'events': {
+                        'click': function (e) {
+                            SwitchPeriod(menuCtx, timeline_1.TimeLine.EnumPeriod.century);
+                        }
+                    }
+                }
+            ]
+        }
+    ];
+    var menuCtx = new contextmenu_1.ContextMenu(menuitems);
+    var canvas = document.getElementById('canvas');
+    ctx = canvas.getContext('2d');
+    canvas.onmousedown = function (ev) {
+        if (ev.button === 0) {
+            var pos = getMousePos(canvas, ev);
+            indLine = getIndexLine(pos.y);
+            if (indLine !== -1) {
+                isDragDrop = true;
+                canvas.style.cursor = 'Pointer';
+            }
+        }
+    };
+    canvas.onmouseup = function (ev) {
+        isDragDrop = false;
+        canvas.style.cursor = 'Default';
+    };
+    canvas.onmousemove = function (ev) {
+        var data;
+        if (!isDragDrop) {
+            for (var i = 0; i < timeLines.length; i++) {
+                var pos = getMousePos(canvas, ev);
+                data = timeLines[i].getCellValue(pos.x, pos.y);
+                if (data !== timeLines[i].curdata) {
+                    if (timeLines[i].curdata !== -1) {
+                        timeLines[i].offBox();
+                    }
+                    if (data !== -1) {
+                        timeLines[i].onBox(data);
+                    }
+                    timeLines[i].curdata = data;
+                }
+            }
+        }
+        else {
+            timeLines[indLine].shift(ev.movementX);
+            timeLines[indLine].draw();
+        }
+    };
+    (window.onresize = function () {
+        canvas.style.top = HTOP + 'px';
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight - HTOP;
+        drawAll();
+    })();
+    $('#canvas').on('contextmenu', function (e) {
+        var pos = getMousePos(canvas, e);
+        indLine = getIndexLine(pos.y);
+        var pMenu = menuCtx.menu.find(function (el) { return el.id === 'save'; });
+        if (indLine === -1) {
+            pMenu.enabled = false;
+        }
+        else {
+            pMenu.enabled = true;
+            pMenu.events = {
+                'click': function (e) {
+                    timeLines[indLine].save();
+                }
+            };
+        }
+        menuCtx.reload();
+        menuCtx.display(e);
+        e.preventDefault();
+    });
+    $('#newTimeline').click(function (ev) {
+        NewTmDialog();
+    });
+    $('#load').click(function (ev) {
+        LoadTimeLine();
+    });
+    $('#save').click(function (ev) {
+        alert('save');
+    });
+    $('#options').click(function (ev) {
+        $('#typePeriod').val(timeline_1.TimeLine.EnumPeriod.year);
+        $('#tmOptionsModal').modal();
+    });
+    $('#btnNewName').click(function (ev) {
+        $('#tmNameModal').modal('hide');
+        NewTimeLine($('#tmName').val());
+    });
+    $('.closenamemodal').click(function (ev) {
+        $('#tmNameModal').modal('hide');
+    });
+    $('.closeoptionmodal').click(function (ev) {
+        $('#tmOptionsModal').modal('hide');
+    });
+    $('.closeregistermodal').click(function (ev) {
+        $('#tmRegisterModal').modal('hide');
+    });
+    $('#tmName').keyup(function (ev) {
+        if ($('#tmName').val().trim() !== '') {
+            $('#btnNewName').prop('disabled', false);
+            if (ev.keyCode === 13) {
+                $('#tmNameModal').modal('hide');
+                NewTimeLine($('#tmName').val());
+            }
+        }
+        else {
+            $('#btnNewName').prop('disabled', true);
+        }
+    });
+    $('#tmNameModal').on('shown.bs.modal', function () {
+        $('#tmName').trigger('focus');
+    });
+    $('#action01').click(function (ev) {
+        alert('action01');
+    });
+    $('#btnReg').click(function (ev) {
+        $('#tmRegisterModal').modal();
+        return false;
+    });
+    $('#btnRegisterUser').click(function (ev) {
+        if ($('#regLogin')[0].reportValidity()
+            && $('#regEmail')[0].reportValidity()
+            && $('#regPassword1')[0].reportValidity()
+            && $('#regPassword2')[0].reportValidity()) {
+            $('#tmRegisterModal').modal('hide');
+        }
+    });
+})();
+function LoadTimeLine() {
+    var tl = timeline_1.TimeLine.load(ctx);
+    NewTimeLine(tl.name, tl);
+}
+function NewTimeLine(name, tl) {
+    if (tl === void 0) { tl = null; }
+    var aY;
+    if ((((timeLines.length + 2) * MIN_GAP) + (timeLines.length + 1) * timeline_1.TimeLine.LINE_THICKNESS) > ctx.canvas.clientHeight) {
+        alert('Достигнуто максимальное количество линий времени');
+        return;
+    }
+    else {
+        aY = splitWorkspace(timeLines.length + 1);
+    }
+    var dt = timeline_1.TimeLine.getCurPeriod(PERIOD_TYPE);
+    var nColor = colorutils_1.makeColor();
+    if (tl === null) {
+        tl = new timeline_1.TimeLine(ctx, dt, 0, 0, PERIOD_TYPE, name);
+    }
+    timeLines.push(tl);
+    for (var i = 0; i < timeLines.length; i++) {
+        timeLines[i].y = aY[i];
+        timeLines[i].color = nColor.next().value;
+    }
+    drawAll();
+}
+function splitWorkspace(n) {
+    var rt = [];
+    var m = (ctx.canvas.clientHeight - n * timeline_1.TimeLine.LINE_THICKNESS) / (n + 1) + 0.5;
+    for (var i = 0, y = m; i < n; i++, y += (m + timeline_1.TimeLine.LINE_THICKNESS)) {
+        rt.push(y);
+    }
+    return rt;
+}
+function getIndexLine(y) {
+    for (var i = 0; i < timeLines.length; i++) {
+        if (y >= timeLines[i].y && y < timeLines[i].y + timeline_1.TimeLine.LINE_THICKNESS) {
+            return i;
+        }
+    }
+    return -1;
+}
+function drawAll() {
+    ctx.clearRect(0, 0, ctx.canvas.clientWidth, ctx.canvas.clientHeight);
+    for (var i = 0; i < timeLines.length; i++) {
+        timeLines[i].Period = PERIOD_TYPE;
+        timeLines[i].draw();
+    }
+}
+function getMousePos(canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+        x: evt.clientX - rect.left,
+        y: evt.clientY - rect.top
+    };
+}
+function NewTmDialog() {
+    $('#tmName').val('');
+    $('#btnNewName').prop('disabled', true);
+    $('#tmNameModal').modal();
+}
+function SwitchPeriod(menuCtx, idPeriod) {
+    menuCtx.menu.find(function (el) { return el.id === 'period'; }).sub.forEach(function (el, nd, arr) {
+        if (el.id === idPeriod) {
+            el.icon = '<i class="fas fa-angle-down"></i>';
+        }
+        else {
+            el.icon = '';
+        }
+    });
+    PERIOD_TYPE = idPeriod;
+    drawAll();
+    menuCtx.reload();
+}
+
 
 /***/ }),
 
-/***/ "./src/saagraph.js":
+/***/ "./src/saagraph.ts":
 /*!*************************!*\
-  !*** ./src/saagraph.js ***!
+  !*** ./src/saagraph.ts ***!
   \*************************/
-/*! exports provided: saaGraph */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"saaGraph\", function() { return saaGraph; });\nlet saaGraph = (function () {\r\n  return {\r\n    roundedRect: function (ctx, x, y, width, height, radius) {\r\n      ctx.beginPath()\r\n      ctx.moveTo(x, y + radius)\r\n      ctx.lineTo(x, y + height)\r\n      ctx.lineTo(x + width, y + height)\r\n      ctx.lineTo(x + width, y + radius)\r\n      ctx.quadraticCurveTo(x + width, y, x + width - radius, y)\r\n      ctx.lineTo(x + radius, y)\r\n      ctx.quadraticCurveTo(x, y, x, y + radius)\r\n      ctx.fill()\r\n    }\r\n  }\r\n})()\r\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9zcmMvc2FhZ3JhcGguanM/NTYwZSJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtBQUFBO0FBQU87QUFDUDtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBLENBQUMiLCJmaWxlIjoiLi9zcmMvc2FhZ3JhcGguanMuanMiLCJzb3VyY2VzQ29udGVudCI6WyJleHBvcnQgbGV0IHNhYUdyYXBoID0gKGZ1bmN0aW9uICgpIHtcclxuICByZXR1cm4ge1xyXG4gICAgcm91bmRlZFJlY3Q6IGZ1bmN0aW9uIChjdHgsIHgsIHksIHdpZHRoLCBoZWlnaHQsIHJhZGl1cykge1xyXG4gICAgICBjdHguYmVnaW5QYXRoKClcclxuICAgICAgY3R4Lm1vdmVUbyh4LCB5ICsgcmFkaXVzKVxyXG4gICAgICBjdHgubGluZVRvKHgsIHkgKyBoZWlnaHQpXHJcbiAgICAgIGN0eC5saW5lVG8oeCArIHdpZHRoLCB5ICsgaGVpZ2h0KVxyXG4gICAgICBjdHgubGluZVRvKHggKyB3aWR0aCwgeSArIHJhZGl1cylcclxuICAgICAgY3R4LnF1YWRyYXRpY0N1cnZlVG8oeCArIHdpZHRoLCB5LCB4ICsgd2lkdGggLSByYWRpdXMsIHkpXHJcbiAgICAgIGN0eC5saW5lVG8oeCArIHJhZGl1cywgeSlcclxuICAgICAgY3R4LnF1YWRyYXRpY0N1cnZlVG8oeCwgeSwgeCwgeSArIHJhZGl1cylcclxuICAgICAgY3R4LmZpbGwoKVxyXG4gICAgfVxyXG4gIH1cclxufSkoKVxyXG4iXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./src/saagraph.js\n");
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.saaGraph = (function () {
+    return {
+        roundedRect: function (ctx, x, y, width, height, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x, y + radius);
+            ctx.lineTo(x, y + height);
+            ctx.lineTo(x + width, y + height);
+            ctx.lineTo(x + width, y + radius);
+            ctx.quadraticCurveTo(x + width, y, x + width - radius, y);
+            ctx.lineTo(x + radius, y);
+            ctx.quadraticCurveTo(x, y, x, y + radius);
+            ctx.fill();
+        }
+    };
+})();
+
 
 /***/ }),
 
-/***/ "./src/stringutils.js":
+/***/ "./src/stringutils.ts":
 /*!****************************!*\
-  !*** ./src/stringutils.js ***!
+  !*** ./src/stringutils.ts ***!
   \****************************/
-/*! exports provided: stringUtils */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"stringUtils\", function() { return stringUtils; });\nlet stringUtils = (function () {\r\n  return {\r\n    pad: function (num, size) {\r\n      var s = num + ''\r\n      while (s.length < size) s = '0' + s\r\n      return s\r\n    },\r\n    isValidUserName: function (s) {\r\n      s = s.trim()\r\n      if (s === '') return false\r\n      let a = s.match(/\\w+/)\r\n      if (a[0] !== s) return false\r\n      return true\r\n    }\r\n  }\r\n})()\r\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9zcmMvc3RyaW5ndXRpbHMuanM/YTA3MSJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtBQUFBO0FBQU87QUFDUDtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0EsS0FBSztBQUNMO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQSxDQUFDIiwiZmlsZSI6Ii4vc3JjL3N0cmluZ3V0aWxzLmpzLmpzIiwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0IGxldCBzdHJpbmdVdGlscyA9IChmdW5jdGlvbiAoKSB7XHJcbiAgcmV0dXJuIHtcclxuICAgIHBhZDogZnVuY3Rpb24gKG51bSwgc2l6ZSkge1xyXG4gICAgICB2YXIgcyA9IG51bSArICcnXHJcbiAgICAgIHdoaWxlIChzLmxlbmd0aCA8IHNpemUpIHMgPSAnMCcgKyBzXHJcbiAgICAgIHJldHVybiBzXHJcbiAgICB9LFxyXG4gICAgaXNWYWxpZFVzZXJOYW1lOiBmdW5jdGlvbiAocykge1xyXG4gICAgICBzID0gcy50cmltKClcclxuICAgICAgaWYgKHMgPT09ICcnKSByZXR1cm4gZmFsc2VcclxuICAgICAgbGV0IGEgPSBzLm1hdGNoKC9cXHcrLylcclxuICAgICAgaWYgKGFbMF0gIT09IHMpIHJldHVybiBmYWxzZVxyXG4gICAgICByZXR1cm4gdHJ1ZVxyXG4gICAgfVxyXG4gIH1cclxufSkoKVxyXG4iXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./src/stringutils.js\n");
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.stringUtils = (function () {
+    return {
+        pad: function (num, size) {
+            var s = num + '';
+            while (s.length < size)
+                s = '0' + s;
+            return s;
+        },
+        isValidUserName: function (s) {
+            s = s.trim();
+            if (s === '')
+                return false;
+            var a = s.match(/\w+/);
+            if (a[0] !== s)
+                return false;
+            return true;
+        }
+    };
+})();
+
 
 /***/ }),
 
-/***/ "./src/timeline.js":
+/***/ "./src/timeline.ts":
 /*!*************************!*\
-  !*** ./src/timeline.js ***!
+  !*** ./src/timeline.ts ***!
   \*************************/
-/*! exports provided: TimeLine */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"TimeLine\", function() { return TimeLine; });\n/* harmony import */ var _dateutils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dateutils */ \"./src/dateutils.js\");\n/* harmony import */ var _saagraph__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./saagraph */ \"./src/saagraph.js\");\n\r\n\r\n\r\nclass TimeLine {\r\n  constructor (ctx, curPeriod, y, color, period, name, data) {\r\n    this.ctx = ctx\r\n    this.curPeriod = curPeriod || null\r\n    this.x = ctx.canvas.clientWidth - 1 + TimeLine.INTERVAL_WIDTH + 0.5\r\n    this.y = y || 0\r\n    this.color = color || null\r\n    this.period = period || null\r\n    this.name = name || 'нет имени'\r\n    this.data = data || {}\r\n  }\r\n\r\n  static get LINE_THICKNESS () { return 25 }\r\n  static get HALF_LINE_THICKNESS () { return TimeLine.LINE_THICKNESS / 2 }\r\n  static get INTERVAL_WIDTH () { return 100 }\r\n  static get HALF_INTERVAL_WIDTH () { return TimeLine.INTERVAL_WIDTH / 2 }\r\n  static get EnumPeriod () { return Object.freeze({ 'day': 1, 'month': 2, 'year': 3, 'decade': 4, 'century': 5 }) }\r\n\r\n  static load (ctx) {\r\n    let o = new TimeLine(ctx)\r\n    return o\r\n  }\r\n\r\n  save () {\r\n    alert(this.name)\r\n  }\r\n\r\n  set Period (period) {\r\n    this.x = this.ctx.canvas.clientWidth - 1 + TimeLine.INTERVAL_WIDTH + 0.5\r\n    this.curPeriod = TimeLine.getCurPeriod(period)\r\n    this.period = period\r\n  }\r\n\r\n  draw () {\r\n    this.data = []\r\n    this.curdata = -1\r\n    let x0 = this.x\r\n    let dt = this.curPeriod\r\n    while (x0 >= 0) {\r\n      this.drawCell(x0, dt)\r\n      x0 -= TimeLine.INTERVAL_WIDTH\r\n      dt = this.getPeriodAgo(dt, -1)\r\n    }\r\n    x0 = this.x\r\n    dt = this.curPeriod\r\n    while (x0 <= this.ctx.canvas.clientWidth - 1 + TimeLine.INTERVAL_WIDTH) {\r\n      this.drawCell(x0, dt)\r\n      x0 += TimeLine.INTERVAL_WIDTH\r\n      dt = this.getPeriodAgo(dt, 1)\r\n    }\r\n    this.drawName()\r\n  }\r\n\r\n  drawName () {\r\n    const HBOOKMARK = 30\r\n    const INDENT = 10\r\n    const RADIUS = 10\r\n    this.ctx.save()\r\n    this.ctx.fillStyle = this.color\r\n    this.ctx.textBaseline = 'middle'\r\n    this.ctx.textAlign = 'center'\r\n    this.ctx.font = '16px serif'\r\n    let wBookmark = this.ctx.measureText(this.name).width + INDENT / 2\r\n    _saagraph__WEBPACK_IMPORTED_MODULE_1__[\"saaGraph\"].roundedRect(this.ctx, INDENT, this.y - HBOOKMARK, wBookmark, HBOOKMARK, RADIUS)\r\n    this.ctx.fillStyle = 'white'\r\n    this.ctx.fillText(this.name, INDENT + wBookmark / 2, this.y - HBOOKMARK / 2)\r\n    this.ctx.restore()\r\n  }\r\n\r\n  drawCell (x0, dt, isSelected) {\r\n    let path = new Path2D()\r\n    path.rect(x0 - TimeLine.INTERVAL_WIDTH + 1, this.y, TimeLine.INTERVAL_WIDTH, TimeLine.LINE_THICKNESS)\r\n    this.ctx.fillStyle = this.color\r\n    this.ctx.strokeStyle = 'white'\r\n    this.ctx.fill(path)\r\n    this.ctx.stroke(path)\r\n\r\n    this.ctx.textBaseline = 'middle'\r\n    this.ctx.textAlign = 'center'\r\n    this.ctx.font = '14px serif'\r\n    this.ctx.fillStyle = 'white'\r\n    this.ctx.fillText(this.formatPeriod(dt), x0 - TimeLine.HALF_INTERVAL_WIDTH, this.y + TimeLine.HALF_LINE_THICKNESS)\r\n\r\n    this.data.push({\r\n      'value': dt,\r\n      'x1': x0 - TimeLine.INTERVAL_WIDTH + 1,\r\n      'y1': this.y,\r\n      'x2': x0,\r\n      'y2': this.y + TimeLine.LINE_THICKNESS - 1,\r\n      'path': path\r\n    })\r\n  }\r\n\r\n  /**\r\n   * Получить значение периода для данной координаты курсора\r\n   *\r\n   * @param {number} x\r\n   * @param {number} y\r\n   * @returns number\r\n   * @memberof TimeLine\r\n   */\r\n  getCellValue (x, y) {\r\n    for (let i = 0; i < this.data.length; i++) {\r\n      if (x > this.data[i].x1 && x < this.data[i].x2 && y > this.data[i].y1 && y < this.data[i].y2) {\r\n        return i\r\n      }\r\n    }\r\n    return -1\r\n  }\r\n\r\n  onBox (_data) {\r\n    let data = this.data[_data]\r\n    this.ctx.strokeStyle = 'black'\r\n    this.ctx.stroke(data.path)\r\n  }\r\n\r\n  offBox () {\r\n    let data = this.data[this.curdata]\r\n    this.ctx.strokeStyle = 'white'\r\n    this.ctx.stroke(data.path)\r\n  }\r\n\r\n  shift (movementX) {\r\n    this.x += movementX\r\n  }\r\n\r\n  static getCurPeriod (periodType) {\r\n    let rt\r\n    switch (periodType) {\r\n      case TimeLine.EnumPeriod.month:\r\n        rt = _dateutils__WEBPACK_IMPORTED_MODULE_0__[\"dateUtils\"].getMonthFromDate(_dateutils__WEBPACK_IMPORTED_MODULE_0__[\"dateUtils\"].getCurDate())\r\n        break\r\n      case TimeLine.EnumPeriod.year:\r\n        rt = _dateutils__WEBPACK_IMPORTED_MODULE_0__[\"dateUtils\"].getYearFromDate(_dateutils__WEBPACK_IMPORTED_MODULE_0__[\"dateUtils\"].getCurDate())\r\n        break\r\n      case TimeLine.EnumPeriod.decade:\r\n        rt = _dateutils__WEBPACK_IMPORTED_MODULE_0__[\"dateUtils\"].getDecadeFromDate(_dateutils__WEBPACK_IMPORTED_MODULE_0__[\"dateUtils\"].getCurDate())\r\n        break\r\n      case TimeLine.EnumPeriod.century:\r\n        rt = _dateutils__WEBPACK_IMPORTED_MODULE_0__[\"dateUtils\"].getCenturyFromDate(_dateutils__WEBPACK_IMPORTED_MODULE_0__[\"dateUtils\"].getCurDate())\r\n        break\r\n      case TimeLine.EnumPeriod.day:\r\n      default:\r\n        rt = _dateutils__WEBPACK_IMPORTED_MODULE_0__[\"dateUtils\"].getCurDate()\r\n        break\r\n    }\r\n    return rt\r\n  }\r\n\r\n  formatPeriod (period) {\r\n    let rt\r\n    switch (this.period) {\r\n      case TimeLine.EnumPeriod.month:\r\n        rt = _dateutils__WEBPACK_IMPORTED_MODULE_0__[\"dateUtils\"].formatMonth(period)\r\n        break\r\n      case TimeLine.EnumPeriod.year:\r\n        rt = _dateutils__WEBPACK_IMPORTED_MODULE_0__[\"dateUtils\"].formatYear(period)\r\n        break\r\n      case TimeLine.EnumPeriod.decade:\r\n        rt = _dateutils__WEBPACK_IMPORTED_MODULE_0__[\"dateUtils\"].formatDecade(period)\r\n        break\r\n      case TimeLine.EnumPeriod.century:\r\n        rt = _dateutils__WEBPACK_IMPORTED_MODULE_0__[\"dateUtils\"].formatCentury(period)\r\n        break\r\n      case TimeLine.EnumPeriod.day:\r\n      default:\r\n        rt = _dateutils__WEBPACK_IMPORTED_MODULE_0__[\"dateUtils\"].formatDate(period)\r\n        break\r\n    }\r\n    return rt\r\n  }\r\n\r\n  getPeriodAgo (period, offset) {\r\n    let dt0\r\n    switch (this.period) {\r\n      case TimeLine.EnumPeriod.month:\r\n      case TimeLine.EnumPeriod.year:\r\n      case TimeLine.EnumPeriod.decade:\r\n        dt0 = period + offset\r\n        break\r\n      case TimeLine.EnumPeriod.century:\r\n        dt0 = period + offset\r\n        if (dt0 === 0) {\r\n          dt0 = dt0 + offset\r\n        }\r\n        break\r\n      case TimeLine.EnumPeriod.day:\r\n      default:\r\n        dt0 = _dateutils__WEBPACK_IMPORTED_MODULE_0__[\"dateUtils\"].getDateAgo(period, offset)\r\n        break\r\n    }\r\n    return dt0\r\n  }\r\n}\r\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9zcmMvdGltZWxpbmUuanM/ODUwZSJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtBQUFBO0FBQUE7QUFBQTtBQUF1QztBQUNGOztBQUU5QjtBQUNQO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBOztBQUVBLGdDQUFnQztBQUNoQyxxQ0FBcUM7QUFDckMsZ0NBQWdDO0FBQ2hDLHFDQUFxQztBQUNyQyw0QkFBNEIsdUJBQXVCLDZEQUE2RDs7QUFFaEg7QUFDQTtBQUNBO0FBQ0E7O0FBRUE7QUFDQTtBQUNBOztBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7O0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7O0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQSxJQUFJLGtEQUFRO0FBQ1o7QUFDQTtBQUNBO0FBQ0E7O0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7O0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTs7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBLEtBQUs7QUFDTDs7QUFFQTtBQUNBO0FBQ0E7QUFDQSxhQUFhLE9BQU87QUFDcEIsYUFBYSxPQUFPO0FBQ3BCO0FBQ0E7QUFDQTtBQUNBO0FBQ0EsbUJBQW1CLHNCQUFzQjtBQUN6QztBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7O0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTs7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUNBOztBQUVBO0FBQ0E7QUFDQTs7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUNBLGFBQWEsb0RBQVMsa0JBQWtCLG9EQUFTO0FBQ2pEO0FBQ0E7QUFDQSxhQUFhLG9EQUFTLGlCQUFpQixvREFBUztBQUNoRDtBQUNBO0FBQ0EsYUFBYSxvREFBUyxtQkFBbUIsb0RBQVM7QUFDbEQ7QUFDQTtBQUNBLGFBQWEsb0RBQVMsb0JBQW9CLG9EQUFTO0FBQ25EO0FBQ0E7QUFDQTtBQUNBLGFBQWEsb0RBQVM7QUFDdEI7QUFDQTtBQUNBO0FBQ0E7O0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQSxhQUFhLG9EQUFTO0FBQ3RCO0FBQ0E7QUFDQSxhQUFhLG9EQUFTO0FBQ3RCO0FBQ0E7QUFDQSxhQUFhLG9EQUFTO0FBQ3RCO0FBQ0E7QUFDQSxhQUFhLG9EQUFTO0FBQ3RCO0FBQ0E7QUFDQTtBQUNBLGFBQWEsb0RBQVM7QUFDdEI7QUFDQTtBQUNBO0FBQ0E7O0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQSxjQUFjLG9EQUFTO0FBQ3ZCO0FBQ0E7QUFDQTtBQUNBO0FBQ0EiLCJmaWxlIjoiLi9zcmMvdGltZWxpbmUuanMuanMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBkYXRlVXRpbHMgfSBmcm9tICcuL2RhdGV1dGlscydcclxuaW1wb3J0IHsgc2FhR3JhcGggfSBmcm9tICcuL3NhYWdyYXBoJ1xyXG5cclxuZXhwb3J0IGNsYXNzIFRpbWVMaW5lIHtcclxuICBjb25zdHJ1Y3RvciAoY3R4LCBjdXJQZXJpb2QsIHksIGNvbG9yLCBwZXJpb2QsIG5hbWUsIGRhdGEpIHtcclxuICAgIHRoaXMuY3R4ID0gY3R4XHJcbiAgICB0aGlzLmN1clBlcmlvZCA9IGN1clBlcmlvZCB8fCBudWxsXHJcbiAgICB0aGlzLnggPSBjdHguY2FudmFzLmNsaWVudFdpZHRoIC0gMSArIFRpbWVMaW5lLklOVEVSVkFMX1dJRFRIICsgMC41XHJcbiAgICB0aGlzLnkgPSB5IHx8IDBcclxuICAgIHRoaXMuY29sb3IgPSBjb2xvciB8fCBudWxsXHJcbiAgICB0aGlzLnBlcmlvZCA9IHBlcmlvZCB8fCBudWxsXHJcbiAgICB0aGlzLm5hbWUgPSBuYW1lIHx8ICfQvdC10YIg0LjQvNC10L3QuCdcclxuICAgIHRoaXMuZGF0YSA9IGRhdGEgfHwge31cclxuICB9XHJcblxyXG4gIHN0YXRpYyBnZXQgTElORV9USElDS05FU1MgKCkgeyByZXR1cm4gMjUgfVxyXG4gIHN0YXRpYyBnZXQgSEFMRl9MSU5FX1RISUNLTkVTUyAoKSB7IHJldHVybiBUaW1lTGluZS5MSU5FX1RISUNLTkVTUyAvIDIgfVxyXG4gIHN0YXRpYyBnZXQgSU5URVJWQUxfV0lEVEggKCkgeyByZXR1cm4gMTAwIH1cclxuICBzdGF0aWMgZ2V0IEhBTEZfSU5URVJWQUxfV0lEVEggKCkgeyByZXR1cm4gVGltZUxpbmUuSU5URVJWQUxfV0lEVEggLyAyIH1cclxuICBzdGF0aWMgZ2V0IEVudW1QZXJpb2QgKCkgeyByZXR1cm4gT2JqZWN0LmZyZWV6ZSh7ICdkYXknOiAxLCAnbW9udGgnOiAyLCAneWVhcic6IDMsICdkZWNhZGUnOiA0LCAnY2VudHVyeSc6IDUgfSkgfVxyXG5cclxuICBzdGF0aWMgbG9hZCAoY3R4KSB7XHJcbiAgICBsZXQgbyA9IG5ldyBUaW1lTGluZShjdHgpXHJcbiAgICByZXR1cm4gb1xyXG4gIH1cclxuXHJcbiAgc2F2ZSAoKSB7XHJcbiAgICBhbGVydCh0aGlzLm5hbWUpXHJcbiAgfVxyXG5cclxuICBzZXQgUGVyaW9kIChwZXJpb2QpIHtcclxuICAgIHRoaXMueCA9IHRoaXMuY3R4LmNhbnZhcy5jbGllbnRXaWR0aCAtIDEgKyBUaW1lTGluZS5JTlRFUlZBTF9XSURUSCArIDAuNVxyXG4gICAgdGhpcy5jdXJQZXJpb2QgPSBUaW1lTGluZS5nZXRDdXJQZXJpb2QocGVyaW9kKVxyXG4gICAgdGhpcy5wZXJpb2QgPSBwZXJpb2RcclxuICB9XHJcblxyXG4gIGRyYXcgKCkge1xyXG4gICAgdGhpcy5kYXRhID0gW11cclxuICAgIHRoaXMuY3VyZGF0YSA9IC0xXHJcbiAgICBsZXQgeDAgPSB0aGlzLnhcclxuICAgIGxldCBkdCA9IHRoaXMuY3VyUGVyaW9kXHJcbiAgICB3aGlsZSAoeDAgPj0gMCkge1xyXG4gICAgICB0aGlzLmRyYXdDZWxsKHgwLCBkdClcclxuICAgICAgeDAgLT0gVGltZUxpbmUuSU5URVJWQUxfV0lEVEhcclxuICAgICAgZHQgPSB0aGlzLmdldFBlcmlvZEFnbyhkdCwgLTEpXHJcbiAgICB9XHJcbiAgICB4MCA9IHRoaXMueFxyXG4gICAgZHQgPSB0aGlzLmN1clBlcmlvZFxyXG4gICAgd2hpbGUgKHgwIDw9IHRoaXMuY3R4LmNhbnZhcy5jbGllbnRXaWR0aCAtIDEgKyBUaW1lTGluZS5JTlRFUlZBTF9XSURUSCkge1xyXG4gICAgICB0aGlzLmRyYXdDZWxsKHgwLCBkdClcclxuICAgICAgeDAgKz0gVGltZUxpbmUuSU5URVJWQUxfV0lEVEhcclxuICAgICAgZHQgPSB0aGlzLmdldFBlcmlvZEFnbyhkdCwgMSlcclxuICAgIH1cclxuICAgIHRoaXMuZHJhd05hbWUoKVxyXG4gIH1cclxuXHJcbiAgZHJhd05hbWUgKCkge1xyXG4gICAgY29uc3QgSEJPT0tNQVJLID0gMzBcclxuICAgIGNvbnN0IElOREVOVCA9IDEwXHJcbiAgICBjb25zdCBSQURJVVMgPSAxMFxyXG4gICAgdGhpcy5jdHguc2F2ZSgpXHJcbiAgICB0aGlzLmN0eC5maWxsU3R5bGUgPSB0aGlzLmNvbG9yXHJcbiAgICB0aGlzLmN0eC50ZXh0QmFzZWxpbmUgPSAnbWlkZGxlJ1xyXG4gICAgdGhpcy5jdHgudGV4dEFsaWduID0gJ2NlbnRlcidcclxuICAgIHRoaXMuY3R4LmZvbnQgPSAnMTZweCBzZXJpZidcclxuICAgIGxldCB3Qm9va21hcmsgPSB0aGlzLmN0eC5tZWFzdXJlVGV4dCh0aGlzLm5hbWUpLndpZHRoICsgSU5ERU5UIC8gMlxyXG4gICAgc2FhR3JhcGgucm91bmRlZFJlY3QodGhpcy5jdHgsIElOREVOVCwgdGhpcy55IC0gSEJPT0tNQVJLLCB3Qm9va21hcmssIEhCT09LTUFSSywgUkFESVVTKVxyXG4gICAgdGhpcy5jdHguZmlsbFN0eWxlID0gJ3doaXRlJ1xyXG4gICAgdGhpcy5jdHguZmlsbFRleHQodGhpcy5uYW1lLCBJTkRFTlQgKyB3Qm9va21hcmsgLyAyLCB0aGlzLnkgLSBIQk9PS01BUksgLyAyKVxyXG4gICAgdGhpcy5jdHgucmVzdG9yZSgpXHJcbiAgfVxyXG5cclxuICBkcmF3Q2VsbCAoeDAsIGR0LCBpc1NlbGVjdGVkKSB7XHJcbiAgICBsZXQgcGF0aCA9IG5ldyBQYXRoMkQoKVxyXG4gICAgcGF0aC5yZWN0KHgwIC0gVGltZUxpbmUuSU5URVJWQUxfV0lEVEggKyAxLCB0aGlzLnksIFRpbWVMaW5lLklOVEVSVkFMX1dJRFRILCBUaW1lTGluZS5MSU5FX1RISUNLTkVTUylcclxuICAgIHRoaXMuY3R4LmZpbGxTdHlsZSA9IHRoaXMuY29sb3JcclxuICAgIHRoaXMuY3R4LnN0cm9rZVN0eWxlID0gJ3doaXRlJ1xyXG4gICAgdGhpcy5jdHguZmlsbChwYXRoKVxyXG4gICAgdGhpcy5jdHguc3Ryb2tlKHBhdGgpXHJcblxyXG4gICAgdGhpcy5jdHgudGV4dEJhc2VsaW5lID0gJ21pZGRsZSdcclxuICAgIHRoaXMuY3R4LnRleHRBbGlnbiA9ICdjZW50ZXInXHJcbiAgICB0aGlzLmN0eC5mb250ID0gJzE0cHggc2VyaWYnXHJcbiAgICB0aGlzLmN0eC5maWxsU3R5bGUgPSAnd2hpdGUnXHJcbiAgICB0aGlzLmN0eC5maWxsVGV4dCh0aGlzLmZvcm1hdFBlcmlvZChkdCksIHgwIC0gVGltZUxpbmUuSEFMRl9JTlRFUlZBTF9XSURUSCwgdGhpcy55ICsgVGltZUxpbmUuSEFMRl9MSU5FX1RISUNLTkVTUylcclxuXHJcbiAgICB0aGlzLmRhdGEucHVzaCh7XHJcbiAgICAgICd2YWx1ZSc6IGR0LFxyXG4gICAgICAneDEnOiB4MCAtIFRpbWVMaW5lLklOVEVSVkFMX1dJRFRIICsgMSxcclxuICAgICAgJ3kxJzogdGhpcy55LFxyXG4gICAgICAneDInOiB4MCxcclxuICAgICAgJ3kyJzogdGhpcy55ICsgVGltZUxpbmUuTElORV9USElDS05FU1MgLSAxLFxyXG4gICAgICAncGF0aCc6IHBhdGhcclxuICAgIH0pXHJcbiAgfVxyXG5cclxuICAvKipcclxuICAgKiDQn9C+0LvRg9GH0LjRgtGMINC30L3QsNGH0LXQvdC40LUg0L/QtdGA0LjQvtC00LAg0LTQu9GPINC00LDQvdC90L7QuSDQutC+0L7RgNC00LjQvdCw0YLRiyDQutGD0YDRgdC+0YDQsFxyXG4gICAqXHJcbiAgICogQHBhcmFtIHtudW1iZXJ9IHhcclxuICAgKiBAcGFyYW0ge251bWJlcn0geVxyXG4gICAqIEByZXR1cm5zIG51bWJlclxyXG4gICAqIEBtZW1iZXJvZiBUaW1lTGluZVxyXG4gICAqL1xyXG4gIGdldENlbGxWYWx1ZSAoeCwgeSkge1xyXG4gICAgZm9yIChsZXQgaSA9IDA7IGkgPCB0aGlzLmRhdGEubGVuZ3RoOyBpKyspIHtcclxuICAgICAgaWYgKHggPiB0aGlzLmRhdGFbaV0ueDEgJiYgeCA8IHRoaXMuZGF0YVtpXS54MiAmJiB5ID4gdGhpcy5kYXRhW2ldLnkxICYmIHkgPCB0aGlzLmRhdGFbaV0ueTIpIHtcclxuICAgICAgICByZXR1cm4gaVxyXG4gICAgICB9XHJcbiAgICB9XHJcbiAgICByZXR1cm4gLTFcclxuICB9XHJcblxyXG4gIG9uQm94IChfZGF0YSkge1xyXG4gICAgbGV0IGRhdGEgPSB0aGlzLmRhdGFbX2RhdGFdXHJcbiAgICB0aGlzLmN0eC5zdHJva2VTdHlsZSA9ICdibGFjaydcclxuICAgIHRoaXMuY3R4LnN0cm9rZShkYXRhLnBhdGgpXHJcbiAgfVxyXG5cclxuICBvZmZCb3ggKCkge1xyXG4gICAgbGV0IGRhdGEgPSB0aGlzLmRhdGFbdGhpcy5jdXJkYXRhXVxyXG4gICAgdGhpcy5jdHguc3Ryb2tlU3R5bGUgPSAnd2hpdGUnXHJcbiAgICB0aGlzLmN0eC5zdHJva2UoZGF0YS5wYXRoKVxyXG4gIH1cclxuXHJcbiAgc2hpZnQgKG1vdmVtZW50WCkge1xyXG4gICAgdGhpcy54ICs9IG1vdmVtZW50WFxyXG4gIH1cclxuXHJcbiAgc3RhdGljIGdldEN1clBlcmlvZCAocGVyaW9kVHlwZSkge1xyXG4gICAgbGV0IHJ0XHJcbiAgICBzd2l0Y2ggKHBlcmlvZFR5cGUpIHtcclxuICAgICAgY2FzZSBUaW1lTGluZS5FbnVtUGVyaW9kLm1vbnRoOlxyXG4gICAgICAgIHJ0ID0gZGF0ZVV0aWxzLmdldE1vbnRoRnJvbURhdGUoZGF0ZVV0aWxzLmdldEN1ckRhdGUoKSlcclxuICAgICAgICBicmVha1xyXG4gICAgICBjYXNlIFRpbWVMaW5lLkVudW1QZXJpb2QueWVhcjpcclxuICAgICAgICBydCA9IGRhdGVVdGlscy5nZXRZZWFyRnJvbURhdGUoZGF0ZVV0aWxzLmdldEN1ckRhdGUoKSlcclxuICAgICAgICBicmVha1xyXG4gICAgICBjYXNlIFRpbWVMaW5lLkVudW1QZXJpb2QuZGVjYWRlOlxyXG4gICAgICAgIHJ0ID0gZGF0ZVV0aWxzLmdldERlY2FkZUZyb21EYXRlKGRhdGVVdGlscy5nZXRDdXJEYXRlKCkpXHJcbiAgICAgICAgYnJlYWtcclxuICAgICAgY2FzZSBUaW1lTGluZS5FbnVtUGVyaW9kLmNlbnR1cnk6XHJcbiAgICAgICAgcnQgPSBkYXRlVXRpbHMuZ2V0Q2VudHVyeUZyb21EYXRlKGRhdGVVdGlscy5nZXRDdXJEYXRlKCkpXHJcbiAgICAgICAgYnJlYWtcclxuICAgICAgY2FzZSBUaW1lTGluZS5FbnVtUGVyaW9kLmRheTpcclxuICAgICAgZGVmYXVsdDpcclxuICAgICAgICBydCA9IGRhdGVVdGlscy5nZXRDdXJEYXRlKClcclxuICAgICAgICBicmVha1xyXG4gICAgfVxyXG4gICAgcmV0dXJuIHJ0XHJcbiAgfVxyXG5cclxuICBmb3JtYXRQZXJpb2QgKHBlcmlvZCkge1xyXG4gICAgbGV0IHJ0XHJcbiAgICBzd2l0Y2ggKHRoaXMucGVyaW9kKSB7XHJcbiAgICAgIGNhc2UgVGltZUxpbmUuRW51bVBlcmlvZC5tb250aDpcclxuICAgICAgICBydCA9IGRhdGVVdGlscy5mb3JtYXRNb250aChwZXJpb2QpXHJcbiAgICAgICAgYnJlYWtcclxuICAgICAgY2FzZSBUaW1lTGluZS5FbnVtUGVyaW9kLnllYXI6XHJcbiAgICAgICAgcnQgPSBkYXRlVXRpbHMuZm9ybWF0WWVhcihwZXJpb2QpXHJcbiAgICAgICAgYnJlYWtcclxuICAgICAgY2FzZSBUaW1lTGluZS5FbnVtUGVyaW9kLmRlY2FkZTpcclxuICAgICAgICBydCA9IGRhdGVVdGlscy5mb3JtYXREZWNhZGUocGVyaW9kKVxyXG4gICAgICAgIGJyZWFrXHJcbiAgICAgIGNhc2UgVGltZUxpbmUuRW51bVBlcmlvZC5jZW50dXJ5OlxyXG4gICAgICAgIHJ0ID0gZGF0ZVV0aWxzLmZvcm1hdENlbnR1cnkocGVyaW9kKVxyXG4gICAgICAgIGJyZWFrXHJcbiAgICAgIGNhc2UgVGltZUxpbmUuRW51bVBlcmlvZC5kYXk6XHJcbiAgICAgIGRlZmF1bHQ6XHJcbiAgICAgICAgcnQgPSBkYXRlVXRpbHMuZm9ybWF0RGF0ZShwZXJpb2QpXHJcbiAgICAgICAgYnJlYWtcclxuICAgIH1cclxuICAgIHJldHVybiBydFxyXG4gIH1cclxuXHJcbiAgZ2V0UGVyaW9kQWdvIChwZXJpb2QsIG9mZnNldCkge1xyXG4gICAgbGV0IGR0MFxyXG4gICAgc3dpdGNoICh0aGlzLnBlcmlvZCkge1xyXG4gICAgICBjYXNlIFRpbWVMaW5lLkVudW1QZXJpb2QubW9udGg6XHJcbiAgICAgIGNhc2UgVGltZUxpbmUuRW51bVBlcmlvZC55ZWFyOlxyXG4gICAgICBjYXNlIFRpbWVMaW5lLkVudW1QZXJpb2QuZGVjYWRlOlxyXG4gICAgICAgIGR0MCA9IHBlcmlvZCArIG9mZnNldFxyXG4gICAgICAgIGJyZWFrXHJcbiAgICAgIGNhc2UgVGltZUxpbmUuRW51bVBlcmlvZC5jZW50dXJ5OlxyXG4gICAgICAgIGR0MCA9IHBlcmlvZCArIG9mZnNldFxyXG4gICAgICAgIGlmIChkdDAgPT09IDApIHtcclxuICAgICAgICAgIGR0MCA9IGR0MCArIG9mZnNldFxyXG4gICAgICAgIH1cclxuICAgICAgICBicmVha1xyXG4gICAgICBjYXNlIFRpbWVMaW5lLkVudW1QZXJpb2QuZGF5OlxyXG4gICAgICBkZWZhdWx0OlxyXG4gICAgICAgIGR0MCA9IGRhdGVVdGlscy5nZXREYXRlQWdvKHBlcmlvZCwgb2Zmc2V0KVxyXG4gICAgICAgIGJyZWFrXHJcbiAgICB9XHJcbiAgICByZXR1cm4gZHQwXHJcbiAgfVxyXG59XHJcbiJdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./src/timeline.js\n");
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var dateutils_1 = __webpack_require__(/*! ./dateutils */ "./src/dateutils.ts");
+var saagraph_1 = __webpack_require__(/*! ./saagraph */ "./src/saagraph.ts");
+var TimeLine = /** @class */ (function () {
+    function TimeLine(ctx, curPeriod, y, color, period, name, data) {
+        if (curPeriod === void 0) { curPeriod = null; }
+        if (y === void 0) { y = 0; }
+        if (color === void 0) { color = null; }
+        if (period === void 0) { period = null; }
+        if (name === void 0) { name = 'нет имени'; }
+        if (data === void 0) { data = []; }
+        this.ctx = ctx;
+        this.curPeriod = curPeriod;
+        this.x = ctx.canvas.clientWidth - 1 + TimeLine.INTERVAL_WIDTH + 0.5;
+        this.y = y;
+        this.color = color;
+        this.period = period;
+        this.name = name;
+        this.data = data;
+    }
+    Object.defineProperty(TimeLine, "LINE_THICKNESS", {
+        get: function () { return 25; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TimeLine, "HALF_LINE_THICKNESS", {
+        get: function () { return TimeLine.LINE_THICKNESS / 2; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TimeLine, "INTERVAL_WIDTH", {
+        get: function () { return 100; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TimeLine, "HALF_INTERVAL_WIDTH", {
+        get: function () { return TimeLine.INTERVAL_WIDTH / 2; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TimeLine, "EnumPeriod", {
+        get: function () { return Object.freeze({ 'day': 1, 'month': 2, 'year': 3, 'decade': 4, 'century': 5 }); },
+        enumerable: true,
+        configurable: true
+    });
+    TimeLine.load = function (ctx) {
+        var o = new TimeLine(ctx);
+        return o;
+    };
+    TimeLine.prototype.save = function () {
+        alert(this.name);
+    };
+    Object.defineProperty(TimeLine.prototype, "Period", {
+        set: function (period) {
+            this.x = this.ctx.canvas.clientWidth - 1 + TimeLine.INTERVAL_WIDTH + 0.5;
+            this.curPeriod = TimeLine.getCurPeriod(period);
+            this.period = period;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    TimeLine.prototype.draw = function () {
+        this.data = [];
+        this.curdata = -1;
+        var x0 = this.x;
+        var dt = this.curPeriod;
+        while (x0 >= 0) {
+            this.drawCell(x0, dt);
+            x0 -= TimeLine.INTERVAL_WIDTH;
+            dt = this.getPeriodAgo(dt, -1);
+        }
+        x0 = this.x;
+        dt = this.curPeriod;
+        while (x0 <= this.ctx.canvas.clientWidth - 1 + TimeLine.INTERVAL_WIDTH) {
+            this.drawCell(x0, dt);
+            x0 += TimeLine.INTERVAL_WIDTH;
+            dt = this.getPeriodAgo(dt, 1);
+        }
+        this.drawName();
+    };
+    TimeLine.prototype.drawName = function () {
+        var HBOOKMARK = 30;
+        var INDENT = 10;
+        var RADIUS = 10;
+        this.ctx.save();
+        this.ctx.fillStyle = this.color;
+        this.ctx.textBaseline = 'middle';
+        this.ctx.textAlign = 'center';
+        this.ctx.font = '16px serif';
+        var wBookmark = this.ctx.measureText(this.name).width + INDENT / 2;
+        saagraph_1.saaGraph.roundedRect(this.ctx, INDENT, this.y - HBOOKMARK, wBookmark, HBOOKMARK, RADIUS);
+        this.ctx.fillStyle = 'white';
+        this.ctx.fillText(this.name, INDENT + wBookmark / 2, this.y - HBOOKMARK / 2);
+        this.ctx.restore();
+    };
+    TimeLine.prototype.drawCell = function (x0, dt) {
+        var path = new Path2D();
+        path.rect(x0 - TimeLine.INTERVAL_WIDTH + 1, this.y, TimeLine.INTERVAL_WIDTH, TimeLine.LINE_THICKNESS);
+        this.ctx.fillStyle = this.color;
+        this.ctx.strokeStyle = 'white';
+        this.ctx.fill(path);
+        this.ctx.stroke(path);
+        this.ctx.textBaseline = 'middle';
+        this.ctx.textAlign = 'center';
+        this.ctx.font = '14px serif';
+        this.ctx.fillStyle = 'white';
+        this.ctx.fillText(this.formatPeriod(dt), x0 - TimeLine.HALF_INTERVAL_WIDTH, this.y + TimeLine.HALF_LINE_THICKNESS);
+        this.data.push(new TimeLineData(dt, x0 - TimeLine.INTERVAL_WIDTH + 1, this.y, x0, this.y + TimeLine.LINE_THICKNESS - 1, path));
+    };
+    /**
+     * Получить значение периода для данной координаты курсора
+     *
+     * @param {number} x
+     * @param {number} y
+     * @returns number
+     * @memberof TimeLine
+     */
+    TimeLine.prototype.getCellValue = function (x, y) {
+        for (var i = 0; i < this.data.length; i++) {
+            if (x > this.data[i].x1 && x < this.data[i].x2 && y > this.data[i].y1 && y < this.data[i].y2) {
+                return i;
+            }
+        }
+        return -1;
+    };
+    TimeLine.prototype.onBox = function (_data) {
+        var data = this.data[_data];
+        this.ctx.strokeStyle = 'black';
+        this.ctx.stroke(data.path);
+    };
+    TimeLine.prototype.offBox = function () {
+        var data = this.data[this.curdata];
+        this.ctx.strokeStyle = 'white';
+        this.ctx.stroke(data.path);
+    };
+    TimeLine.prototype.shift = function (movementX) {
+        this.x += movementX;
+    };
+    TimeLine.getCurPeriod = function (periodType) {
+        var rt;
+        switch (periodType) {
+            case TimeLine.EnumPeriod.month:
+                rt = dateutils_1.DateUtils.getMonthFromDate(dateutils_1.DateUtils.getCurDate());
+                break;
+            case TimeLine.EnumPeriod.year:
+                rt = dateutils_1.DateUtils.getYearFromDate(dateutils_1.DateUtils.getCurDate());
+                break;
+            case TimeLine.EnumPeriod.decade:
+                rt = dateutils_1.DateUtils.getDecadeFromDate(dateutils_1.DateUtils.getCurDate());
+                break;
+            case TimeLine.EnumPeriod.century:
+                rt = dateutils_1.DateUtils.getCenturyFromDate(dateutils_1.DateUtils.getCurDate());
+                break;
+            case TimeLine.EnumPeriod.day:
+            default:
+                rt = dateutils_1.DateUtils.getCurDate();
+                break;
+        }
+        return rt;
+    };
+    TimeLine.prototype.formatPeriod = function (period) {
+        var rt;
+        switch (this.period) {
+            case TimeLine.EnumPeriod.month:
+                rt = dateutils_1.DateUtils.formatMonth(period);
+                break;
+            case TimeLine.EnumPeriod.year:
+                rt = dateutils_1.DateUtils.formatYear(period);
+                break;
+            case TimeLine.EnumPeriod.decade:
+                rt = dateutils_1.DateUtils.formatDecade(period);
+                break;
+            case TimeLine.EnumPeriod.century:
+                rt = dateutils_1.DateUtils.formatCentury(period);
+                break;
+            case TimeLine.EnumPeriod.day:
+            default:
+                rt = dateutils_1.DateUtils.formatDate(period);
+                break;
+        }
+        return rt;
+    };
+    TimeLine.prototype.getPeriodAgo = function (period, offset) {
+        var dt0;
+        switch (this.period) {
+            case TimeLine.EnumPeriod.month:
+            case TimeLine.EnumPeriod.year:
+            case TimeLine.EnumPeriod.decade:
+                dt0 = period + offset;
+                break;
+            case TimeLine.EnumPeriod.century:
+                dt0 = period + offset;
+                if (dt0 === 0) {
+                    dt0 = dt0 + offset;
+                }
+                break;
+            case TimeLine.EnumPeriod.day:
+            default:
+                dt0 = dateutils_1.DateUtils.getDateAgo(period, offset);
+                break;
+        }
+        return dt0;
+    };
+    return TimeLine;
+}());
+exports.TimeLine = TimeLine;
+var TimeLineData = /** @class */ (function () {
+    function TimeLineData(value, x1, y1, x2, y2, path) {
+        this.value = value;
+        this.x1 = x1;
+        this.y1 = y1;
+        this.x2 = x2;
+        this.y2 = y2;
+        this.path = path;
+    }
+    return TimeLineData;
+}());
+
 
 /***/ })
 
 /******/ });
+//# sourceMappingURL=main.js.map

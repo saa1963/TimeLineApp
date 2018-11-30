@@ -2,7 +2,25 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\src\ts\**" />
+    <Content Remove="wwwroot\src\ts\**" />
+    <EmbeddedResource Remove="wwwroot\src\ts\**" />
+    <None Remove="wwwroot\src\ts\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\src\colorutils.js" />
+    <Content Remove="wwwroot\src\contextmenu.js" />
+    <Content Remove="wwwroot\src\dateutils.js" />
+    <Content Remove="wwwroot\src\index.js" />
+    <Content Remove="wwwroot\src\saagraph.js" />
+    <Content Remove="wwwroot\src\stringutils.js" />
+    <Content Remove="wwwroot\src\timeline.js" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
@@ -15,6 +33,16 @@
   <ItemGroup>
     <Folder Include="wwwroot\lib\fontawesome-free-5.5.0-web\svgs\" />
     <Folder Include="wwwroot\lib\fontawesome-free-5.5.0-web\webfonts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="wwwroot\src\colorutils.js" />
+    <TypeScriptCompile Include="wwwroot\src\contextmenu.js" />
+    <TypeScriptCompile Include="wwwroot\src\dateutils.js" />
+    <TypeScriptCompile Include="wwwroot\src\index.js" />
+    <TypeScriptCompile Include="wwwroot\src\saagraph.js" />
+    <TypeScriptCompile Include="wwwroot\src\stringutils.js" />
+    <TypeScriptCompile Include="wwwroot\src\timeline.js" />
   </ItemGroup>
 
 </Project>
