@@ -224,7 +224,7 @@ function LoadTimeLine () {
   NewTimeLine(tl.name, tl)
 }
 
-function NewTimeLine (name: string, tl: TimeLine = null) {
+function NewTimeLine (name: string, tl?: TimeLine) {
   let aY
   if ((((timeLines.length + 2) * MIN_GAP) + (timeLines.length + 1) * TimeLine.LINE_THICKNESS) > ctx.canvas.clientHeight) {
     alert('Достигнуто максимальное количество линий времени')
@@ -233,7 +233,7 @@ function NewTimeLine (name: string, tl: TimeLine = null) {
     aY = splitWorkspace(timeLines.length + 1)
   }
   let dt = TimeLine.getCurPeriod(PERIOD_TYPE)
-    let nColor = makeColor()
+  let nColor = makeColor()
   if (tl === null) {
     tl = new TimeLine(ctx, dt, 0, 0, PERIOD_TYPE, name)
   }

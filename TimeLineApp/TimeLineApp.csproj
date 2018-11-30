@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <Content Remove="wwwroot\src\colorutils.js" />
-    <Content Remove="wwwroot\src\contextmenu.js" />
+    <Content Remove="wwwroot\src\contextmenu.ts" />
     <Content Remove="wwwroot\src\dateutils.js" />
     <Content Remove="wwwroot\src\index.js" />
     <Content Remove="wwwroot\src\saagraph.js" />
@@ -37,7 +37,7 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="wwwroot\src\colorutils.js" />
-    <TypeScriptCompile Include="wwwroot\src\contextmenu.js" />
+    <TypeScriptCompile Include="wwwroot\src\contextmenu.ts" />
     <TypeScriptCompile Include="wwwroot\src\dateutils.js" />
     <TypeScriptCompile Include="wwwroot\src\index.js" />
     <TypeScriptCompile Include="wwwroot\src\saagraph.js" />

@@ -33,10 +33,5 @@ module.exports = {
         use: 'ts-loader'
       }
     ]
-  },
-  resolveLoader: {
-    modules: ['C:/Users/soshin.OPER/AppData/Roaming/npm/node_modules'],
-    extensions: ['.js', '.json'],
-    mainFields: ['loader', 'main']
   }
 };

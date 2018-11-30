@@ -1,5 +1,5 @@
 /* eslint-disable eqeqeq */
-export function ContextMenu (menu, options) {
+export function ContextMenu (menu, options?) {
   var self = this
   var num = ContextMenu.count++
 
@@ -67,7 +67,7 @@ export function ContextMenu (menu, options) {
     var ulOuter = document.createElement('ul')
 
     level.forEach(function (item) {
-      var li = document.createElement('li')
+      let li = <MyHTMLLIElement>document.createElement('li')
       li.menu = self
 
       if (typeof item.type === 'undefined') {
@@ -255,4 +255,8 @@ export const ContextUtil = {
       'height': height
     }
   }
+}
+
+class MyHTMLLIElement extends HTMLLIElement {
+  menu: any
 }

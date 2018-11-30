@@ -6,15 +6,21 @@ export enum EnumPeriod {
 }
 
 export class TimeLine {
-  public ctx: CanvasRenderingContext2D
-  public curPeriod: any
-  public x: number
-  public y: number
-  public color: any
-  public period: EnumPeriod
-  public name: string
-  public data: TimeLineData[]
-  public curdata: number
+  ctx: CanvasRenderingContext2D
+  curPeriod: number | Date
+  x: number
+  y: number
+  color: string | CanvasGradient | CanvasPattern
+  period: EnumPeriod
+  name: string
+  data: TimeLineData[]
+  curdata: number
+
+  static readonly LINE_THICKNESS: number = 25
+  private static readonly HALF_LINE_THICKNESS: number = TimeLine.LINE_THICKNESS / 2
+  private static readonly INTERVAL_WIDTH: number = 100
+  private static readonly HALF_INTERVAL_WIDTH: number = TimeLine.INTERVAL_WIDTH / 2
+
   constructor (ctx, curPeriod = null, y = 0, color = null, period = null, name = 'нет имени', data = []) {
     this.ctx = ctx
     this.curPeriod = curPeriod
@@ -26,12 +32,7 @@ export class TimeLine {
     this.data = data
   }
 
-  static get LINE_THICKNESS () { return 25 }
-  static get HALF_LINE_THICKNESS () { return TimeLine.LINE_THICKNESS / 2 }
-  static get INTERVAL_WIDTH (): number { return 100 }
-  static get HALF_INTERVAL_WIDTH () { return TimeLine.INTERVAL_WIDTH / 2 }
-
-  static load (ctx) {
+  static load(ctx: CanvasRenderingContext2D): TimeLine {
     let o = new TimeLine(ctx)
     return o
   }
@@ -132,7 +133,7 @@ export class TimeLine {
     this.x += movementX
   }
 
-  static getCurPeriod (periodType: EnumPeriod) {
+  static getCurPeriod (periodType: EnumPeriod): number | Date {
     let rt
     switch (periodType) {
       case EnumPeriod.month:
@@ -202,7 +203,7 @@ export class TimeLine {
 }
 
 class TimeLineData {
-  public constructor (
+  constructor (
     public value: any,
     public x1: number,
     public y1: number,

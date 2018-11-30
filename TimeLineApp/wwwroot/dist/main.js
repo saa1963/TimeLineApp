@@ -151,276 +151,255 @@ exports.makeColor = function () {
 
 /***/ }),
 
-/***/ "./src/contextmenu.js":
+/***/ "./src/contextmenu.ts":
 /*!****************************!*\
-  !*** ./src/contextmenu.js ***!
+  !*** ./src/contextmenu.ts ***!
   \****************************/
-/*! exports provided: ContextMenu, DIVIDER, ContextUtil */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ContextMenu", function() { return ContextMenu; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DIVIDER", function() { return DIVIDER; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ContextUtil", function() { return ContextUtil; });
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
 /* eslint-disable eqeqeq */
-function ContextMenu (menu, options) {
-  var self = this
-  var num = ContextMenu.count++
-
-  this.menu = menu
-  this.contextTarget = null
-
-  if (!(menu instanceof Array)) {
-    throw new Error('Parameter 1 must be of type Array')
-  }
-
-  if (typeof options !== 'undefined') {
-    if (typeof options !== 'object') {
-      throw new Error('Parameter 2 must be of type object')
+function ContextMenu(menu, options) {
+    var self = this;
+    var num = ContextMenu.count++;
+    this.menu = menu;
+    this.contextTarget = null;
+    if (!(menu instanceof Array)) {
+        throw new Error('Parameter 1 must be of type Array');
     }
-  } else {
-    options = {}
-  }
-
-  window.addEventListener('resize', function () {
-    if (ContextUtil.getProperty(options, 'close_on_resize', true)) {
-      self.hide()
-    }
-  })
-
-  this.setOptions = function (_options) {
-    if (typeof _options === 'object') {
-      options = _options
-    } else {
-      throw new Error('Parameter 1 must be of type object')
-    }
-  }
-
-  this.changeOption = function (option, value) {
-    if (typeof option === 'string') {
-      if (typeof value !== 'undefined') {
-        options[option] = value
-      } else {
-        throw new Error('Parameter 2 must be set')
-      }
-    } else {
-      throw new Error('Parameter 1 must be of type string')
-    }
-  }
-
-  this.getOptions = function () {
-    return options
-  }
-
-  this.reload = function () {
-    if (document.getElementById('cm_' + num) == null) {
-      var cnt = document.createElement('div')
-      cnt.className = 'cm_container'
-      cnt.id = 'cm_' + num
-
-      document.body.appendChild(cnt)
-    }
-
-    var container = document.getElementById('cm_' + num)
-    container.innerHTML = ''
-
-    container.appendChild(renderLevel(menu))
-  }
-
-  function renderLevel (level) {
-    var ulOuter = document.createElement('ul')
-
-    level.forEach(function (item) {
-      var li = document.createElement('li')
-      li.menu = self
-
-      if (typeof item.type === 'undefined') {
-        var iconSpan = document.createElement('span')
-        iconSpan.className = 'cm_icon_span'
-
-        if (ContextUtil.getProperty(item, 'icon', '') != '') {
-          iconSpan.innerHTML = ContextUtil.getProperty(item, 'icon', '')
-        } else {
-          iconSpan.innerHTML = ContextUtil.getProperty(options, 'default_icon', '')
+    if (typeof options !== 'undefined') {
+        if (typeof options !== 'object') {
+            throw new Error('Parameter 2 must be of type object');
         }
-
-        var textSpan = document.createElement('span')
-        textSpan.className = 'cm_text'
-
-        if (ContextUtil.getProperty(item, 'text', '') != '') {
-          textSpan.innerHTML = ContextUtil.getProperty(item, 'text', '')
-        } else {
-          textSpan.innerHTML = ContextUtil.getProperty(options, 'default_text', 'item')
+    }
+    else {
+        options = {};
+    }
+    window.addEventListener('resize', function () {
+        if (exports.ContextUtil.getProperty(options, 'close_on_resize', true)) {
+            self.hide();
         }
-
-        var subSpan = document.createElement('span')
-        subSpan.className = 'cm_sub_span'
-
-        if (typeof item.sub !== 'undefined') {
-          if (ContextUtil.getProperty(options, 'sub_icon', '') != '') {
-            subSpan.innerHTML = ContextUtil.getProperty(options, 'sub_icon', '')
-          } else {
-            subSpan.innerHTML = '&#155;'
-          }
+    });
+    this.setOptions = function (_options) {
+        if (typeof _options === 'object') {
+            options = _options;
         }
-
-        li.appendChild(iconSpan)
-        li.appendChild(textSpan)
-        li.appendChild(subSpan)
-
-        if (!ContextUtil.getProperty(item, 'enabled', true)) {
-          li.setAttribute('disabled', '')
-        } else {
-          if (typeof item.events === 'object') {
-            var keys = Object.keys(item.events)
-
-            for (var i = 0; i < keys.length; i++) {
-              li.addEventListener(keys[i], item.events[keys[i]])
+        else {
+            throw new Error('Parameter 1 must be of type object');
+        }
+    };
+    this.changeOption = function (option, value) {
+        if (typeof option === 'string') {
+            if (typeof value !== 'undefined') {
+                options[option] = value;
             }
-          }
-
-          if (typeof item.sub !== 'undefined') {
-            li.appendChild(renderLevel(item.sub))
-          }
+            else {
+                throw new Error('Parameter 2 must be set');
+            }
         }
-      } else {
-        if (item.type == ContextMenu.DIVIDER) {
-          li.className = 'cm_divider'
+        else {
+            throw new Error('Parameter 1 must be of type string');
         }
-      }
-
-      ulOuter.appendChild(li)
-    })
-
-    return ulOuter
-  }
-
-  this.display = function (e, target) {
-    if (typeof target !== 'undefined') {
-      self.contextTarget = target
-    } else {
-      self.contextTarget = e.target
+    };
+    this.getOptions = function () {
+        return options;
+    };
+    this.reload = function () {
+        if (document.getElementById('cm_' + num) == null) {
+            var cnt = document.createElement('div');
+            cnt.className = 'cm_container';
+            cnt.id = 'cm_' + num;
+            document.body.appendChild(cnt);
+        }
+        var container = document.getElementById('cm_' + num);
+        container.innerHTML = '';
+        container.appendChild(renderLevel(menu));
+    };
+    function renderLevel(level) {
+        var ulOuter = document.createElement('ul');
+        level.forEach(function (item) {
+            var li = document.createElement('li');
+            li.menu = self;
+            if (typeof item.type === 'undefined') {
+                var iconSpan = document.createElement('span');
+                iconSpan.className = 'cm_icon_span';
+                if (exports.ContextUtil.getProperty(item, 'icon', '') != '') {
+                    iconSpan.innerHTML = exports.ContextUtil.getProperty(item, 'icon', '');
+                }
+                else {
+                    iconSpan.innerHTML = exports.ContextUtil.getProperty(options, 'default_icon', '');
+                }
+                var textSpan = document.createElement('span');
+                textSpan.className = 'cm_text';
+                if (exports.ContextUtil.getProperty(item, 'text', '') != '') {
+                    textSpan.innerHTML = exports.ContextUtil.getProperty(item, 'text', '');
+                }
+                else {
+                    textSpan.innerHTML = exports.ContextUtil.getProperty(options, 'default_text', 'item');
+                }
+                var subSpan = document.createElement('span');
+                subSpan.className = 'cm_sub_span';
+                if (typeof item.sub !== 'undefined') {
+                    if (exports.ContextUtil.getProperty(options, 'sub_icon', '') != '') {
+                        subSpan.innerHTML = exports.ContextUtil.getProperty(options, 'sub_icon', '');
+                    }
+                    else {
+                        subSpan.innerHTML = '&#155;';
+                    }
+                }
+                li.appendChild(iconSpan);
+                li.appendChild(textSpan);
+                li.appendChild(subSpan);
+                if (!exports.ContextUtil.getProperty(item, 'enabled', true)) {
+                    li.setAttribute('disabled', '');
+                }
+                else {
+                    if (typeof item.events === 'object') {
+                        var keys = Object.keys(item.events);
+                        for (var i = 0; i < keys.length; i++) {
+                            li.addEventListener(keys[i], item.events[keys[i]]);
+                        }
+                    }
+                    if (typeof item.sub !== 'undefined') {
+                        li.appendChild(renderLevel(item.sub));
+                    }
+                }
+            }
+            else {
+                if (item.type == ContextMenu.DIVIDER) {
+                    li.className = 'cm_divider';
+                }
+            }
+            ulOuter.appendChild(li);
+        });
+        return ulOuter;
     }
-
-    var menu = document.getElementById('cm_' + num)
-
-    var clickCoords = { x: e.clientX, y: e.clientY }
-    var clickCoordsX = clickCoords.x
-    var clickCoordsY = clickCoords.y
-
-    var menuWidth = menu.offsetWidth + 4
-    var menuHeight = menu.offsetHeight + 4
-
-    var windowWidth = window.innerWidth
-    var windowHeight = window.innerHeight
-
-    var mouseOffset = parseInt(ContextUtil.getProperty(options, 'mouse_offset', 2))
-
-    if ((windowWidth - clickCoordsX) < menuWidth) {
-      menu.style.left = windowWidth - menuWidth + 'px'
-    } else {
-      menu.style.left = (clickCoordsX + mouseOffset) + 'px'
+    this.display = function (e, target) {
+        if (typeof target !== 'undefined') {
+            self.contextTarget = target;
+        }
+        else {
+            self.contextTarget = e.target;
+        }
+        var menu = document.getElementById('cm_' + num);
+        var clickCoords = { x: e.clientX, y: e.clientY };
+        var clickCoordsX = clickCoords.x;
+        var clickCoordsY = clickCoords.y;
+        var menuWidth = menu.offsetWidth + 4;
+        var menuHeight = menu.offsetHeight + 4;
+        var windowWidth = window.innerWidth;
+        var windowHeight = window.innerHeight;
+        var mouseOffset = parseInt(exports.ContextUtil.getProperty(options, 'mouse_offset', 2));
+        if ((windowWidth - clickCoordsX) < menuWidth) {
+            menu.style.left = windowWidth - menuWidth + 'px';
+        }
+        else {
+            menu.style.left = (clickCoordsX + mouseOffset) + 'px';
+        }
+        if ((windowHeight - clickCoordsY) < menuHeight) {
+            menu.style.top = windowHeight - menuHeight + 'px';
+        }
+        else {
+            menu.style.top = (clickCoordsY + mouseOffset) + 'px';
+        }
+        var sizes = exports.ContextUtil.getSizes(menu);
+        if ((windowWidth - clickCoordsX) < sizes.width) {
+            menu.classList.add('cm_border_right');
+        }
+        else {
+            menu.classList.remove('cm_border_right');
+        }
+        if ((windowHeight - clickCoordsY) < sizes.height) {
+            menu.classList.add('cm_border_bottom');
+        }
+        else {
+            menu.classList.remove('cm_border_bottom');
+        }
+        menu.classList.add('display');
+        if (exports.ContextUtil.getProperty(options, 'close_on_click', true)) {
+            window.addEventListener('click', documentClick);
+        }
+        e.preventDefault();
+    };
+    this.hide = function () {
+        document.getElementById('cm_' + num).classList.remove('display');
+        window.removeEventListener('click', documentClick);
+    };
+    function documentClick() {
+        self.hide();
     }
-
-    if ((windowHeight - clickCoordsY) < menuHeight) {
-      menu.style.top = windowHeight - menuHeight + 'px'
-    } else {
-      menu.style.top = (clickCoordsY + mouseOffset) + 'px'
-    }
-
-    var sizes = ContextUtil.getSizes(menu)
-
-    if ((windowWidth - clickCoordsX) < sizes.width) {
-      menu.classList.add('cm_border_right')
-    } else {
-      menu.classList.remove('cm_border_right')
-    }
-
-    if ((windowHeight - clickCoordsY) < sizes.height) {
-      menu.classList.add('cm_border_bottom')
-    } else {
-      menu.classList.remove('cm_border_bottom')
-    }
-
-    menu.classList.add('display')
-
-    if (ContextUtil.getProperty(options, 'close_on_click', true)) {
-      window.addEventListener('click', documentClick)
-    }
-
-    e.preventDefault()
-  }
-
-  this.hide = function () {
-    document.getElementById('cm_' + num).classList.remove('display')
-    window.removeEventListener('click', documentClick)
-  }
-
-  function documentClick () {
-    self.hide()
-  }
-
-  this.reload()
+    this.reload();
 }
-
-ContextMenu.count = 0
-ContextMenu.DIVIDER = 'cm_divider'
-const DIVIDER = 'cm_divider'
-
-const ContextUtil = {
-  getProperty: function (options, opt, def) {
-    if (typeof options[opt] !== 'undefined') {
-      return options[opt]
-    } else {
-      return def
-    }
-  },
-
-  getSizes: function (obj) {
-    var lis = obj.getElementsByTagName('li')
-
-    var widthDef = 0
-    var heightDef = 0
-
-    for (var i = 0; i < lis.length; i++) {
-      var li = lis[i]
-
-      if (li.offsetWidth > widthDef) {
-        widthDef = li.offsetWidth
-      }
-
-      if (li.offsetHeight > heightDef) {
-        heightDef = li.offsetHeight
-      }
-    }
-
-    var width = widthDef
-    var height = heightDef
-
-    for (let i = 0; i < lis.length; i++) {
-      let li = lis[i]
-
-      var ul = li.getElementsByTagName('ul')
-      if (typeof ul[0] !== 'undefined') {
-        var ulSize = ContextUtil.getSizes(ul[0])
-
-        if (widthDef + ulSize.width > width) {
-          width = widthDef + ulSize.width
+exports.ContextMenu = ContextMenu;
+ContextMenu.count = 0;
+ContextMenu.DIVIDER = 'cm_divider';
+exports.DIVIDER = 'cm_divider';
+exports.ContextUtil = {
+    getProperty: function (options, opt, def) {
+        if (typeof options[opt] !== 'undefined') {
+            return options[opt];
         }
-
-        if (heightDef + ulSize.height > height) {
-          height = heightDef + ulSize.height
+        else {
+            return def;
         }
-      }
+    },
+    getSizes: function (obj) {
+        var lis = obj.getElementsByTagName('li');
+        var widthDef = 0;
+        var heightDef = 0;
+        for (var i = 0; i < lis.length; i++) {
+            var li = lis[i];
+            if (li.offsetWidth > widthDef) {
+                widthDef = li.offsetWidth;
+            }
+            if (li.offsetHeight > heightDef) {
+                heightDef = li.offsetHeight;
+            }
+        }
+        var width = widthDef;
+        var height = heightDef;
+        for (var i_1 = 0; i_1 < lis.length; i_1++) {
+            var li_1 = lis[i_1];
+            var ul = li_1.getElementsByTagName('ul');
+            if (typeof ul[0] !== 'undefined') {
+                var ulSize = exports.ContextUtil.getSizes(ul[0]);
+                if (widthDef + ulSize.width > width) {
+                    width = widthDef + ulSize.width;
+                }
+                if (heightDef + ulSize.height > height) {
+                    height = heightDef + ulSize.height;
+                }
+            }
+        }
+        return {
+            'width': width,
+            'height': height
+        };
     }
-
-    return {
-      'width': width,
-      'height': height
+};
+var MyHTMLLIElement = /** @class */ (function (_super) {
+    __extends(MyHTMLLIElement, _super);
+    function MyHTMLLIElement() {
+        return _super !== null && _super.apply(this, arguments) || this;
     }
-  }
-}
+    return MyHTMLLIElement;
+}(HTMLLIElement));
 
 
 /***/ }),
@@ -521,7 +500,7 @@ function romanize(num) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var timeline_1 = __webpack_require__(/*! ./timeline */ "./src/timeline.ts");
 var colorutils_1 = __webpack_require__(/*! ./colorutils */ "./src/colorutils.ts");
-var contextmenu_1 = __webpack_require__(/*! ./contextmenu */ "./src/contextmenu.js");
+var contextmenu_1 = __webpack_require__(/*! ./contextmenu */ "./src/contextmenu.ts");
 var MIN_GAP = 100;
 var PERIOD_TYPE = timeline_1.EnumPeriod.day;
 var HTOP = 56;
@@ -738,7 +717,6 @@ function LoadTimeLine() {
     NewTimeLine(tl.name, tl);
 }
 function NewTimeLine(name, tl) {
-    if (tl === void 0) { tl = null; }
     var aY;
     if ((((timeLines.length + 2) * MIN_GAP) + (timeLines.length + 1) * timeline_1.TimeLine.LINE_THICKNESS) > ctx.canvas.clientHeight) {
         alert('Достигнуто максимальное количество линий времени');
@@ -901,26 +879,6 @@ var TimeLine = /** @class */ (function () {
         this.name = name;
         this.data = data;
     }
-    Object.defineProperty(TimeLine, "LINE_THICKNESS", {
-        get: function () { return 25; },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TimeLine, "HALF_LINE_THICKNESS", {
-        get: function () { return TimeLine.LINE_THICKNESS / 2; },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TimeLine, "INTERVAL_WIDTH", {
-        get: function () { return 100; },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TimeLine, "HALF_INTERVAL_WIDTH", {
-        get: function () { return TimeLine.INTERVAL_WIDTH / 2; },
-        enumerable: true,
-        configurable: true
-    });
     TimeLine.load = function (ctx) {
         var o = new TimeLine(ctx);
         return o;
@@ -1079,6 +1037,10 @@ var TimeLine = /** @class */ (function () {
         }
         return dt0;
     };
+    TimeLine.LINE_THICKNESS = 25;
+    TimeLine.HALF_LINE_THICKNESS = TimeLine.LINE_THICKNESS / 2;
+    TimeLine.INTERVAL_WIDTH = 100;
+    TimeLine.HALF_INTERVAL_WIDTH = TimeLine.INTERVAL_WIDTH / 2;
     return TimeLine;
 }());
 exports.TimeLine = TimeLine;
