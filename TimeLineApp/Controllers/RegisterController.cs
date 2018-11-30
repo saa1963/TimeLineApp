@@ -21,13 +21,13 @@ namespace TimeLineApp.Controllers
 
         // POST: api/Register
         [HttpPost]
-        public ActionResult Post([FromForm] Register model)
+        public string Post([FromForm]Register model)
         {
             if (storage.Save(model.Login, model.Email, model.Password1))
             {
-                return Redirect("/index.html");
+                return "";
             }
-            return BadRequest();
+            return "Данный пользователь уже зарегистрирован";
         }
     }
 }

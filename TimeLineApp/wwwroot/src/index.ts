@@ -204,17 +204,49 @@ let ctx: CanvasRenderingContext2D
   })
   $('#action01').click((ev) => {
     alert('action01')
-    })
+  })
+  $('#regPassword1').focus(ev => {
+    $('#passw_not_matches').css('display', 'none')
+  })
+  $('#regPassword2').focus(ev => {
+    $('#passw_not_matches').css('display', 'none')
+  })
   $('#btnReg').click((ev) => {
+    $('#regLogin').val('')
+    $('#regEmail').val('')
+    $('#regPassword1').val('')
+    $('#regPassword2').val('')
     $('#tmRegisterModal').modal()
+    $('#passw_not_matches').css('display', 'none')
     return false
   })
   $('#btnRegisterUser').click(ev => {
     if ((<HTMLInputElement>$('#regLogin')[0]).reportValidity()
         && (<HTMLInputElement>$('#regEmail')[0]).reportValidity()
         && (<HTMLInputElement>$('#regPassword1')[0]).reportValidity()
-        && (<HTMLInputElement>$('#regPassword2')[0]).reportValidity()) {
-      $('#tmRegisterModal').modal('hide')
+      && (<HTMLInputElement>$('#regPassword2')[0]).reportValidity()) {
+      if ($('#regPassword1').val() === $('#regPassword2').val()) {
+        $.ajax('api/register', {
+          type: 'POST',
+          data: {
+            Login: $('#regLogin').val(),
+            Email: $('#regEmail').val(),
+            Password1: $('#regPassword1').val(),
+            Password2: $('#regPassword2').val()
+          }
+        })
+          .done(data => {
+            if (data === '') {
+              $('#tmRegisterModal').modal('hide')
+            } else {
+              $('#reg_server_error').text(data)
+              $('#reg_server_error').css('display', 'unset')
+            }
+          })
+        
+      } else {
+        $('#passw_not_matches').css('display', 'unset')
+      }
     }
   })
 })()

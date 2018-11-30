@@ -24,7 +24,7 @@ namespace TimeLineApp.services
             if (File.Exists(path))
             {
                 var users = File.ReadAllText(path).ToUpper();
-                rt = rgx.IsMatch(users);
+                rt = rgx.IsMatch(users.ToUpper());
             }
             return rt;
         }

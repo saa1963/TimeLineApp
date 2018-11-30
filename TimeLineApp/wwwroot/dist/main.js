@@ -129,7 +129,7 @@ exports.makeColor = function () {
         switch (_a.label) {
             case 0:
                 index = 0;
-                colors = ['green', 'rgba(255, 0, 0, 1.0)', 'blue', 'magenta', 'orange'];
+                colors = ['magenta', 'green', 'rgba(255, 0, 0, 1.0)', 'blue', 'magenta', 'orange'];
                 _a.label = 1;
             case 1:
                 if (false) {}
@@ -699,8 +699,19 @@ var ctx;
     $('#action01').click(function (ev) {
         alert('action01');
     });
+    $('#regPassword1').focus(function (ev) {
+        $('#passw_not_matches').css('display', 'none');
+    });
+    $('#regPassword2').focus(function (ev) {
+        $('#passw_not_matches').css('display', 'none');
+    });
     $('#btnReg').click(function (ev) {
+        $('#regLogin').val('');
+        $('#regEmail').val('');
+        $('#regPassword1').val('');
+        $('#regPassword2').val('');
         $('#tmRegisterModal').modal();
+        $('#passw_not_matches').css('display', 'none');
         return false;
     });
     $('#btnRegisterUser').click(function (ev) {
@@ -708,7 +719,29 @@ var ctx;
             && $('#regEmail')[0].reportValidity()
             && $('#regPassword1')[0].reportValidity()
             && $('#regPassword2')[0].reportValidity()) {
-            $('#tmRegisterModal').modal('hide');
+            if ($('#regPassword1').val() === $('#regPassword2').val()) {
+                $.ajax('api/register', {
+                    type: 'POST',
+                    data: {
+                        Login: $('#regLogin').val(),
+                        Email: $('#regEmail').val(),
+                        Password1: $('#regPassword1').val(),
+                        Password2: $('#regPassword2').val()
+                    }
+                })
+                    .done(function (data) {
+                    if (data === '') {
+                        $('#tmRegisterModal').modal('hide');
+                    }
+                    else {
+                        $('#reg_server_error').text(data);
+                        $('#reg_server_error').css('display', 'unset');
+                    }
+                });
+            }
+            else {
+                $('#passw_not_matches').css('display', 'unset');
+            }
         }
     });
 })();

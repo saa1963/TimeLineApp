@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
@@ -10,16 +10,6 @@
     <Content Remove="wwwroot\src\ts\**" />
     <EmbeddedResource Remove="wwwroot\src\ts\**" />
     <None Remove="wwwroot\src\ts\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="wwwroot\src\colorutils.js" />
-    <Content Remove="wwwroot\src\contextmenu.ts" />
-    <Content Remove="wwwroot\src\dateutils.js" />
-    <Content Remove="wwwroot\src\index.js" />
-    <Content Remove="wwwroot\src\saagraph.js" />
-    <Content Remove="wwwroot\src\stringutils.js" />
-    <Content Remove="wwwroot\src\timeline.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,13 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="wwwroot\src\colorutils.js" />
     <TypeScriptCompile Include="wwwroot\src\contextmenu.ts" />
-    <TypeScriptCompile Include="wwwroot\src\dateutils.js" />
-    <TypeScriptCompile Include="wwwroot\src\index.js" />
-    <TypeScriptCompile Include="wwwroot\src\saagraph.js" />
-    <TypeScriptCompile Include="wwwroot\src\stringutils.js" />
-    <TypeScriptCompile Include="wwwroot\src\timeline.js" />
   </ItemGroup>
 
 </Project>
