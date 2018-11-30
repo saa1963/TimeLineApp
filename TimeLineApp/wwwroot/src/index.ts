@@ -1,9 +1,9 @@
-import { TimeLine } from './timeline'
+import { TimeLine, EnumPeriod } from './timeline'
 import { makeColor } from './colorutils'
 import { ContextMenu, DIVIDER } from './contextmenu'
 
 const MIN_GAP = 100
-let PERIOD_TYPE = TimeLine.EnumPeriod.day
+let PERIOD_TYPE = EnumPeriod.day
 const HTOP = 56
 
 let timeLines: TimeLine[] = []
@@ -47,48 +47,48 @@ let ctx: CanvasRenderingContext2D
       'text': 'Периодичность',
       'sub': [
         {
-          'id': TimeLine.EnumPeriod.day,
+          'id': EnumPeriod.day,
           'text': 'День',
           'icon': '<i class="fas fa-angle-down"></i>',
           'events': {
             'click': (e) => {
-              SwitchPeriod(menuCtx, TimeLine.EnumPeriod.day)
+              SwitchPeriod(menuCtx, EnumPeriod.day)
             }
           }
         },
         {
-          'id': TimeLine.EnumPeriod.month,
+          'id': EnumPeriod.month,
           'text': 'Месяц',
           'events': {
             'click': (e) => {
-              SwitchPeriod(menuCtx, TimeLine.EnumPeriod.month)
+              SwitchPeriod(menuCtx, EnumPeriod.month)
             }
           }
         },
         {
-          'id': TimeLine.EnumPeriod.year,
+          'id': EnumPeriod.year,
           'text': 'Год',
           'events': {
             'click': (e) => {
-              SwitchPeriod(menuCtx, TimeLine.EnumPeriod.year)
+              SwitchPeriod(menuCtx, EnumPeriod.year)
             }
           }
         },
         {
-          'id': TimeLine.EnumPeriod.decade,
+          'id': EnumPeriod.decade,
           'text': 'Десятилетие',
           'events': {
             'click': (e) => {
-              SwitchPeriod(menuCtx, TimeLine.EnumPeriod.decade)
+              SwitchPeriod(menuCtx, EnumPeriod.decade)
             }
           }
         },
         {
-          'id': TimeLine.EnumPeriod.century,
+          'id': EnumPeriod.century,
           'text': 'Век',
           'events': {
             'click': (e) => {
-              SwitchPeriod(menuCtx, TimeLine.EnumPeriod.century)
+              SwitchPeriod(menuCtx, EnumPeriod.century)
             }
           }
         }
@@ -172,7 +172,7 @@ let ctx: CanvasRenderingContext2D
     alert('save')
   })
   $('#options').click((ev) => {
-    $('#typePeriod').val(TimeLine.EnumPeriod.year)
+    $('#typePeriod').val(EnumPeriod.year)
     $('#tmOptionsModal').modal()
   })
   $('#btnNewName').click((ev) => {

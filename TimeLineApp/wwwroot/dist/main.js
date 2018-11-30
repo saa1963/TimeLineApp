@@ -523,7 +523,7 @@ var timeline_1 = __webpack_require__(/*! ./timeline */ "./src/timeline.ts");
 var colorutils_1 = __webpack_require__(/*! ./colorutils */ "./src/colorutils.ts");
 var contextmenu_1 = __webpack_require__(/*! ./contextmenu */ "./src/contextmenu.js");
 var MIN_GAP = 100;
-var PERIOD_TYPE = timeline_1.TimeLine.EnumPeriod.day;
+var PERIOD_TYPE = timeline_1.EnumPeriod.day;
 var HTOP = 56;
 var timeLines = [];
 var ctx;
@@ -564,48 +564,48 @@ var ctx;
             'text': 'Периодичность',
             'sub': [
                 {
-                    'id': timeline_1.TimeLine.EnumPeriod.day,
+                    'id': timeline_1.EnumPeriod.day,
                     'text': 'День',
                     'icon': '<i class="fas fa-angle-down"></i>',
                     'events': {
                         'click': function (e) {
-                            SwitchPeriod(menuCtx, timeline_1.TimeLine.EnumPeriod.day);
+                            SwitchPeriod(menuCtx, timeline_1.EnumPeriod.day);
                         }
                     }
                 },
                 {
-                    'id': timeline_1.TimeLine.EnumPeriod.month,
+                    'id': timeline_1.EnumPeriod.month,
                     'text': 'Месяц',
                     'events': {
                         'click': function (e) {
-                            SwitchPeriod(menuCtx, timeline_1.TimeLine.EnumPeriod.month);
+                            SwitchPeriod(menuCtx, timeline_1.EnumPeriod.month);
                         }
                     }
                 },
                 {
-                    'id': timeline_1.TimeLine.EnumPeriod.year,
+                    'id': timeline_1.EnumPeriod.year,
                     'text': 'Год',
                     'events': {
                         'click': function (e) {
-                            SwitchPeriod(menuCtx, timeline_1.TimeLine.EnumPeriod.year);
+                            SwitchPeriod(menuCtx, timeline_1.EnumPeriod.year);
                         }
                     }
                 },
                 {
-                    'id': timeline_1.TimeLine.EnumPeriod.decade,
+                    'id': timeline_1.EnumPeriod.decade,
                     'text': 'Десятилетие',
                     'events': {
                         'click': function (e) {
-                            SwitchPeriod(menuCtx, timeline_1.TimeLine.EnumPeriod.decade);
+                            SwitchPeriod(menuCtx, timeline_1.EnumPeriod.decade);
                         }
                     }
                 },
                 {
-                    'id': timeline_1.TimeLine.EnumPeriod.century,
+                    'id': timeline_1.EnumPeriod.century,
                     'text': 'Век',
                     'events': {
                         'click': function (e) {
-                            SwitchPeriod(menuCtx, timeline_1.TimeLine.EnumPeriod.century);
+                            SwitchPeriod(menuCtx, timeline_1.EnumPeriod.century);
                         }
                     }
                 }
@@ -686,7 +686,7 @@ var ctx;
         alert('save');
     });
     $('#options').click(function (ev) {
-        $('#typePeriod').val(timeline_1.TimeLine.EnumPeriod.year);
+        $('#typePeriod').val(timeline_1.EnumPeriod.year);
         $('#tmOptionsModal').modal();
     });
     $('#btnNewName').click(function (ev) {
@@ -857,15 +857,6 @@ exports.stringUtils = (function () {
             while (s.length < size)
                 s = '0' + s;
             return s;
-        },
-        isValidUserName: function (s) {
-            s = s.trim();
-            if (s === '')
-                return false;
-            var a = s.match(/\w+/);
-            if (a[0] !== s)
-                return false;
-            return true;
         }
     };
 })();
@@ -885,6 +876,14 @@ exports.stringUtils = (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var dateutils_1 = __webpack_require__(/*! ./dateutils */ "./src/dateutils.ts");
 var saagraph_1 = __webpack_require__(/*! ./saagraph */ "./src/saagraph.ts");
+var EnumPeriod;
+(function (EnumPeriod) {
+    EnumPeriod[EnumPeriod["day"] = 1] = "day";
+    EnumPeriod[EnumPeriod["month"] = 2] = "month";
+    EnumPeriod[EnumPeriod["year"] = 3] = "year";
+    EnumPeriod[EnumPeriod["decade"] = 4] = "decade";
+    EnumPeriod[EnumPeriod["century"] = 5] = "century";
+})(EnumPeriod = exports.EnumPeriod || (exports.EnumPeriod = {}));
 var TimeLine = /** @class */ (function () {
     function TimeLine(ctx, curPeriod, y, color, period, name, data) {
         if (curPeriod === void 0) { curPeriod = null; }
@@ -919,11 +918,6 @@ var TimeLine = /** @class */ (function () {
     });
     Object.defineProperty(TimeLine, "HALF_INTERVAL_WIDTH", {
         get: function () { return TimeLine.INTERVAL_WIDTH / 2; },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TimeLine, "EnumPeriod", {
-        get: function () { return Object.freeze({ 'day': 1, 'month': 2, 'year': 3, 'decade': 4, 'century': 5 }); },
         enumerable: true,
         configurable: true
     });
@@ -1023,19 +1017,19 @@ var TimeLine = /** @class */ (function () {
     TimeLine.getCurPeriod = function (periodType) {
         var rt;
         switch (periodType) {
-            case TimeLine.EnumPeriod.month:
+            case EnumPeriod.month:
                 rt = dateutils_1.DateUtils.getMonthFromDate(dateutils_1.DateUtils.getCurDate());
                 break;
-            case TimeLine.EnumPeriod.year:
+            case EnumPeriod.year:
                 rt = dateutils_1.DateUtils.getYearFromDate(dateutils_1.DateUtils.getCurDate());
                 break;
-            case TimeLine.EnumPeriod.decade:
+            case EnumPeriod.decade:
                 rt = dateutils_1.DateUtils.getDecadeFromDate(dateutils_1.DateUtils.getCurDate());
                 break;
-            case TimeLine.EnumPeriod.century:
+            case EnumPeriod.century:
                 rt = dateutils_1.DateUtils.getCenturyFromDate(dateutils_1.DateUtils.getCurDate());
                 break;
-            case TimeLine.EnumPeriod.day:
+            case EnumPeriod.day:
             default:
                 rt = dateutils_1.DateUtils.getCurDate();
                 break;
@@ -1045,19 +1039,19 @@ var TimeLine = /** @class */ (function () {
     TimeLine.prototype.formatPeriod = function (period) {
         var rt;
         switch (this.period) {
-            case TimeLine.EnumPeriod.month:
+            case EnumPeriod.month:
                 rt = dateutils_1.DateUtils.formatMonth(period);
                 break;
-            case TimeLine.EnumPeriod.year:
+            case EnumPeriod.year:
                 rt = dateutils_1.DateUtils.formatYear(period);
                 break;
-            case TimeLine.EnumPeriod.decade:
+            case EnumPeriod.decade:
                 rt = dateutils_1.DateUtils.formatDecade(period);
                 break;
-            case TimeLine.EnumPeriod.century:
+            case EnumPeriod.century:
                 rt = dateutils_1.DateUtils.formatCentury(period);
                 break;
-            case TimeLine.EnumPeriod.day:
+            case EnumPeriod.day:
             default:
                 rt = dateutils_1.DateUtils.formatDate(period);
                 break;
@@ -1067,18 +1061,18 @@ var TimeLine = /** @class */ (function () {
     TimeLine.prototype.getPeriodAgo = function (period, offset) {
         var dt0;
         switch (this.period) {
-            case TimeLine.EnumPeriod.month:
-            case TimeLine.EnumPeriod.year:
-            case TimeLine.EnumPeriod.decade:
+            case EnumPeriod.month:
+            case EnumPeriod.year:
+            case EnumPeriod.decade:
                 dt0 = period + offset;
                 break;
-            case TimeLine.EnumPeriod.century:
+            case EnumPeriod.century:
                 dt0 = period + offset;
                 if (dt0 === 0) {
                     dt0 = dt0 + offset;
                 }
                 break;
-            case TimeLine.EnumPeriod.day:
+            case EnumPeriod.day:
             default:
                 dt0 = dateutils_1.DateUtils.getDateAgo(period, offset);
                 break;

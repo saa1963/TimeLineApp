@@ -1,13 +1,17 @@
 import { DateUtils } from './dateutils'
 import { saaGraph } from './saagraph'
 
+export enum EnumPeriod {
+  day = 1, month = 2, year = 3, decade = 4, century = 5
+}
+
 export class TimeLine {
   public ctx: CanvasRenderingContext2D
   public curPeriod: any
   public x: number
   public y: number
   public color: any
-  public period: any
+  public period: EnumPeriod
   public name: string
   public data: TimeLineData[]
   public curdata: number
@@ -26,7 +30,6 @@ export class TimeLine {
   static get HALF_LINE_THICKNESS () { return TimeLine.LINE_THICKNESS / 2 }
   static get INTERVAL_WIDTH (): number { return 100 }
   static get HALF_INTERVAL_WIDTH () { return TimeLine.INTERVAL_WIDTH / 2 }
-  static get EnumPeriod () { return Object.freeze({ 'day': 1, 'month': 2, 'year': 3, 'decade': 4, 'century': 5 }) }
 
   static load (ctx) {
     let o = new TimeLine(ctx)
@@ -129,22 +132,22 @@ export class TimeLine {
     this.x += movementX
   }
 
-  static getCurPeriod (periodType) {
+  static getCurPeriod (periodType: EnumPeriod) {
     let rt
     switch (periodType) {
-      case TimeLine.EnumPeriod.month:
+      case EnumPeriod.month:
         rt = DateUtils.getMonthFromDate(DateUtils.getCurDate())
         break
-      case TimeLine.EnumPeriod.year:
+      case EnumPeriod.year:
         rt = DateUtils.getYearFromDate(DateUtils.getCurDate())
         break
-      case TimeLine.EnumPeriod.decade:
+      case EnumPeriod.decade:
         rt = DateUtils.getDecadeFromDate(DateUtils.getCurDate())
         break
-      case TimeLine.EnumPeriod.century:
+      case EnumPeriod.century:
         rt = DateUtils.getCenturyFromDate(DateUtils.getCurDate())
         break
-      case TimeLine.EnumPeriod.day:
+      case EnumPeriod.day:
       default:
         rt = DateUtils.getCurDate()
         break
@@ -155,19 +158,19 @@ export class TimeLine {
   formatPeriod (period) {
     let rt
     switch (this.period) {
-      case TimeLine.EnumPeriod.month:
+      case EnumPeriod.month:
         rt = DateUtils.formatMonth(period)
         break
-      case TimeLine.EnumPeriod.year:
+      case EnumPeriod.year:
         rt = DateUtils.formatYear(period)
         break
-      case TimeLine.EnumPeriod.decade:
+      case EnumPeriod.decade:
         rt = DateUtils.formatDecade(period)
         break
-      case TimeLine.EnumPeriod.century:
+      case EnumPeriod.century:
         rt = DateUtils.formatCentury(period)
         break
-      case TimeLine.EnumPeriod.day:
+      case EnumPeriod.day:
       default:
         rt = DateUtils.formatDate(period)
         break
@@ -175,23 +178,23 @@ export class TimeLine {
     return rt
   }
 
-  getPeriodAgo (period, offset) {
+  getPeriodAgo (period: number | Date, offset: number): Date {
     let dt0
     switch (this.period) {
-      case TimeLine.EnumPeriod.month:
-      case TimeLine.EnumPeriod.year:
-      case TimeLine.EnumPeriod.decade:
-        dt0 = period + offset
+      case EnumPeriod.month:
+      case EnumPeriod.year:
+      case EnumPeriod.decade:
+        dt0 = <number>period + offset
         break
-      case TimeLine.EnumPeriod.century:
-        dt0 = period + offset
+      case EnumPeriod.century:
+        dt0 = <number>period + offset
         if (dt0 === 0) {
           dt0 = dt0 + offset
         }
         break
-      case TimeLine.EnumPeriod.day:
+      case EnumPeriod.day:
       default:
-        dt0 = DateUtils.getDateAgo(period, offset)
+        dt0 = DateUtils.getDateAgo(<Date>period, offset)
         break
     }
     return dt0
