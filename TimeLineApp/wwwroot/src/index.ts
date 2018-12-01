@@ -218,6 +218,7 @@ let ctx: CanvasRenderingContext2D
     $('#regPassword2').val('')
     $('#tmRegisterModal').modal()
     $('#passw_not_matches').css('display', 'none')
+    $('#reg_server_error').css('display', 'none')
     return false
   })
   $('#btnRegisterUser').click(ev => {

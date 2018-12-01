@@ -20,11 +20,11 @@ namespace TimeLineApp.services
         {
             bool rt = false;
             string upperLogin = login.ToUpper();
-            var rgx = new Regex(@"^" + upperLogin + @"\^");
+            var rgx = new Regex(@"^" + upperLogin + @"\^", RegexOptions.Multiline);
             if (File.Exists(path))
             {
                 var users = File.ReadAllText(path).ToUpper();
-                rt = rgx.IsMatch(users.ToUpper());
+                rt = rgx.IsMatch(users);
             }
             return rt;
         }

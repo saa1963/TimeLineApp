@@ -18,5 +18,10 @@ namespace TimeLineApp.Test
         {
             return Path.Combine(filesFolder(), name);
         }
+
+        public static string usersFolder()
+        {
+            return @"C:\Users\Сошины\source\repos\TimeLineApp2\TimeLineApp";
+        }
     }
 }
