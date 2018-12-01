@@ -681,6 +681,9 @@ var ctx;
     $('.closeregistermodal').click(function (ev) {
         $('#tmRegisterModal').modal('hide');
     });
+    $('.closeloginmodal').click(function (ev) {
+        $('#tmLoginModal').modal('hide');
+    });
     $('#tmName').keyup(function (ev) {
         if ($('#tmName').val().trim() !== '') {
             $('#btnNewName').prop('disabled', false);
@@ -705,6 +708,10 @@ var ctx;
     $('#regPassword2').focus(function (ev) {
         $('#passw_not_matches').css('display', 'none');
     });
+    $('#logPassword').focus(function (ev) {
+        $('#log_server_error').css('display', 'none');
+    });
+    // Открытие окна регистрации пользователя btnReg
     $('#btnReg').click(function (ev) {
         $('#regLogin').val('');
         $('#regEmail').val('');
@@ -712,15 +719,17 @@ var ctx;
         $('#regPassword2').val('');
         $('#tmRegisterModal').modal();
         $('#passw_not_matches').css('display', 'none');
+        $('#reg_server_error').css('display', 'none');
         return false;
     });
+    // Регистрация пользователя btnRegisterUser
     $('#btnRegisterUser').click(function (ev) {
         if ($('#regLogin')[0].reportValidity()
             && $('#regEmail')[0].reportValidity()
             && $('#regPassword1')[0].reportValidity()
             && $('#regPassword2')[0].reportValidity()) {
             if ($('#regPassword1').val() === $('#regPassword2').val()) {
-                $.ajax('api/register', {
+                $.ajax('api/register/reg', {
                     type: 'POST',
                     data: {
                         Login: $('#regLogin').val(),
@@ -742,6 +751,36 @@ var ctx;
             else {
                 $('#passw_not_matches').css('display', 'unset');
             }
+        }
+    });
+    // Открытие окна входа пользователя btnLogin
+    $('#btnLogin').click(function (ev) {
+        $('#logLogin').val('');
+        $('#logPassword').val('');
+        $('#tmLoginModal').modal();
+        $('#log_server_error').css('display', 'none');
+        return false;
+    });
+    // Вход пользователя btnLoginUser
+    $('#btnLoginUser').click(function (ev) {
+        if ($('#logLogin')[0].reportValidity()
+            && $('#logPassword')[0].reportValidity()) {
+            $.ajax('api/register/log', {
+                type: 'POST',
+                data: {
+                    Login: $('#logLogin').val(),
+                    Password: $('#logPassword').val()
+                }
+            })
+                .done(function (data) {
+                if (data === '') {
+                    $('#tmLoginModal').modal('hide');
+                }
+                else {
+                    $('#log_server_error').text(data);
+                    $('#log_server_error').css('display', 'unset');
+                }
+            });
         }
     });
 })();

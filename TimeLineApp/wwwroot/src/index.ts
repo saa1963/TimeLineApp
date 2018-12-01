@@ -188,6 +188,9 @@ let ctx: CanvasRenderingContext2D
   $('.closeregistermodal').click((ev) => {
     $('#tmRegisterModal').modal('hide')
   })
+  $('.closeloginmodal').click((ev) => {
+    $('#tmLoginModal').modal('hide')
+  })
   $('#tmName').keyup((ev) => {
     if ((<string>$('#tmName').val()).trim() !== '') {
       $('#btnNewName').prop('disabled', false)
@@ -211,6 +214,10 @@ let ctx: CanvasRenderingContext2D
   $('#regPassword2').focus(ev => {
     $('#passw_not_matches').css('display', 'none')
   })
+  $('#logPassword').focus(ev => {
+    $('#log_server_error').css('display', 'none')
+  })
+  // Открытие окна регистрации пользователя btnReg
   $('#btnReg').click((ev) => {
     $('#regLogin').val('')
     $('#regEmail').val('')
@@ -221,13 +228,14 @@ let ctx: CanvasRenderingContext2D
     $('#reg_server_error').css('display', 'none')
     return false
   })
+  // Регистрация пользователя btnRegisterUser
   $('#btnRegisterUser').click(ev => {
     if ((<HTMLInputElement>$('#regLogin')[0]).reportValidity()
         && (<HTMLInputElement>$('#regEmail')[0]).reportValidity()
         && (<HTMLInputElement>$('#regPassword1')[0]).reportValidity()
       && (<HTMLInputElement>$('#regPassword2')[0]).reportValidity()) {
       if ($('#regPassword1').val() === $('#regPassword2').val()) {
-        $.ajax('api/register', {
+        $.ajax('api/register/reg', {
           type: 'POST',
           data: {
             Login: $('#regLogin').val(),
@@ -248,6 +256,35 @@ let ctx: CanvasRenderingContext2D
       } else {
         $('#passw_not_matches').css('display', 'unset')
       }
+    }
+  })
+  // Открытие окна входа пользователя btnLogin
+  $('#btnLogin').click((ev) => {
+    $('#logLogin').val('')
+    $('#logPassword').val('')
+    $('#tmLoginModal').modal()
+    $('#log_server_error').css('display', 'none')
+    return false
+  })
+  // Вход пользователя btnLoginUser
+  $('#btnLoginUser').click(ev => {
+    if ((<HTMLInputElement>$('#logLogin')[0]).reportValidity()
+      && (<HTMLInputElement>$('#logPassword')[0]).reportValidity()) {
+      $.ajax('api/register/log', {
+        type: 'POST',
+        data: {
+          Login: $('#logLogin').val(),
+          Password: $('#logPassword').val()
+        }
+      })
+      .done(data => {
+        if (data === '') {
+          $('#tmLoginModal').modal('hide')
+        } else {
+          $('#log_server_error').text(data)
+          $('#log_server_error').css('display', 'unset')
+        }
+      })
     }
   })
 })()

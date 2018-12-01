@@ -9,7 +9,7 @@ using TimeLineApp.services;
 
 namespace TimeLineApp.Controllers
 {
-    [Route("api/[controller]")]
+    //[Route("api/[controller]")]
     [ApiController]
     public class RegisterController : ControllerBase
     {
@@ -19,7 +19,7 @@ namespace TimeLineApp.Controllers
             storage = _storage;
         }
 
-        // POST: api/Register
+        [Route("api/register/reg")]
         [HttpPost]
         public string Post([FromForm]Register model)
         {
@@ -28,6 +28,17 @@ namespace TimeLineApp.Controllers
                 return "";
             }
             return "Данный пользователь уже зарегистрирован";
+        }
+
+        [Route("api/register/log")]
+        [HttpPost]
+        public string Logon([FromForm]Logon model)
+        {
+            if (storage.Logon(model.Login, model.Password))
+            {
+                return "";
+            }
+            return "Ошибка входа";
         }
     }
 }

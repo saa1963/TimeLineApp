@@ -29,6 +29,25 @@ namespace TimeLineApp.services
             return rt;
         }
 
+        public bool Logon(string login, string password)
+        {
+            bool rt = false;
+            if (File.Exists(path))
+            {
+                var users = File.ReadLines(path).ToList();
+                foreach (var s in users)
+                {
+                    var a = s.Split('^');
+                    if (a[0].ToUpper() == login.ToUpper() && a[2] == password)
+                    {
+                        rt = true;
+                        break;
+                    }
+                }
+            }
+            return rt;
+        }
+
         public bool Remove(string login)
         {
             bool rt = false;
