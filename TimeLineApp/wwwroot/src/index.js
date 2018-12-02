@@ -6,6 +6,7 @@ var contextmenu_1 = require("./contextmenu");
 var MIN_GAP = 100;
 var PERIOD_TYPE = timeline_1.EnumPeriod.day;
 var HTOP = 56;
+var IsAuthentificated = false;
 var timeLines = [];
 var ctx;
 (function main() {
@@ -257,10 +258,21 @@ var ctx;
     });
     // Открытие окна входа пользователя btnLogin
     $('#btnLogin').click(function (ev) {
-        $('#logLogin').val('');
-        $('#logPassword').val('');
-        $('#tmLoginModal').modal();
-        $('#log_server_error').css('display', 'none');
+        if (!IsAuthentificated) {
+            $('#logLogin').val('');
+            $('#logPassword').val('');
+            $('#tmLoginModal').modal();
+            $('#log_server_error').css('display', 'none');
+        }
+        else {
+            $.ajax('api/register/logout')
+                .done(function (data) {
+                if (data) {
+                    IsAuthentificated = false;
+                    $('#btnLogin').text('Вход');
+                }
+            });
+        }
         return false;
     });
     // Вход пользователя btnLoginUser
@@ -270,19 +282,19 @@ var ctx;
             $.ajax('api/register/log', {
                 type: 'POST',
                 data: {
-                    Login: $('#regLogin').val(),
-                    Email: $('#regEmail').val(),
-                    Password1: $('#regPassword1').val(),
-                    Password2: $('#regPassword2').val()
+                    Login: $('#logLogin').val(),
+                    Password: $('#logPassword').val()
                 }
             })
                 .done(function (data) {
                 if (data === '') {
-                    $('#tmRegisterModal').modal('hide');
+                    IsAuthentificated = true;
+                    $('#tmLoginModal').modal('hide');
+                    $('#btnLogin').text('Выход');
                 }
                 else {
-                    $('#reg_server_error').text(data);
-                    $('#reg_server_error').css('display', 'unset');
+                    $('#log_server_error').text(data);
+                    $('#log_server_error').css('display', 'unset');
                 }
             });
         }

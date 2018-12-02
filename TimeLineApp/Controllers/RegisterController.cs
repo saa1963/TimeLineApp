@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TimeLineApp.Models;
@@ -32,13 +35,33 @@ namespace TimeLineApp.Controllers
 
         [Route("api/register/log")]
         [HttpPost]
-        public string Logon([FromForm]Logon model)
+        public async Task<string> Logon([FromForm]Logon model)
         {
             if (storage.Logon(model.Login, model.Password))
             {
+                await AuthenticateUser(model.Login);
                 return "";
             }
             return "Ошибка входа";
+        }
+
+        [Route("api/register/logout")]
+        [HttpGet]
+        public async Task<bool> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return true;
+        }
+
+        private async Task AuthenticateUser(string login)
+        {
+            List<Claim> claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, login),
+            };
+            var claimsIdentity = new ClaimsIdentity(claims, "Cookies", ClaimTypes.Name, ClaimTypes.Role);
+            var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
         }
     }
 }

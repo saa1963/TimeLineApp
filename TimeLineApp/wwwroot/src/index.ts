@@ -5,6 +5,7 @@ import { ContextMenu, DIVIDER } from './contextmenu'
 const MIN_GAP = 100
 let PERIOD_TYPE = EnumPeriod.day
 const HTOP = 56
+let IsAuthentificated: boolean = false
 
 let timeLines: TimeLine[] = []
 let ctx: CanvasRenderingContext2D
@@ -260,10 +261,20 @@ let ctx: CanvasRenderingContext2D
   })
   // Открытие окна входа пользователя btnLogin
   $('#btnLogin').click((ev) => {
-    $('#logLogin').val('')
-    $('#logPassword').val('')
-    $('#tmLoginModal').modal()
-    $('#log_server_error').css('display', 'none')
+    if (!IsAuthentificated) {
+      $('#logLogin').val('')
+      $('#logPassword').val('')
+      $('#tmLoginModal').modal()
+      $('#log_server_error').css('display', 'none')
+    } else {
+      $.ajax('api/register/logout')
+        .done(data => {
+          if (data) {
+            IsAuthentificated = false
+            $('#btnLogin').text('Вход')
+          }
+        })
+    }
     return false
   })
   // Вход пользователя btnLoginUser
@@ -279,7 +290,9 @@ let ctx: CanvasRenderingContext2D
       })
       .done(data => {
         if (data === '') {
+          IsAuthentificated = true
           $('#tmLoginModal').modal('hide')
+          $('#btnLogin').text('Выход')
         } else {
           $('#log_server_error').text(data)
           $('#log_server_error').css('display', 'unset')

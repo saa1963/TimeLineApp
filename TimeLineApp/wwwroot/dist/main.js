@@ -504,6 +504,7 @@ var contextmenu_1 = __webpack_require__(/*! ./contextmenu */ "./src/contextmenu.
 var MIN_GAP = 100;
 var PERIOD_TYPE = timeline_1.EnumPeriod.day;
 var HTOP = 56;
+var IsAuthentificated = false;
 var timeLines = [];
 var ctx;
 (function main() {
@@ -755,10 +756,21 @@ var ctx;
     });
     // Открытие окна входа пользователя btnLogin
     $('#btnLogin').click(function (ev) {
-        $('#logLogin').val('');
-        $('#logPassword').val('');
-        $('#tmLoginModal').modal();
-        $('#log_server_error').css('display', 'none');
+        if (!IsAuthentificated) {
+            $('#logLogin').val('');
+            $('#logPassword').val('');
+            $('#tmLoginModal').modal();
+            $('#log_server_error').css('display', 'none');
+        }
+        else {
+            $.ajax('api/register/logout')
+                .done(function (data) {
+                if (data) {
+                    IsAuthentificated = false;
+                    $('#btnLogin').text('Вход');
+                }
+            });
+        }
         return false;
     });
     // Вход пользователя btnLoginUser
@@ -774,7 +786,9 @@ var ctx;
             })
                 .done(function (data) {
                 if (data === '') {
+                    IsAuthentificated = true;
                     $('#tmLoginModal').modal('hide');
+                    $('#btnLogin').text('Выход');
                 }
                 else {
                     $('#log_server_error').text(data);
