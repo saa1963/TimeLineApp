@@ -12,7 +12,7 @@ let ctx: CanvasRenderingContext2D
 
 (function main () {
   let isDragDrop = false
-  let indLine
+  let indLine: number
 
   let menuitems = [
     {
@@ -37,7 +37,12 @@ let ctx: CanvasRenderingContext2D
       'id': 'save',
       'text': 'Сохранить',
       'icon': '<i class="far fa-save"></i>',
-      'enabled': false
+      'enabled': false,
+      'events': {
+        'click': (e) => {
+          timeLines[indLine].save()
+        }
+      }
     },
     {
       'id': 'line',
@@ -272,6 +277,8 @@ let ctx: CanvasRenderingContext2D
           if (data) {
             IsAuthentificated = false
             $('#btnLogin').text('Вход')
+            $('#lblUser').css('display', 'none')
+            $('#lblUser').text('')
           }
         })
     }
@@ -293,6 +300,8 @@ let ctx: CanvasRenderingContext2D
           IsAuthentificated = true
           $('#tmLoginModal').modal('hide')
           $('#btnLogin').text('Выход')
+          $('#lblUser').css('display', 'unset')
+          $('#lblUser').text(<string>$('#logLogin').val())
         } else {
           $('#log_server_error').text(data)
           $('#log_server_error').css('display', 'unset')
@@ -307,7 +316,7 @@ function LoadTimeLine () {
   NewTimeLine(tl.name, tl)
 }
 
-function NewTimeLine (name: string, tl?: TimeLine) {
+function NewTimeLine (name: string, tl: TimeLine = null) {
   let aY
   if ((((timeLines.length + 2) * MIN_GAP) + (timeLines.length + 1) * TimeLine.LINE_THICKNESS) > ctx.canvas.clientHeight) {
     alert('Достигнуто максимальное количество линий времени')

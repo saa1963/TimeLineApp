@@ -35,7 +35,12 @@ var ctx;
             'id': 'save',
             'text': 'Сохранить',
             'icon': '<i class="far fa-save"></i>',
-            'enabled': false
+            'enabled': false,
+            'events': {
+                'click': function (e) {
+                    timeLines[indLine].save();
+                }
+            }
         },
         {
             'id': 'line',
@@ -270,6 +275,8 @@ var ctx;
                 if (data) {
                     IsAuthentificated = false;
                     $('#btnLogin').text('Вход');
+                    $('#lblUser').css('display', 'none');
+                    $('#lblUser').text('');
                 }
             });
         }
@@ -291,6 +298,8 @@ var ctx;
                     IsAuthentificated = true;
                     $('#tmLoginModal').modal('hide');
                     $('#btnLogin').text('Выход');
+                    $('#lblUser').css('display', 'unset');
+                    $('#lblUser').text($('#logLogin').val());
                 }
                 else {
                     $('#log_server_error').text(data);
@@ -305,6 +314,7 @@ function LoadTimeLine() {
     NewTimeLine(tl.name, tl);
 }
 function NewTimeLine(name, tl) {
+    if (tl === void 0) { tl = null; }
     var aY;
     if ((((timeLines.length + 2) * MIN_GAP) + (timeLines.length + 1) * timeline_1.TimeLine.LINE_THICKNESS) > ctx.canvas.clientHeight) {
         alert('Достигнуто максимальное количество линий времени');
