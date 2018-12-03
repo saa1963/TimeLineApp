@@ -17,10 +17,17 @@ namespace TimeLineApp.services
         {
             env = hostingEnvironment;
         }
+
+        /// <summary>
+        /// UnauthorizedAccessException
+        /// </summary>
+        /// <param name="httpCtx"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public bool IsExist(HttpContext httpCtx, string name)
         {
-            var err = getFileName(httpCtx, name);
-            if (err.IsSuccess) return
+            var fname = getFileName(httpCtx, name);
+            return File.Exists(fname);
         }
 
         public TimeLine Load(string name)
@@ -28,9 +35,10 @@ namespace TimeLineApp.services
             throw new NotImplementedException();
         }
 
-        public bool Save(TimeLine tl)
+        public bool Save(HttpContext httpCtx, string tl)
         {
-            throw new NotImplementedException();
+            var fname = getFileName(httpCtx, tl.Name);
+            File.WriteAllText(fname, )
         }
 
         private string getFileName(HttpContext httpCtx, string name)
@@ -42,7 +50,7 @@ namespace TimeLineApp.services
             }
             else
             {
-                throw new UnauthorizedAccessException();
+                throw new UnauthorizedAccessException("Неавторизованный доступ.");
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,6 +11,6 @@ namespace TimeLineApp.services
     {
         bool Save(TimeLine tl);
         TimeLine Load(string name);
-        bool IsExist(string name);
+        bool IsExist(HttpContext httpCtx, string name);
     }
 }
