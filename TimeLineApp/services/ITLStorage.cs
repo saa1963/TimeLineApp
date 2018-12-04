@@ -12,5 +12,6 @@ namespace TimeLineApp.services
         bool Save(HttpContext httpCtx, TimeLine tl);
         TimeLine Load(string name);
         bool IsExist(HttpContext httpCtx, string name);
+        IEnumerable<string> List(HttpContext httpCtx);
     }
 }

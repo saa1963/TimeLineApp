@@ -34,11 +34,6 @@ var TimeLine = /** @class */ (function () {
     TimeLine.prototype.save = function () {
         $.ajax('api/storage/save', {
             method: 'POST',
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
-            },
             data: {
                 s1: this.name,
                 s2: JSON.stringify({
@@ -112,7 +107,13 @@ var TimeLine = /** @class */ (function () {
                     ]
                 })
             }
-        }).done(function (data) { console.log('OK'); });
+        })
+            .done(function (_) {
+            alert('Сохранение прошло успешно.');
+        })
+            .fail(function (jqXHR) {
+            alert('Ошибка при сохранении.\n' + jqXHR.responseText);
+        });
     };
     Object.defineProperty(TimeLine.prototype, "Period", {
         set: function (period) {

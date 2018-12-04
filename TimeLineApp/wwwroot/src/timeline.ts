@@ -119,7 +119,7 @@ export class TimeLine {
       })
       .fail((jqXHR) => {
         alert('Ошибка при сохранении.\n' + jqXHR.responseText)
-    })
+      })
   }
 
   set Period (period) {

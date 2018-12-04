@@ -1061,6 +1061,9 @@ var TimeLine = /** @class */ (function () {
         })
             .fail(function (jqXHR) {
             alert('Ошибка при сохранении.\n' + jqXHR.responseText);
+        })
+            .always(function (x) {
+            console.log(x);
         });
     };
     Object.defineProperty(TimeLine.prototype, "Period", {

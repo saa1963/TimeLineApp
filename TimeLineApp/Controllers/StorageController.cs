@@ -13,10 +13,12 @@ namespace TimeLineApp.Controllers
     public class StorageController : ControllerBase
     {
         private readonly ITLStorage storage;
+
         public StorageController(ITLStorage _storage)
         {
             storage = _storage;
         }
+
         [HttpPost]
         [Route("api/storage/save")]
         public IActionResult Save([FromForm]DblString model)
@@ -26,6 +28,20 @@ namespace TimeLineApp.Controllers
                 var tl = new TimeLine(model.s1, model.s2);
                 storage.Save(HttpContext, tl);
                 return Ok();
+            }
+            catch(Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("api/storage/list")]
+        public ActionResult<IEnumerable<string>> List()
+        {
+            try
+            {
+                return Ok(storage.List(HttpContext));
             }
             catch(Exception e)
             {

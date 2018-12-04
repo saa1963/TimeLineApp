@@ -20,16 +20,25 @@ namespace TimeLineApp.services
             env = hostingEnvironment;
         }
 
-        /// <summary>
-        /// UnauthorizedAccessException
-        /// </summary>
-        /// <param name="httpCtx"></param>
-        /// <param name="name"></param>
-        /// <returns></returns>
         public bool IsExist(HttpContext httpCtx, string name)
         {
             var fname = getFileName(httpCtx, name);
             return File.Exists(fname);
+        }
+
+        public IEnumerable<string> List(HttpContext httpCtx)
+        {
+            var rt = new List<string>();
+            var userName = getUserName(httpCtx);
+            var path = Path.Combine(env.ContentRootPath, "data"); //, userName + "." + name + ".tl");
+            var files = Directory.GetFiles(path, userName + ".*.tl");
+            foreach (var f in files)
+            {
+                var fname = Path.GetFileName(f);
+                var ar = fname.Split('.');
+                rt.Add(ar[1]);
+            }
+            return rt;
         }
 
         public TimeLine Load(string name)
@@ -54,24 +63,27 @@ namespace TimeLineApp.services
             }
         }
 
-        private string getFileName(HttpContext httpCtx, string name)
+        private string getUserName(HttpContext httpCtx)
         {
+            string rt = null;
             if (httpCtx.User.HasClaim(s => s.Type == ClaimTypes.Name))
             {
                 var userName = httpCtx.User.Claims.SingleOrDefault(s => s.Type == ClaimTypes.Name).Value;
                 if (userName != null)
                 {
-                    return Path.Combine(env.ContentRootPath, "data", userName + "." + name + ".tl");
-                }
-                else
-                {
-                    throw new UnauthorizedAccessException("Неавторизованный доступ.");
+                    rt =  userName;
                 }
             }
+            if (rt != null)
+                return rt;
             else
-            {
-                throw new UnauthorizedAccessException("Неавторизованный доступ.");
-            }
+                throw new UnauthorizedAccessException("Неавторизованный доступ");
+        }
+
+        private string getFileName(HttpContext httpCtx, string name)
+        {
+            var userName = getUserName(httpCtx);
+            return Path.Combine(env.ContentRootPath, "data", userName + "." + name + ".tl");
         }
     }
 }
