@@ -114,8 +114,12 @@ export class TimeLine {
         })
       }
     })
-      .done(data => { console.log('OK') })
-    .fail(
+      .done((_) => {
+        alert('Сохранение прошло успешно.')
+      })
+      .fail((jqXHR) => {
+        alert('Ошибка при сохранении.\n' + jqXHR.responseText)
+    })
   }
 
   set Period (period) {
