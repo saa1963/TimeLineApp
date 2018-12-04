@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using TimeLineApp.Models;
@@ -35,18 +37,36 @@ namespace TimeLineApp.services
             throw new NotImplementedException();
         }
 
-        public bool Save(HttpContext httpCtx, string tl)
+        public bool Save(HttpContext httpCtx, TimeLine tl)
         {
-            var fname = getFileName(httpCtx, tl.Name);
-            File.WriteAllText(fname, )
+            try
+            {
+                var fname = getFileName(httpCtx, tl.Name);
+                IFormatter formatter = new BinaryFormatter();
+                Stream stream = new FileStream(fname, FileMode.Create, FileAccess.Write, FileShare.None);
+                formatter.Serialize(stream, tl);
+                stream.Close();
+                return true;
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
         }
 
         private string getFileName(HttpContext httpCtx, string name)
         {
-            var userName = httpCtx.User.Claims.SingleOrDefault(s => s.Type == ClaimTypes.Name).Value;
-            if (userName != null)
+            if (httpCtx.User.HasClaim(s => s.Type == ClaimTypes.Name))
             {
-                return Path.Combine(env.ContentRootPath, "data", userName + "." + name + ".tl");
+                var userName = httpCtx.User.Claims.SingleOrDefault(s => s.Type == ClaimTypes.Name).Value;
+                if (userName != null)
+                {
+                    return Path.Combine(env.ContentRootPath, "data", userName + "." + name + ".tl");
+                }
+                else
+                {
+                    throw new UnauthorizedAccessException("Неавторизованный доступ.");
+                }
             }
             else
             {

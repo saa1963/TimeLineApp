@@ -8,6 +8,7 @@ using Newtonsoft.Json.Linq;
 
 namespace TimeLineApp.Models
 {
+    [Serializable]
     public struct Date
     {
         int Day;
@@ -48,6 +49,8 @@ namespace TimeLineApp.Models
             Year = year;
         }
     }
+
+    [Serializable]
     public class TimeLine
     {
         private List<Event> m_events = new List<Event>();
@@ -174,6 +177,7 @@ namespace TimeLineApp.Models
         { get => m_periods.Count; }
     }
 
+    [Serializable]
     public class Event
     {
         private string m_name;
@@ -223,6 +227,7 @@ namespace TimeLineApp.Models
         public int Century { get => m_century; set => m_century = value; }
     }
 
+    [Serializable]
     public class EventCentury: Event
     {
         public EventCentury(string name, int century): base(name)
@@ -231,6 +236,7 @@ namespace TimeLineApp.Models
         }
     }
 
+    [Serializable]
     public class EventDecade : Event
     {
         /// <summary>
@@ -258,6 +264,7 @@ namespace TimeLineApp.Models
         }
     }
 
+    [Serializable]
     public class EventYear: Event
     {
         public EventYear(string name, int year): base(name)
@@ -268,6 +275,7 @@ namespace TimeLineApp.Models
         }
     }
 
+    [Serializable]
     public class EventMonth: Event
     {
         /// <summary>
@@ -298,6 +306,7 @@ namespace TimeLineApp.Models
         }
     }
 
+    [Serializable]
     public class EventDay: Event
     {
         /// <summary>
@@ -317,6 +326,7 @@ namespace TimeLineApp.Models
         }
     }
 
+    [Serializable]
     public class Period
     {
         public string Name { get; set; }

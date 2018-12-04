@@ -35,6 +35,7 @@ namespace TimeLineApp
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
             services.AddSingleton<IUserStorage, FileUserStorage>();
+            services.AddSingleton<ITLStorage, FileTLStorage>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

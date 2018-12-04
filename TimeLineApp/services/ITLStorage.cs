@@ -9,7 +9,7 @@ namespace TimeLineApp.services
 {
     public interface ITLStorage
     {
-        bool Save(TimeLine tl);
+        bool Save(HttpContext httpCtx, TimeLine tl);
         TimeLine Load(string name);
         bool IsExist(HttpContext httpCtx, string name);
     }
