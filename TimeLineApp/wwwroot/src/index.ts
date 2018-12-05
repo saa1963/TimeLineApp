@@ -311,9 +311,11 @@ let ctx: CanvasRenderingContext2D
   })
 })()
 
-function LoadTimeLine () {
-  let tl = TimeLine.load(ctx)
-  NewTimeLine(tl.name, tl)
+function LoadTimeLine() {
+  let lst: string[] = TimeLine.getList()
+  
+  //let tl = TimeLine.load(ctx)
+  //NewTimeLine(tl.name, tl)
 }
 
 function NewTimeLine (name: string, tl: TimeLine = null) {

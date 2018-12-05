@@ -310,8 +310,9 @@ var ctx;
     });
 })();
 function LoadTimeLine() {
-    var tl = timeline_1.TimeLine.load(ctx);
-    NewTimeLine(tl.name, tl);
+    timeline_1.TimeLine.load();
+    //let tl = TimeLine.load(ctx)
+    //NewTimeLine(tl.name, tl)
 }
 function NewTimeLine(name, tl) {
     if (tl === void 0) { tl = null; }

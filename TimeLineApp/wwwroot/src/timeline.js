@@ -27,9 +27,11 @@ var TimeLine = /** @class */ (function () {
         this.name = name;
         this.data = data;
     }
-    TimeLine.load = function (ctx) {
-        var o = new TimeLine(ctx);
-        return o;
+    TimeLine.load = function () {
+        $.ajax('api/storage/list')
+            .done(function (data) {
+            console.log(data);
+        });
     };
     TimeLine.prototype.save = function () {
         $.ajax('api/storage/save', {

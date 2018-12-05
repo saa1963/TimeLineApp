@@ -51,6 +51,9 @@ var DateUtils = /** @class */ (function () {
         var century = Math.floor((decade - 1) / 10) + 1;
         return decade - (century - 1) * 10;
     };
+    DateUtils.leapYear = function (year) {
+        return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
+    };
     DateUtils.mth = ['ЯНВ', 'ФЕВ', 'МАР', 'АПР', 'МАЙ', 'ИЮН', 'ИЮЛ', 'АВГ', 'СЕН', 'ОКТ', 'НОЯ', 'ДЕК'];
     return DateUtils;
 }());

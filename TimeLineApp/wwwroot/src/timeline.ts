@@ -34,9 +34,20 @@ export class TimeLine {
     this.data = data
   }
 
-  static load(ctx: CanvasRenderingContext2D): TimeLine {
-    let o = new TimeLine(ctx)
-    return o
+  static getList(): string[] {
+    let rt: string[]
+    $.ajax('api/storage/list')
+      .done(data => {
+        return data
+      })
+      .fail(data => {
+        alert(data.responseText)
+        return null
+      })
+  }
+
+  static load() {
+    
   }
 
   save () {

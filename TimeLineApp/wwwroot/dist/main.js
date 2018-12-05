@@ -465,6 +465,9 @@ var DateUtils = /** @class */ (function () {
         var century = Math.floor((decade - 1) / 10) + 1;
         return decade - (century - 1) * 10;
     };
+    DateUtils.leapYear = function (year) {
+        return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
+    };
     DateUtils.mth = ['ЯНВ', 'ФЕВ', 'МАР', 'АПР', 'МАЙ', 'ИЮН', 'ИЮЛ', 'АВГ', 'СЕН', 'ОКТ', 'НОЯ', 'ДЕК'];
     return DateUtils;
 }());
@@ -808,8 +811,10 @@ var ctx;
     });
 })();
 function LoadTimeLine() {
-    var tl = timeline_1.TimeLine.load(ctx);
-    NewTimeLine(tl.name, tl);
+    timeline_1.TimeLine.load();
+    $('#tmLoadModal').modal();
+    //let tl = TimeLine.load(ctx)
+    //NewTimeLine(tl.name, tl)
 }
 function NewTimeLine(name, tl) {
     if (tl === void 0) { tl = null; }
@@ -975,9 +980,13 @@ var TimeLine = /** @class */ (function () {
         this.name = name;
         this.data = data;
     }
-    TimeLine.load = function (ctx) {
-        var o = new TimeLine(ctx);
-        return o;
+    TimeLine.load = function () {
+        $.ajax('api/storage/list')
+            .done(function (data) {
+        })
+            .fail(function (data) {
+            alert(data.responseText);
+        });
     };
     TimeLine.prototype.save = function () {
         $.ajax('api/storage/save', {
@@ -1061,9 +1070,6 @@ var TimeLine = /** @class */ (function () {
         })
             .fail(function (jqXHR) {
             alert('Ошибка при сохранении.\n' + jqXHR.responseText);
-        })
-            .always(function (x) {
-            console.log(x);
         });
     };
     Object.defineProperty(TimeLine.prototype, "Period", {
