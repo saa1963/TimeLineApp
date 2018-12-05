@@ -49,6 +49,10 @@ export class DateUtils {
     let century = Math.floor((decade - 1) / 10) + 1
     return decade - (century - 1) * 10
   }
+
+  static leapYear(year) {
+    return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
+  }
 }
 
 function romanize (num: number): string {

@@ -1,5 +1,6 @@
 import { DateUtils } from './dateutils'
 import { saaGraph } from './saagraph'
+import { TimeLineData as TLData } from './TLEvent'
 
 export enum EnumPeriod {
   day = 1, month = 2, year = 3, decade = 4, century = 5
@@ -15,6 +16,7 @@ export class TimeLine {
   name: string
   data: TimeLineData[]
   curdata: number
+  tldata: TLData
 
   static readonly LINE_THICKNESS: number = 25
   private static readonly HALF_LINE_THICKNESS: number = TimeLine.LINE_THICKNESS / 2

@@ -83,19 +83,19 @@ namespace TimeLineApp.Models
                         }
                         else if (e["year"] != null)
                         {
-                            m_events.Add(new EventMonth(
+                            m_events.Add(new EventYear(
                                 e["name"].Value<string>(),
                                 e["year"].Value<int>()));
                         }
                         else if (e["decade"] != null)
                         {
-                            m_events.Add(new EventMonth(
+                            m_events.Add(new EventDecade(
                                 e["name"].Value<string>(),
                                 e["decade"].Value<int>()));
                         }
                         else if (e["century"] != null)
                         {
-                            m_events.Add(new EventMonth(
+                            m_events.Add(new EventCentury(
                                 e["name"].Value<string>(),
                                 e["century"].Value<int>()));
                         }
