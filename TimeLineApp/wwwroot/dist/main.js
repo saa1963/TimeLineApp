@@ -669,89 +669,26 @@ var ctx;
     var isDragDrop = false;
     var indLine;
     var menuitems = [
-        {
-            'id': 'new',
-            'text': 'Новая',
-            'icon': '<i class="far fa-file"></i></i>',
-            'events': {
-                'click': NewTmDialog
-            }
-        },
-        {
-            'id': 'load',
-            'text': 'Загрузить',
-            'icon': '<i class="far fa-folder-open"></i>',
-            'events': {
-                'click': function (e) {
-                    LoadTimeLine();
-                }
-            }
-        },
-        {
-            'id': 'save',
-            'text': 'Сохранить',
-            'icon': '<i class="far fa-save"></i>',
-            'enabled': false,
-            'events': {
-                'click': function (e) {
-                    timeLines[indLine].save();
-                }
-            }
-        },
-        {
-            'id': 'line',
-            'type': contextmenu_1.DIVIDER
-        },
-        {
-            'id': 'period',
-            'text': 'Периодичность',
-            'sub': [
-                {
-                    'id': timeline_1.EnumPeriod.day,
-                    'text': 'День',
-                    'icon': '<i class="fas fa-angle-down"></i>',
-                    'events': {
-                        'click': function (e) {
-                            SwitchPeriod(menuCtx, timeline_1.EnumPeriod.day);
-                        }
-                    }
-                },
-                {
-                    'id': timeline_1.EnumPeriod.month,
-                    'text': 'Месяц',
-                    'events': {
-                        'click': function (e) {
-                            SwitchPeriod(menuCtx, timeline_1.EnumPeriod.month);
-                        }
-                    }
-                },
-                {
-                    'id': timeline_1.EnumPeriod.year,
-                    'text': 'Год',
-                    'events': {
-                        'click': function (e) {
-                            SwitchPeriod(menuCtx, timeline_1.EnumPeriod.year);
-                        }
-                    }
-                },
-                {
-                    'id': timeline_1.EnumPeriod.decade,
-                    'text': 'Десятилетие',
-                    'events': {
-                        'click': function (e) {
-                            SwitchPeriod(menuCtx, timeline_1.EnumPeriod.decade);
-                        }
-                    }
-                },
-                {
-                    'id': timeline_1.EnumPeriod.century,
-                    'text': 'Век',
-                    'events': {
-                        'click': function (e) {
-                            SwitchPeriod(menuCtx, timeline_1.EnumPeriod.century);
-                        }
-                    }
-                }
+        { id: 'new', text: 'Новая', icon: '<i class="far fa-file"></i>',
+            events: { click: NewTmDialog } },
+        { id: 'load', text: 'Загрузить', icon: '<i class="far fa-folder-open"></i>',
+            events: { click: LoadTimeLine } },
+        { id: 'save', text: 'Сохранить', icon: '<i class="far fa-save"></i>',
+            enabled: false,
+            events: { click: function () { return timeLines[indLine].save(); } } },
+        { id: 'line', type: contextmenu_1.DIVIDER },
+        { id: 'period', text: 'Периодичность',
+            sub: [
+                { id: timeline_1.EnumPeriod.day, text: 'День', icon: '<i class="fas fa-angle-down"></i>',
+                    events: { click: function () { return SwitchPeriod(menuCtx, timeline_1.EnumPeriod.day); } } },
+                { id: timeline_1.EnumPeriod.month, text: 'Месяц',
+                    events: { click: function () { return SwitchPeriod(menuCtx, timeline_1.EnumPeriod.month); } } },
+                { id: timeline_1.EnumPeriod.year, text: 'Год',
+                    events: { click: function () { return SwitchPeriod(menuCtx, timeline_1.EnumPeriod.year); } } },
+                { id: timeline_1.EnumPeriod.decade, text: 'Десятилетие',
+                    events: { click: function () { return SwitchPeriod(menuCtx, timeline_1.EnumPeriod.decade); } } },
+                { id: timeline_1.EnumPeriod.century, text: 'Век',
+                    events: { click: function () { return SwitchPeriod(menuCtx, timeline_1.EnumPeriod.century); } } }
             ]
         }
     ];

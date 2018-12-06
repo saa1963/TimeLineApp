@@ -3,99 +3,37 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var timeline_1 = require("./timeline");
 var colorutils_1 = require("./colorutils");
 var contextmenu_1 = require("./contextmenu");
+var LogonHandlers_1 = require("./LogonHandlers");
+var RegisterHandlers_1 = require("./RegisterHandlers");
 var MIN_GAP = 100;
 var PERIOD_TYPE = timeline_1.EnumPeriod.day;
 var HTOP = 56;
-var IsAuthentificated = false;
 var timeLines = [];
 var ctx;
 (function main() {
     var isDragDrop = false;
     var indLine;
     var menuitems = [
-        {
-            'id': 'new',
-            'text': 'Новая',
-            'icon': '<i class="far fa-file"></i></i>',
-            'events': {
-                'click': NewTmDialog
-            }
-        },
-        {
-            'id': 'load',
-            'text': 'Загрузить',
-            'icon': '<i class="far fa-folder-open"></i>',
-            'events': {
-                'click': function (e) {
-                    LoadTimeLine();
-                }
-            }
-        },
-        {
-            'id': 'save',
-            'text': 'Сохранить',
-            'icon': '<i class="far fa-save"></i>',
-            'enabled': false,
-            'events': {
-                'click': function (e) {
-                    timeLines[indLine].save();
-                }
-            }
-        },
-        {
-            'id': 'line',
-            'type': contextmenu_1.DIVIDER
-        },
-        {
-            'id': 'period',
-            'text': 'Периодичность',
-            'sub': [
-                {
-                    'id': timeline_1.EnumPeriod.day,
-                    'text': 'День',
-                    'icon': '<i class="fas fa-angle-down"></i>',
-                    'events': {
-                        'click': function (e) {
-                            SwitchPeriod(menuCtx, timeline_1.EnumPeriod.day);
-                        }
-                    }
-                },
-                {
-                    'id': timeline_1.EnumPeriod.month,
-                    'text': 'Месяц',
-                    'events': {
-                        'click': function (e) {
-                            SwitchPeriod(menuCtx, timeline_1.EnumPeriod.month);
-                        }
-                    }
-                },
-                {
-                    'id': timeline_1.EnumPeriod.year,
-                    'text': 'Год',
-                    'events': {
-                        'click': function (e) {
-                            SwitchPeriod(menuCtx, timeline_1.EnumPeriod.year);
-                        }
-                    }
-                },
-                {
-                    'id': timeline_1.EnumPeriod.decade,
-                    'text': 'Десятилетие',
-                    'events': {
-                        'click': function (e) {
-                            SwitchPeriod(menuCtx, timeline_1.EnumPeriod.decade);
-                        }
-                    }
-                },
-                {
-                    'id': timeline_1.EnumPeriod.century,
-                    'text': 'Век',
-                    'events': {
-                        'click': function (e) {
-                            SwitchPeriod(menuCtx, timeline_1.EnumPeriod.century);
-                        }
-                    }
-                }
+        { id: 'new', text: 'Новая', icon: '<i class="far fa-file"></i>',
+            events: { click: NewTmDialog } },
+        { id: 'load', text: 'Загрузить', icon: '<i class="far fa-folder-open"></i>',
+            events: { click: LoadTimeLine } },
+        { id: 'save', text: 'Сохранить', icon: '<i class="far fa-save"></i>',
+            enabled: false,
+            events: { click: timeLines[indLine].save } },
+        { id: 'line', type: contextmenu_1.DIVIDER },
+        { id: 'period', text: 'Периодичность',
+            sub: [
+                { id: timeline_1.EnumPeriod.day, text: 'День', icon: '<i class="fas fa-angle-down"></i>',
+                    events: { click: function () { return SwitchPeriod(menuCtx, timeline_1.EnumPeriod.day); } } },
+                { id: timeline_1.EnumPeriod.month, text: 'Месяц',
+                    events: { click: function () { return SwitchPeriod(menuCtx, timeline_1.EnumPeriod.month); } } },
+                { id: timeline_1.EnumPeriod.year, text: 'Год',
+                    events: { click: function () { return SwitchPeriod(menuCtx, timeline_1.EnumPeriod.year); } } },
+                { id: timeline_1.EnumPeriod.decade, text: 'Десятилетие',
+                    events: { click: function () { return SwitchPeriod(menuCtx, timeline_1.EnumPeriod.decade); } } },
+                { id: timeline_1.EnumPeriod.century, text: 'Век',
+                    events: { click: function () { return SwitchPeriod(menuCtx, timeline_1.EnumPeriod.century); } } }
             ]
         }
     ];
@@ -223,94 +161,13 @@ var ctx;
         $('#log_server_error').css('display', 'none');
     });
     // Открытие окна регистрации пользователя btnReg
-    $('#btnReg').click(function (ev) {
-        $('#regLogin').val('');
-        $('#regEmail').val('');
-        $('#regPassword1').val('');
-        $('#regPassword2').val('');
-        $('#tmRegisterModal').modal();
-        $('#passw_not_matches').css('display', 'none');
-        $('#reg_server_error').css('display', 'none');
-        return false;
-    });
+    $('#btnReg').click(RegisterHandlers_1.RegisterHandlers.OpenRegisterWindow);
     // Регистрация пользователя btnRegisterUser
-    $('#btnRegisterUser').click(function (ev) {
-        if ($('#regLogin')[0].reportValidity()
-            && $('#regEmail')[0].reportValidity()
-            && $('#regPassword1')[0].reportValidity()
-            && $('#regPassword2')[0].reportValidity()) {
-            if ($('#regPassword1').val() === $('#regPassword2').val()) {
-                $.ajax('api/register/reg', {
-                    type: 'POST',
-                    data: {
-                        Login: $('#regLogin').val(),
-                        Email: $('#regEmail').val(),
-                        Password1: $('#regPassword1').val(),
-                        Password2: $('#regPassword2').val()
-                    }
-                })
-                    .done(function (data) {
-                    if (data === '') {
-                        $('#tmRegisterModal').modal('hide');
-                    }
-                    else {
-                        $('#reg_server_error').text(data);
-                        $('#reg_server_error').css('display', 'unset');
-                    }
-                });
-            }
-            else {
-                $('#passw_not_matches').css('display', 'unset');
-            }
-        }
-    });
+    $('#btnRegisterUser').click(RegisterHandlers_1.RegisterHandlers.RegisterUser);
     // Открытие окна входа пользователя btnLogin
-    $('#btnLogin').click(function (ev) {
-        if (!IsAuthentificated) {
-            $('#logLogin').val('');
-            $('#logPassword').val('');
-            $('#tmLoginModal').modal();
-            $('#log_server_error').css('display', 'none');
-        }
-        else {
-            $.ajax('api/register/logout')
-                .done(function (data) {
-                if (data) {
-                    IsAuthentificated = false;
-                    $('#btnLogin').text('Вход');
-                    $('#lblUser').css('display', 'none');
-                    $('#lblUser').text(getCookie('timelineuser') || '');
-                }
-            });
-        }
-        return false;
-    });
+    $('#btnLogin').click(LogonHandlers_1.LogonHandlers.OpenLogonWindow);
     // Вход пользователя btnLoginUser
-    $('#btnLoginUser').click(function (ev) {
-        if ($('#logLogin')[0].reportValidity()
-            && $('#logPassword')[0].reportValidity()) {
-            $.ajax('api/register/log', {
-                type: 'POST',
-                data: {
-                    Login: $('#logLogin').val(),
-                    Password: $('#logPassword').val()
-                }
-            })
-                .done(function (data) {
-                if (data === '') {
-                    IsAuthentificated = true;
-                    $('#tmLoginModal').modal('hide');
-                    $('#btnLogin').text('Выход');
-                    $('#lblUser').css('display', 'unset');
-                    $('#lblUser').text($('#logLogin').val());
-                }
-                else {
-                    $('#log_server_error').text(data);
-                    $('#log_server_error').css('display', 'unset');
-                }
-            });
-        }
-    });
+    $('#btnLoginUser').click(LogonHandlers_1.LogonHandlers.LoginLogout);
 })();
 function LoadTimeLine() {
     timeline_1.TimeLine.getList()
@@ -397,10 +254,5 @@ function SwitchPeriod(menuCtx, idPeriod) {
     PERIOD_TYPE = idPeriod;
     drawAll();
     menuCtx.reload();
-}
-// возвращает cookie с именем name, если есть, если нет, то undefined
-function getCookie(name) {
-    var matches = document.cookie.match(new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"));
-    return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 //# sourceMappingURL=index.js.map

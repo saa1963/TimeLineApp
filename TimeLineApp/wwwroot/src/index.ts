@@ -16,89 +16,26 @@ let ctx: CanvasRenderingContext2D
   let indLine: number
 
   let menuitems = [
-    {
-      'id': 'new',
-      'text': 'Новая',
-      'icon': '<i class="far fa-file"></i></i>',
-      'events': {
-        'click': NewTmDialog
-      }
-    },
-    {
-      'id': 'load',
-      'text': 'Загрузить',
-      'icon': '<i class="far fa-folder-open"></i>',
-      'events': {
-        'click': (e) => {
-          LoadTimeLine()
-        }
-      }
-    },
-    {
-      'id': 'save',
-      'text': 'Сохранить',
-      'icon': '<i class="far fa-save"></i>',
-      'enabled': false,
-      'events': {
-        'click': (e) => {
-          timeLines[indLine].save()
-        }
-      }
-    },
-    {
-      'id': 'line',
-      'type': DIVIDER
-    },
-    {
-      'id': 'period',
-      'text': 'Периодичность',
-      'sub': [
-        {
-          'id': EnumPeriod.day,
-          'text': 'День',
-          'icon': '<i class="fas fa-angle-down"></i>',
-          'events': {
-            'click': (e) => {
-              SwitchPeriod(menuCtx, EnumPeriod.day)
-            }
-          }
-        },
-        {
-          'id': EnumPeriod.month,
-          'text': 'Месяц',
-          'events': {
-            'click': (e) => {
-              SwitchPeriod(menuCtx, EnumPeriod.month)
-            }
-          }
-        },
-        {
-          'id': EnumPeriod.year,
-          'text': 'Год',
-          'events': {
-            'click': (e) => {
-              SwitchPeriod(menuCtx, EnumPeriod.year)
-            }
-          }
-        },
-        {
-          'id': EnumPeriod.decade,
-          'text': 'Десятилетие',
-          'events': {
-            'click': (e) => {
-              SwitchPeriod(menuCtx, EnumPeriod.decade)
-            }
-          }
-        },
-        {
-          'id': EnumPeriod.century,
-          'text': 'Век',
-          'events': {
-            'click': (e) => {
-              SwitchPeriod(menuCtx, EnumPeriod.century)
-            }
-          }
-        }
+    {id: 'new', text: 'Новая', icon: '<i class="far fa-file"></i>',
+      events: {click: OpenNewTLDialog}},
+    {id: 'load', text: 'Загрузить', icon: '<i class="far fa-folder-open"></i>',
+      events: { click: OpenLoadTLDialog }},
+    {id: 'save', text: 'Сохранить', icon: '<i class="far fa-save"></i>',
+      enabled: false,
+      events: {click: () => timeLines[indLine].save()}},
+    {id: 'line',type: DIVIDER},
+    {id: 'period', text: 'Периодичность',
+      sub: [
+        {id: EnumPeriod.day, text: 'День', icon: '<i class="fas fa-angle-down"></i>',
+          events: {click: () => SwitchPeriod(menuCtx, EnumPeriod.day)}},
+        {id: EnumPeriod.month, text: 'Месяц',
+          events: {click: () => SwitchPeriod(menuCtx, EnumPeriod.month)}},
+        {id: EnumPeriod.year, text: 'Год',
+          events: {click: () => SwitchPeriod(menuCtx, EnumPeriod.year)}},
+        {id: EnumPeriod.decade, text: 'Десятилетие',
+          events: {click: () => SwitchPeriod(menuCtx, EnumPeriod.decade)}},
+        {id: EnumPeriod.century, text: 'Век',
+          events: {click: () => SwitchPeriod(menuCtx, EnumPeriod.century)}}
       ]
     }
   ]
@@ -170,7 +107,7 @@ let ctx: CanvasRenderingContext2D
   })
 
   $('#newTimeline').click((ev) => {
-    NewTmDialog()
+    OpenNewTLDialog()
   })
   $('#load').click((ev) => {
     LoadTimeLine()
@@ -235,15 +172,33 @@ let ctx: CanvasRenderingContext2D
   $('#btnLogin').click(LogonHandlers.OpenLogonWindow)
   // Вход пользователя btnLoginUser
   $('#btnLoginUser').click(LogonHandlers.LoginLogout)
+  // Загрузка TL btnLoadTL
+  $('#btnLoadTL').click(LoadTimeLine)
 })()
 
 function LoadTimeLine() {
+  $.ajax('api/storage/load',
+    {data: {
+      fname: $('#files_list').val()
+    }
+    })
+    .done(data => {
+
+      $('#tmLoadModal').modal()
+    })
+    .fail(data => {
+      alert('Ошибка загрузки\n' + data.responseText)
+    }
+  )
+}
+
+function OpenLoadTLDialog() {
   TimeLine.getList()
     .then(value => {
       let files_list = $('#files_list')
       files_list.find('option').remove()
       for (let i = 0; i < value.length; i++) {
-        files_list.append($('<option></option>', { value: i, text: value[i] }))
+        files_list.append($('<option></option>', { value: value[i], text: value[i] }))
       }
       $('#tmLoadModal').modal()
     })
@@ -310,7 +265,7 @@ function getMousePos (canvas, evt) {
   }
 }
 
-function NewTmDialog () {
+function OpenNewTLDialog () {
   $('#tmName').val('')
   $('#btnNewName').prop('disabled', true)
   $('#tmNameModal').modal()
