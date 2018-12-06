@@ -13,6 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\src\Globals.ts" />
+    <Content Remove="wwwroot\src\LogonHandlers.ts" />
+    <Content Remove="wwwroot\src\RegisterHandlers.ts" />
     <Content Remove="wwwroot\src\TLEvent.ts" />
   </ItemGroup>
 
@@ -31,6 +34,9 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="wwwroot\src\contextmenu.ts" />
+    <TypeScriptCompile Include="wwwroot\src\LogonHandlers.ts" />
+    <TypeScriptCompile Include="wwwroot\src\Globals.ts" />
+    <TypeScriptCompile Include="wwwroot\src\RegisterHandlers.ts" />
     <TypeScriptCompile Include="wwwroot\src\TLEvent.ts" />
   </ItemGroup>
 

@@ -34,16 +34,18 @@ export class TimeLine {
     this.data = data
   }
 
-  static getList(): string[] {
-    let rt: string[]
-    $.ajax('api/storage/list')
-      .done(data => {
-        return data
-      })
-      .fail(data => {
-        alert(data.responseText)
-        return null
-      })
+  static getList(): Promise<string[]> {
+    return new Promise<string[]>(
+      function (resolve, reject) {
+        $.ajax('api/storage/list')
+          .done(data => {
+            resolve(data)
+          })
+          .fail((data) => {
+            reject(data.responseText)
+          })
+      }
+    )
   }
 
   static load() {

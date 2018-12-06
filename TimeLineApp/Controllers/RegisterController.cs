@@ -40,6 +40,8 @@ namespace TimeLineApp.Controllers
             if (storage.Logon(model.Login, model.Password))
             {
                 await AuthenticateUser(model.Login);
+                HttpContext.Response.Cookies.Append("timelineuser", model.Login, 
+                    new CookieOptions() { Expires = new DateTimeOffset(DateTime.Now.AddMonths(1)), HttpOnly = false});
                 return "";
             }
             return "Ошибка входа";

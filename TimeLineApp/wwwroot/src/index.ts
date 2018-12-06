@@ -1,11 +1,12 @@
 import { TimeLine, EnumPeriod } from './timeline'
 import { makeColor } from './colorutils'
 import { ContextMenu, DIVIDER } from './contextmenu'
+import { LogonHandlers } from './LogonHandlers';
+import { RegisterHandlers } from './RegisterHandlers'
 
 const MIN_GAP = 100
 let PERIOD_TYPE = EnumPeriod.day
 const HTOP = 56
-let IsAuthentificated: boolean = false
 
 let timeLines: TimeLine[] = []
 let ctx: CanvasRenderingContext2D
@@ -197,6 +198,9 @@ let ctx: CanvasRenderingContext2D
   $('.closeloginmodal').click((ev) => {
     $('#tmLoginModal').modal('hide')
   })
+  $('.closeloadmodal').click((ev) => {
+    $('#tmLoadModal').modal('hide')
+  })
   $('#tmName').keyup((ev) => {
     if ((<string>$('#tmName').val()).trim() !== '') {
       $('#btnNewName').prop('disabled', false)
@@ -224,95 +228,28 @@ let ctx: CanvasRenderingContext2D
     $('#log_server_error').css('display', 'none')
   })
   // Открытие окна регистрации пользователя btnReg
-  $('#btnReg').click((ev) => {
-    $('#regLogin').val('')
-    $('#regEmail').val('')
-    $('#regPassword1').val('')
-    $('#regPassword2').val('')
-    $('#tmRegisterModal').modal()
-    $('#passw_not_matches').css('display', 'none')
-    $('#reg_server_error').css('display', 'none')
-    return false
-  })
+  $('#btnReg').click(RegisterHandlers.OpenRegisterWindow)
   // Регистрация пользователя btnRegisterUser
-  $('#btnRegisterUser').click(ev => {
-    if ((<HTMLInputElement>$('#regLogin')[0]).reportValidity()
-        && (<HTMLInputElement>$('#regEmail')[0]).reportValidity()
-        && (<HTMLInputElement>$('#regPassword1')[0]).reportValidity()
-      && (<HTMLInputElement>$('#regPassword2')[0]).reportValidity()) {
-      if ($('#regPassword1').val() === $('#regPassword2').val()) {
-        $.ajax('api/register/reg', {
-          type: 'POST',
-          data: {
-            Login: $('#regLogin').val(),
-            Email: $('#regEmail').val(),
-            Password1: $('#regPassword1').val(),
-            Password2: $('#regPassword2').val()
-          }
-        })
-          .done(data => {
-            if (data === '') {
-              $('#tmRegisterModal').modal('hide')
-            } else {
-              $('#reg_server_error').text(data)
-              $('#reg_server_error').css('display', 'unset')
-            }
-          })
-        
-      } else {
-        $('#passw_not_matches').css('display', 'unset')
-      }
-    }
-  })
+  $('#btnRegisterUser').click(RegisterHandlers.RegisterUser)
   // Открытие окна входа пользователя btnLogin
-  $('#btnLogin').click((ev) => {
-    if (!IsAuthentificated) {
-      $('#logLogin').val('')
-      $('#logPassword').val('')
-      $('#tmLoginModal').modal()
-      $('#log_server_error').css('display', 'none')
-    } else {
-      $.ajax('api/register/logout')
-        .done(data => {
-          if (data) {
-            IsAuthentificated = false
-            $('#btnLogin').text('Вход')
-            $('#lblUser').css('display', 'none')
-            $('#lblUser').text('')
-          }
-        })
-    }
-    return false
-  })
+  $('#btnLogin').click(LogonHandlers.OpenLogonWindow)
   // Вход пользователя btnLoginUser
-  $('#btnLoginUser').click(ev => {
-    if ((<HTMLInputElement>$('#logLogin')[0]).reportValidity()
-      && (<HTMLInputElement>$('#logPassword')[0]).reportValidity()) {
-      $.ajax('api/register/log', {
-        type: 'POST',
-        data: {
-          Login: $('#logLogin').val(),
-          Password: $('#logPassword').val()
-        }
-      })
-      .done(data => {
-        if (data === '') {
-          IsAuthentificated = true
-          $('#tmLoginModal').modal('hide')
-          $('#btnLogin').text('Выход')
-          $('#lblUser').css('display', 'unset')
-          $('#lblUser').text(<string>$('#logLogin').val())
-        } else {
-          $('#log_server_error').text(data)
-          $('#log_server_error').css('display', 'unset')
-        }
-      })
-    }
-  })
+  $('#btnLoginUser').click(LogonHandlers.LoginLogout)
 })()
 
 function LoadTimeLine() {
-  let lst: string[] = TimeLine.getList()
+  TimeLine.getList()
+    .then(value => {
+      let files_list = $('#files_list')
+      files_list.find('option').remove()
+      for (let i = 0; i < value.length; i++) {
+        files_list.append($('<option></option>', { value: i, text: value[i] }))
+      }
+      $('#tmLoadModal').modal()
+    })
+    .catch(responseText => {
+      alert('Ошибка сервера.\n' + responseText)
+    })
   
   //let tl = TimeLine.load(ctx)
   //NewTimeLine(tl.name, tl)

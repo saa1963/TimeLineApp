@@ -86,6 +86,160 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./src/Globals.ts":
+/*!************************!*\
+  !*** ./src/Globals.ts ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var Globals = /** @class */ (function () {
+    function Globals() {
+    }
+    Globals.getCookie = function (name) {
+        var c = document.cookie;
+        var matches = document.cookie.match(new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"));
+        return matches ? decodeURIComponent(matches[1]) : undefined;
+    };
+    Globals.IsAuthentificated = false;
+    return Globals;
+}());
+exports.Globals = Globals;
+
+
+/***/ }),
+
+/***/ "./src/LogonHandlers.ts":
+/*!******************************!*\
+  !*** ./src/LogonHandlers.ts ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var Globals_1 = __webpack_require__(/*! ./Globals */ "./src/Globals.ts");
+var LogonHandlers = /** @class */ (function () {
+    function LogonHandlers() {
+    }
+    // Открытие окна входа пользователя
+    LogonHandlers.OpenLogonWindow = function () {
+        if (!Globals_1.Globals.IsAuthentificated) {
+            $('#logLogin').val(Globals_1.Globals.getCookie('timelineuser') || '');
+            $('#logPassword').val('');
+            $('#tmLoginModal').modal();
+            $('#log_server_error').css('display', 'none');
+        }
+        else {
+            $.ajax('api/register/logout')
+                .done(function (data) {
+                if (data) {
+                    Globals_1.Globals.IsAuthentificated = false;
+                    $('#btnLogin').text('Вход');
+                    $('#lblUser').css('display', 'none');
+                    $('#lblUser').text('');
+                }
+            });
+        }
+        return false;
+    };
+    // Вход пользователя
+    LogonHandlers.LoginLogout = function () {
+        if ($('#logLogin')[0].reportValidity()
+            && $('#logPassword')[0].reportValidity()) {
+            $.ajax('api/register/log', {
+                type: 'POST',
+                data: {
+                    Login: $('#logLogin').val(),
+                    Password: $('#logPassword').val()
+                }
+            })
+                .done(function (data) {
+                if (data === '') {
+                    Globals_1.Globals.IsAuthentificated = true;
+                    $('#tmLoginModal').modal('hide');
+                    $('#btnLogin').text('Выход');
+                    $('#lblUser').css('display', 'unset');
+                    $('#lblUser').text($('#logLogin').val());
+                }
+                else {
+                    $('#log_server_error').text(data);
+                    $('#log_server_error').css('display', 'unset');
+                }
+            });
+        }
+    };
+    return LogonHandlers;
+}());
+exports.LogonHandlers = LogonHandlers;
+
+
+/***/ }),
+
+/***/ "./src/RegisterHandlers.ts":
+/*!*********************************!*\
+  !*** ./src/RegisterHandlers.ts ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var RegisterHandlers = /** @class */ (function () {
+    function RegisterHandlers() {
+    }
+    RegisterHandlers.OpenRegisterWindow = function () {
+        $('#regLogin').val('');
+        $('#regEmail').val('');
+        $('#regPassword1').val('');
+        $('#regPassword2').val('');
+        $('#tmRegisterModal').modal();
+        $('#passw_not_matches').css('display', 'none');
+        $('#reg_server_error').css('display', 'none');
+        return false;
+    };
+    RegisterHandlers.RegisterUser = function () {
+        if ($('#regLogin')[0].reportValidity()
+            && $('#regEmail')[0].reportValidity()
+            && $('#regPassword1')[0].reportValidity()
+            && $('#regPassword2')[0].reportValidity()) {
+            if ($('#regPassword1').val() === $('#regPassword2').val()) {
+                $.ajax('api/register/reg', {
+                    type: 'POST',
+                    data: {
+                        Login: $('#regLogin').val(),
+                        Email: $('#regEmail').val(),
+                        Password1: $('#regPassword1').val(),
+                        Password2: $('#regPassword2').val()
+                    }
+                })
+                    .done(function (data) {
+                    if (data === '') {
+                        $('#tmRegisterModal').modal('hide');
+                    }
+                    else {
+                        $('#reg_server_error').text(data);
+                        $('#reg_server_error').css('display', 'unset');
+                    }
+                });
+            }
+            else {
+                $('#passw_not_matches').css('display', 'unset');
+            }
+        }
+    };
+    return RegisterHandlers;
+}());
+exports.RegisterHandlers = RegisterHandlers;
+
+
+/***/ }),
+
 /***/ "./src/colorutils.ts":
 /*!***************************!*\
   !*** ./src/colorutils.ts ***!
@@ -504,10 +658,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var timeline_1 = __webpack_require__(/*! ./timeline */ "./src/timeline.ts");
 var colorutils_1 = __webpack_require__(/*! ./colorutils */ "./src/colorutils.ts");
 var contextmenu_1 = __webpack_require__(/*! ./contextmenu */ "./src/contextmenu.ts");
+var LogonHandlers_1 = __webpack_require__(/*! ./LogonHandlers */ "./src/LogonHandlers.ts");
+var RegisterHandlers_1 = __webpack_require__(/*! ./RegisterHandlers */ "./src/RegisterHandlers.ts");
 var MIN_GAP = 100;
 var PERIOD_TYPE = timeline_1.EnumPeriod.day;
 var HTOP = 56;
-var IsAuthentificated = false;
 var timeLines = [];
 var ctx;
 (function main() {
@@ -693,6 +848,9 @@ var ctx;
     $('.closeloginmodal').click(function (ev) {
         $('#tmLoginModal').modal('hide');
     });
+    $('.closeloadmodal').click(function (ev) {
+        $('#tmLoadModal').modal('hide');
+    });
     $('#tmName').keyup(function (ev) {
         if ($('#tmName').val().trim() !== '') {
             $('#btnNewName').prop('disabled', false);
@@ -721,98 +879,27 @@ var ctx;
         $('#log_server_error').css('display', 'none');
     });
     // Открытие окна регистрации пользователя btnReg
-    $('#btnReg').click(function (ev) {
-        $('#regLogin').val('');
-        $('#regEmail').val('');
-        $('#regPassword1').val('');
-        $('#regPassword2').val('');
-        $('#tmRegisterModal').modal();
-        $('#passw_not_matches').css('display', 'none');
-        $('#reg_server_error').css('display', 'none');
-        return false;
-    });
+    $('#btnReg').click(RegisterHandlers_1.RegisterHandlers.OpenRegisterWindow);
     // Регистрация пользователя btnRegisterUser
-    $('#btnRegisterUser').click(function (ev) {
-        if ($('#regLogin')[0].reportValidity()
-            && $('#regEmail')[0].reportValidity()
-            && $('#regPassword1')[0].reportValidity()
-            && $('#regPassword2')[0].reportValidity()) {
-            if ($('#regPassword1').val() === $('#regPassword2').val()) {
-                $.ajax('api/register/reg', {
-                    type: 'POST',
-                    data: {
-                        Login: $('#regLogin').val(),
-                        Email: $('#regEmail').val(),
-                        Password1: $('#regPassword1').val(),
-                        Password2: $('#regPassword2').val()
-                    }
-                })
-                    .done(function (data) {
-                    if (data === '') {
-                        $('#tmRegisterModal').modal('hide');
-                    }
-                    else {
-                        $('#reg_server_error').text(data);
-                        $('#reg_server_error').css('display', 'unset');
-                    }
-                });
-            }
-            else {
-                $('#passw_not_matches').css('display', 'unset');
-            }
-        }
-    });
+    $('#btnRegisterUser').click(RegisterHandlers_1.RegisterHandlers.RegisterUser);
     // Открытие окна входа пользователя btnLogin
-    $('#btnLogin').click(function (ev) {
-        if (!IsAuthentificated) {
-            $('#logLogin').val('');
-            $('#logPassword').val('');
-            $('#tmLoginModal').modal();
-            $('#log_server_error').css('display', 'none');
-        }
-        else {
-            $.ajax('api/register/logout')
-                .done(function (data) {
-                if (data) {
-                    IsAuthentificated = false;
-                    $('#btnLogin').text('Вход');
-                    $('#lblUser').css('display', 'none');
-                    $('#lblUser').text('');
-                }
-            });
-        }
-        return false;
-    });
+    $('#btnLogin').click(LogonHandlers_1.LogonHandlers.OpenLogonWindow);
     // Вход пользователя btnLoginUser
-    $('#btnLoginUser').click(function (ev) {
-        if ($('#logLogin')[0].reportValidity()
-            && $('#logPassword')[0].reportValidity()) {
-            $.ajax('api/register/log', {
-                type: 'POST',
-                data: {
-                    Login: $('#logLogin').val(),
-                    Password: $('#logPassword').val()
-                }
-            })
-                .done(function (data) {
-                if (data === '') {
-                    IsAuthentificated = true;
-                    $('#tmLoginModal').modal('hide');
-                    $('#btnLogin').text('Выход');
-                    $('#lblUser').css('display', 'unset');
-                    $('#lblUser').text($('#logLogin').val());
-                }
-                else {
-                    $('#log_server_error').text(data);
-                    $('#log_server_error').css('display', 'unset');
-                }
-            });
-        }
-    });
+    $('#btnLoginUser').click(LogonHandlers_1.LogonHandlers.LoginLogout);
 })();
 function LoadTimeLine() {
-    timeline_1.TimeLine.load();
-    $('#tmLoadModal').modal();
+    timeline_1.TimeLine.getList()
+        .then(function (value) {
+        var files_list = $('#files_list');
+        files_list.find('option').remove();
+        for (var i = 0; i < value.length; i++) {
+            files_list.append($('<option></option>', { value: i, text: value[i] }));
+        }
+        $('#tmLoadModal').modal();
+    })
+        .catch(function (responseText) {
+        alert('Ошибка сервера.\n' + responseText);
+    });
     //let tl = TimeLine.load(ctx)
     //NewTimeLine(tl.name, tl)
 }
@@ -980,13 +1067,18 @@ var TimeLine = /** @class */ (function () {
         this.name = name;
         this.data = data;
     }
-    TimeLine.load = function () {
-        $.ajax('api/storage/list')
-            .done(function (data) {
-        })
-            .fail(function (data) {
-            alert(data.responseText);
+    TimeLine.getList = function () {
+        return new Promise(function (resolve, reject) {
+            $.ajax('api/storage/list')
+                .done(function (data) {
+                resolve(data);
+            })
+                .fail(function (data) {
+                reject(data.responseText);
+            });
         });
+    };
+    TimeLine.load = function () {
     };
     TimeLine.prototype.save = function () {
         $.ajax('api/storage/save', {

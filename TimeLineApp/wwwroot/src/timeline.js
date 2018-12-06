@@ -27,11 +27,18 @@ var TimeLine = /** @class */ (function () {
         this.name = name;
         this.data = data;
     }
-    TimeLine.load = function () {
-        $.ajax('api/storage/list')
-            .done(function (data) {
-            console.log(data);
+    TimeLine.getList = function () {
+        return new Promise(function (resolve, reject) {
+            $.ajax('api/storage/list')
+                .done(function (data) {
+                resolve(data);
+            })
+                .fail(function (data) {
+                reject(data.responseText);
+            });
         });
+    };
+    TimeLine.load = function () {
     };
     TimeLine.prototype.save = function () {
         $.ajax('api/storage/save', {

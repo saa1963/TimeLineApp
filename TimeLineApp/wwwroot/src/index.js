@@ -192,6 +192,9 @@ var ctx;
     $('.closeloginmodal').click(function (ev) {
         $('#tmLoginModal').modal('hide');
     });
+    $('.closeloadmodal').click(function (ev) {
+        $('#tmLoadModal').modal('hide');
+    });
     $('#tmName').keyup(function (ev) {
         if ($('#tmName').val().trim() !== '') {
             $('#btnNewName').prop('disabled', false);
@@ -276,7 +279,7 @@ var ctx;
                     IsAuthentificated = false;
                     $('#btnLogin').text('Вход');
                     $('#lblUser').css('display', 'none');
-                    $('#lblUser').text('');
+                    $('#lblUser').text(getCookie('timelineuser') || '');
                 }
             });
         }
@@ -310,7 +313,18 @@ var ctx;
     });
 })();
 function LoadTimeLine() {
-    timeline_1.TimeLine.load();
+    timeline_1.TimeLine.getList()
+        .then(function (value) {
+        var files_list = $('#files_list');
+        files_list.find('option').remove();
+        for (var i = 0; i < value.length; i++) {
+            files_list.append($('<option></option>', { value: i, text: value[i] }));
+        }
+        $('#tmLoadModal').modal();
+    })
+        .catch(function (responseText) {
+        alert('Ошибка сервера.\n' + responseText);
+    });
     //let tl = TimeLine.load(ctx)
     //NewTimeLine(tl.name, tl)
 }
@@ -383,5 +397,10 @@ function SwitchPeriod(menuCtx, idPeriod) {
     PERIOD_TYPE = idPeriod;
     drawAll();
     menuCtx.reload();
+}
+// возвращает cookie с именем name, если есть, если нет, то undefined
+function getCookie(name) {
+    var matches = document.cookie.match(new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 //# sourceMappingURL=index.js.map
