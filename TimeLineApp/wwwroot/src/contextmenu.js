@@ -13,90 +13,78 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-/* eslint-disable eqeqeq */
-function ContextMenu(menu, options) {
-    var self = this;
-    var num = ContextMenu.count++;
-    this.menu = menu;
-    this.contextTarget = null;
-    if (!(menu instanceof Array)) {
-        throw new Error('Parameter 1 must be of type Array');
+var ContextMenu = /** @class */ (function () {
+    function ContextMenu(menu, options) {
+        this.contextTarget = null;
+        var this_object = this;
+        var num = ContextMenu.count++;
+        this.menu = menu;
+        if (options == undefined)
+            this.options = {};
+        else
+            this.options = options;
+        window.addEventListener('resize', this_object.onresize);
+        this.reload();
     }
-    if (typeof options !== 'undefined') {
-        if (typeof options !== 'object') {
-            throw new Error('Parameter 2 must be of type object');
-        }
-    }
-    else {
-        options = {};
-    }
-    window.addEventListener('resize', function () {
-        if (exports.ContextUtil.getProperty(options, 'close_on_resize', true)) {
-            self.hide();
-        }
-    });
-    this.setOptions = function (_options) {
-        if (typeof _options === 'object') {
-            options = _options;
-        }
-        else {
-            throw new Error('Parameter 1 must be of type object');
+    ContextMenu.prototype.onresize = function () {
+        var this_object = this;
+        if (ContextUtil.getProperty(this_object.options, 'close_on_resize', true)) {
+            this.hide();
         }
     };
-    this.changeOption = function (option, value) {
-        if (typeof option === 'string') {
-            if (typeof value !== 'undefined') {
-                options[option] = value;
-            }
-            else {
-                throw new Error('Parameter 2 must be set');
-            }
-        }
-        else {
-            throw new Error('Parameter 1 must be of type string');
-        }
+    ContextMenu.prototype.hide = function () {
+        var this_object = this;
+        document.getElementById('cm_' + ContextMenu.count).classList.remove('display');
+        window.removeEventListener('click', this_object.documentClick);
     };
-    this.getOptions = function () {
-        return options;
+    ContextMenu.prototype.setOptions = function (_options) {
+        this.options = _options;
     };
-    this.reload = function () {
-        if (document.getElementById('cm_' + num) == null) {
+    ContextMenu.prototype.changeOption = function (option, value) {
+        this.options[option] = value;
+    };
+    ContextMenu.prototype.getOptions = function () {
+        return this.options;
+    };
+    ContextMenu.prototype.reload = function () {
+        if (document.getElementById('cm_' + ContextMenu.count) == null) {
             var cnt = document.createElement('div');
             cnt.className = 'cm_container';
-            cnt.id = 'cm_' + num;
+            cnt.id = 'cm_' + ContextMenu.count;
             document.body.appendChild(cnt);
         }
-        var container = document.getElementById('cm_' + num);
+        var container = document.getElementById('cm_' + ContextMenu.count);
         container.innerHTML = '';
-        container.appendChild(renderLevel(menu));
+        container.appendChild(this.renderLevel(this.menu));
     };
-    function renderLevel(level) {
+    ContextMenu.prototype.renderLevel = function (level) {
         var ulOuter = document.createElement('ul');
+        var this_object = this;
         level.forEach(function (item) {
             var li = document.createElement('li');
-            li.menu = self;
+            li.menu = this_object;
             if (typeof item.type === 'undefined') {
                 var iconSpan = document.createElement('span');
                 iconSpan.className = 'cm_icon_span';
-                if (exports.ContextUtil.getProperty(item, 'icon', '') != '') {
-                    iconSpan.innerHTML = exports.ContextUtil.getProperty(item, 'icon', '');
+                if (ContextUtil.getProperty(item, 'icon', '') != '') {
+                    iconSpan.innerHTML = ContextUtil.getProperty(item, 'icon', '');
                 }
                 else {
-                    iconSpan.innerHTML = exports.ContextUtil.getProperty(options, 'default_icon', '');
+                    iconSpan.innerHTML = ContextUtil.getProperty(this_object.options, 'default_icon', '');
                 }
                 var textSpan = document.createElement('span');
                 textSpan.className = 'cm_text';
-                if (exports.ContextUtil.getProperty(item, 'text', '') != '') {
-                    textSpan.innerHTML = exports.ContextUtil.getProperty(item, 'text', '');
+                if (ContextUtil.getProperty(item, 'text', '') != '') {
+                    textSpan.innerHTML = ContextUtil.getProperty(item, 'text', '');
                 }
                 else {
-                    textSpan.innerHTML = exports.ContextUtil.getProperty(options, 'default_text', 'item');
+                    textSpan.innerHTML = ContextUtil.getProperty(this_object.options, 'default_text', 'item');
                 }
                 var subSpan = document.createElement('span');
                 subSpan.className = 'cm_sub_span';
                 if (typeof item.sub !== 'undefined') {
-                    if (exports.ContextUtil.getProperty(options, 'sub_icon', '') != '') {
-                        subSpan.innerHTML = exports.ContextUtil.getProperty(options, 'sub_icon', '');
+                    if (ContextUtil.getProperty(this_object.options, 'sub_icon', '') != '') {
+                        subSpan.innerHTML = ContextUtil.getProperty(this_object.options, 'sub_icon', '');
                     }
                     else {
                         subSpan.innerHTML = '&#155;';
@@ -105,7 +93,7 @@ function ContextMenu(menu, options) {
                 li.appendChild(iconSpan);
                 li.appendChild(textSpan);
                 li.appendChild(subSpan);
-                if (!exports.ContextUtil.getProperty(item, 'enabled', true)) {
+                if (!ContextUtil.getProperty(item, 'enabled', true)) {
                     li.setAttribute('disabled', '');
                 }
                 else {
@@ -116,7 +104,7 @@ function ContextMenu(menu, options) {
                         }
                     }
                     if (typeof item.sub !== 'undefined') {
-                        li.appendChild(renderLevel(item.sub));
+                        li.appendChild(this_object.renderLevel(item.sub));
                     }
                 }
             }
@@ -128,15 +116,15 @@ function ContextMenu(menu, options) {
             ulOuter.appendChild(li);
         });
         return ulOuter;
-    }
-    this.display = function (e, target) {
+    };
+    ContextMenu.prototype.display = function (e, target) {
         if (typeof target !== 'undefined') {
-            self.contextTarget = target;
+            this.contextTarget = target;
         }
         else {
-            self.contextTarget = e.target;
+            this.contextTarget = e.target;
         }
-        var menu = document.getElementById('cm_' + num);
+        var menu = document.getElementById('cm_' + ContextMenu.count);
         var clickCoords = { x: e.clientX, y: e.clientY };
         var clickCoordsX = clickCoords.x;
         var clickCoordsY = clickCoords.y;
@@ -144,7 +132,7 @@ function ContextMenu(menu, options) {
         var menuHeight = menu.offsetHeight + 4;
         var windowWidth = window.innerWidth;
         var windowHeight = window.innerHeight;
-        var mouseOffset = parseInt(exports.ContextUtil.getProperty(options, 'mouse_offset', 2));
+        var mouseOffset = parseInt(ContextUtil.getProperty(this.options, 'mouse_offset', 2));
         if ((windowWidth - clickCoordsX) < menuWidth) {
             menu.style.left = windowWidth - menuWidth + 'px';
         }
@@ -157,7 +145,7 @@ function ContextMenu(menu, options) {
         else {
             menu.style.top = (clickCoordsY + mouseOffset) + 'px';
         }
-        var sizes = exports.ContextUtil.getSizes(menu);
+        var sizes = ContextUtil.getSizes(menu);
         if ((windowWidth - clickCoordsX) < sizes.width) {
             menu.classList.add('cm_border_right');
         }
@@ -171,34 +159,31 @@ function ContextMenu(menu, options) {
             menu.classList.remove('cm_border_bottom');
         }
         menu.classList.add('display');
-        if (exports.ContextUtil.getProperty(options, 'close_on_click', true)) {
-            window.addEventListener('click', documentClick);
+        if (ContextUtil.getProperty(this.options, 'close_on_click', true)) {
+            window.addEventListener('click', this.documentClick);
         }
         e.preventDefault();
     };
-    this.hide = function () {
-        document.getElementById('cm_' + num).classList.remove('display');
-        window.removeEventListener('click', documentClick);
+    ContextMenu.prototype.documentClick = function () {
+        this.hide();
     };
-    function documentClick() {
-        self.hide();
-    }
-    this.reload();
-}
+    ContextMenu.count = 0;
+    ContextMenu.DIVIDER = 'cm_divider';
+    return ContextMenu;
+}());
 exports.ContextMenu = ContextMenu;
-ContextMenu.count = 0;
-ContextMenu.DIVIDER = 'cm_divider';
-exports.DIVIDER = 'cm_divider';
-exports.ContextUtil = {
-    getProperty: function (options, opt, def) {
+var ContextUtil = /** @class */ (function () {
+    function ContextUtil() {
+    }
+    ContextUtil.getProperty = function (options, opt, def) {
         if (typeof options[opt] !== 'undefined') {
             return options[opt];
         }
         else {
             return def;
         }
-    },
-    getSizes: function (obj) {
+    };
+    ContextUtil.getSizes = function (obj) {
         var lis = obj.getElementsByTagName('li');
         var widthDef = 0;
         var heightDef = 0;
@@ -217,7 +202,7 @@ exports.ContextUtil = {
             var li_1 = lis[i_1];
             var ul = li_1.getElementsByTagName('ul');
             if (typeof ul[0] !== 'undefined') {
-                var ulSize = exports.ContextUtil.getSizes(ul[0]);
+                var ulSize = ContextUtil.getSizes(ul[0]);
                 if (widthDef + ulSize.width > width) {
                     width = widthDef + ulSize.width;
                 }
@@ -230,8 +215,10 @@ exports.ContextUtil = {
             'width': width,
             'height': height
         };
-    }
-};
+    };
+    return ContextUtil;
+}());
+exports.ContextUtil = ContextUtil;
 var MyHTMLLIElement = /** @class */ (function (_super) {
     __extends(MyHTMLLIElement, _super);
     function MyHTMLLIElement() {

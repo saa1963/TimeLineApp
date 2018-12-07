@@ -1,6 +1,6 @@
 import { TimeLine, EnumPeriod } from './timeline'
 import { makeColor } from './colorutils'
-import { ContextMenu, DIVIDER } from './contextmenu'
+import { ContextMenu } from './contextmenu'
 import { LogonHandlers } from './LogonHandlers';
 import { RegisterHandlers } from './RegisterHandlers'
 
@@ -23,7 +23,7 @@ let ctx: CanvasRenderingContext2D
     {id: 'save', text: 'Сохранить', icon: '<i class="far fa-save"></i>',
       enabled: false,
       events: {click: () => timeLines[indLine].save()}},
-    {id: 'line',type: DIVIDER},
+    {id: 'line',type: ContextMenu.DIVIDER},
     {id: 'period', text: 'Периодичность',
       sub: [
         {id: EnumPeriod.day, text: 'День', icon: '<i class="fas fa-angle-down"></i>',
@@ -40,6 +40,7 @@ let ctx: CanvasRenderingContext2D
     }
   ]
   let menuCtx = new ContextMenu(menuitems)
+  //document.getElementById('cm_' + num)
 
   let canvas: HTMLCanvasElement = document.getElementById('canvas') as HTMLCanvasElement
   ctx = canvas.getContext('2d')

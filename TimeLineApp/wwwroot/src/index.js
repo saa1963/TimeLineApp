@@ -15,13 +15,13 @@ var ctx;
     var indLine;
     var menuitems = [
         { id: 'new', text: 'Новая', icon: '<i class="far fa-file"></i>',
-            events: { click: NewTmDialog } },
+            events: { click: OpenNewTLDialog } },
         { id: 'load', text: 'Загрузить', icon: '<i class="far fa-folder-open"></i>',
-            events: { click: LoadTimeLine } },
+            events: { click: OpenLoadTLDialog } },
         { id: 'save', text: 'Сохранить', icon: '<i class="far fa-save"></i>',
             enabled: false,
-            events: { click: timeLines[indLine].save } },
-        { id: 'line', type: contextmenu_1.DIVIDER },
+            events: { click: function () { return timeLines[indLine].save(); } } },
+        { id: 'line', type: contextmenu_1.ContextMenu.DIVIDER },
         { id: 'period', text: 'Периодичность',
             sub: [
                 { id: timeline_1.EnumPeriod.day, text: 'День', icon: '<i class="fas fa-angle-down"></i>',
@@ -38,6 +38,7 @@ var ctx;
         }
     ];
     var menuCtx = new contextmenu_1.ContextMenu(menuitems);
+    //document.getElementById('cm_' + num)
     var canvas = document.getElementById('canvas');
     ctx = canvas.getContext('2d');
     canvas.onmousedown = function (ev) {
@@ -102,7 +103,7 @@ var ctx;
         e.preventDefault();
     });
     $('#newTimeline').click(function (ev) {
-        NewTmDialog();
+        OpenNewTLDialog();
     });
     $('#load').click(function (ev) {
         LoadTimeLine();
@@ -168,14 +169,28 @@ var ctx;
     $('#btnLogin').click(LogonHandlers_1.LogonHandlers.OpenLogonWindow);
     // Вход пользователя btnLoginUser
     $('#btnLoginUser').click(LogonHandlers_1.LogonHandlers.LoginLogout);
+    // Загрузка TL btnLoadTL
+    $('#btnLoadTL').click(LoadTimeLine);
 })();
 function LoadTimeLine() {
+    $.ajax('api/storage/load', { data: {
+            fname: $('#files_list').val()
+        }
+    })
+        .done(function (data) {
+        $('#tmLoadModal').modal();
+    })
+        .fail(function (data) {
+        alert('Ошибка загрузки\n' + data.responseText);
+    });
+}
+function OpenLoadTLDialog() {
     timeline_1.TimeLine.getList()
         .then(function (value) {
         var files_list = $('#files_list');
         files_list.find('option').remove();
         for (var i = 0; i < value.length; i++) {
-            files_list.append($('<option></option>', { value: i, text: value[i] }));
+            files_list.append($('<option></option>', { value: value[i], text: value[i] }));
         }
         $('#tmLoadModal').modal();
     })
@@ -237,7 +252,7 @@ function getMousePos(canvas, evt) {
         y: evt.clientY - rect.top
     };
 }
-function NewTmDialog() {
+function OpenNewTLDialog() {
     $('#tmName').val('');
     $('#btnNewName').prop('disabled', true);
     $('#tmNameModal').modal();

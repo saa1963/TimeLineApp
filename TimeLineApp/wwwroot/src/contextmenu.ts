@@ -1,74 +1,66 @@
-/* eslint-disable eqeqeq */
-export function ContextMenu (menu, options?) {
-  var self = this
-  var num = ContextMenu.count++
+export class ContextMenu {
+  private static count: number = 0
+  private options: object
+  private menu: object[]
+  private contextTarget: EventTarget = null
+  static readonly DIVIDER: string = 'cm_divider'
 
-  this.menu = menu
-  this.contextTarget = null
-
-  if (!(menu instanceof Array)) {
-    throw new Error('Parameter 1 must be of type Array')
+  constructor(menu: object[], options?: object) {
+    let this_object = this
+    let num = ContextMenu.count++
+    this.menu = menu
+    if (options == undefined) this.options = {}
+    else this.options = options
+    window.addEventListener('resize', this_object.onresize)
+    this.reload()
   }
 
-  if (typeof options !== 'undefined') {
-    if (typeof options !== 'object') {
-      throw new Error('Parameter 2 must be of type object')
-    }
-  } else {
-    options = {}
-  }
-
-  window.addEventListener('resize', function () {
-    if (ContextUtil.getProperty(options, 'close_on_resize', true)) {
-      self.hide()
-    }
-  })
-
-  this.setOptions = function (_options) {
-    if (typeof _options === 'object') {
-      options = _options
-    } else {
-      throw new Error('Parameter 1 must be of type object')
+  private onresize() {
+    let this_object = this
+    if (ContextUtil.getProperty(this_object.options, 'close_on_resize', true)) {
+      this.hide()
     }
   }
 
-  this.changeOption = function (option, value) {
-    if (typeof option === 'string') {
-      if (typeof value !== 'undefined') {
-        options[option] = value
-      } else {
-        throw new Error('Parameter 2 must be set')
-      }
-    } else {
-      throw new Error('Parameter 1 must be of type string')
-    }
+  hide() {
+    let this_object = this
+    document.getElementById('cm_' + ContextMenu.count).classList.remove('display')
+    window.removeEventListener('click', this_object.documentClick)
   }
 
-  this.getOptions = function () {
-    return options
+  setOptions(_options: object) {
+      this.options = _options
   }
 
-  this.reload = function () {
-    if (document.getElementById('cm_' + num) == null) {
+  changeOption(option: string, value: any) {
+      this.options[option] = value
+  }
+
+  getOptions() {
+    return this.options
+  }
+
+  reload() {
+    if (document.getElementById('cm_' + ContextMenu.count) == null) {
       var cnt = document.createElement('div')
       cnt.className = 'cm_container'
-      cnt.id = 'cm_' + num
+      cnt.id = 'cm_' + ContextMenu.count
 
       document.body.appendChild(cnt)
     }
 
-    var container = document.getElementById('cm_' + num)
+    var container = document.getElementById('cm_' + ContextMenu.count)
     container.innerHTML = ''
 
-    container.appendChild(renderLevel(menu))
+    container.appendChild(this.renderLevel(this.menu))
   }
 
-  function renderLevel (level) {
+  private renderLevel(level) {
     var ulOuter = document.createElement('ul')
-
+    let this_object = this
     level.forEach(function (item) {
       let li = <MyHTMLLIElement>document.createElement('li')
-      li.menu = self
+      li.menu = this_object
 
       if (typeof item.type === 'undefined') {
         var iconSpan = document.createElement('span')
@@ -77,7 +69,7 @@ export function ContextMenu (menu, options?) {
         if (ContextUtil.getProperty(item, 'icon', '') != '') {
           iconSpan.innerHTML = ContextUtil.getProperty(item, 'icon', '')
         } else {
-          iconSpan.innerHTML = ContextUtil.getProperty(options, 'default_icon', '')
+          iconSpan.innerHTML = ContextUtil.getProperty(this_object.options, 'default_icon', '')
         }
 
         var textSpan = document.createElement('span')
@@ -86,15 +78,15 @@ export function ContextMenu (menu, options?) {
         if (ContextUtil.getProperty(item, 'text', '') != '') {
           textSpan.innerHTML = ContextUtil.getProperty(item, 'text', '')
         } else {
-          textSpan.innerHTML = ContextUtil.getProperty(options, 'default_text', 'item')
+          textSpan.innerHTML = ContextUtil.getProperty(this_object.options, 'default_text', 'item')
         }
 
         var subSpan = document.createElement('span')
         subSpan.className = 'cm_sub_span'
 
         if (typeof item.sub !== 'undefined') {
-          if (ContextUtil.getProperty(options, 'sub_icon', '') != '') {
-            subSpan.innerHTML = ContextUtil.getProperty(options, 'sub_icon', '')
+          if (ContextUtil.getProperty(this_object.options, 'sub_icon', '') != '') {
+            subSpan.innerHTML = ContextUtil.getProperty(this_object.options, 'sub_icon', '')
           } else {
             subSpan.innerHTML = '&#155;'
           }
@@ -116,7 +108,7 @@ export function ContextMenu (menu, options?) {
           }
 
           if (typeof item.sub !== 'undefined') {
-            li.appendChild(renderLevel(item.sub))
+            li.appendChild(this_object.renderLevel(item.sub))
           }
         }
       } else {
@@ -131,14 +123,14 @@ export function ContextMenu (menu, options?) {
     return ulOuter
   }
 
-  this.display = function (e, target) {
+  display(e: MouseEvent, target?: EventTarget) {
     if (typeof target !== 'undefined') {
-      self.contextTarget = target
+      this.contextTarget = target
     } else {
-      self.contextTarget = e.target
+      this.contextTarget = e.target
     }
 
-    var menu = document.getElementById('cm_' + num)
+    var menu = document.getElementById('cm_' + ContextMenu.count)
 
     var clickCoords = { x: e.clientX, y: e.clientY }
     var clickCoordsX = clickCoords.x
@@ -150,7 +142,7 @@ export function ContextMenu (menu, options?) {
     var windowWidth = window.innerWidth
     var windowHeight = window.innerHeight
 
-    var mouseOffset = parseInt(ContextUtil.getProperty(options, 'mouse_offset', 2))
+    var mouseOffset = parseInt(ContextUtil.getProperty(this.options, 'mouse_offset', 2))
 
     if ((windowWidth - clickCoordsX) < menuWidth) {
       menu.style.left = windowWidth - menuWidth + 'px'
@@ -180,39 +172,28 @@ export function ContextMenu (menu, options?) {
 
     menu.classList.add('display')
 
-    if (ContextUtil.getProperty(options, 'close_on_click', true)) {
-      window.addEventListener('click', documentClick)
+    if (ContextUtil.getProperty(this.options, 'close_on_click', true)) {
+      window.addEventListener('click', this.documentClick)
     }
 
     e.preventDefault()
   }
 
-  this.hide = function () {
-    document.getElementById('cm_' + num).classList.remove('display')
-    window.removeEventListener('click', documentClick)
+  private documentClick() {
+    this.hide()
   }
-
-  function documentClick () {
-    self.hide()
-  }
-
-  this.reload()
 }
 
-ContextMenu.count = 0
-ContextMenu.DIVIDER = 'cm_divider'
-export const DIVIDER = 'cm_divider'
-
-export const ContextUtil = {
-  getProperty: function (options, opt, def) {
+export class ContextUtil {
+  static getProperty(options: object, opt: string, def: any) {
     if (typeof options[opt] !== 'undefined') {
       return options[opt]
     } else {
       return def
     }
-  },
+  }
 
-  getSizes: function (obj) {
+  static getSizes(obj) {
     var lis = obj.getElementsByTagName('li')
 
     var widthDef = 0
