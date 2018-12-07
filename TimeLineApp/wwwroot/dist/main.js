@@ -330,27 +330,26 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ContextMenu = /** @class */ (function () {
     function ContextMenu(menu, options) {
+        var _this = this;
         this.contextTarget = null;
-        var this_object = this;
         var num = ContextMenu.count++;
         this.menu = menu;
         if (options == undefined)
             this.options = {};
         else
             this.options = options;
-        window.addEventListener('resize', this_object.onresize);
+        window.addEventListener('resize', function () { return _this.onresize(); });
         this.reload();
     }
     ContextMenu.prototype.onresize = function () {
-        var this_object = this;
-        if (ContextUtil.getProperty(this_object.options, 'close_on_resize', true)) {
-            this_object.hide();
+        if (ContextUtil.getProperty(this.options, 'close_on_resize', true)) {
+            this.hide();
         }
     };
     ContextMenu.prototype.hide = function () {
-        var this_object = this;
+        var _this = this;
         document.getElementById('cm_' + ContextMenu.count).classList.remove('display');
-        window.removeEventListener('click', this_object.documentClick);
+        window.removeEventListener('click', function () { return _this.documentClick(); });
     };
     ContextMenu.prototype.setOptions = function (_options) {
         this.options = _options;
@@ -373,11 +372,11 @@ var ContextMenu = /** @class */ (function () {
         container.appendChild(this.renderLevel(this.menu));
     };
     ContextMenu.prototype.renderLevel = function (level) {
+        var _this = this;
         var ulOuter = document.createElement('ul');
-        var this_object = this;
         level.forEach(function (item) {
             var li = document.createElement('li');
-            li.menu = this_object;
+            li.menu = _this;
             if (typeof item.type === 'undefined') {
                 var iconSpan = document.createElement('span');
                 iconSpan.className = 'cm_icon_span';
@@ -385,7 +384,7 @@ var ContextMenu = /** @class */ (function () {
                     iconSpan.innerHTML = ContextUtil.getProperty(item, 'icon', '');
                 }
                 else {
-                    iconSpan.innerHTML = ContextUtil.getProperty(this_object.options, 'default_icon', '');
+                    iconSpan.innerHTML = ContextUtil.getProperty(_this.options, 'default_icon', '');
                 }
                 var textSpan = document.createElement('span');
                 textSpan.className = 'cm_text';
@@ -393,13 +392,13 @@ var ContextMenu = /** @class */ (function () {
                     textSpan.innerHTML = ContextUtil.getProperty(item, 'text', '');
                 }
                 else {
-                    textSpan.innerHTML = ContextUtil.getProperty(this_object.options, 'default_text', 'item');
+                    textSpan.innerHTML = ContextUtil.getProperty(_this.options, 'default_text', 'item');
                 }
                 var subSpan = document.createElement('span');
                 subSpan.className = 'cm_sub_span';
                 if (typeof item.sub !== 'undefined') {
-                    if (ContextUtil.getProperty(this_object.options, 'sub_icon', '') != '') {
-                        subSpan.innerHTML = ContextUtil.getProperty(this_object.options, 'sub_icon', '');
+                    if (ContextUtil.getProperty(_this.options, 'sub_icon', '') != '') {
+                        subSpan.innerHTML = ContextUtil.getProperty(_this.options, 'sub_icon', '');
                     }
                     else {
                         subSpan.innerHTML = '&#155;';
@@ -419,7 +418,7 @@ var ContextMenu = /** @class */ (function () {
                         }
                     }
                     if (typeof item.sub !== 'undefined') {
-                        li.appendChild(this_object.renderLevel(item.sub));
+                        li.appendChild(_this.renderLevel(item.sub));
                     }
                 }
             }
@@ -433,6 +432,7 @@ var ContextMenu = /** @class */ (function () {
         return ulOuter;
     };
     ContextMenu.prototype.display = function (e, target) {
+        var _this = this;
         if (typeof target !== 'undefined') {
             this.contextTarget = target;
         }
@@ -474,9 +474,8 @@ var ContextMenu = /** @class */ (function () {
             menu.classList.remove('cm_border_bottom');
         }
         menu.classList.add('display');
-        var this_object = this;
-        if (ContextUtil.getProperty(this_object.options, 'close_on_click', true)) {
-            window.addEventListener('click', function () { this_object.documentClick(); });
+        if (ContextUtil.getProperty(this.options, 'close_on_click', true)) {
+            window.addEventListener('click', function () { _this.documentClick(); });
         }
         e.preventDefault();
     };

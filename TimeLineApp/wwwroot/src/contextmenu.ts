@@ -6,26 +6,23 @@ export class ContextMenu {
   static readonly DIVIDER: string = 'cm_divider'
 
   constructor(menu: object[], options?: object) {
-    let this_object = this
     let num = ContextMenu.count++
     this.menu = menu
     if (options == undefined) this.options = {}
     else this.options = options
-    window.addEventListener('resize', this_object.onresize)
+    window.addEventListener('resize', () => this.onresize())
     this.reload()
   }
 
   private onresize() {
-    let this_object = this
-    if (ContextUtil.getProperty(this_object.options, 'close_on_resize', true)) {
-      this_object.hide()
+    if (ContextUtil.getProperty(this.options, 'close_on_resize', true)) {
+      this.hide()
     }
   }
 
   hide() {
-    let this_object = this
     document.getElementById('cm_' + ContextMenu.count).classList.remove('display')
-    window.removeEventListener('click', this_object.documentClick)
+    window.removeEventListener('click', () => this.documentClick())
   }
 
   setOptions(_options: object) {
@@ -57,10 +54,9 @@ export class ContextMenu {
 
   private renderLevel(level) {
     var ulOuter = document.createElement('ul')
-    let this_object = this
-    level.forEach(function (item) {
+    level.forEach((item) => {
       let li = <MyHTMLLIElement>document.createElement('li')
-      li.menu = this_object
+      li.menu = this
 
       if (typeof item.type === 'undefined') {
         var iconSpan = document.createElement('span')
@@ -69,7 +65,7 @@ export class ContextMenu {
         if (ContextUtil.getProperty(item, 'icon', '') != '') {
           iconSpan.innerHTML = ContextUtil.getProperty(item, 'icon', '')
         } else {
-          iconSpan.innerHTML = ContextUtil.getProperty(this_object.options, 'default_icon', '')
+          iconSpan.innerHTML = ContextUtil.getProperty(this.options, 'default_icon', '')
         }
 
         var textSpan = document.createElement('span')
@@ -78,15 +74,15 @@ export class ContextMenu {
         if (ContextUtil.getProperty(item, 'text', '') != '') {
           textSpan.innerHTML = ContextUtil.getProperty(item, 'text', '')
         } else {
-          textSpan.innerHTML = ContextUtil.getProperty(this_object.options, 'default_text', 'item')
+          textSpan.innerHTML = ContextUtil.getProperty(this.options, 'default_text', 'item')
         }
 
         var subSpan = document.createElement('span')
         subSpan.className = 'cm_sub_span'
 
         if (typeof item.sub !== 'undefined') {
-          if (ContextUtil.getProperty(this_object.options, 'sub_icon', '') != '') {
-            subSpan.innerHTML = ContextUtil.getProperty(this_object.options, 'sub_icon', '')
+          if (ContextUtil.getProperty(this.options, 'sub_icon', '') != '') {
+            subSpan.innerHTML = ContextUtil.getProperty(this.options, 'sub_icon', '')
           } else {
             subSpan.innerHTML = '&#155;'
           }
@@ -108,7 +104,7 @@ export class ContextMenu {
           }
 
           if (typeof item.sub !== 'undefined') {
-            li.appendChild(this_object.renderLevel(item.sub))
+            li.appendChild(this.renderLevel(item.sub))
           }
         }
       } else {
@@ -172,9 +168,8 @@ export class ContextMenu {
 
     menu.classList.add('display')
 
-    let this_object = this
-    if (ContextUtil.getProperty(this_object.options, 'close_on_click', true)) {
-      window.addEventListener('click', () => { this_object.documentClick() })
+    if (ContextUtil.getProperty(this.options, 'close_on_click', true)) {
+      window.addEventListener('click', () => { this.documentClick() })
     }
 
     e.preventDefault()
@@ -240,5 +235,5 @@ export class ContextUtil {
 }
 
 class MyHTMLLIElement extends HTMLLIElement {
-  menu: any
+  menu: ContextMenu
 }
