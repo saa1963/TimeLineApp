@@ -18,7 +18,7 @@ export class ContextMenu {
   private onresize() {
     let this_object = this
     if (ContextUtil.getProperty(this_object.options, 'close_on_resize', true)) {
-      this.hide()
+      this_object.hide()
     }
   }
 
@@ -172,8 +172,9 @@ export class ContextMenu {
 
     menu.classList.add('display')
 
-    if (ContextUtil.getProperty(this.options, 'close_on_click', true)) {
-      window.addEventListener('click', this.documentClick)
+    let this_object = this
+    if (ContextUtil.getProperty(this_object.options, 'close_on_click', true)) {
+      window.addEventListener('click', () => { this_object.documentClick() })
     }
 
     e.preventDefault()

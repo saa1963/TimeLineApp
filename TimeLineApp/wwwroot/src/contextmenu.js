@@ -29,7 +29,7 @@ var ContextMenu = /** @class */ (function () {
     ContextMenu.prototype.onresize = function () {
         var this_object = this;
         if (ContextUtil.getProperty(this_object.options, 'close_on_resize', true)) {
-            this.hide();
+            this_object.hide();
         }
     };
     ContextMenu.prototype.hide = function () {
@@ -159,8 +159,9 @@ var ContextMenu = /** @class */ (function () {
             menu.classList.remove('cm_border_bottom');
         }
         menu.classList.add('display');
-        if (ContextUtil.getProperty(this.options, 'close_on_click', true)) {
-            window.addEventListener('click', this.documentClick);
+        var this_object = this;
+        if (ContextUtil.getProperty(this_object.options, 'close_on_click', true)) {
+            window.addEventListener('click', function () { this_object.documentClick(); });
         }
         e.preventDefault();
     };
