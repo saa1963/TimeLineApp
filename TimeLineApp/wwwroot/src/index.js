@@ -178,10 +178,14 @@ function LoadTimeLine() {
         }
     })
         .done(function (data) {
+        console.log(data);
         $('#tmLoadModal').modal();
     })
         .fail(function (data) {
-        alert('Ошибка загрузки\n' + data.responseText);
+        alert('Ошибка загрузки\n'
+            + data.status.toString() + ' '
+            + data.statusText + '\n'
+            + data.responseText);
     });
 }
 function OpenLoadTLDialog() {

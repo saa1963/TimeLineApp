@@ -48,5 +48,21 @@ namespace TimeLineApp.Controllers
                 return StatusCode(500, e.Message);
             }
         }
+
+        [HttpGet]
+        [Route("api/storage/load")]
+        public ActionResult<string> Load(string fname)
+        {
+            try
+            {
+                var tl = storage.Load(HttpContext, fname);
+                var rt = tl.ToJSON();
+                return rt;
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
     }
 }

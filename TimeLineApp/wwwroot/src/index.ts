@@ -184,11 +184,14 @@ function LoadTimeLine() {
     }
     })
     .done(data => {
-
+      console.log(data)
       $('#tmLoadModal').modal()
     })
     .fail(data => {
-      alert('Ошибка загрузки\n' + data.responseText)
+      alert('Ошибка загрузки\n'
+        + data.status.toString() + ' '
+        + data.statusText + '\n'
+        + data.responseText)
     }
   )
 }

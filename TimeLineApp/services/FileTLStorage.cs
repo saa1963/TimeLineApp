@@ -41,9 +41,21 @@ namespace TimeLineApp.services
             return rt;
         }
 
-        public TimeLine Load(string name)
+        public TimeLine Load(HttpContext httpCtx, string name)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var fname = getFileName(httpCtx, name);
+                IFormatter formatter = new BinaryFormatter();
+                using (var stream = new FileStream(fname, FileMode.Open, FileAccess.Read, FileShare.None))
+                {
+                    return (TimeLine)formatter.Deserialize(stream);
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public bool Save(HttpContext httpCtx, TimeLine tl)

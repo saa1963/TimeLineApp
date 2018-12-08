@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -56,6 +57,29 @@ namespace TimeLineApp.Models
         private List<Event> m_events = new List<Event>();
         private List<Period> m_periods = new List<Period>();
         public string Name { get; set; }
+
+        public string ToJSON()
+        {
+            JsonSerializer serializer = new JsonSerializer();
+            //serializer.Converters.Add(new JavaScriptDateTimeConverter());
+            //serializer.NullValueHandling = NullValueHandling.Ignore;
+            using (var stream = new MemoryStream())
+            {
+                using (StreamWriter sw = new StreamWriter(stream))
+                using (JsonWriter writer = new JsonTextWriter(sw))
+                {
+                    serializer.Serialize(writer, this);
+                    // {"ExpiryDate":new Date(1230375600000),"Price":0}
+                    writer.Flush();
+
+                    stream.Position = 0;
+                    using (var sr = new StreamReader(stream))
+                    {
+                        return sr.ReadToEnd();
+                    }
+                }
+            }
+        }
 
         public TimeLine(string name, string data = null)
         {
