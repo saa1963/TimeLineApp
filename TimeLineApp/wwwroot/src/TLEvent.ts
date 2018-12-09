@@ -133,8 +133,8 @@ export class TLPeriod {
 }
 
 export class TimeLineData {
-  Event: TLEvent[] = []
-  Period: TLPeriod[] = []
+  Events: TLEvent[] = []
+  Periods: TLPeriod[] = []
   Name: string
   constructor(name: string, data?: string) {
     this.Name = name
@@ -144,7 +144,7 @@ export class TimeLineData {
       events.forEach((value, index, array) => {
         if (value['type'] === 0) {
           if (value['day'] !== undefined) {
-            this.Event.push(
+            this.Events.push(
               new TLEventDay(
                 <string>value['name'],
                 <number>value['day']['year'],
@@ -152,28 +152,28 @@ export class TimeLineData {
                 <number>value['day']['day'])
             )
           } else if (value['month'] !== undefined) {
-            this.Event.push(
+            this.Events.push(
               new TLEventMonth(
                 <string>value['name'],
                 <number>value['month']
               )
             )
           } else if (value['year'] !== undefined) {
-            this.Event.push(
+            this.Events.push(
               new TLEventYear(
                 <string>value['name'],
                 <number>value['year']
               )
             )
           } else if (value['decade'] !== undefined) {
-            this.Event.push(
+            this.Events.push(
               new TLEventDecade(
                 <string>value['name'],
                 <number>value['decade']
               )
             )
           } else if (value['century'] !== undefined) {
-            this.Event.push(
+            this.Events.push(
               new TLEventCentury(
                 <string>value['name'],
                 <number>value['century']
@@ -189,7 +189,7 @@ export class TimeLineData {
             let year2 = <number>value['last']['day']['year']
             let month2 = <number>value['last']['day']['month']
             let day2 = <number>value['last']['day']['day']
-            this.Period.push(
+            this.Periods.push(
               new TLPeriod(
                 nn,
                 new TLEventDay('Начало', year1, month1, day1),
@@ -197,7 +197,7 @@ export class TimeLineData {
               )
             )
           } else if (value['first']['month'] !== undefined) {
-            this.Period.push(
+            this.Periods.push(
               new TLPeriod(
                 nn,
                 new TLEventMonth('Начало', <number>value['first']['month']),
@@ -205,7 +205,7 @@ export class TimeLineData {
               )
             )
           } else if (value['first']['year'] !== undefined) {
-            this.Period.push(
+            this.Periods.push(
               new TLPeriod(
                 nn,
                 new TLEventYear('Начало', <number>value['first']['year']),
@@ -213,7 +213,7 @@ export class TimeLineData {
               )
             )
           } else if (value['first']['decade'] !== undefined) {
-            this.Period.push(
+            this.Periods.push(
               new TLPeriod(
                 nn,
                 new TLEventDecade('Начало', <number>value['first']['decade']),
@@ -221,7 +221,7 @@ export class TimeLineData {
               )
             )
           } else if (value['first']['century'] !== undefined) {
-            this.Period.push(
+            this.Periods.push(
               new TLPeriod(
                 nn,
                 new TLEventCentury('Начало', <number>value['first']['century']),
