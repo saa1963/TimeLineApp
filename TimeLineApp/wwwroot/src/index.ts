@@ -185,7 +185,7 @@ function LoadTimeLine() {
     })
     .done(data => {
       console.log(data)
-      $('#tmLoadModal').modal()
+      $('#tmLoadModal').modal('hide')
     })
     .fail(data => {
       alert('Ошибка загрузки\n'

@@ -63,10 +63,7 @@ namespace TimeLineApp.services
             try
             {
                 var fname = getFileName(httpCtx, tl.Name);
-                IFormatter formatter = new BinaryFormatter();
-                Stream stream = new FileStream(fname, FileMode.Create, FileAccess.Write, FileShare.None);
-                formatter.Serialize(stream, tl);
-                stream.Close();
+                File.WriteAllText(fname, tl.ToJSON());
                 return true;
             }
             catch(Exception e)

@@ -12,9 +12,9 @@ namespace TimeLineApp.Models
     [Serializable]
     public struct Date
     {
-        int Day;
-        int Month;
-        int Year;
+        public int Day;
+        public int Month;
+        public int Year;
 
         public Date(int year, int month, int day)
         {
@@ -57,6 +57,8 @@ namespace TimeLineApp.Models
         private List<Event> m_events = new List<Event>();
         private List<Period> m_periods = new List<Period>();
         public string Name { get; set; }
+        public List<Event> Events { get => m_events; set => m_events = value; }
+        public List<Period> Periods { get => m_periods; set => m_periods = value; }
 
         public string ToJSON()
         {
@@ -194,9 +196,10 @@ namespace TimeLineApp.Models
             m_events.Add(e);
         }
 
+        [JsonIgnore]
         public int EventCount
         { get => m_events.Count; }
-
+        [JsonIgnore]
         public int PeriodCount
         { get => m_periods.Count; }
     }

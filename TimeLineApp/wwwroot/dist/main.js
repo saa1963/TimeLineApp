@@ -821,7 +821,7 @@ function LoadTimeLine() {
     })
         .done(function (data) {
         console.log(data);
-        $('#tmLoadModal').modal();
+        $('#tmLoadModal').modal('hide');
     })
         .fail(function (data) {
         alert('Ошибка загрузки\n'
