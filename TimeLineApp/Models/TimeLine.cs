@@ -83,112 +83,11 @@ namespace TimeLineApp.Models
             }
         }
 
-        public TimeLine(string name, string data = null)
+        public static TimeLine FromJSON(string data)
         {
-            Name = name;
-            if (data != null)
-            {
-                var o = JObject.Parse(data);
-                foreach (var e in o["events"])
-                {
-                    if (e["type"].Value<long>() == 0)
-                    {
-                        if (e["day"] != null)
-                        {
-                            m_events.Add(new EventDay(
-                                e["name"].Value<string>(),
-                                e["day"]["year"].Value<int>(),
-                                e["day"]["month"].Value<int>(),
-                                e["day"]["day"].Value<int>()));
-                        }
-                        else if (e["month"] != null)
-                        {
-                            m_events.Add(new EventMonth(
-                                e["name"].Value<string>(),
-                                e["month"].Value<int>()));
-                        }
-                        else if (e["year"] != null)
-                        {
-                            m_events.Add(new EventYear(
-                                e["name"].Value<string>(),
-                                e["year"].Value<int>()));
-                        }
-                        else if (e["decade"] != null)
-                        {
-                            m_events.Add(new EventDecade(
-                                e["name"].Value<string>(),
-                                e["decade"].Value<int>()));
-                        }
-                        else if (e["century"] != null)
-                        {
-                            m_events.Add(new EventCentury(
-                                e["name"].Value<string>(),
-                                e["century"].Value<int>()));
-                        }
-                    }
-                    else
-                    {
-                        var nn = e["name"].Value<string>();
-                        if (e["first"]["day"] != null)
-                        {
-                            var year1 = e["first"]["day"]["year"].Value<int>();
-                            var month1 = e["first"]["day"]["month"].Value<int>();
-                            var day1 = e["first"]["day"]["day"].Value<int>();
-                            var year2 = e["last"]["day"]["year"].Value<int>();
-                            var month2 = e["last"]["day"]["month"].Value<int>();
-                            var day2 = e["last"]["day"]["day"].Value<int>();
-                            m_periods.Add(new Period(
-                                nn,
-                                new EventDay("Начало", year1, month1, day1),
-                                new EventDay("Конец", year2, month2, day2)));
-                        }
-                        else if (e["first"]["month"] != null)
-                        {
-                            m_periods.Add(new Period(
-                                e[name].Value<string>(),
-                                new EventMonth("Начало",
-                                    e["first"]["month"].Value<int>()
-                                ),
-                                new EventMonth("Конец",
-                                    e["last"]["month"].Value<int>()
-                                )));
-                        }
-                        else if (e["first"]["year"] != null)
-                        {
-                            m_periods.Add(new Period(
-                                e[name].Value<string>(),
-                                new EventYear("Начало",
-                                    e["first"]["year"].Value<int>()
-                                ),
-                                new EventYear("Конец",
-                                    e["last"]["year"].Value<int>()
-                                )));
-                        }
-                        else if (e["first"]["decade"] != null)
-                        {
-                            m_periods.Add(new Period(
-                                e[name].Value<string>(),
-                                new EventDecade("Начало",
-                                    e["first"]["decade"].Value<int>()
-                                ),
-                                new EventDecade("Конец",
-                                    e["last"]["decade"].Value<int>()
-                                )));
-                        }
-                        else if (e["first"]["century"] != null)
-                        {
-                            m_periods.Add(new Period(
-                                e[name].Value<string>(),
-                                new EventCentury("Начало",
-                                    e["first"]["century"].Value<int>()
-                                ),
-                                new EventCentury("Конец",
-                                    e["last"]["century"].Value<int>()
-                                )));
-                        }
-                    }
-                }
-            }
+            JsonSerializer serializer = new JsonSerializer();
+            JsonTextReader reader = new JsonTextReader(new StringReader(data));
+            return serializer.Deserialize<TimeLine>(reader);
         }
 
         public void AddEvent(Event e)

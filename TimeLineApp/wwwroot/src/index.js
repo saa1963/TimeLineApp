@@ -178,8 +178,12 @@ function LoadTimeLine() {
         }
     })
         .done(function (data) {
-        console.log(data);
-        $('#tmLoadModal').modal();
+        var tldata = JSON.parse(data);
+        var tl = new timeline_1.TimeLine(ctx);
+        tl.name = tldata.Name;
+        tl.tldata = tldata;
+        NewTimeLine(tldata.Name, tl);
+        $('#tmLoadModal').modal('hide');
     })
         .fail(function (data) {
         alert('Ошибка загрузки\n'

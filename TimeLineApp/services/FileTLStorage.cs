@@ -9,6 +9,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using TimeLineApp.Models;
+using Newtonsoft.Json;
 
 namespace TimeLineApp.services
 {
@@ -46,10 +47,13 @@ namespace TimeLineApp.services
             try
             {
                 var fname = getFileName(httpCtx, name);
-                IFormatter formatter = new BinaryFormatter();
-                using (var stream = new FileStream(fname, FileMode.Open, FileAccess.Read, FileShare.None))
+                JsonSerializer serializer = new JsonSerializer();
+                using (var sr = new StreamReader(fname))
                 {
-                    return (TimeLine)formatter.Deserialize(stream);
+                    using (var jr = new JsonTextReader(sr))
+                    {
+                        return serializer.Deserialize<TimeLine>(jr);
+                    }
                 }
             }
             catch (Exception e)

@@ -168,8 +168,8 @@ exports.TLPeriod = TLPeriod;
 var TimeLineData = /** @class */ (function () {
     function TimeLineData(name, data) {
         var _this = this;
-        this.Event = [];
-        this.Period = [];
+        this.Events = [];
+        this.Periods = [];
         this.Name = name;
         if (data !== undefined) {
             var o = JSON.parse(data);
@@ -177,19 +177,19 @@ var TimeLineData = /** @class */ (function () {
             events.forEach(function (value, index, array) {
                 if (value['type'] === 0) {
                     if (value['day'] !== undefined) {
-                        _this.Event.push(new TLEventDay(value['name'], value['day']['year'], value['day']['month'], value['day']['day']));
+                        _this.Events.push(new TLEventDay(value['name'], value['day']['year'], value['day']['month'], value['day']['day']));
                     }
                     else if (value['month'] !== undefined) {
-                        _this.Event.push(new TLEventMonth(value['name'], value['month']));
+                        _this.Events.push(new TLEventMonth(value['name'], value['month']));
                     }
                     else if (value['year'] !== undefined) {
-                        _this.Event.push(new TLEventYear(value['name'], value['year']));
+                        _this.Events.push(new TLEventYear(value['name'], value['year']));
                     }
                     else if (value['decade'] !== undefined) {
-                        _this.Event.push(new TLEventDecade(value['name'], value['decade']));
+                        _this.Events.push(new TLEventDecade(value['name'], value['decade']));
                     }
                     else if (value['century'] !== undefined) {
-                        _this.Event.push(new TLEventCentury(value['name'], value['century']));
+                        _this.Events.push(new TLEventCentury(value['name'], value['century']));
                     }
                 }
                 else {
@@ -201,19 +201,19 @@ var TimeLineData = /** @class */ (function () {
                         var year2 = value['last']['day']['year'];
                         var month2 = value['last']['day']['month'];
                         var day2 = value['last']['day']['day'];
-                        _this.Period.push(new TLPeriod(nn, new TLEventDay('Начало', year1, month1, day1), new TLEventDay('Конец', year2, month2, day2)));
+                        _this.Periods.push(new TLPeriod(nn, new TLEventDay('Начало', year1, month1, day1), new TLEventDay('Конец', year2, month2, day2)));
                     }
                     else if (value['first']['month'] !== undefined) {
-                        _this.Period.push(new TLPeriod(nn, new TLEventMonth('Начало', value['first']['month']), new TLEventMonth('Конец', value['last']['month'])));
+                        _this.Periods.push(new TLPeriod(nn, new TLEventMonth('Начало', value['first']['month']), new TLEventMonth('Конец', value['last']['month'])));
                     }
                     else if (value['first']['year'] !== undefined) {
-                        _this.Period.push(new TLPeriod(nn, new TLEventYear('Начало', value['first']['year']), new TLEventYear('Конец', value['last']['year'])));
+                        _this.Periods.push(new TLPeriod(nn, new TLEventYear('Начало', value['first']['year']), new TLEventYear('Конец', value['last']['year'])));
                     }
                     else if (value['first']['decade'] !== undefined) {
-                        _this.Period.push(new TLPeriod(nn, new TLEventDecade('Начало', value['first']['decade']), new TLEventDecade('Конец', value['last']['decade'])));
+                        _this.Periods.push(new TLPeriod(nn, new TLEventDecade('Начало', value['first']['decade']), new TLEventDecade('Конец', value['last']['decade'])));
                     }
                     else if (value['first']['century'] !== undefined) {
-                        _this.Period.push(new TLPeriod(nn, new TLEventCentury('Начало', value['first']['century']), new TLEventCentury('Конец', value['last']['century'])));
+                        _this.Periods.push(new TLPeriod(nn, new TLEventCentury('Начало', value['first']['century']), new TLEventCentury('Конец', value['last']['century'])));
                     }
                 }
             });

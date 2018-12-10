@@ -820,7 +820,11 @@ function LoadTimeLine() {
         }
     })
         .done(function (data) {
-        console.log(data);
+        var tldata = JSON.parse(data);
+        var tl = new timeline_1.TimeLine(ctx);
+        tl.name = tldata.Name;
+        tl.tldata = tldata;
+        NewTimeLine(tldata.Name, tl);
         $('#tmLoadModal').modal('hide');
     })
         .fail(function (data) {
@@ -1028,76 +1032,7 @@ var TimeLine = /** @class */ (function () {
             method: 'POST',
             data: {
                 s1: this.name,
-                s2: JSON.stringify({
-                    "name": "Жизнь Сошина",
-                    "events": [
-                        {
-                            "type": 0,
-                            "name": "Рождение",
-                            "day": {
-                                "year": 1963,
-                                "month": 6,
-                                "day": 5
-                            },
-                            "month": 23551,
-                            "year": 1963,
-                            "decade": 197,
-                            "century": 20
-                        },
-                        {
-                            "type": 0,
-                            "name": "В школу",
-                            "day": {
-                                "year": 1970,
-                                "month": 9,
-                                "day": 1
-                            },
-                            "month": 23637,
-                            "year": 1970,
-                            "decade": 198,
-                            "century": 20
-                        },
-                        {
-                            "type": 0,
-                            "name": "Окончил школу",
-                            "day": {
-                                "year": 1980,
-                                "month": 6,
-                                "day": 30
-                            },
-                            "month": 23754,
-                            "year": 1980,
-                            "decade": 199,
-                            "century": 20
-                        },
-                        {
-                            "type": 1,
-                            "name": "1-ая учеба в ВУЗе",
-                            "first": {
-                                "day": {
-                                    "year": 1981,
-                                    "month": 9,
-                                    "day": 1
-                                },
-                                "month": 23769,
-                                "year": 1981,
-                                "decade": 199,
-                                "century": 20
-                            },
-                            "last": {
-                                "day": {
-                                    "year": 1984,
-                                    "month": 8,
-                                    "day": 31
-                                },
-                                "month": 23804,
-                                "year": 1984,
-                                "decade": 199,
-                                "century": 20
-                            }
-                        }
-                    ]
-                })
+                s2: JSON.stringify(this.tldata)
             }
         })
             .done(function (_) {

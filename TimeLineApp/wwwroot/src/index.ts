@@ -3,6 +3,7 @@ import { makeColor } from './colorutils'
 import { ContextMenu } from './contextmenu'
 import { LogonHandlers } from './LogonHandlers';
 import { RegisterHandlers } from './RegisterHandlers'
+import { TimeLineData } from './TLEvent'
 
 const MIN_GAP = 100
 let PERIOD_TYPE = EnumPeriod.day
@@ -184,7 +185,11 @@ function LoadTimeLine() {
     }
     })
     .done(data => {
-      console.log(data)
+      let tldata: TimeLineData = JSON.parse(data)
+      let tl = new TimeLine(ctx)
+      tl.name = tldata.Name
+      tl.tldata = tldata
+      NewTimeLine(tldata.Name, tl)
       $('#tmLoadModal').modal('hide')
     })
     .fail(data => {

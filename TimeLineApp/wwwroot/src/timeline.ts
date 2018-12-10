@@ -1,6 +1,6 @@
 import { DateUtils } from './dateutils'
 import { saaGraph } from './saagraph'
-import { TimeLineData as TLData } from './TLEvent'
+import { TimeLineData } from './TLEvent'
 
 export enum EnumPeriod {
   day = 1, month = 2, year = 3, decade = 4, century = 5
@@ -14,9 +14,9 @@ export class TimeLine {
   color: string | CanvasGradient | CanvasPattern
   period: EnumPeriod
   name: string
-  data: TimeLineData[]
+  data: CellData[]
   curdata: number
-  tldata: TLData
+  tldata: TimeLineData
 
   static readonly LINE_THICKNESS: number = 25
   private static readonly HALF_LINE_THICKNESS: number = TimeLine.LINE_THICKNESS / 2
@@ -57,76 +57,7 @@ export class TimeLine {
       method: 'POST',
       data: {
         s1: this.name,
-        s2: JSON.stringify( {
-          "name": "Жизнь Сошина",
-          "events": [
-            {
-              "type": 0,
-              "name": "Рождение",
-              "day": {
-                "year": 1963,
-                "month": 6,
-                "day": 5
-              },
-              "month": 23551,
-              "year": 1963,
-              "decade": 197,
-              "century": 20
-            },
-            {
-              "type": 0,
-              "name": "В школу",
-              "day": {
-                "year": 1970,
-                "month": 9,
-                "day": 1
-              },
-              "month": 23637,
-              "year": 1970,
-              "decade": 198,
-              "century": 20
-            },
-            {
-              "type": 0,
-              "name": "Окончил школу",
-              "day": {
-                "year": 1980,
-                "month": 6,
-                "day": 30
-              },
-              "month": 23754,
-              "year": 1980,
-              "decade": 199,
-              "century": 20
-            },
-            {
-              "type": 1,
-              "name": "1-ая учеба в ВУЗе",
-              "first": {
-                "day": {
-                  "year": 1981,
-                  "month": 9,
-                  "day": 1
-                },
-                "month": 23769,
-                "year": 1981,
-                "decade": 199,
-                "century": 20
-              },
-              "last": {
-                "day": {
-                  "year": 1984,
-                  "month": 8,
-                  "day": 31
-                },
-                "month": 23804,
-                "year": 1984,
-                "decade": 199,
-                "century": 20
-              }
-            }
-          ]
-        })
+        s2: JSON.stringify(this.tldata)
       }
     })
       .done((_) => {
@@ -193,7 +124,7 @@ export class TimeLine {
     this.ctx.fillStyle = 'white'
     this.ctx.fillText(this.formatPeriod(dt), x0 - TimeLine.HALF_INTERVAL_WIDTH, this.y + TimeLine.HALF_LINE_THICKNESS)
 
-    this.data.push(new TimeLineData(dt, x0 - TimeLine.INTERVAL_WIDTH + 1, this.y, x0, this.y + TimeLine.LINE_THICKNESS - 1, path))
+    this.data.push(new CellData(dt, x0 - TimeLine.INTERVAL_WIDTH + 1, this.y, x0, this.y + TimeLine.LINE_THICKNESS - 1, path))
   }
 
   /**
@@ -298,7 +229,7 @@ export class TimeLine {
   }
 }
 
-class TimeLineData {
+class CellData {
   constructor (
     public value: any,
     public x1: number,
