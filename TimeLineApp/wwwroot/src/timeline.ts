@@ -1,10 +1,7 @@
 import { DateUtils } from './dateutils'
 import { saaGraph } from './saagraph'
-import { TimeLineData } from './TLEvent'
+import { TimeLineData, TLEvent, EnumPeriod, TLPeriod } from './TLEvent'
 
-export enum EnumPeriod {
-  day = 1, month = 2, year = 3, decade = 4, century = 5
-}
 
 export class TimeLine {
   ctx: CanvasRenderingContext2D
@@ -48,10 +45,6 @@ export class TimeLine {
     )
   }
 
-  static load() {
-    
-  }
-
   save () {
     $.ajax('api/storage/save', {
       method: 'POST',
@@ -92,6 +85,26 @@ export class TimeLine {
       dt = this.getPeriodAgo(dt, 1)
     }
     this.drawName()
+  }
+
+  findevents(dt: number | Date): TLEvent[] {
+    let rt: TLEvent[] = []
+    this.tldata.Events.forEach(v => {
+      if (v.Equal(this.period, dt)) {
+        rt.push(v)
+      }
+    })
+    return rt
+  }
+
+  findperiods(dt: number | Date): TLPeriod[] {
+    let rt: TLPeriod[] = []
+    this.tldata.Periods.forEach(v => {
+      if (v.Equal(this.period, dt)) {
+        rt.push(v)
+      }
+    })
+    return rt
   }
 
   drawName () {

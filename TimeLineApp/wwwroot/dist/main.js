@@ -1025,8 +1025,6 @@ var TimeLine = /** @class */ (function () {
             });
         });
     };
-    TimeLine.load = function () {
-    };
     TimeLine.prototype.save = function () {
         $.ajax('api/storage/save', {
             method: 'POST',
@@ -1097,7 +1095,7 @@ var TimeLine = /** @class */ (function () {
         this.ctx.font = '14px serif';
         this.ctx.fillStyle = 'white';
         this.ctx.fillText(this.formatPeriod(dt), x0 - TimeLine.HALF_INTERVAL_WIDTH, this.y + TimeLine.HALF_LINE_THICKNESS);
-        this.data.push(new TimeLineData(dt, x0 - TimeLine.INTERVAL_WIDTH + 1, this.y, x0, this.y + TimeLine.LINE_THICKNESS - 1, path));
+        this.data.push(new CellData(dt, x0 - TimeLine.INTERVAL_WIDTH + 1, this.y, x0, this.y + TimeLine.LINE_THICKNESS - 1, path));
     };
     /**
      * Получить значение периода для данной координаты курсора
@@ -1200,8 +1198,8 @@ var TimeLine = /** @class */ (function () {
     return TimeLine;
 }());
 exports.TimeLine = TimeLine;
-var TimeLineData = /** @class */ (function () {
-    function TimeLineData(value, x1, y1, x2, y2, path) {
+var CellData = /** @class */ (function () {
+    function CellData(value, x1, y1, x2, y2, path) {
         this.value = value;
         this.x1 = x1;
         this.y1 = y1;
@@ -1209,7 +1207,7 @@ var TimeLineData = /** @class */ (function () {
         this.y2 = y2;
         this.path = path;
     }
-    return TimeLineData;
+    return CellData;
 }());
 
 

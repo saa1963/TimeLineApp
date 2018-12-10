@@ -1,5 +1,9 @@
 ﻿import { DateUtils } from './dateutils'
 
+export enum EnumPeriod {
+  day = 1, month = 2, year = 3, decade = 4, century = 5
+}
+
 class TLDate {
   Day: number
   Month: number
@@ -53,6 +57,9 @@ export abstract class TLEvent {
   }
   protected YearFromMonth(month: number): number {
     return (month - 1) / 12 + (month / Math.abs(month))
+  }
+  public Equal(period: EnumPeriod, vl: number | Date): boolean {
+    return true
   }
 }
 
@@ -130,107 +137,13 @@ export class TLPeriod {
     this.Begin = begin
     this.End = end
   }
+  public Equal(period: EnumPeriod, vl: number | Date): boolean {
+    return true
+  }
 }
 
 export class TimeLineData {
   Events: TLEvent[] = []
   Periods: TLPeriod[] = []
   Name: string
-  constructor(name: string, data?: string) {
-    this.Name = name
-    if (data !== undefined) {
-      let o = JSON.parse(data)
-      let events = o.events as object[]
-      events.forEach((value, index, array) => {
-        if (value['type'] === 0) {
-          if (value['day'] !== undefined) {
-            this.Events.push(
-              new TLEventDay(
-                <string>value['name'],
-                <number>value['day']['year'],
-                <number>value['day']['month'],
-                <number>value['day']['day'])
-            )
-          } else if (value['month'] !== undefined) {
-            this.Events.push(
-              new TLEventMonth(
-                <string>value['name'],
-                <number>value['month']
-              )
-            )
-          } else if (value['year'] !== undefined) {
-            this.Events.push(
-              new TLEventYear(
-                <string>value['name'],
-                <number>value['year']
-              )
-            )
-          } else if (value['decade'] !== undefined) {
-            this.Events.push(
-              new TLEventDecade(
-                <string>value['name'],
-                <number>value['decade']
-              )
-            )
-          } else if (value['century'] !== undefined) {
-            this.Events.push(
-              new TLEventCentury(
-                <string>value['name'],
-                <number>value['century']
-              )
-            )
-          }
-        } else {
-          let nn = <string>value['name']
-          if (value['first']['day'] !== undefined) {
-            let year1 = <number>value['first']['day']['year']
-            let month1 = <number>value['first']['day']['month']
-            let day1 = <number>value['first']['day']['day']
-            let year2 = <number>value['last']['day']['year']
-            let month2 = <number>value['last']['day']['month']
-            let day2 = <number>value['last']['day']['day']
-            this.Periods.push(
-              new TLPeriod(
-                nn,
-                new TLEventDay('Начало', year1, month1, day1),
-                new TLEventDay('Конец', year2, month2, day2)
-              )
-            )
-          } else if (value['first']['month'] !== undefined) {
-            this.Periods.push(
-              new TLPeriod(
-                nn,
-                new TLEventMonth('Начало', <number>value['first']['month']),
-                new TLEventMonth('Конец', <number>value['last']['month'])
-              )
-            )
-          } else if (value['first']['year'] !== undefined) {
-            this.Periods.push(
-              new TLPeriod(
-                nn,
-                new TLEventYear('Начало', <number>value['first']['year']),
-                new TLEventYear('Конец', <number>value['last']['year'])
-              )
-            )
-          } else if (value['first']['decade'] !== undefined) {
-            this.Periods.push(
-              new TLPeriod(
-                nn,
-                new TLEventDecade('Начало', <number>value['first']['decade']),
-                new TLEventDecade('Конец', <number>value['last']['decade'])
-              )
-            )
-          } else if (value['first']['century'] !== undefined) {
-            this.Periods.push(
-              new TLPeriod(
-                nn,
-                new TLEventCentury('Начало', <number>value['first']['century']),
-                new TLEventCentury('Конец', <number>value['last']['century'])
-              )
-            )
-          }
-        }
-      })
-    }
-  }
 }

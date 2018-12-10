@@ -1,9 +1,9 @@
-import { TimeLine, EnumPeriod } from './timeline'
+import { TimeLine } from './timeline'
 import { makeColor } from './colorutils'
 import { ContextMenu } from './contextmenu'
 import { LogonHandlers } from './LogonHandlers';
 import { RegisterHandlers } from './RegisterHandlers'
-import { TimeLineData } from './TLEvent'
+import { TimeLineData, EnumPeriod } from './TLEvent'
 
 const MIN_GAP = 100
 let PERIOD_TYPE = EnumPeriod.day
