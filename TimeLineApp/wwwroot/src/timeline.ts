@@ -5,14 +5,20 @@ import { TimeLineData, TLEvent, EnumPeriod, TLPeriod } from './TLEvent'
 
 export class TimeLine {
   ctx: CanvasRenderingContext2D
+  /** Значение ОВ с которого начинается отрисовка справа налево */
   curPeriod: number | Date
+  /** координата x с которой отрисовывается ЛВ, сначала справа налево, потом слева направо */
   x: number
   y: number
   color: string | CanvasGradient | CanvasPattern
+  /** Текущий вид ОВ */
   period: EnumPeriod
   name: string
+  /** Массив данных для отображаемых ОВ */
   data: CellData[]
+  /** Текущий индекс в массиве this.data  */ 
   curdata: number
+  /** Массив событий и периодов для всей ЛВ */
   tldata: TimeLineData
 
   static readonly LINE_THICKNESS: number = 25
@@ -137,18 +143,22 @@ export class TimeLine {
     this.ctx.fillStyle = 'white'
     this.ctx.fillText(this.formatPeriod(dt), x0 - TimeLine.HALF_INTERVAL_WIDTH, this.y + TimeLine.HALF_LINE_THICKNESS)
 
-    this.data.push(new CellData(dt, x0 - TimeLine.INTERVAL_WIDTH + 1, this.y, x0, this.y + TimeLine.LINE_THICKNESS - 1, path))
+    let cellData = new CellData(dt, x0 - TimeLine.INTERVAL_WIDTH + 1, this.y, x0, this.y + TimeLine.LINE_THICKNESS - 1, path)
+    cellData.events = this.findevents(dt)
+    cellData.periods = this.findperiods(dt)
+    this.data.push(cellData)
+
   }
 
   /**
-   * Получить значение периода для данной координаты курсора
+   * Получить индекс в массиве this.data для данной координаты курсора
    *
    * @param {number} x
    * @param {number} y
    * @returns number
    * @memberof TimeLine
    */
-  getCellValue (x, y) {
+  getCellValue (x: number, y: number): number {
     for (let i = 0; i < this.data.length; i++) {
       if (x > this.data[i].x1 && x < this.data[i].x2 && y > this.data[i].y1 && y < this.data[i].y2) {
         return i
@@ -243,6 +253,8 @@ export class TimeLine {
 }
 
 class CellData {
+  events: TLEvent[]
+  periods: TLPeriod[]
   constructor (
     public value: any,
     public x1: number,

@@ -59,7 +59,22 @@ export abstract class TLEvent {
     return (month - 1) / 12 + (month / Math.abs(month))
   }
   public Equal(period: EnumPeriod, vl: number | Date): boolean {
-    return true
+    switch (period) {
+      case EnumPeriod.day:
+        let dt = <Date>vl
+        if (dt.getFullYear() === this.Year && dt.getMonth() + 1 === this.Month && dt.getDate() === this.Day)
+        break
+      case EnumPeriod.month:
+        break
+      case EnumPeriod.year:
+        break
+      case EnumPeriod.decade:
+        break
+      case EnumPeriod.century:
+        break
+      default:
+        break
+    }
   }
 }
 
