@@ -93,6 +93,11 @@ export class TimeLine {
     this.drawName()
   }
 
+  /**
+   * Формирует массив событий для текущего ОВ
+   * @param dt 
+   * Текущее значение ОВ, которое в данный момент отрисовывается
+   */
   findevents(dt: number | Date): TLEvent[] {
     let rt: TLEvent[] = []
     this.tldata.Events.forEach(v => {
@@ -102,11 +107,15 @@ export class TimeLine {
     })
     return rt
   }
-
+  /**
+   * Формирует массив периодов для текущего ОВ
+   * @param dt 
+   * Текущее значение ОВ, которое в данный момент отрисовывается
+   */
   findperiods(dt: number | Date): TLPeriod[] {
     let rt: TLPeriod[] = []
     this.tldata.Periods.forEach(v => {
-      if (v.Equal(this.period, dt)) {
+      if (v.Contains(this.period, dt)) {
         rt.push(v)
       }
     })
