@@ -2,14 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var dateutils_1 = require("./dateutils");
 var saagraph_1 = require("./saagraph");
-var EnumPeriod;
-(function (EnumPeriod) {
-    EnumPeriod[EnumPeriod["day"] = 1] = "day";
-    EnumPeriod[EnumPeriod["month"] = 2] = "month";
-    EnumPeriod[EnumPeriod["year"] = 3] = "year";
-    EnumPeriod[EnumPeriod["decade"] = 4] = "decade";
-    EnumPeriod[EnumPeriod["century"] = 5] = "century";
-})(EnumPeriod = exports.EnumPeriod || (exports.EnumPeriod = {}));
+var TLEvent_1 = require("./TLEvent");
 var TimeLine = /** @class */ (function () {
     function TimeLine(ctx, curPeriod, y, color, period, name, data) {
         if (curPeriod === void 0) { curPeriod = null; }
@@ -37,8 +30,6 @@ var TimeLine = /** @class */ (function () {
                 reject(data.responseText);
             });
         });
-    };
-    TimeLine.load = function () {
     };
     TimeLine.prototype.save = function () {
         $.ajax('api/storage/save', {
@@ -83,6 +74,35 @@ var TimeLine = /** @class */ (function () {
         }
         this.drawName();
     };
+    /**
+     * Формирует массив событий для текущего ОВ
+     * @param dt
+     * Текущее значение ОВ, которое в данный момент отрисовывается
+     */
+    //findevents(dt: number | Date): TLEvent[] {
+    //  let rt: TLEvent[] = []
+    //  this.tldata.Events.forEach(v => {
+    //    if (v.Equal(this.period, dt)) {
+    //      rt.push(v)
+    //    }
+    //  })
+    //  return rt
+    //}
+    /**
+     * Формирует массив периодов для текущего ОВ
+     * @param dt
+     * Текущее значение ОВ, которое в данный момент отрисовывается
+     */
+    TimeLine.prototype.findperiods = function (dt) {
+        var _this = this;
+        var rt = [];
+        this.tldata.Periods.forEach(function (v) {
+            if (v.Contains(_this.period, dt)) {
+                rt.push(v);
+            }
+        });
+        return rt;
+    };
     TimeLine.prototype.drawName = function () {
         var HBOOKMARK = 30;
         var INDENT = 10;
@@ -110,10 +130,13 @@ var TimeLine = /** @class */ (function () {
         this.ctx.font = '14px serif';
         this.ctx.fillStyle = 'white';
         this.ctx.fillText(this.formatPeriod(dt), x0 - TimeLine.HALF_INTERVAL_WIDTH, this.y + TimeLine.HALF_LINE_THICKNESS);
-        this.data.push(new TimeLineData(dt, x0 - TimeLine.INTERVAL_WIDTH + 1, this.y, x0, this.y + TimeLine.LINE_THICKNESS - 1, path));
+        var cellData = new CellData(dt, x0 - TimeLine.INTERVAL_WIDTH + 1, this.y, x0, this.y + TimeLine.LINE_THICKNESS - 1, path);
+        //cellData.events = this.findevents(dt)
+        cellData.periods = this.findperiods(dt);
+        this.data.push(cellData);
     };
     /**
-     * Получить значение периода для данной координаты курсора
+     * Получить индекс в массиве this.data для данной координаты курсора
      *
      * @param {number} x
      * @param {number} y
@@ -144,19 +167,19 @@ var TimeLine = /** @class */ (function () {
     TimeLine.getCurPeriod = function (periodType) {
         var rt;
         switch (periodType) {
-            case EnumPeriod.month:
+            case TLEvent_1.EnumPeriod.month:
                 rt = dateutils_1.DateUtils.getMonthFromDate(dateutils_1.DateUtils.getCurDate());
                 break;
-            case EnumPeriod.year:
+            case TLEvent_1.EnumPeriod.year:
                 rt = dateutils_1.DateUtils.getYearFromDate(dateutils_1.DateUtils.getCurDate());
                 break;
-            case EnumPeriod.decade:
+            case TLEvent_1.EnumPeriod.decade:
                 rt = dateutils_1.DateUtils.getDecadeFromDate(dateutils_1.DateUtils.getCurDate());
                 break;
-            case EnumPeriod.century:
+            case TLEvent_1.EnumPeriod.century:
                 rt = dateutils_1.DateUtils.getCenturyFromDate(dateutils_1.DateUtils.getCurDate());
                 break;
-            case EnumPeriod.day:
+            case TLEvent_1.EnumPeriod.day:
             default:
                 rt = dateutils_1.DateUtils.getCurDate();
                 break;
@@ -166,19 +189,19 @@ var TimeLine = /** @class */ (function () {
     TimeLine.prototype.formatPeriod = function (period) {
         var rt;
         switch (this.period) {
-            case EnumPeriod.month:
+            case TLEvent_1.EnumPeriod.month:
                 rt = dateutils_1.DateUtils.formatMonth(period);
                 break;
-            case EnumPeriod.year:
+            case TLEvent_1.EnumPeriod.year:
                 rt = dateutils_1.DateUtils.formatYear(period);
                 break;
-            case EnumPeriod.decade:
+            case TLEvent_1.EnumPeriod.decade:
                 rt = dateutils_1.DateUtils.formatDecade(period);
                 break;
-            case EnumPeriod.century:
+            case TLEvent_1.EnumPeriod.century:
                 rt = dateutils_1.DateUtils.formatCentury(period);
                 break;
-            case EnumPeriod.day:
+            case TLEvent_1.EnumPeriod.day:
             default:
                 rt = dateutils_1.DateUtils.formatDate(period);
                 break;
@@ -188,18 +211,18 @@ var TimeLine = /** @class */ (function () {
     TimeLine.prototype.getPeriodAgo = function (period, offset) {
         var dt0;
         switch (this.period) {
-            case EnumPeriod.month:
-            case EnumPeriod.year:
-            case EnumPeriod.decade:
+            case TLEvent_1.EnumPeriod.month:
+            case TLEvent_1.EnumPeriod.year:
+            case TLEvent_1.EnumPeriod.decade:
                 dt0 = period + offset;
                 break;
-            case EnumPeriod.century:
+            case TLEvent_1.EnumPeriod.century:
                 dt0 = period + offset;
                 if (dt0 === 0) {
                     dt0 = dt0 + offset;
                 }
                 break;
-            case EnumPeriod.day:
+            case TLEvent_1.EnumPeriod.day:
             default:
                 dt0 = dateutils_1.DateUtils.getDateAgo(period, offset);
                 break;
@@ -213,8 +236,8 @@ var TimeLine = /** @class */ (function () {
     return TimeLine;
 }());
 exports.TimeLine = TimeLine;
-var TimeLineData = /** @class */ (function () {
-    function TimeLineData(value, x1, y1, x2, y2, path) {
+var CellData = /** @class */ (function () {
+    function CellData(value, x1, y1, x2, y2, path) {
         this.value = value;
         this.x1 = x1;
         this.y1 = y1;
@@ -222,6 +245,6 @@ var TimeLineData = /** @class */ (function () {
         this.y2 = y2;
         this.path = path;
     }
-    return TimeLineData;
+    return CellData;
 }());
 //# sourceMappingURL=timeline.js.map

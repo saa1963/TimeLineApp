@@ -5,8 +5,9 @@ var colorutils_1 = require("./colorutils");
 var contextmenu_1 = require("./contextmenu");
 var LogonHandlers_1 = require("./LogonHandlers");
 var RegisterHandlers_1 = require("./RegisterHandlers");
+var TLEvent_1 = require("./TLEvent");
 var MIN_GAP = 100;
-var PERIOD_TYPE = timeline_1.EnumPeriod.day;
+var PERIOD_TYPE = TLEvent_1.EnumPeriod.day;
 var HTOP = 56;
 var timeLines = [];
 var ctx;
@@ -24,16 +25,16 @@ var ctx;
         { id: 'line', type: contextmenu_1.ContextMenu.DIVIDER },
         { id: 'period', text: 'Периодичность',
             sub: [
-                { id: timeline_1.EnumPeriod.day, text: 'День', icon: '<i class="fas fa-angle-down"></i>',
-                    events: { click: function () { return SwitchPeriod(menuCtx, timeline_1.EnumPeriod.day); } } },
-                { id: timeline_1.EnumPeriod.month, text: 'Месяц',
-                    events: { click: function () { return SwitchPeriod(menuCtx, timeline_1.EnumPeriod.month); } } },
-                { id: timeline_1.EnumPeriod.year, text: 'Год',
-                    events: { click: function () { return SwitchPeriod(menuCtx, timeline_1.EnumPeriod.year); } } },
-                { id: timeline_1.EnumPeriod.decade, text: 'Десятилетие',
-                    events: { click: function () { return SwitchPeriod(menuCtx, timeline_1.EnumPeriod.decade); } } },
-                { id: timeline_1.EnumPeriod.century, text: 'Век',
-                    events: { click: function () { return SwitchPeriod(menuCtx, timeline_1.EnumPeriod.century); } } }
+                { id: TLEvent_1.EnumPeriod.day, text: 'День', icon: '<i class="fas fa-angle-down"></i>',
+                    events: { click: function () { return SwitchPeriod(menuCtx, TLEvent_1.EnumPeriod.day); } } },
+                { id: TLEvent_1.EnumPeriod.month, text: 'Месяц',
+                    events: { click: function () { return SwitchPeriod(menuCtx, TLEvent_1.EnumPeriod.month); } } },
+                { id: TLEvent_1.EnumPeriod.year, text: 'Год',
+                    events: { click: function () { return SwitchPeriod(menuCtx, TLEvent_1.EnumPeriod.year); } } },
+                { id: TLEvent_1.EnumPeriod.decade, text: 'Десятилетие',
+                    events: { click: function () { return SwitchPeriod(menuCtx, TLEvent_1.EnumPeriod.decade); } } },
+                { id: TLEvent_1.EnumPeriod.century, text: 'Век',
+                    events: { click: function () { return SwitchPeriod(menuCtx, TLEvent_1.EnumPeriod.century); } } }
             ]
         }
     ];
@@ -112,7 +113,7 @@ var ctx;
         alert('save');
     });
     $('#options').click(function (ev) {
-        $('#typePeriod').val(timeline_1.EnumPeriod.year);
+        $('#typePeriod').val(TLEvent_1.EnumPeriod.year);
         $('#tmOptionsModal').modal();
     });
     $('#btnNewName').click(function (ev) {
@@ -178,7 +179,7 @@ function LoadTimeLine() {
         }
     })
         .done(function (data) {
-        var tldata = JSON.parse(data);
+        var tldata = new TLEvent_1.TimeLineData(JSON.parse(data));
         var tl = new timeline_1.TimeLine(ctx);
         tl.name = tldata.Name;
         tl.tldata = tldata;

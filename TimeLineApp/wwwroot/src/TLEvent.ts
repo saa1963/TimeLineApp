@@ -58,6 +58,13 @@ export abstract class TLEvent {
   protected YearFromMonth(month: number): number {
     return (month - 1) / 12 + (month / Math.abs(month))
   }
+  static GetType(o: TLEvent): EnumPeriod {
+    if (o.Day !== null) return EnumPeriod.day
+    if (o.Month !== null) return EnumPeriod.month
+    if (o.Year !== null) return EnumPeriod.year
+    if (o.Decade !== null) return EnumPeriod.decade
+    if (o.Century !== null) return EnumPeriod.century
+  }
   /**
    * Попадает ли событие this в текущее значение ОВ
    * @param period
@@ -161,11 +168,16 @@ export class TLPeriod {
   Name: string
   Begin: TLEvent
   End: TLEvent
-  constructor(name: string, begin: TLEvent, end: TLEvent) {
-    if (typeof (begin) !== typeof (end)) throw new Error('Неодинаковый тип')
-    this.Name = name
-    this.Begin = begin
-    this.End = end
+  constructor(o: TLPeriod) {
+    this.Name = o.Name
+    let type = TLEvent.GetType(o.Begin)
+    if (type == EnumPeriod.day) {
+      this.Begin = new TLEventDay(o.Name, o.Begin.Day.Year, o.Begin.Day.Month, o.Begin.Day.Day)
+    } else if (type == EnumPeriod.month) {
+
+    }
+    this.Begin = o.Begin
+    this.End = o.End
   }
   /**
    * Попадает текущее значение ОВ в период this
@@ -174,40 +186,52 @@ export class TLPeriod {
    * @param vl
    * Текущее значение ОВ, которое в данный момент отрисовывается
    */
-  public Contains(period: EnumPeriod, vl: number | Date): boolean {
+  Contains(period: EnumPeriod, vl: number | Date): boolean {
     let rt = false
-    switch (period) {
-      case EnumPeriod.day:
-        let dt = <Date>vl
-        if (this.Begin.Day !== null) {
-          if (dt.getFullYear() === this.Day.Year && dt.getMonth() + 1 === this.Day.Month && dt.getDate() === this.Day.Day) {
-            rt = true
-          }
-        }
-        break
-      case EnumPeriod.month:
-        rt = (vl === this.Month)
-        break
-      case EnumPeriod.year:
-        rt = (vl === this.Year)
-        break
-      case EnumPeriod.decade:
-        rt = (vl === this.Decade)
-        break
-      case EnumPeriod.century:
-        rt = (vl === this.Century)
-        break
-      default:
-        break
-    }
+    //switch (period) {
+    //  case EnumPeriod.day:
+    //    let dt = <Date>vl
+    //    if (this.Begin.Day !== null) {
+    //      if (dt.getFullYear() === this.Day.Year && dt.getMonth() + 1 === this.Day.Month && dt.getDate() === this.Day.Day) {
+    //        rt = true
+    //      }
+    //    }
+    //    break
+    //  case EnumPeriod.month:
+    //    rt = (vl === this.Month)
+    //    break
+    //  case EnumPeriod.year:
+    //    rt = (vl === this.Year)
+    //    break
+    //  case EnumPeriod.decade:
+    //    rt = (vl === this.Decade)
+    //    break
+    //  case EnumPeriod.century:
+    //    rt = (vl === this.Century)
+    //    break
+    //  default:
+    //    break
+    //}
     return rt
   }
 }
 
 export class TimeLineData {
   /** Здесь только события с конкретными датами */
-  Events: TLEvent[] = []
+  //Events: TLEvent[] = []
   /** Здесь периоды, события у которых нет конкретной даты тоже относятся к периодам */
   Periods: TLPeriod[] = []
   Name: string
+  constructor(o: TimeLineData) {
+    this.Name = o.Name
+    o.Periods.forEach(data => {
+      this.Periods.push(new TLPeriod(data))
+    })
+  }
+}
+
+export class TLPeriodEvent extends TLPeriod {
+  constructor(o: TLPeriod) {
+    super(o)
+  }
 }

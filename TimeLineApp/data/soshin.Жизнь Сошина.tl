@@ -1,44 +1,87 @@
 {
   "Name": "Жизнь Сошина",
-  "Events": [
+  "Periods": [
     {
       "Name": "Рождение",
-      "Day": {
-        "Day": 5,
-        "Month": 6,
-        "Year": 1963
+      "Begin": {
+        "Name": "Начало",
+        "Day": {
+          "Day": 5,
+          "Month": 6,
+          "Year": 1963
+        },
+        "Month": 23550,
+        "Year": 1963,
+        "Decade": 197,
+        "Century": 20
       },
-      "Month": 23550,
-      "Year": 1963,
-      "Decade": 197,
-      "Century": 20
+      "End": {
+        "Name": "Конец",
+        "Day": {
+          "Day": 5,
+          "Month": 6,
+          "Year": 1963
+        },
+        "Month": 23550,
+        "Year": 1963,
+        "Decade": 197,
+        "Century": 20
+      }
     },
     {
       "Name": "В школу",
-      "Day": {
-        "Day": 1,
-        "Month": 9,
-        "Year": 1970
+      "Begin": {
+        "Name": "Начало",
+        "Day": {
+          "Day": 1,
+          "Month": 9,
+          "Year": 1970
+        },
+        "Month": 23637,
+        "Year": 1970,
+        "Decade": 198,
+        "Century": 20
       },
-      "Month": 23637,
-      "Year": 1970,
-      "Decade": 198,
-      "Century": 20
+      "End": {
+        "Name": "Конец",
+        "Day": {
+          "Day": 1,
+          "Month": 9,
+          "Year": 1970
+        },
+        "Month": 23637,
+        "Year": 1970,
+        "Decade": 198,
+        "Century": 20
+      }
     },
     {
       "Name": "Окончил школу",
-      "Day": {
-        "Day": 30,
-        "Month": 6,
-        "Year": 1980
+      "Begin": {
+        "Name": "Начало",
+        "Day": {
+          "Day": 30,
+          "Month": 6,
+          "Year": 1980
+        },
+        "Month": 23754,
+        "Year": 1980,
+        "Decade": 199,
+        "Century": 20
       },
-      "Month": 23754,
-      "Year": 1980,
-      "Decade": 199,
-      "Century": 20
-    }
-  ],
-  "Periods": [
+      "End": {
+        "Name": "Конец",
+        "Day": {
+          "Day": 30,
+          "Month": 6,
+          "Year": 1980
+        },
+        "Month": 23754,
+        "Year": 1980,
+        "Decade": 199,
+        "Century": 20
+      }
+    },
     {
       "Name": "1-ая учеба в ВУЗе",
       "Begin": {

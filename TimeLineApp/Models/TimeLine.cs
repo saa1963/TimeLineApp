@@ -54,24 +54,19 @@ namespace TimeLineApp.Models
     [Serializable]
     public class TimeLine
     {
-        private List<Event> m_events = new List<Event>();
         private List<Period> m_periods = new List<Period>();
         public string Name { get; set; }
-        public List<Event> Events { get => m_events; set => m_events = value; }
         public List<Period> Periods { get => m_periods; set => m_periods = value; }
 
         public string ToJSON()
         {
             JsonSerializer serializer = new JsonSerializer();
-            //serializer.Converters.Add(new JavaScriptDateTimeConverter());
-            //serializer.NullValueHandling = NullValueHandling.Ignore;
             using (var stream = new MemoryStream())
             {
                 using (StreamWriter sw = new StreamWriter(stream))
                 using (JsonWriter writer = new JsonTextWriter(sw))
                 {
                     serializer.Serialize(writer, this);
-                    // {"ExpiryDate":new Date(1230375600000),"Price":0}
                     writer.Flush();
 
                     stream.Position = 0;
@@ -90,14 +85,6 @@ namespace TimeLineApp.Models
             return serializer.Deserialize<TimeLine>(reader);
         }
 
-        public void AddEvent(Event e)
-        {
-            m_events.Add(e);
-        }
-
-        [JsonIgnore]
-        public int EventCount
-        { get => m_events.Count; }
         [JsonIgnore]
         public int PeriodCount
         { get => m_periods.Count; }
@@ -261,10 +248,16 @@ namespace TimeLineApp.Models
 
         public Period(string name, Event begin, Event end)
         {
-            if (begin.GetType() != end.GetType()) throw new ArgumentException("Неодинаковый тип");
             Name = name;
             Begin = begin;
             End = end;
         }
+    }
+
+    [Serializable]
+    public class PeriodEvent: Period
+    {
+        public PeriodEvent(string name, Event ev):base(name, ev, ev)
+        { }
     }
 }

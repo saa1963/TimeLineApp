@@ -98,15 +98,15 @@ export class TimeLine {
    * @param dt 
    * Текущее значение ОВ, которое в данный момент отрисовывается
    */
-  findevents(dt: number | Date): TLEvent[] {
-    let rt: TLEvent[] = []
-    this.tldata.Events.forEach(v => {
-      if (v.Equal(this.period, dt)) {
-        rt.push(v)
-      }
-    })
-    return rt
-  }
+  //findevents(dt: number | Date): TLEvent[] {
+  //  let rt: TLEvent[] = []
+  //  this.tldata.Events.forEach(v => {
+  //    if (v.Equal(this.period, dt)) {
+  //      rt.push(v)
+  //    }
+  //  })
+  //  return rt
+  //}
   /**
    * Формирует массив периодов для текущего ОВ
    * @param dt 
@@ -153,7 +153,7 @@ export class TimeLine {
     this.ctx.fillText(this.formatPeriod(dt), x0 - TimeLine.HALF_INTERVAL_WIDTH, this.y + TimeLine.HALF_LINE_THICKNESS)
 
     let cellData = new CellData(dt, x0 - TimeLine.INTERVAL_WIDTH + 1, this.y, x0, this.y + TimeLine.LINE_THICKNESS - 1, path)
-    cellData.events = this.findevents(dt)
+    //cellData.events = this.findevents(dt)
     cellData.periods = this.findperiods(dt)
     this.data.push(cellData)
 
@@ -262,7 +262,7 @@ export class TimeLine {
 }
 
 class CellData {
-  events: TLEvent[]
+  //events: TLEvent[]
   periods: TLPeriod[]
   constructor (
     public value: any,

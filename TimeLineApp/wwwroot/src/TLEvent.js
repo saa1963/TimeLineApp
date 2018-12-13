@@ -14,6 +14,14 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var dateutils_1 = require("./dateutils");
+var EnumPeriod;
+(function (EnumPeriod) {
+    EnumPeriod[EnumPeriod["day"] = 1] = "day";
+    EnumPeriod[EnumPeriod["month"] = 2] = "month";
+    EnumPeriod[EnumPeriod["year"] = 3] = "year";
+    EnumPeriod[EnumPeriod["decade"] = 4] = "decade";
+    EnumPeriod[EnumPeriod["century"] = 5] = "century";
+})(EnumPeriod = exports.EnumPeriod || (exports.EnumPeriod = {}));
 var TLDate = /** @class */ (function () {
     function TLDate(year, month, day) {
         if (year == 0)
@@ -68,6 +76,39 @@ var TLEvent = /** @class */ (function () {
     };
     TLEvent.prototype.YearFromMonth = function (month) {
         return (month - 1) / 12 + (month / Math.abs(month));
+    };
+    /**
+     * Попадает ли событие this в текущее значение ОВ
+     * @param period
+     * Текущая дробность отображения для ЛВ
+     * @param vl
+     * Текущее значение ОВ, которое в данный момент отрисовывается
+     */
+    TLEvent.prototype.Equal = function (period, vl) {
+        var rt = false;
+        switch (period) {
+            case EnumPeriod.day:
+                var dt = vl;
+                if (dt.getFullYear() === this.Day.Year && dt.getMonth() + 1 === this.Day.Month && dt.getDate() === this.Day.Day) {
+                    rt = true;
+                }
+                break;
+            case EnumPeriod.month:
+                rt = (vl === this.Month);
+                break;
+            case EnumPeriod.year:
+                rt = (vl === this.Year);
+                break;
+            case EnumPeriod.decade:
+                rt = (vl === this.Decade);
+                break;
+            case EnumPeriod.century:
+                rt = (vl === this.Century);
+                break;
+            default:
+                break;
+        }
+        return rt;
     };
     return TLEvent;
 }());
@@ -156,70 +197,69 @@ var TLEventCentury = /** @class */ (function (_super) {
 exports.TLEventCentury = TLEventCentury;
 var TLPeriod = /** @class */ (function () {
     function TLPeriod(name, begin, end) {
-        if (typeof (begin) !== typeof (end))
-            throw new Error('Неодинаковый тип');
         this.Name = name;
         this.Begin = begin;
         this.End = end;
     }
+    /**
+     * Попадает текущее значение ОВ в период this
+     * @param period
+     * Текущая дробность отображения для ЛВ
+     * @param vl
+     * Текущее значение ОВ, которое в данный момент отрисовывается
+     */
+    TLPeriod.prototype.Contains = function (period, vl) {
+        var rt = false;
+        //switch (period) {
+        //  case EnumPeriod.day:
+        //    let dt = <Date>vl
+        //    if (this.Begin.Day !== null) {
+        //      if (dt.getFullYear() === this.Day.Year && dt.getMonth() + 1 === this.Day.Month && dt.getDate() === this.Day.Day) {
+        //        rt = true
+        //      }
+        //    }
+        //    break
+        //  case EnumPeriod.month:
+        //    rt = (vl === this.Month)
+        //    break
+        //  case EnumPeriod.year:
+        //    rt = (vl === this.Year)
+        //    break
+        //  case EnumPeriod.decade:
+        //    rt = (vl === this.Decade)
+        //    break
+        //  case EnumPeriod.century:
+        //    rt = (vl === this.Century)
+        //    break
+        //  default:
+        //    break
+        //}
+        return rt;
+    };
     return TLPeriod;
 }());
 exports.TLPeriod = TLPeriod;
 var TimeLineData = /** @class */ (function () {
-    function TimeLineData(name, data) {
+    function TimeLineData(o) {
         var _this = this;
-        this.Events = [];
+        /** Здесь только события с конкретными датами */
+        //Events: TLEvent[] = []
+        /** Здесь периоды, события у которых нет конкретной даты тоже относятся к периодам */
         this.Periods = [];
-        this.Name = name;
-        if (data !== undefined) {
-            var o = JSON.parse(data);
-            var events = o.events;
-            events.forEach(function (value, index, array) {
-                if (value['type'] === 0) {
-                    if (value['day'] !== undefined) {
-                        _this.Events.push(new TLEventDay(value['name'], value['day']['year'], value['day']['month'], value['day']['day']));
-                    }
-                    else if (value['month'] !== undefined) {
-                        _this.Events.push(new TLEventMonth(value['name'], value['month']));
-                    }
-                    else if (value['year'] !== undefined) {
-                        _this.Events.push(new TLEventYear(value['name'], value['year']));
-                    }
-                    else if (value['decade'] !== undefined) {
-                        _this.Events.push(new TLEventDecade(value['name'], value['decade']));
-                    }
-                    else if (value['century'] !== undefined) {
-                        _this.Events.push(new TLEventCentury(value['name'], value['century']));
-                    }
-                }
-                else {
-                    var nn = value['name'];
-                    if (value['first']['day'] !== undefined) {
-                        var year1 = value['first']['day']['year'];
-                        var month1 = value['first']['day']['month'];
-                        var day1 = value['first']['day']['day'];
-                        var year2 = value['last']['day']['year'];
-                        var month2 = value['last']['day']['month'];
-                        var day2 = value['last']['day']['day'];
-                        _this.Periods.push(new TLPeriod(nn, new TLEventDay('Начало', year1, month1, day1), new TLEventDay('Конец', year2, month2, day2)));
-                    }
-                    else if (value['first']['month'] !== undefined) {
-                        _this.Periods.push(new TLPeriod(nn, new TLEventMonth('Начало', value['first']['month']), new TLEventMonth('Конец', value['last']['month'])));
-                    }
-                    else if (value['first']['year'] !== undefined) {
-                        _this.Periods.push(new TLPeriod(nn, new TLEventYear('Начало', value['first']['year']), new TLEventYear('Конец', value['last']['year'])));
-                    }
-                    else if (value['first']['decade'] !== undefined) {
-                        _this.Periods.push(new TLPeriod(nn, new TLEventDecade('Начало', value['first']['decade']), new TLEventDecade('Конец', value['last']['decade'])));
-                    }
-                    else if (value['first']['century'] !== undefined) {
-                        _this.Periods.push(new TLPeriod(nn, new TLEventCentury('Начало', value['first']['century']), new TLEventCentury('Конец', value['last']['century'])));
-                    }
-                }
-            });
-        }
+        this.Name = o.Name;
+        o.Periods.forEach(function (data) {
+            _this.Periods.push(new TLPeriod(data.Name, data.Begin, data.End));
+        });
     }
     return TimeLineData;
 }());
 exports.TimeLineData = TimeLineData;
+var TLPeriodEvent = /** @class */ (function (_super) {
+    __extends(TLPeriodEvent, _super);
+    function TLPeriodEvent(name, ev) {
+        return _super.call(this, name, ev, ev) || this;
+    }
+    return TLPeriodEvent;
+}(TLPeriod));
+exports.TLPeriodEvent = TLPeriodEvent;
 //# sourceMappingURL=TLEvent.js.map
