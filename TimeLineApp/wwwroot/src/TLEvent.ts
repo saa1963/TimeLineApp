@@ -72,30 +72,16 @@ export abstract class TLEvent {
    * @param vl
    * Текущее значение ОВ, которое в данный момент отрисовывается
    */
-  public Equal(period: EnumPeriod, vl: number | Date): boolean {
+  public Equal(o: TLEvent): boolean {
     let rt = false
-    switch (period) {
-      case EnumPeriod.day:
-        let dt = <Date>vl
-        if (dt.getFullYear() === this.Day.Year && dt.getMonth() + 1 === this.Day.Month && dt.getDate() === this.Day.Day) {
-          rt = true
-        }
-        break
-      case EnumPeriod.month:
-        rt = (vl === this.Month)
-        break
-      case EnumPeriod.year:
-        rt = (vl === this.Year)
-        break
-      case EnumPeriod.decade:
-        rt = (vl === this.Decade)
-        break
-      case EnumPeriod.century:
-        rt = (vl === this.Century)
-        break
-      default:
-        break
-    }
+    if (this.Century === o.Century
+      && this.Decade === o.Decade
+      && this.Year === o.Year
+      && this.Month === o.Month
+      && this.Day.Year === o.Day.Year
+      && this.Day.Month === o.Day.Month
+      && this.Day.Day === o.Day.Day
+    ) rt = true
     return rt
   }
 }
@@ -171,10 +157,16 @@ export class TLPeriod {
   constructor(o: TLPeriod) {
     this.Name = o.Name
     let type = TLEvent.GetType(o.Begin)
-    if (type == EnumPeriod.day) {
+    if (type === EnumPeriod.day) {
       this.Begin = new TLEventDay(o.Name, o.Begin.Day.Year, o.Begin.Day.Month, o.Begin.Day.Day)
-    } else if (type == EnumPeriod.month) {
-
+    } else if (type === EnumPeriod.month) {
+      this.Begin = new TLEventMonth(name, o.Begin.Month)
+    } else if (type === EnumPeriod.year) {
+      this.Begin = new TLEventYear(name, o.Begin.Year)
+    } else if (type === EnumPeriod.decade) {
+      this.Begin = new TLEventDecade(name, o.Begin.Decade)
+    } else if (type === EnumPeriod.century) {
+      this.Begin = new TLEventCentury(name, o.Begin.Century)
     }
     this.Begin = o.Begin
     this.End = o.End
@@ -225,7 +217,10 @@ export class TimeLineData {
   constructor(o: TimeLineData) {
     this.Name = o.Name
     o.Periods.forEach(data => {
-      this.Periods.push(new TLPeriod(data))
+      if (data.Begin.Equal(data.End))
+        this.Periods.push(new TLPeriodEvent(data))
+      else
+        this.Periods.push(new TLPeriod(data))
     })
   }
 }
