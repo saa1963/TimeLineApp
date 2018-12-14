@@ -1,5 +1,10 @@
 import { stringUtils } from './stringutils'
 
+// Год делится на 400 -> високосный
+// Год делится на 100 -> не високосный
+// Год делится на 4 -> високосный
+// Год не високосный
+
 export class DateUtils {
   private static mth: string[] = ['ЯНВ', 'ФЕВ', 'МАР', 'АПР', 'МАЙ', 'ИЮН', 'ИЮЛ', 'АВГ', 'СЕН', 'ОКТ', 'НОЯ', 'ДЕК']
   static getCurDate(): Date {

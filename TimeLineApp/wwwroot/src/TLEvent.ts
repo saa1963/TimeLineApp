@@ -198,26 +198,26 @@ export class TLPeriod {
    */
   Contains(period: EnumPeriod, vl: number | Date): boolean {
     let rt = false
-    switch (period) {
-      case EnumPeriod.day:
-        let dt = <Date>vl
-        rt = this.ContainsDay(dt, this)
-        break
-      case EnumPeriod.month:
-        rt = (vl === this.Month)
-        break
-      case EnumPeriod.year:
-        rt = (vl === this.Year)
-        break
-      case EnumPeriod.decade:
-        rt = (vl === this.Decade)
-        break
-      case EnumPeriod.century:
-        rt = (vl === this.Century)
-        break
-      default:
-        break
-    }
+    //switch (period) {
+    //  case EnumPeriod.day:
+    //    let dt = <Date>vl
+    //    rt = this.ContainsDay(dt, this)
+    //    break
+    //  case EnumPeriod.month:
+    //    rt = (vl === this.Month)
+    //    break
+    //  case EnumPeriod.year:
+    //    rt = (vl === this.Year)
+    //    break
+    //  case EnumPeriod.decade:
+    //    rt = (vl === this.Decade)
+    //    break
+    //  case EnumPeriod.century:
+    //    rt = (vl === this.Century)
+    //    break
+    //  default:
+    //    break
+    //}
     return rt
   }
   /**
