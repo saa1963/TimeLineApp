@@ -262,6 +262,12 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var dateutils_1 = __webpack_require__(/*! ./dateutils */ "./src/dateutils.ts");
 var EnumPeriod;
@@ -327,6 +333,18 @@ var TLEvent = /** @class */ (function () {
     TLEvent.prototype.YearFromMonth = function (month) {
         return (month - 1) / 12 + (month / Math.abs(month));
     };
+    TLEvent.GetType = function (o) {
+        if (o.Day !== null)
+            return EnumPeriod.day;
+        if (o.Month !== null)
+            return EnumPeriod.month;
+        if (o.Year !== null)
+            return EnumPeriod.year;
+        if (o.Decade !== null)
+            return EnumPeriod.decade;
+        if (o.Century !== null)
+            return EnumPeriod.century;
+    };
     /**
      * Попадает ли событие this в текущее значение ОВ
      * @param period
@@ -334,30 +352,16 @@ var TLEvent = /** @class */ (function () {
      * @param vl
      * Текущее значение ОВ, которое в данный момент отрисовывается
      */
-    TLEvent.prototype.Equal = function (period, vl) {
+    TLEvent.Equal = function (o1, o2) {
         var rt = false;
-        switch (period) {
-            case EnumPeriod.day:
-                var dt = vl;
-                if (dt.getFullYear() === this.Day.Year && dt.getMonth() + 1 === this.Day.Month && dt.getDate() === this.Day.Day) {
-                    rt = true;
-                }
-                break;
-            case EnumPeriod.month:
-                rt = (vl === this.Month);
-                break;
-            case EnumPeriod.year:
-                rt = (vl === this.Year);
-                break;
-            case EnumPeriod.decade:
-                rt = (vl === this.Decade);
-                break;
-            case EnumPeriod.century:
-                rt = (vl === this.Century);
-                break;
-            default:
-                break;
-        }
+        if (o1.Century === o2.Century
+            && o1.Decade === o2.Decade
+            && o1.Year === o2.Year
+            && o1.Month === o2.Month
+            && o1.Day.Year === o2.Day.Year
+            && o1.Day.Month === o2.Day.Month
+            && o1.Day.Day === o2.Day.Day)
+            rt = true;
         return rt;
     };
     return TLEvent;
@@ -446,10 +450,41 @@ var TLEventCentury = /** @class */ (function (_super) {
 }(TLEvent));
 exports.TLEventCentury = TLEventCentury;
 var TLPeriod = /** @class */ (function () {
-    function TLPeriod(name, begin, end) {
-        this.Name = name;
-        this.Begin = begin;
-        this.End = end;
+    function TLPeriod(o) {
+        this.Name = o.Name;
+        var type;
+        type = TLEvent.GetType(o.Begin);
+        if (type === EnumPeriod.day) {
+            this.Begin = new TLEventDay(o.Begin.Name, o.Begin.Day.Year, o.Begin.Day.Month, o.Begin.Day.Day);
+        }
+        else if (type === EnumPeriod.month) {
+            this.Begin = new TLEventMonth(o.Begin.Name, o.Begin.Month);
+        }
+        else if (type === EnumPeriod.year) {
+            this.Begin = new TLEventYear(o.Begin.Name, o.Begin.Year);
+        }
+        else if (type === EnumPeriod.decade) {
+            this.Begin = new TLEventDecade(o.Begin.Name, o.Begin.Decade);
+        }
+        else if (type === EnumPeriod.century) {
+            this.Begin = new TLEventCentury(o.Begin.Name, o.Begin.Century);
+        }
+        type = TLEvent.GetType(o.End);
+        if (type === EnumPeriod.day) {
+            this.End = new TLEventDay(o.End.Name, o.End.Day.Year, o.End.Day.Month, o.End.Day.Day);
+        }
+        else if (type === EnumPeriod.month) {
+            this.End = new TLEventMonth(o.End.Name, o.End.Month);
+        }
+        else if (type === EnumPeriod.year) {
+            this.End = new TLEventYear(o.End.Name, o.End.Year);
+        }
+        else if (type === EnumPeriod.decade) {
+            this.End = new TLEventDecade(o.End.Name, o.End.Decade);
+        }
+        else if (type === EnumPeriod.century) {
+            this.End = new TLEventCentury(o.End.Name, o.End.Century);
+        }
     }
     /**
      * Попадает текущее значение ОВ в период this
@@ -460,14 +495,10 @@ var TLPeriod = /** @class */ (function () {
      */
     TLPeriod.prototype.Contains = function (period, vl) {
         var rt = false;
+        var type = typeof (this);
         //switch (period) {
         //  case EnumPeriod.day:
         //    let dt = <Date>vl
-        //    if (this.Begin.Day !== null) {
-        //      if (dt.getFullYear() === this.Day.Year && dt.getMonth() + 1 === this.Day.Month && dt.getDate() === this.Day.Day) {
-        //        rt = true
-        //      }
-        //    }
         //    break
         //  case EnumPeriod.month:
         //    rt = (vl === this.Month)
@@ -498,7 +529,10 @@ var TimeLineData = /** @class */ (function () {
         this.Periods = [];
         this.Name = o.Name;
         o.Periods.forEach(function (data) {
-            _this.Periods.push(new TLPeriod(data.Name, data.Begin, data.End));
+            if (TLEvent.Equal(data.Begin, data.End))
+                _this.Periods.push(new TLPeriodEvent(data));
+            else
+                _this.Periods.push(new TLPeriod(data));
         });
     }
     return TimeLineData;
@@ -506,12 +540,18 @@ var TimeLineData = /** @class */ (function () {
 exports.TimeLineData = TimeLineData;
 var TLPeriodEvent = /** @class */ (function (_super) {
     __extends(TLPeriodEvent, _super);
-    function TLPeriodEvent(name, ev) {
-        return _super.call(this, name, ev, ev) || this;
+    function TLPeriodEvent(o) {
+        return _super.call(this, o) || this;
     }
+    TLPeriodEvent = __decorate([
+        ClassName
+    ], TLPeriodEvent);
     return TLPeriodEvent;
 }(TLPeriod));
 exports.TLPeriodEvent = TLPeriodEvent;
+function ClassName(constructor) {
+    console.log(constructor.name);
+}
 
 
 /***/ }),

@@ -32,6 +32,7 @@ class TLDate {
     this.Month = month;
     this.Year = year;
   }
+  Greater()
 }
 
 export abstract class TLEvent {
@@ -41,6 +42,7 @@ export abstract class TLEvent {
   Year: number
   Decade: number
   Century: number
+  Type: EnumPeriod
   constructor(name: string) {
     this.Name = name
     this.Day = null
@@ -72,15 +74,15 @@ export abstract class TLEvent {
    * @param vl
    * Текущее значение ОВ, которое в данный момент отрисовывается
    */
-  public Equal(o: TLEvent): boolean {
+  static Equal(o1:TLEvent, o2: TLEvent): boolean {
     let rt = false
-    if (this.Century === o.Century
-      && this.Decade === o.Decade
-      && this.Year === o.Year
-      && this.Month === o.Month
-      && this.Day.Year === o.Day.Year
-      && this.Day.Month === o.Day.Month
-      && this.Day.Day === o.Day.Day
+    if (o1.Century === o2.Century
+      && o1.Decade === o2.Decade
+      && o1.Year === o2.Year
+      && o1.Month === o2.Month
+      && o1.Day.Year === o2.Day.Year
+      && o1.Day.Month === o2.Day.Month
+      && o1.Day.Day === o2.Day.Day
     ) rt = true
     return rt
   }
@@ -94,6 +96,7 @@ export class TLEventDay extends TLEvent {
     this.Year = year;
     this.Decade = this.DecadeFromYear(year)
     this.Century = this.CenturyFromDecade(this.Decade);
+    this.Type = EnumPeriod.day
   }
 }
 
@@ -114,6 +117,7 @@ export class TLEventMonth extends TLEvent {
       this.Decade = this.DecadeFromYear(this.Year)
       this.Century = this.CenturyFromDecade(this.Decade);
     }
+    this.Type = EnumPeriod.month
   }
 }
 
@@ -123,6 +127,7 @@ export class TLEventYear extends TLEvent {
     this.Year = year
     this.Decade = this.DecadeFromYear(year)
     this.Century = this.CenturyFromDecade(this.Decade);
+    this.Type = EnumPeriod.year
   }
 }
 
@@ -140,6 +145,7 @@ export class TLEventDecade extends TLEvent {
       this.Decade = decade;
       this.Century = this.CenturyFromDecade(decade)
     }
+    this.Type = EnumPeriod.decade
   }
 }
 
@@ -147,6 +153,7 @@ export class TLEventCentury extends TLEvent {
   constructor(name: string, century: number) {
     super(name)
     this.Century = century
+    this.Type = EnumPeriod.century
   }
 }
 
@@ -155,21 +162,32 @@ export class TLPeriod {
   Begin: TLEvent
   End: TLEvent
   constructor(o: TLPeriod) {
-    this.Name = o.Name
-    let type = TLEvent.GetType(o.Begin)
+    this.Name = o.Name;
+    let type: EnumPeriod
+    type = TLEvent.GetType(o.Begin)
     if (type === EnumPeriod.day) {
-      this.Begin = new TLEventDay(o.Name, o.Begin.Day.Year, o.Begin.Day.Month, o.Begin.Day.Day)
+      this.Begin = new TLEventDay(o.Begin.Name, o.Begin.Day.Year, o.Begin.Day.Month, o.Begin.Day.Day)
     } else if (type === EnumPeriod.month) {
-      this.Begin = new TLEventMonth(name, o.Begin.Month)
+      this.Begin = new TLEventMonth(o.Begin.Name, o.Begin.Month)
     } else if (type === EnumPeriod.year) {
-      this.Begin = new TLEventYear(name, o.Begin.Year)
+      this.Begin = new TLEventYear(o.Begin.Name, o.Begin.Year)
     } else if (type === EnumPeriod.decade) {
-      this.Begin = new TLEventDecade(name, o.Begin.Decade)
+      this.Begin = new TLEventDecade(o.Begin.Name, o.Begin.Decade)
     } else if (type === EnumPeriod.century) {
-      this.Begin = new TLEventCentury(name, o.Begin.Century)
+      this.Begin = new TLEventCentury(o.Begin.Name, o.Begin.Century)
     }
-    this.Begin = o.Begin
-    this.End = o.End
+    type = TLEvent.GetType(o.End)
+    if (type === EnumPeriod.day) {
+      this.End = new TLEventDay(o.End.Name, o.End.Day.Year, o.End.Day.Month, o.End.Day.Day)
+    } else if (type === EnumPeriod.month) {
+      this.End = new TLEventMonth(o.End.Name, o.End.Month)
+    } else if (type === EnumPeriod.year) {
+      this.End = new TLEventYear(o.End.Name, o.End.Year)
+    } else if (type === EnumPeriod.decade) {
+      this.End = new TLEventDecade(o.End.Name, o.End.Decade)
+    } else if (type === EnumPeriod.century) {
+      this.End = new TLEventCentury(o.End.Name, o.End.Century)
+    }
   }
   /**
    * Попадает текущее значение ОВ в период this
@@ -180,31 +198,43 @@ export class TLPeriod {
    */
   Contains(period: EnumPeriod, vl: number | Date): boolean {
     let rt = false
-    //switch (period) {
-    //  case EnumPeriod.day:
-    //    let dt = <Date>vl
-    //    if (this.Begin.Day !== null) {
-    //      if (dt.getFullYear() === this.Day.Year && dt.getMonth() + 1 === this.Day.Month && dt.getDate() === this.Day.Day) {
-    //        rt = true
-    //      }
-    //    }
-    //    break
-    //  case EnumPeriod.month:
-    //    rt = (vl === this.Month)
-    //    break
-    //  case EnumPeriod.year:
-    //    rt = (vl === this.Year)
-    //    break
-    //  case EnumPeriod.decade:
-    //    rt = (vl === this.Decade)
-    //    break
-    //  case EnumPeriod.century:
-    //    rt = (vl === this.Century)
-    //    break
-    //  default:
-    //    break
-    //}
+    switch (period) {
+      case EnumPeriod.day:
+        let dt = <Date>vl
+        rt = this.ContainsDay(dt, this)
+        break
+      case EnumPeriod.month:
+        rt = (vl === this.Month)
+        break
+      case EnumPeriod.year:
+        rt = (vl === this.Year)
+        break
+      case EnumPeriod.decade:
+        rt = (vl === this.Decade)
+        break
+      case EnumPeriod.century:
+        rt = (vl === this.Century)
+        break
+      default:
+        break
+    }
     return rt
+  }
+  /**
+   * 
+   * @param dt отображаемый ОВ
+   * @param o объект насчет которого принимается решение включать или нет
+   */
+  private ContainsDay(dt: Date, o: TLPeriod): boolean {
+    let dt1: Date, dt2: Date
+    switch (o.Begin.Type) {
+      case EnumPeriod.day:
+        dt1 = new Date(this.Begin.Day.Year, this.Begin.Day.Month, this.Begin.Day.Day)
+        break;
+      case EnumPeriod.month:
+        dt1 = new Date(this.Begin.Day.Year, this.Begin.Day.Month, this.Begin.Day.Day)
+        break;
+    }
   }
 }
 
@@ -217,7 +247,7 @@ export class TimeLineData {
   constructor(o: TimeLineData) {
     this.Name = o.Name
     o.Periods.forEach(data => {
-      if (data.Begin.Equal(data.End))
+      if (TLEvent.Equal(data.Begin, data.End))
         this.Periods.push(new TLPeriodEvent(data))
       else
         this.Periods.push(new TLPeriod(data))
@@ -229,4 +259,5 @@ export class TLPeriodEvent extends TLPeriod {
   constructor(o: TLPeriod) {
     super(o)
   }
+}
 }
