@@ -7,6 +7,17 @@ import { stringUtils } from './stringutils'
 
 export class DateUtils {
   private static mth: string[] = ['ЯНВ', 'ФЕВ', 'МАР', 'АПР', 'МАЙ', 'ИЮН', 'ИЮЛ', 'АВГ', 'СЕН', 'ОКТ', 'НОЯ', 'ДЕК']
+  static IsLeapYear(year: number) {
+    let rt: boolean = false
+    if (Math.floor((year / 400)) === year / 400) {
+      rt = true
+    } else if (Math.floor((year / 4)) === year / 4) {
+      if (Math.floor((year / 100)) !== year / 100) {
+        rt = true
+      }
+    }
+    return rt
+  }
   static getCurDate(): Date {
     let dt = new Date()
     return new Date(dt.getFullYear(), dt.getMonth(), dt.getDate())
