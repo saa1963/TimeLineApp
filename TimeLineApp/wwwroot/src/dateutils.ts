@@ -7,6 +7,30 @@ import { stringUtils } from './stringutils'
 
 export class DateUtils {
   private static mth: string[] = ['ЯНВ', 'ФЕВ', 'МАР', 'АПР', 'МАЙ', 'ИЮН', 'ИЮЛ', 'АВГ', 'СЕН', 'ОКТ', 'НОЯ', 'ДЕК']
+  private static dth: number[] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+  private static dth_leap: number[] = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+  /**
+   * День от Рождества Христова
+   * @param year
+   * @param month 1-12
+   * @param day
+   */
+  static DaysFromAD(year, month, day): number {
+    let days_in_year: number
+    let days_from_ny: number = 0
+    if (DateUtils.IsLeapYear(year)) {
+      days_in_year = 366
+      this.dth_leap.slice(0, month - 1).forEach(s => {
+        days_from_ny += s
+      })
+    } else {
+      days_in_year = 365
+      this.dth.slice(0, month - 1).forEach(s => {
+        days_from_ny += s
+      })
+    }
+    return days_in_year * year
+  }
   static IsLeapYear(year: number) {
     let rt: boolean = false
     if (Math.floor((year / 400)) === year / 400) {

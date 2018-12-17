@@ -32,15 +32,7 @@ class TLDate {
     this.Month = month;
     this.Year = year;
   }
-  DaysFromAD(): number {
-    let days_in_year: number
-    if (DateUtils.IsLeapYear(this.Year)) {
-      days_in_year = 366
-    } else {
-      days_in_year = 365
-    }
-    return 
-  }
+  
   Greater()
 }
 
