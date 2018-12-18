@@ -33,7 +33,25 @@ class TLDate {
     this.Year = year;
   }
   
-  Greater()
+  Greater(o: TLDate): boolean {
+    return DateUtils.DaysFromAD(this.Year, this.Month, this.Day) > DateUtils.DaysFromAD(o.Year, o.Month, o.Day)
+  }
+
+  GreaterOrEqual(o: TLDate): boolean {
+    return DateUtils.DaysFromAD(this.Year, this.Month, this.Day) >= DateUtils.DaysFromAD(o.Year, o.Month, o.Day)
+  }
+
+  Less(o: TLDate): boolean {
+    return DateUtils.DaysFromAD(this.Year, this.Month, this.Day) < DateUtils.DaysFromAD(o.Year, o.Month, o.Day)
+  }
+
+  LessOrEqual(o: TLDate): boolean {
+    return DateUtils.DaysFromAD(this.Year, this.Month, this.Day) <= DateUtils.DaysFromAD(o.Year, o.Month, o.Day)
+  }
+
+  Equal(o: TLDate): boolean {
+    return DateUtils.DaysFromAD(this.Year, this.Month, this.Day) === DateUtils.DaysFromAD(o.Year, o.Month, o.Day)
+  }
 }
 
 export abstract class TLEvent {
