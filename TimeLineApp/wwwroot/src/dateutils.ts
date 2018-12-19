@@ -1,22 +1,37 @@
 import { stringUtils } from './stringutils'
 
-
-
 export class DateUtils {
   private static mth: string[] = ['ЯНВ', 'ФЕВ', 'МАР', 'АПР', 'МАЙ', 'ИЮН', 'ИЮЛ', 'АВГ', 'СЕН', 'ОКТ', 'НОЯ', 'ДЕК']
   private static dth: number[] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
   private static dth_leap: number[] = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+  /**
+   * Дни от РХ в год, месяц, день
+   * @param days день от РХ
+   */
   static YMDFromAD(days: number): { year: number, month: number, day: number } {
     let d: number = 0
-    let yr: number = 1
+    let yr: number, delta: number
+    if (days > 0) {
+      delta = yr = 1
+    } else if (days < 0) {
+      delta = yr = -1
+    } else {
+      return null
+    }
     while (d < days) {
       if (DateUtils.leapYear(yr)) {
-        d += 366
+        d += (366 * delta)
       } else {
-        d += 355
+        d += (355 * delta)
       }
-      yr++
+      yr += delta
     }
+    if (DateUtils.leapYear(yr)) {
+      d -= (366 * delta)
+    } else {
+      d -= (355 * delta)
+    }
+    yr -= delta
     return {year:1, month:1, day:1}
   }
   /**
