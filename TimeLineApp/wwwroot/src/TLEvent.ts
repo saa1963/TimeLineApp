@@ -9,30 +9,34 @@ class TLDate {
   Month: number
   Year: number
   FromCrismas: number
-  constructor(year: number, month: number, day: number) {
-    if (year == 0) throw new Error('Год равен 0')
-    if (month > 12 || month < 1) throw new Error('Неверный месяц месяца')
-    if (day < 1) throw new Error('День меньше 1')
-    if ([ 1, 3, 5, 7, 8, 10, 12 ].includes(month)) {
-      if (day > 31) throw new Error('Неверный день месяца')
-    } else if ([ 4, 6, 9, 11 ].includes(month)) {
-      if (day > 30) throw new Error('Неверный день месяца')
-    } else {
-      if (day > 29) throw new Error('Неверный день месяца')
-      if (year >= 1 && year <= 9999) {
-        var dt = new Date(year, month - 1, day);
-        if (DateUtils.leapYear(year)) {
-          if (day > 27) throw new Error('Неверный день месяца')
-        }
-        else {
-          if (day > 28) throw new Error('Неверный день месяца')
+  constructor(year: number, month: number, day: number, fromCrismas?: number) {
+    if (fromCrismas === undefined) {
+      if (year == 0) throw new Error('Год равен 0')
+      if (month > 12 || month < 1) throw new Error('Неверный месяц месяца')
+      if (day < 1) throw new Error('День меньше 1')
+      if ([1, 3, 5, 7, 8, 10, 12].includes(month)) {
+        if (day > 31) throw new Error('Неверный день месяца')
+      } else if ([4, 6, 9, 11].includes(month)) {
+        if (day > 30) throw new Error('Неверный день месяца')
+      } else {
+        if (day > 29) throw new Error('Неверный день месяца')
+        if (year >= 1 && year <= 9999) {
+          var dt = new Date(year, month - 1, day);
+          if (DateUtils.leapYear(year)) {
+            if (day > 27) throw new Error('Неверный день месяца')
+          }
+          else {
+            if (day > 28) throw new Error('Неверный день месяца')
+          }
         }
       }
+      this.Day = day
+      this.Month = month
+      this.Year = year
+      this.FromCrismas = DateUtils.DaysFromAD(year, month, day)
+    } else {
+
     }
-    this.Day = day
-    this.Month = month
-    this.Year = year
-    this.FromCrismas = DateUtils.DaysFromAD(year, month, day)
   }
   
   Greater(o: TLDate): boolean {
@@ -267,21 +271,22 @@ export class TLPeriod {
     }
     switch (this.End.Type) {
       case EnumPeriod.day:
-        dt1 = this.End.Day
+        dt2 = this.End.Day
         break
       case EnumPeriod.month:
-        dt1 = new TLDate(this.Begin.Day.Year, this.Begin.Day.Month, 1)
+        dt2 = new TLDate(this.Begin.Day.Year, this.Begin.Day.Month, 1)
         break
       case EnumPeriod.year:
-        dt1 = new TLDate(this.Begin.Day.Year, 1, 1)
+        dt2 = new TLDate(this.Begin.Day.Year, 1, 1)
         break
       case EnumPeriod.decade:
-        dt1 = new TLDate(Math.floor(this.Begin.Year / 10) + 1, 1, 1)
+        dt2 = new TLDate(Math.floor(this.Begin.Year / 10) + 1, 1, 1)
         break
       case EnumPeriod.century:
-        dt1 = new TLDate(Math.floor(this.Begin.Year / 100) + 1, 1, 1)
+        dt2 = new TLDate(Math.floor(this.Begin.Year / 100) + 1, 1, 1)
         break
     }
+    return dt.GreaterOrEqual(dt1) && dt.LessOrEqual(dt2)
   }
 }
 

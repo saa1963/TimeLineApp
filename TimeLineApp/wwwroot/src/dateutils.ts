@@ -6,6 +6,19 @@ export class DateUtils {
   private static mth: string[] = ['ЯНВ', 'ФЕВ', 'МАР', 'АПР', 'МАЙ', 'ИЮН', 'ИЮЛ', 'АВГ', 'СЕН', 'ОКТ', 'НОЯ', 'ДЕК']
   private static dth: number[] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
   private static dth_leap: number[] = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+  static YMDFromAD(days: number): { year: number, month: number, day: number } {
+    let d: number = 0
+    let yr: number = 1
+    while (d < days) {
+      if (DateUtils.leapYear(yr)) {
+        d += 366
+      } else {
+        d += 355
+      }
+      yr++
+    }
+    return {year:1, month:1, day:1}
+  }
   /**
    * День от Рождества Христова + -
    * @param year может быть с минусом
