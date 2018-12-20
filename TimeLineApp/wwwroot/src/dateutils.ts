@@ -26,13 +26,32 @@ export class DateUtils {
       }
       yr += delta
     }
+
+    // отматываем год назад
     if (DateUtils.leapYear(yr)) {
       d -= (366 * delta)
     } else {
       d -= (355 * delta)
     }
     yr -= delta
-    return {year:1, month:1, day:1}
+
+    let dth0: number[]
+    if (DateUtils.leapYear(yr)) {
+      dth0 = this.dth_leap
+    } else {
+      dth0 = this.dth
+    }
+    let mth = 0
+    while (d < days) {
+      d += (dth0[mth] * delta)
+      mth++
+    }
+    mth--
+    d -= (dth0[mth] * delta)
+
+    let ds =  Math.abs(days) - Math.abs(d)
+
+    return {year:yr, month:mth, day:ds}
   }
   /**
    * День от Рождества Христова + -
