@@ -18,7 +18,7 @@
     <Content Remove="wwwroot\src\LogonHandlers.ts" />
     <Content Remove="wwwroot\src\RegisterHandlers.ts" />
     <Content Remove="wwwroot\src\TLEvent.ts" />
-    <Content Remove="wwwroot\tests\DateUtils.spec.ts" />
+    <Content Remove="wwwroot\test\DateUtils.spec.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,7 +41,7 @@
     <TypeScriptCompile Include="wwwroot\src\Globals.ts" />
     <TypeScriptCompile Include="wwwroot\src\RegisterHandlers.ts" />
     <TypeScriptCompile Include="wwwroot\src\TLEvent.ts" />
-    <TypeScriptCompile Include="wwwroot\tests\DateUtils.spec.ts" />
+    <TypeScriptCompile Include="wwwroot\test\DateUtils.spec.ts" />
   </ItemGroup>
 
 </Project>
