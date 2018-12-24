@@ -173,7 +173,7 @@ var ctx;
     $('#btnLoginUser').click(LogonHandlers_1.LogonHandlers.LoginLogout);
     // Загрузка TL btnLoadTL
     $('#btnLoadTL').click(LoadTimeLine);
-    var daysFromAD = dateutils_1.DateUtils.DaysFromAD(1963, 6, 5);
+    var daysFromAD = dateutils_1.DateUtils.DaysFromAD(1980, 1, 1);
     console.log('daysFromAD ' + daysFromAD);
     var qq = dateutils_1.DateUtils.YMDFromAD(daysFromAD);
     console.log(qq);

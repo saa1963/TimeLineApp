@@ -947,7 +947,8 @@ var DateUtils = /** @class */ (function () {
         else {
             return null;
         }
-        while (d < days) {
+        var abs_days = Math.abs(days);
+        while (Math.abs(d) < abs_days) {
             if (DateUtils.leapYear(yr)) {
                 d += (366 * delta);
             }
@@ -957,13 +958,13 @@ var DateUtils = /** @class */ (function () {
             yr += delta;
         }
         // отматываем год назад
+        yr -= delta;
         if (DateUtils.leapYear(yr)) {
             d -= (366 * delta);
         }
         else {
             d -= (365 * delta);
         }
-        yr -= delta;
         var dth0;
         if (DateUtils.leapYear(yr)) {
             dth0 = this.dth_leap;
@@ -972,7 +973,7 @@ var DateUtils = /** @class */ (function () {
             dth0 = this.dth;
         }
         var mth = 0;
-        while (d < days) {
+        while (Math.abs(d) < abs_days) {
             d += (dth0[mth] * delta);
             mth++;
         }
@@ -1268,7 +1269,7 @@ var ctx;
     $('#btnLoginUser').click(LogonHandlers_1.LogonHandlers.LoginLogout);
     // Загрузка TL btnLoadTL
     $('#btnLoadTL').click(LoadTimeLine);
-    var daysFromAD = dateutils_1.DateUtils.DaysFromAD(1980, 1, 1);
+    var daysFromAD = dateutils_1.DateUtils.DaysFromAD(-1, 1, 1);
     console.log('daysFromAD ' + daysFromAD);
     var qq = dateutils_1.DateUtils.YMDFromAD(daysFromAD);
     console.log(qq);

@@ -18,7 +18,8 @@ export class DateUtils {
     } else {
       return null
     }
-    while (d < days) {
+    let abs_days = Math.abs(days)
+    while (Math.abs(d) < abs_days) {
       if (DateUtils.leapYear(yr)) {
         d += (366 * delta)
       } else {
@@ -28,12 +29,12 @@ export class DateUtils {
     }
 
     // отматываем год назад
+    yr -= delta
     if (DateUtils.leapYear(yr)) {
       d -= (366 * delta)
     } else {
       d -= (365 * delta)
     }
-    yr -= delta
 
     let dth0: number[]
     if (DateUtils.leapYear(yr)) {
@@ -42,7 +43,7 @@ export class DateUtils {
       dth0 = this.dth
     }
     let mth = 0
-    while (d < days) {
+    while (Math.abs(d) < abs_days) {
       d += (dth0[mth] * delta)
       mth++
     }

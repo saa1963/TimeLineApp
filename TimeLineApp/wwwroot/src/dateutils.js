@@ -25,17 +25,16 @@ var DateUtils = /** @class */ (function () {
                 d += (366 * delta);
             }
             else {
-                d += (355 * delta);
+                d += (365 * delta);
             }
             yr += delta;
-            console.log(yr);
         }
         // отматываем год назад
         if (DateUtils.leapYear(yr)) {
             d -= (366 * delta);
         }
         else {
-            d -= (355 * delta);
+            d -= (365 * delta);
         }
         yr -= delta;
         var dth0;
@@ -53,7 +52,7 @@ var DateUtils = /** @class */ (function () {
         mth--;
         d -= (dth0[mth] * delta);
         var ds = Math.abs(days) - Math.abs(d);
-        return { year: yr, month: mth, day: ds };
+        return { year: yr, month: mth + 1, day: ds };
     };
     /**
      * День от Рождества Христова + -

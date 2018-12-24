@@ -177,10 +177,6 @@ let ctx: CanvasRenderingContext2D
   $('#btnLoginUser').click(LogonHandlers.LoginLogout)
   // Загрузка TL btnLoadTL
   $('#btnLoadTL').click(LoadTimeLine)
-  let daysFromAD = DateUtils.DaysFromAD(1980, 1, 1)
-  console.log('daysFromAD ' + daysFromAD)
-  let qq = DateUtils.YMDFromAD(daysFromAD)
-  console.log(qq)
 })()
 
 function LoadTimeLine() {
