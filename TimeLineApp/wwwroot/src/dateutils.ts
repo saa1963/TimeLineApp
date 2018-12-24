@@ -2,7 +2,7 @@ import { stringUtils } from './stringutils'
 
 export class DateUtils {
   private static mth: string[] = ['ЯНВ', 'ФЕВ', 'МАР', 'АПР', 'МАЙ', 'ИЮН', 'ИЮЛ', 'АВГ', 'СЕН', 'ОКТ', 'НОЯ', 'ДЕК']
-  private static dth: number[] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+  private static dth: number[] =      [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
   private static dth_leap: number[] = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
   /**
    * Дни от РХ в год, месяц, день
@@ -22,7 +22,7 @@ export class DateUtils {
       if (DateUtils.leapYear(yr)) {
         d += (366 * delta)
       } else {
-        d += (355 * delta)
+        d += (365 * delta)
       }
       yr += delta
     }
@@ -31,7 +31,7 @@ export class DateUtils {
     if (DateUtils.leapYear(yr)) {
       d -= (366 * delta)
     } else {
-      d -= (355 * delta)
+      d -= (365 * delta)
     }
     yr -= delta
 
@@ -51,7 +51,7 @@ export class DateUtils {
 
     let ds =  Math.abs(days) - Math.abs(d)
 
-    return {year:yr, month:mth, day:ds}
+    return {year:yr, month:mth + 1, day:ds}
   }
   /**
    * День от Рождества Христова + -

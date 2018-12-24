@@ -4,6 +4,7 @@ import { ContextMenu } from './contextmenu'
 import { LogonHandlers } from './LogonHandlers';
 import { RegisterHandlers } from './RegisterHandlers'
 import { TimeLineData, EnumPeriod } from './TLEvent'
+import { DateUtils } from './dateutils';
 
 const MIN_GAP = 100
 let PERIOD_TYPE = EnumPeriod.day
@@ -176,6 +177,10 @@ let ctx: CanvasRenderingContext2D
   $('#btnLoginUser').click(LogonHandlers.LoginLogout)
   // Загрузка TL btnLoadTL
   $('#btnLoadTL').click(LoadTimeLine)
+  let daysFromAD = DateUtils.DaysFromAD(1980, 1, 1)
+  console.log('daysFromAD ' + daysFromAD)
+  let qq = DateUtils.YMDFromAD(daysFromAD)
+  console.log(qq)
 })()
 
 function LoadTimeLine() {

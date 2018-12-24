@@ -12,12 +12,6 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 var dateutils_1 = require("./dateutils");
 var EnumPeriod;
@@ -29,40 +23,60 @@ var EnumPeriod;
     EnumPeriod[EnumPeriod["century"] = 5] = "century";
 })(EnumPeriod = exports.EnumPeriod || (exports.EnumPeriod = {}));
 var TLDate = /** @class */ (function () {
-    function TLDate(year, month, day) {
-        if (year == 0)
-            throw new Error('Год равен 0');
-        if (month > 12 || month < 1)
-            throw new Error('Неверный месяц месяца');
-        if (day < 1)
-            throw new Error('День меньше 1');
-        if ([1, 3, 5, 7, 8, 10, 12].includes(month)) {
-            if (day > 31)
-                throw new Error('Неверный день месяца');
-        }
-        else if ([4, 6, 9, 11].includes(month)) {
-            if (day > 30)
-                throw new Error('Неверный день месяца');
-        }
-        else {
-            if (day > 29)
-                throw new Error('Неверный день месяца');
-            if (year >= 1 && year <= 9999) {
-                var dt = new Date(year, month - 1, day);
-                if (dateutils_1.DateUtils.leapYear(year)) {
-                    if (day > 27)
-                        throw new Error('Неверный день месяца');
-                }
-                else {
-                    if (day > 28)
-                        throw new Error('Неверный день месяца');
+    function TLDate(year, month, day, fromCrismas) {
+        if (fromCrismas === undefined) {
+            if (year == 0)
+                throw new Error('Год равен 0');
+            if (month > 12 || month < 1)
+                throw new Error('Неверный месяц месяца');
+            if (day < 1)
+                throw new Error('День меньше 1');
+            if ([1, 3, 5, 7, 8, 10, 12].includes(month)) {
+                if (day > 31)
+                    throw new Error('Неверный день месяца');
+            }
+            else if ([4, 6, 9, 11].includes(month)) {
+                if (day > 30)
+                    throw new Error('Неверный день месяца');
+            }
+            else {
+                if (day > 29)
+                    throw new Error('Неверный день месяца');
+                if (year >= 1 && year <= 9999) {
+                    var dt = new Date(year, month - 1, day);
+                    if (dateutils_1.DateUtils.leapYear(year)) {
+                        if (day > 27)
+                            throw new Error('Неверный день месяца');
+                    }
+                    else {
+                        if (day > 28)
+                            throw new Error('Неверный день месяца');
+                    }
                 }
             }
+            this.Day = day;
+            this.Month = month;
+            this.Year = year;
+            this.FromCrismas = dateutils_1.DateUtils.DaysFromAD(year, month, day);
         }
-        this.Day = day;
-        this.Month = month;
-        this.Year = year;
+        else {
+        }
     }
+    TLDate.prototype.Greater = function (o) {
+        return this.FromCrismas > o.FromCrismas;
+    };
+    TLDate.prototype.GreaterOrEqual = function (o) {
+        return this.FromCrismas >= o.FromCrismas;
+    };
+    TLDate.prototype.Less = function (o) {
+        return this.FromCrismas < o.FromCrismas;
+    };
+    TLDate.prototype.LessOrEqual = function (o) {
+        return this.FromCrismas <= o.FromCrismas;
+    };
+    TLDate.prototype.Equal = function (o) {
+        return this.FromCrismas === o.FromCrismas;
+    };
     return TLDate;
 }());
 var TLEvent = /** @class */ (function () {
@@ -126,6 +140,7 @@ var TLEventDay = /** @class */ (function (_super) {
         _this.Year = year;
         _this.Decade = _this.DecadeFromYear(year);
         _this.Century = _this.CenturyFromDecade(_this.Decade);
+        _this.Type = EnumPeriod.day;
         return _this;
     }
     return TLEventDay;
@@ -150,6 +165,7 @@ var TLEventMonth = /** @class */ (function (_super) {
             _this.Decade = _this.DecadeFromYear(_this.Year);
             _this.Century = _this.CenturyFromDecade(_this.Decade);
         }
+        _this.Type = EnumPeriod.month;
         return _this;
     }
     return TLEventMonth;
@@ -162,6 +178,7 @@ var TLEventYear = /** @class */ (function (_super) {
         _this.Year = year;
         _this.Decade = _this.DecadeFromYear(year);
         _this.Century = _this.CenturyFromDecade(_this.Decade);
+        _this.Type = EnumPeriod.year;
         return _this;
     }
     return TLEventYear;
@@ -184,6 +201,7 @@ var TLEventDecade = /** @class */ (function (_super) {
             _this.Decade = decade;
             _this.Century = _this.CenturyFromDecade(decade);
         }
+        _this.Type = EnumPeriod.decade;
         return _this;
     }
     return TLEventDecade;
@@ -194,6 +212,7 @@ var TLEventCentury = /** @class */ (function (_super) {
     function TLEventCentury(name, century) {
         var _this = _super.call(this, name) || this;
         _this.Century = century;
+        _this.Type = EnumPeriod.century;
         return _this;
     }
     return TLEventCentury;
@@ -245,27 +264,70 @@ var TLPeriod = /** @class */ (function () {
      */
     TLPeriod.prototype.Contains = function (period, vl) {
         var rt = false;
-        var type = typeof (this);
-        //switch (period) {
-        //  case EnumPeriod.day:
-        //    let dt = <Date>vl
-        //    break
-        //  case EnumPeriod.month:
-        //    rt = (vl === this.Month)
-        //    break
-        //  case EnumPeriod.year:
-        //    rt = (vl === this.Year)
-        //    break
-        //  case EnumPeriod.decade:
-        //    rt = (vl === this.Decade)
-        //    break
-        //  case EnumPeriod.century:
-        //    rt = (vl === this.Century)
-        //    break
-        //  default:
-        //    break
-        //}
+        switch (period) {
+            case EnumPeriod.day:
+                var dt = vl;
+                rt = this.ContainsDay(new TLDate(dt.getFullYear(), dt.getMonth() + 1, dt.getDate()));
+                break;
+            case EnumPeriod.month:
+                //rt = (vl === this.Month)
+                break;
+            case EnumPeriod.year:
+                //rt = (vl === this.Year)
+                break;
+            case EnumPeriod.decade:
+                //rt = (vl === this.Decade)
+                break;
+            case EnumPeriod.century:
+                //rt = (vl === this.Century)
+                break;
+            default:
+                break;
+        }
         return rt;
+    };
+    /**
+     *
+     * @param dt отображаемый ОВ
+     * @param o объект насчет которого принимается решение включать или нет
+     */
+    TLPeriod.prototype.ContainsDay = function (dt) {
+        var dt1, dt2;
+        switch (this.Begin.Type) {
+            case EnumPeriod.day:
+                dt1 = this.Begin.Day;
+                break;
+            case EnumPeriod.month:
+                dt1 = new TLDate(this.Begin.Day.Year, this.Begin.Day.Month, 1);
+                break;
+            case EnumPeriod.year:
+                dt1 = new TLDate(this.Begin.Day.Year, 1, 1);
+                break;
+            case EnumPeriod.decade:
+                dt1 = new TLDate(Math.floor(this.Begin.Year / 10) + 1, 1, 1);
+                break;
+            case EnumPeriod.century:
+                dt1 = new TLDate(Math.floor(this.Begin.Year / 100) + 1, 1, 1);
+                break;
+        }
+        switch (this.End.Type) {
+            case EnumPeriod.day:
+                dt2 = this.End.Day;
+                break;
+            case EnumPeriod.month:
+                dt2 = new TLDate(this.Begin.Day.Year, this.Begin.Day.Month, 1);
+                break;
+            case EnumPeriod.year:
+                dt2 = new TLDate(this.Begin.Day.Year, 1, 1);
+                break;
+            case EnumPeriod.decade:
+                dt2 = new TLDate(Math.floor(this.Begin.Year / 10) + 1, 1, 1);
+                break;
+            case EnumPeriod.century:
+                dt2 = new TLDate(Math.floor(this.Begin.Year / 100) + 1, 1, 1);
+                break;
+        }
+        return dt.GreaterOrEqual(dt1) && dt.LessOrEqual(dt2);
     };
     return TLPeriod;
 }());
@@ -293,13 +355,7 @@ var TLPeriodEvent = /** @class */ (function (_super) {
     function TLPeriodEvent(o) {
         return _super.call(this, o) || this;
     }
-    TLPeriodEvent = __decorate([
-        ClassName
-    ], TLPeriodEvent);
     return TLPeriodEvent;
 }(TLPeriod));
 exports.TLPeriodEvent = TLPeriodEvent;
-function ClassName(constructor) {
-    console.log(constructor.name);
-}
 //# sourceMappingURL=TLEvent.js.map

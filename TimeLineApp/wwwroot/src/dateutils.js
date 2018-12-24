@@ -4,6 +4,86 @@ var stringutils_1 = require("./stringutils");
 var DateUtils = /** @class */ (function () {
     function DateUtils() {
     }
+    /**
+     * Дни от РХ в год, месяц, день
+     * @param days день от РХ
+     */
+    DateUtils.YMDFromAD = function (days) {
+        var d = 0;
+        var yr, delta;
+        if (days > 0) {
+            delta = yr = 1;
+        }
+        else if (days < 0) {
+            delta = yr = -1;
+        }
+        else {
+            return null;
+        }
+        while (d < days) {
+            if (DateUtils.leapYear(yr)) {
+                d += (366 * delta);
+            }
+            else {
+                d += (355 * delta);
+            }
+            yr += delta;
+            console.log(yr);
+        }
+        // отматываем год назад
+        if (DateUtils.leapYear(yr)) {
+            d -= (366 * delta);
+        }
+        else {
+            d -= (355 * delta);
+        }
+        yr -= delta;
+        var dth0;
+        if (DateUtils.leapYear(yr)) {
+            dth0 = this.dth_leap;
+        }
+        else {
+            dth0 = this.dth;
+        }
+        var mth = 0;
+        while (d < days) {
+            d += (dth0[mth] * delta);
+            mth++;
+        }
+        mth--;
+        d -= (dth0[mth] * delta);
+        var ds = Math.abs(days) - Math.abs(d);
+        return { year: yr, month: mth, day: ds };
+    };
+    /**
+     * День от Рождества Христова + -
+     * @param year может быть с минусом
+     * @param month 1-12
+     * @param day
+     */
+    DateUtils.DaysFromAD = function (_year, month, day) {
+        var year = Math.abs(_year);
+        var days_from_Crismas = 0;
+        for (var i = 1; i < year; i++) {
+            if (DateUtils.leapYear(i)) {
+                days_from_Crismas += 366;
+            }
+            else {
+                days_from_Crismas += 365;
+            }
+        }
+        if (DateUtils.leapYear(year)) {
+            this.dth_leap.slice(0, month - 1).forEach(function (s) {
+                days_from_Crismas += s;
+            });
+        }
+        else {
+            this.dth.slice(0, month - 1).forEach(function (s) {
+                days_from_Crismas += s;
+            });
+        }
+        return (days_from_Crismas + day) * (year / _year);
+    };
     DateUtils.getCurDate = function () {
         var dt = new Date();
         return new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
@@ -55,6 +135,8 @@ var DateUtils = /** @class */ (function () {
         return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
     };
     DateUtils.mth = ['ЯНВ', 'ФЕВ', 'МАР', 'АПР', 'МАЙ', 'ИЮН', 'ИЮЛ', 'АВГ', 'СЕН', 'ОКТ', 'НОЯ', 'ДЕК'];
+    DateUtils.dth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    DateUtils.dth_leap = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     return DateUtils;
 }());
 exports.DateUtils = DateUtils;

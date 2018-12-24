@@ -229,16 +229,16 @@ export class TLPeriod {
         rt = this.ContainsDay(new TLDate(dt.getFullYear(), dt.getMonth() + 1, dt.getDate()))
         break
       case EnumPeriod.month:
-        rt = (vl === this.Month)
+        //rt = (vl === this.Month)
         break
       case EnumPeriod.year:
-        rt = (vl === this.Year)
+        //rt = (vl === this.Year)
         break
       case EnumPeriod.decade:
-        rt = (vl === this.Decade)
+        //rt = (vl === this.Decade)
         break
       case EnumPeriod.century:
-        rt = (vl === this.Century)
+        //rt = (vl === this.Century)
         break
       default:
         break
@@ -311,5 +311,4 @@ export class TLPeriodEvent extends TLPeriod {
   constructor(o: TLPeriod) {
     super(o)
   }
-}
 }
