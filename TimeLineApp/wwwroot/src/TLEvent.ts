@@ -1,4 +1,5 @@
 ﻿import { DateUtils } from './dateutils'
+import { makeColor } from './colorutils';
 
 export enum EnumPeriod {
   day = 1, month = 2, year = 3, decade = 4, century = 5
@@ -35,7 +36,11 @@ class TLDate {
       this.Year = year
       this.FromCrismas = DateUtils.DaysFromAD(year, month, day)
     } else {
-
+      this.FromCrismas = fromCrismas
+      let temp = DateUtils.YMDFromAD(fromCrismas)
+      this.Day = temp.day
+      this.Month = temp.month
+      this.Year = temp.year
     }
   }
   
@@ -57,6 +62,18 @@ class TLDate {
 
   Equal(o: TLDate): boolean {
     return this.FromCrismas === o.FromCrismas
+  }
+
+  AddDays(n: number): TLDate {
+    return new TLDate(null, null, null, this.FromCrismas + n)
+  }
+
+  AddMonths(n: number): TLDate {
+    let mth: number
+    let mmn = DateUtils.makeMonthNumber(this.Month)
+    for (let i = 0; i < n; i++) {
+      mth = mmn.next().value
+    }
   }
 }
 
@@ -248,7 +265,7 @@ export class TLPeriod {
   /**
    * 
    * @param dt отображаемый ОВ
-   * @param o объект насчет которого принимается решение включать или нет
+   * @param this объект насчет которого принимается решение включать или нет
    */
   private ContainsDay(dt: TLDate): boolean {
     let dt1: TLDate, dt2: TLDate
