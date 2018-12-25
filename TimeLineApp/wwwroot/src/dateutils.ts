@@ -4,12 +4,19 @@ export class DateUtils {
   private static mth: string[] = ['ЯНВ', 'ФЕВ', 'МАР', 'АПР', 'МАЙ', 'ИЮН', 'ИЮЛ', 'АВГ', 'СЕН', 'ОКТ', 'НОЯ', 'ДЕК']
   private static dth: number[] =      [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
   private static dth_leap: number[] = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-  static makeMonthNumber = function* (_init: number) {
-    let delta = Math.abs(_init) / _init
-    var init = _init + delta
+  static makeMonthNumber = function* (_initYear: number, _initMonth: number, reverse: boolean = false) {
+    let delta = reverse ? -1 : 1
+    let init = _initYear
+    let initYear = _initYear
+    let initMonth = _initMonth 
     while (true) {
-      if (init === 13 || init === 0) {
-        init = 1
+      initMonth += delta
+      if (initMonth === limit) {
+        initMonth = limit0
+        initYear += delta
+        if (initYear === 0) {
+
+        }
       }
       yield init
       init += delta
