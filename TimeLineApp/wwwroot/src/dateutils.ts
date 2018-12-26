@@ -1,25 +1,24 @@
 import { stringUtils } from './stringutils'
 
+interface YearMonth {
+  year: number
+  month: number
+}
+
 export class DateUtils {
   private static mth: string[] = ['ЯНВ', 'ФЕВ', 'МАР', 'АПР', 'МАЙ', 'ИЮН', 'ИЮЛ', 'АВГ', 'СЕН', 'ОКТ', 'НОЯ', 'ДЕК']
   private static dth: number[] =      [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
   private static dth_leap: number[] = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
   static makeMonthNumber = function* (_initYear: number, _initMonth: number, reverse: boolean = false) {
     let delta = reverse ? -1 : 1
-    let init = _initYear
-    let initYear = _initYear
-    let initMonth = _initMonth 
+    let absinitYear = Math.abs(_initYear)
+    let init = DateUtils.getNumberFromMonth(_initYear, _initMonth)
     while (true) {
-      initMonth += delta
-      if (initMonth === limit) {
-        initMonth = limit0
-        initYear += delta
-        if (initYear === 0) {
-
-        }
-      }
-      yield init
       init += delta
+      if (init === 0) {
+        init += delta
+      }
+      yield DateUtils.getMonthFromNumber(init)
     }
   }
   /**
@@ -113,6 +112,25 @@ export class DateUtils {
   }
   static getMonthFromDate(dt: Date): number {
     return (dt.getFullYear() - 1) * 12 + dt.getMonth() + 1
+  }
+  static getNumberFromMonth(year: number, month: number): number {
+    let rt: number
+    let delta = year / Math.abs(year)
+    rt = (year - delta) * 12 + (month * delta)
+    return rt
+  }
+  static getMonthFromNumber(num: number): YearMonth {
+    let year: number
+    let month: number
+    let rt: YearMonth
+    if (num > 0) {
+      year = Math.floor(num / 12)
+      rt = { year: year + 1, month: num - year * 12 }
+    } else {
+      year = Math.ceil(num / 12)
+      rt = { year: year - 1, month: Math.abs(num) - Math.abs(year * 12) }
+    }
+    return rt
   }
   static getYearFromDate(dt: Date): number {
     return dt.getFullYear()
