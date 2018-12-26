@@ -6,7 +6,6 @@ var contextmenu_1 = require("./contextmenu");
 var LogonHandlers_1 = require("./LogonHandlers");
 var RegisterHandlers_1 = require("./RegisterHandlers");
 var TLEvent_1 = require("./TLEvent");
-var dateutils_1 = require("./dateutils");
 var MIN_GAP = 100;
 var PERIOD_TYPE = TLEvent_1.EnumPeriod.day;
 var HTOP = 56;
@@ -173,10 +172,6 @@ var ctx;
     $('#btnLoginUser').click(LogonHandlers_1.LogonHandlers.LoginLogout);
     // Загрузка TL btnLoadTL
     $('#btnLoadTL').click(LoadTimeLine);
-    var daysFromAD = dateutils_1.DateUtils.DaysFromAD(1980, 1, 1);
-    console.log('daysFromAD ' + daysFromAD);
-    var qq = dateutils_1.DateUtils.YMDFromAD(daysFromAD);
-    console.log(qq);
 })();
 function LoadTimeLine() {
     $.ajax('api/storage/load', { data: {

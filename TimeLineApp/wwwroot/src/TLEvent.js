@@ -60,6 +60,11 @@ var TLDate = /** @class */ (function () {
             this.FromCrismas = dateutils_1.DateUtils.DaysFromAD(year, month, day);
         }
         else {
+            this.FromCrismas = fromCrismas;
+            var temp = dateutils_1.DateUtils.YMDFromAD(fromCrismas);
+            this.Day = temp.day;
+            this.Month = temp.month;
+            this.Year = temp.year;
         }
     }
     TLDate.prototype.Greater = function (o) {
@@ -76,6 +81,29 @@ var TLDate = /** @class */ (function () {
     };
     TLDate.prototype.Equal = function (o) {
         return this.FromCrismas === o.FromCrismas;
+    };
+    TLDate.prototype.AddDays = function (n) {
+        return new TLDate(null, null, null, this.FromCrismas + n);
+    };
+    TLDate.prototype.AddMonths = function (n) {
+        var rt;
+        var mth;
+        var mmn = dateutils_1.DateUtils.makeMonthNumber(this.Year, this.Month, n < 0);
+        for (var i = 0; i < n; i++) {
+            mth = mmn.next().value;
+        }
+        var day = this.Day;
+        while (true) {
+            try {
+                rt = new TLDate(mth.year, mth.month, day);
+                break;
+            }
+            catch (ex) {
+                day--;
+                continue;
+            }
+        }
+        return rt;
     };
     return TLDate;
 }());
@@ -289,7 +317,7 @@ var TLPeriod = /** @class */ (function () {
     /**
      *
      * @param dt отображаемый ОВ
-     * @param o объект насчет которого принимается решение включать или нет
+     * @param this объект насчет которого принимается решение включать или нет
      */
     TLPeriod.prototype.ContainsDay = function (dt) {
         var dt1, dt2;
