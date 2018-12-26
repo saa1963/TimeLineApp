@@ -1,5 +1,4 @@
-﻿import { DateUtils } from './dateutils'
-import { makeColor } from './colorutils';
+﻿import { DateUtils, YearMonth } from './dateutils'
 
 export enum EnumPeriod {
   day = 1, month = 2, year = 3, decade = 4, century = 5
@@ -69,11 +68,24 @@ class TLDate {
   }
 
   AddMonths(n: number): TLDate {
-    let mth: number
-    let mmn = DateUtils.makeMonthNumber(this.Month)
+    let rt: TLDate
+    let mth: YearMonth
+    let mmn = DateUtils.makeMonthNumber(this.Year, this.Month, n < 0)
     for (let i = 0; i < n; i++) {
       mth = mmn.next().value
     }
+    let day = this.Day
+    while (true) {
+      try {
+        rt = new TLDate(mth.year, mth.month, day)
+        break
+      }
+      catch (ex) {
+        day--
+        continue
+      }
+    }
+    return rt
   }
 }
 

@@ -1,6 +1,6 @@
 import { stringUtils } from './stringutils'
 
-interface YearMonth {
+export interface YearMonth {
   year: number
   month: number
 }
