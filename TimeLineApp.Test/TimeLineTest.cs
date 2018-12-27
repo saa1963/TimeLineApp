@@ -93,15 +93,5 @@ namespace TimeLineApp.Test
         {
             var o = new Period("11", new EventDay("123", 2018, 1, 1), new EventDay("321", 2018, 2, 2));
         }
-        [Fact]
-        public void TimeLine0Test()
-        {
-            var fname = Utils.getFile("test.json");
-            var s = File.ReadAllText(fname);
-            var o = new TimeLine("11", s);
-            Assert.NotNull(o);
-            Assert.Equal(3, o.EventCount);
-            Assert.Equal(1, o.PeriodCount);
-        }
     }
 }
