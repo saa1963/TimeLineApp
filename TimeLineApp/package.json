@@ -12,7 +12,6 @@
     "@types/bootstrap": "^4.1.4",
     "@types/jquery": "^3.3.29",
     "bootstrap": "^4.2.1",
-    "jquery": "^3.3.1",
-    "popper.js": "file:node_modules/popper.js"
+    "jquery": "^3.3.1"
   }
 }

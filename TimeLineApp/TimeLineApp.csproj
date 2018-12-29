@@ -18,7 +18,6 @@
     <Content Remove="wwwroot\src\LogonHandlers.ts" />
     <Content Remove="wwwroot\src\RegisterHandlers.ts" />
     <Content Remove="wwwroot\src\TLEvent.ts" />
-    <Content Remove="wwwroot\test\DateUtils.spec.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,13 +40,12 @@
     <TypeScriptCompile Include="wwwroot\src\Globals.ts" />
     <TypeScriptCompile Include="wwwroot\src\RegisterHandlers.ts" />
     <TypeScriptCompile Include="wwwroot\src\TLEvent.ts" />
-    <TypeScriptCompile Include="wwwroot\test\DateUtils.spec.ts" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-    <TypeScriptTarget>ES2016</TypeScriptTarget>
+    <TypeScriptTarget>ESNext</TypeScriptTarget>
     <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
-    <TypeScriptModuleKind>System</TypeScriptModuleKind>
+    <TypeScriptModuleKind>None</TypeScriptModuleKind>
     <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
     <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
     <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
