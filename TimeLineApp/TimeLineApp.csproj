@@ -13,10 +13,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="bundleconfig.json" />
+    <Content Remove="wwwroot\src\colorutils.ts" />
     <Content Remove="wwwroot\src\ctxmenu.ts" />
+    <Content Remove="wwwroot\src\dateutils.ts" />
     <Content Remove="wwwroot\src\Globals.ts" />
+    <Content Remove="wwwroot\src\index.ts" />
     <Content Remove="wwwroot\src\LogonHandlers.ts" />
     <Content Remove="wwwroot\src\RegisterHandlers.ts" />
+    <Content Remove="wwwroot\src\saagraph.ts" />
+    <Content Remove="wwwroot\src\stringutils.ts" />
+    <Content Remove="wwwroot\src\timeline.ts" />
     <Content Remove="wwwroot\src\TLEvent.ts" />
   </ItemGroup>
 
@@ -34,23 +41,29 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="wwwroot\src\colorutils.ts" />
     <TypeScriptCompile Include="wwwroot\src\contextmenu.ts" />
     <TypeScriptCompile Include="wwwroot\src\ctxmenu.ts" />
+    <TypeScriptCompile Include="wwwroot\src\dateutils.ts" />
+    <TypeScriptCompile Include="wwwroot\src\index.ts" />
     <TypeScriptCompile Include="wwwroot\src\LogonHandlers.ts" />
     <TypeScriptCompile Include="wwwroot\src\Globals.ts" />
     <TypeScriptCompile Include="wwwroot\src\RegisterHandlers.ts" />
+    <TypeScriptCompile Include="wwwroot\src\saagraph.ts" />
+    <TypeScriptCompile Include="wwwroot\src\stringutils.ts" />
+    <TypeScriptCompile Include="wwwroot\src\timeline.ts" />
     <TypeScriptCompile Include="wwwroot\src\TLEvent.ts" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptTarget>ESNext</TypeScriptTarget>
     <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
-    <TypeScriptModuleKind>None</TypeScriptModuleKind>
+    <TypeScriptModuleKind>ES6</TypeScriptModuleKind>
     <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
     <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
     <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
-    <TypeScriptOutFile />
-    <TypeScriptOutDir />
+    <TypeScriptOutFile></TypeScriptOutFile>
+    <TypeScriptOutDir></TypeScriptOutDir>
     <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
     <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
     <TypeScriptSourceMap>True</TypeScriptSourceMap>

@@ -20,7 +20,9 @@
     "inputFiles": [
       "wwwroot/src/*.js"
       //"!js/ignore.js" // start with a ! to exclude files
-    ]
-
+    ],
+    "minify": {
+      "enabled": true
+    }
   } 
 ]

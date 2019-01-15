@@ -33,9 +33,9 @@ export class ContextMenu {
       this.options[option] = value
   }
 
-  getOptions() {
-    return this.options
-  }
+  //getOptions() {
+  //  return this.options
+  //}
 
   reload() {
     if (document.getElementById('cm_' + ContextMenu.count) == null) {
