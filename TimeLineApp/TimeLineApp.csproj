@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="bundleconfig.json" />
     <Content Remove="wwwroot\src\colorutils.ts" />
     <Content Remove="wwwroot\src\ctxmenu.ts" />
     <Content Remove="wwwroot\src\dateutils.ts" />
@@ -25,6 +24,10 @@
     <Content Remove="wwwroot\src\stringutils.ts" />
     <Content Remove="wwwroot\src\timeline.ts" />
     <Content Remove="wwwroot\src\TLEvent.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\dist\main.min.css" />
   </ItemGroup>
 
   <ItemGroup>
@@ -56,7 +59,7 @@
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-    <TypeScriptTarget>ESNext</TypeScriptTarget>
+    <TypeScriptTarget>ES2017</TypeScriptTarget>
     <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
     <TypeScriptModuleKind>ES6</TypeScriptModuleKind>
     <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>

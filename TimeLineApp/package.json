@@ -12,7 +12,18 @@
     "@types/bootstrap": "^4.1.4",
     "@types/jquery": "^3.3.29",
     "bootstrap": "^4.2.1",
+    "console-control-strings": "^1.1.0",
+    "gulp-concat": "^2.6.1",
     "jquery": "^3.3.1",
-    "popper.js": "^1.14.6"
+    "minipass": "^2.3.5",
+    "mkdirp": "^0.5.1",
+    "popper.js": "^1.14.6",
+    "rimraf": "^2.6.3"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.0",
+    "gulp-cli": "^2.0.1",
+    "gulp-cssmin": "^0.2.0",
+    "gulp-uglify": "^3.0.1"
   }
 }
