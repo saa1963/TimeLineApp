@@ -1,4 +1,4 @@
-﻿/// <binding BeforeBuild='min' Clean='clean' />
+﻿/// <binding BeforeBuild='default' />
 "use strict";
 
 const { series } = require('gulp');
@@ -8,7 +8,8 @@ var gulp = require("gulp"),
   cssmin = require("gulp-cssmin"),
   terser = require("gulp-terser"),
   ts = require("gulp-typescript"),
-  tsProject = ts.createProject("tsconfig.json");
+  tsProject = ts.createProject("tsconfig.json"),
+  fs = require("fs");
 
 var paths = {
   webroot: "./wwwroot/"
@@ -25,6 +26,17 @@ paths.concatCss = "css/main.css";
 paths.distCssFiles = paths.webroot + "dist/*.css";
 paths.distJsFiles = paths.webroot + "dist/main.js";
 paths.dist = paths.webroot + "dist";
+paths.popper = "./node_modules/@types/bootstrap/index.d.ts";
+
+function replace_popper(cb) {
+  fs.readFile(paths.popper, "utf8", function (err, data) {
+    if (!err) {
+      data = data.replace('import * as Popper from "popper.js";', 'import * as Popper from "popper.js/index.d"');
+      fs.writeFile(paths.popper, data, err => { });
+    }
+  });
+  cb()
+}
 
 function clean(cb) {
   rimraf(paths.distCssFiles, cb);
@@ -67,4 +79,4 @@ function ts_compileProd(cb) {
 }
 
 exports.Production = series(clean, min_css, ts_compileProd);
-exports.Development = series(clean, min_css1, ts_compileDev);
+exports.default = series(clean, replace_popper, min_css1, ts_compileDev);
