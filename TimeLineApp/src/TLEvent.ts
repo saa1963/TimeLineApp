@@ -14,9 +14,9 @@ class TLDate {
       if (year == 0) throw new Error('Год равен 0')
       if (month > 12 || month < 1) throw new Error('Неверный месяц месяца')
       if (day < 1) throw new Error('День меньше 1')
-      if ([1, 3, 5, 7, 8, 10, 12].includes(month)) {
+      if (this.Includes([1, 3, 5, 7, 8, 10, 12], month)) {
         if (day > 31) throw new Error('Неверный день месяца')
-      } else if ([4, 6, 9, 11].includes(month)) {
+      } else if (this.Includes([4, 6, 9, 11], month)) {
         if (day > 30) throw new Error('Неверный день месяца')
       } else {
         if (day > 29) throw new Error('Неверный день месяца')
@@ -41,6 +41,13 @@ class TLDate {
       this.Month = temp.month
       this.Year = temp.year
     }
+  }
+
+  private Includes(arr: number[], value: number): boolean {
+    arr.forEach((v) => {
+      if (v === value) return true
+    });
+    return false
   }
   
   Greater(o: TLDate): boolean {

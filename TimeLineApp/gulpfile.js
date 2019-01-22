@@ -1,45 +1,70 @@
 ﻿/// <binding BeforeBuild='min' Clean='clean' />
 "use strict";
 
+const { series } = require('gulp');
 var gulp = require("gulp"),
   rimraf = require("rimraf"),
   concat = require("gulp-concat"),
   cssmin = require("gulp-cssmin"),
-  uglify = require("gulp-uglify");
+  terser = require("gulp-terser"),
+  ts = require("gulp-typescript"),
+  tsProject = ts.createProject("tsconfig.json");
 
 var paths = {
   webroot: "./wwwroot/"
 };
 
-paths.js = paths.webroot + "src/**/*.js";
-paths.minJs = paths.webroot + "src/**/*.min.js";
-paths.css = paths.webroot + "css/**/*.css";
-paths.minCss = paths.webroot + "css/**/*.min.css";
-paths.concatJsDest = paths.webroot + "dist/main.min.js";
-paths.concatCssDest = paths.webroot + "dist/main.min.css";
+paths.js = "src/js/*.js";
+paths.minJs = "src/js/*.min.js";
+paths.css = [
+  paths.webroot + "css/*.css",
+  paths.webroot + "lib/fontawesome-free-5.5.0-web/css/all.min.css",
+  paths.webroot + "lib/bootstrap/css/bootstrap.min.css"
+];
+paths.concatCss = "css/main.css";
+paths.distCssFiles = paths.webroot + "dist/*.css";
+paths.distJsFiles = paths.webroot + "dist/main.js";
+paths.dist = paths.webroot + "dist";
 
-gulp.task("clean:js", function (cb) {
-  rimraf(paths.concatJsDest, cb);
-});
+function clean(cb) {
+  rimraf(paths.distCssFiles, cb);
+  rimraf(paths.distJsFiles, cb);
+}
 
-gulp.task("clean:css", function (cb) {
-  rimraf(paths.concatCssDest, cb);
-});
+function min_js(cb) {
+  return gulp.src([paths.js])
+    .pipe(concat("main.min.js"))
+    .pipe(terser())
+    .pipe(gulp.dest(paths.dist));
+}
 
-gulp.task("clean", ["clean:js", "clean:css"]);
-
-gulp.task("min:js", function () {
-  return gulp.src([paths.js, "!" + paths.minJs], { base: "." })
-    .pipe(concat(paths.concatJsDest))
-    .pipe(uglify())
-    .pipe(gulp.dest("."));
-});
-
-gulp.task("min:css", function () {
-  return gulp.src([paths.css, "!" + paths.minCss])
-    .pipe(concat(paths.concatCssDest))
+function min_css(cb) {
+  return gulp.src(paths.css)
+    .pipe(concat("main.min.css"))
     .pipe(cssmin())
-    .pipe(gulp.dest("."));
-});
+    .pipe(gulp.dest(paths.dist));
+}
 
-gulp.task("min", ["min:js", "min:css"]);
+function min_css1(cb) {
+  return gulp.src(paths.css)
+    .pipe(concat("main.css"))
+    .pipe(gulp.dest(paths.dist));
+}
+
+function ts_compileDev(cb) {
+  return tsProject.src()
+    .pipe(tsProject())
+    .pipe(concat("main.js"))
+    .pipe(gulp.dest(paths.dist));
+}
+
+function ts_compileProd(cb) {
+  return tsProject.src()
+    .pipe(tsProject())
+    .pipe(concat("main.min.js"))
+    .pipe(terser())
+    .pipe(gulp.dest(paths.dist));
+}
+
+exports.Production = series(clean, min_css, ts_compileProd);
+exports.Development = series(clean, min_css1, ts_compileDev);

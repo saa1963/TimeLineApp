@@ -6,28 +6,31 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="wwwroot\src\ts\**" />
-    <Content Remove="wwwroot\src\ts\**" />
-    <EmbeddedResource Remove="wwwroot\src\ts\**" />
-    <None Remove="wwwroot\src\ts\**" />
+    <Compile Remove="src\ts\**" />
+    <Content Remove="src\ts\**" />
+    <EmbeddedResource Remove="src\ts\**" />
+    <None Remove="src\ts\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\src\colorutils.ts" />
-    <Content Remove="wwwroot\src\ctxmenu.ts" />
-    <Content Remove="wwwroot\src\dateutils.ts" />
-    <Content Remove="wwwroot\src\Globals.ts" />
-    <Content Remove="wwwroot\src\index.ts" />
-    <Content Remove="wwwroot\src\LogonHandlers.ts" />
-    <Content Remove="wwwroot\src\RegisterHandlers.ts" />
-    <Content Remove="wwwroot\src\saagraph.ts" />
-    <Content Remove="wwwroot\src\stringutils.ts" />
-    <Content Remove="wwwroot\src\timeline.ts" />
-    <Content Remove="wwwroot\src\TLEvent.ts" />
+    <Content Remove="src\colorutils.ts" />
+    <Content Remove="src\dateutils.ts" />
+    <Content Remove="src\Globals.ts" />
+    <Content Remove="src\index.ts" />
+    <Content Remove="src\LogonHandlers.ts" />
+    <Content Remove="src\RegisterHandlers.ts" />
+    <Content Remove="src\saagraph.ts" />
+    <Content Remove="src\stringutils.ts" />
+    <Content Remove="src\timeline.ts" />
+    <Content Remove="src\TLEvent.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\dist\main.min.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="src\contextmenu.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,22 +47,21 @@
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="wwwroot\src\colorutils.ts" />
-    <TypeScriptCompile Include="wwwroot\src\contextmenu.ts" />
-    <TypeScriptCompile Include="wwwroot\src\ctxmenu.ts" />
-    <TypeScriptCompile Include="wwwroot\src\dateutils.ts" />
-    <TypeScriptCompile Include="wwwroot\src\index.ts" />
-    <TypeScriptCompile Include="wwwroot\src\LogonHandlers.ts" />
-    <TypeScriptCompile Include="wwwroot\src\Globals.ts" />
-    <TypeScriptCompile Include="wwwroot\src\RegisterHandlers.ts" />
-    <TypeScriptCompile Include="wwwroot\src\saagraph.ts" />
-    <TypeScriptCompile Include="wwwroot\src\stringutils.ts" />
-    <TypeScriptCompile Include="wwwroot\src\timeline.ts" />
-    <TypeScriptCompile Include="wwwroot\src\TLEvent.ts" />
+    <TypeScriptCompile Include="src\colorutils.ts" />
+    <TypeScriptCompile Include="src\contextmenu.ts" />
+    <TypeScriptCompile Include="src\dateutils.ts" />
+    <TypeScriptCompile Include="src\index.ts" />
+    <TypeScriptCompile Include="src\LogonHandlers.ts" />
+    <TypeScriptCompile Include="src\Globals.ts" />
+    <TypeScriptCompile Include="src\RegisterHandlers.ts" />
+    <TypeScriptCompile Include="src\saagraph.ts" />
+    <TypeScriptCompile Include="src\stringutils.ts" />
+    <TypeScriptCompile Include="src\timeline.ts" />
+    <TypeScriptCompile Include="src\TLEvent.ts" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-    <TypeScriptTarget>ES2017</TypeScriptTarget>
+    <TypeScriptTarget>ESNext</TypeScriptTarget>
     <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
     <TypeScriptModuleKind>ES6</TypeScriptModuleKind>
     <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
