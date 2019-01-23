@@ -6,4 +6,3 @@ export class Globals {
     }
 }
 Globals.IsAuthentificated = false;
-//# sourceMappingURL=Globals.js.map

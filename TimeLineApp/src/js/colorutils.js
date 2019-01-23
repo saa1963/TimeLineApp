@@ -11,4 +11,3 @@ export let makeColor = function* () {
         }
     }
 };
-//# sourceMappingURL=colorutils.js.map

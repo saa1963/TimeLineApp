@@ -231,4 +231,3 @@ class CellData {
         this.path = path;
     }
 }
-//# sourceMappingURL=timeline.js.map

@@ -347,4 +347,3 @@ export class TLPeriodEvent extends TLPeriod {
         super(o);
     }
 }
-//# sourceMappingURL=TLEvent.js.map

@@ -196,4 +196,3 @@ export class ContextUtil {
 }
 class MyHTMLLIElement extends HTMLLIElement {
 }
-//# sourceMappingURL=contextmenu.js.map

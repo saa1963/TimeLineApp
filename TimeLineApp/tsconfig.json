@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
-    "noImplicitAny": false,
+    "module": "esnext",
     "noEmitOnError": true,
+    "noImplicitAny": false,
     "removeComments": false,
     "sourceMap": true,
-    "target": "es6",
-    "module": "amd"
+    "target": "esnext"
   },
-  "include": ["src/*.ts"]
+  "include": ["src/*.ts", "webpack.config.js"]
 }

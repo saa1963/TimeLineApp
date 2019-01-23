@@ -1,4 +1,4 @@
-﻿/// <binding BeforeBuild='default' />
+﻿/// <binding />
 "use strict";
 
 const { series } = require('gulp');
@@ -10,12 +10,13 @@ var gulp = require("gulp"),
   ts = require("gulp-typescript"),
   tsProject = ts.createProject("tsconfig.json"),
   fs = require("fs");
+const webpack = require('webpack-stream');
 
 var paths = {
   webroot: "./wwwroot/"
 };
 
-paths.js = "src/js/*.js";
+paths.js = "src/js";
 paths.minJs = "src/js/*.min.js";
 paths.css = [
   paths.webroot + "css/*.css",
@@ -35,7 +36,7 @@ function replace_popper(cb) {
       fs.writeFile(paths.popper, data, err => { });
     }
   });
-  cb()
+  cb();
 }
 
 function clean(cb) {
@@ -64,10 +65,14 @@ function min_css1(cb) {
 }
 
 function ts_compileDev(cb) {
-  return tsProject.src()
-    .pipe(tsProject())
-    .pipe(concat("main.js"))
-    .pipe(gulp.dest(paths.dist));
+  return gulp.src('src/*.ts')
+    .pipe(webpack(require('./webpack.config.js')))
+    .pipe(gulp.dest(paths.webroot + 'dist/'));
+  //return tsProject.src()
+  //  .pipe(tsProject())
+  //  .pipe(gulp.dest(paths.dist));
+    //.pipe(concat("main.js"))
+    //.pipe(gulp.dest(paths.dist));
 }
 
 function ts_compileProd(cb) {

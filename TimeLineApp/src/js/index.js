@@ -277,4 +277,3 @@ function SwitchPeriod(menuCtx, idPeriod) {
     drawAll();
     menuCtx.reload();
 }
-//# sourceMappingURL=index.js.map

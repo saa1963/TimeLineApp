@@ -1,5 +1,4 @@
 const path = require('path');
-const process = require('process')
  
 //module.exports = {
 //  entry: './src/index.js',
@@ -18,9 +17,10 @@ const process = require('process')
 module.exports = {
   entry: './src/index.ts',
   devtool: 'source-map',
+  mode: 'development',
   output: {
     filename: 'main.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'wwwroot/dist')
   },
   resolve: {
     modules: ['node_modules'],

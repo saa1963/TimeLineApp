@@ -40,4 +40,3 @@ export class RegisterHandlers {
         }
     }
 }
-//# sourceMappingURL=RegisterHandlers.js.map
