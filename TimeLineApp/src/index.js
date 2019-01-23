@@ -4,7 +4,7 @@ import { ContextMenu } from './contextmenu';
 import { LogonHandlers } from './LogonHandlers';
 import { RegisterHandlers } from './RegisterHandlers';
 import { TimeLineData, EnumPeriod } from './TLEvent';
-import * as $ from 'jquery';
+//import * as $ from 'jquery'
 const MIN_GAP = 100;
 let PERIOD_TYPE = EnumPeriod.day;
 const HTOP = 56;

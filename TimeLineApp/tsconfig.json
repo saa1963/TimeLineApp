@@ -5,7 +5,8 @@
     "noImplicitAny": false,
     "removeComments": false,
     "sourceMap": true,
-    "target": "esnext"
+    "target": "esnext",
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src/*.ts", "webpack.config.js"]
 }
