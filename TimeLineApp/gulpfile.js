@@ -18,24 +18,26 @@ paths.css = [
   paths.webroot + "css/*.css"
 ];
 paths.concatCss = "css/main.css";
-paths.distCssFiles = paths.webroot + "dist/*.css";
-paths.distJsFiles = paths.webroot + "dist/main.js";
+paths.distFiles = paths.webroot + "dist/*.*";
 paths.dist = paths.webroot + "dist";
 paths.popper = "./node_modules/@types/bootstrap/index.d.ts";
 
 function replace_popper(cb) {
+  let src = 'import * as Popper from "popper.js";';
+  let dst = 'import * as Popper from "popper.js/index.d";';
   fs.readFile(paths.popper, "utf8", function (err, data) {
     if (!err) {
-      data = data.replace('import * as Popper from "popper.js";', 'import * as Popper from "popper.js/index.d"');
-      fs.writeFile(paths.popper, data, err => { });
+      if (data.indexOf(src) >= 0) {
+        data = data.replace(src, dst);
+        fs.writeFile(paths.popper, data, err => { });
+      }
     }
   });
   cb();
 }
 
 function clean(cb) {
-  rimraf(paths.distCssFiles, cb);
-  rimraf(paths.distJsFiles, cb);
+  rimraf(paths.distFiles, cb);
 }
 
 function min_css1(cb) {
@@ -50,4 +52,4 @@ function ts_compileDev(cb) {
     .pipe(gulp.dest(paths.webroot + 'dist/'));
 }
 
-exports.default = series(clean, ts_compileDev);
+exports.default = series(clean, replace_popper , ts_compileDev);

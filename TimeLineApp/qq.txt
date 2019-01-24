@@ -1,0 +1,161 @@
+[[90m19:32:03[39m] Using gulpfile ~\source\repos\TimeLineApp2\TimeLineApp\gulpfile.js
+[[90m19:32:03[39m] Starting 'default'...
+[[90m19:32:03[39m] Starting 'clean'...
+[[90m19:32:03[39m] Finished 'clean' after 13 ms
+[[90m19:32:03[39m] Starting 'ts_compileDev'...
+======== Resolving type reference directive 'sizzle', containing file 'C:\Users\Сошины\source\repos\TimeLineApp2\TimeLineApp\node_modules\@types\jquery\index.d.ts', root directory 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types'. ========
+Resolving with primary search path 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types'.
+'package.json' does not have a 'typings' field.
+'package.json' does not have a 'types' field.
+'package.json' has 'main' field '' that references 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/sizzle'.
+'package.json' does not have a 'typesVersions' field.
+Found 'package.json' at 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/sizzle/package.json'. Package ID is '@types/sizzle/index.d.ts@2.3.2'.
+'package.json' does not have a 'typesVersions' field.
+'package.json' does not have a 'typings' field.
+'package.json' does not have a 'types' field.
+File 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/sizzle/index.d.ts' exist - use it as a name resolution result.
+Resolving real path for 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/sizzle/index.d.ts', result 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/sizzle/index.d.ts'.
+======== Type reference directive 'sizzle' was successfully resolved to 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/sizzle/index.d.ts', primary: true. ========
+======== Resolving type reference directive 'jquery', containing file 'C:\Users\Сошины\source\repos\TimeLineApp2\TimeLineApp\node_modules\@types\bootstrap\index.d.ts', root directory 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types'. ========
+Resolving with primary search path 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types'.
+'package.json' does not have a 'typings' field.
+'package.json' has 'types' field 'index' that references 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index'.
+'package.json' does not have a 'typesVersions' field.
+Found 'package.json' at 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/package.json'. Package ID is '@types/jquery/index.d.ts@3.3.29'.
+'package.json' does not have a 'typesVersions' field.
+'package.json' does not have a 'typings' field.
+'package.json' has 'types' field 'index' that references 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index'.
+File 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index' does not exist.
+Loading module as file / folder, candidate module location 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index', target file type 'TypeScript'.
+File 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index.ts' does not exist.
+File 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index.tsx' does not exist.
+File 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index.d.ts' exist - use it as a name resolution result.
+Resolving real path for 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index.d.ts', result 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index.d.ts'.
+======== Type reference directive 'jquery' was successfully resolved to 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index.d.ts', primary: true. ========
+======== Resolving type reference directive 'bootstrap', containing file 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/src/__inferred type names__.ts', root directory 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types'. ========
+Resolving with primary search path 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types'.
+'package.json' does not have a 'typings' field.
+'package.json' has 'types' field 'index' that references 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/bootstrap/index'.
+'package.json' does not have a 'typesVersions' field.
+Found 'package.json' at 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/bootstrap/package.json'. Package ID is '@types/bootstrap/index.d.ts@4.2.0'.
+'package.json' does not have a 'typesVersions' field.
+'package.json' does not have a 'typings' field.
+'package.json' has 'types' field 'index' that references 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/bootstrap/index'.
+File 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/bootstrap/index' does not exist.
+Loading module as file / folder, candidate module location 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/bootstrap/index', target file type 'TypeScript'.
+File 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/bootstrap/index.ts' does not exist.
+File 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/bootstrap/index.tsx' does not exist.
+File 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/bootstrap/index.d.ts' exist - use it as a name resolution result.
+Resolving real path for 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/bootstrap/index.d.ts', result 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/bootstrap/index.d.ts'.
+======== Type reference directive 'bootstrap' was successfully resolved to 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/bootstrap/index.d.ts', primary: true. ========
+======== Resolving type reference directive 'jquery', containing file 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/src/__inferred type names__.ts', root directory 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types'. ========
+Resolving with primary search path 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types'.
+'package.json' does not have a 'typings' field.
+'package.json' has 'types' field 'index' that references 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index'.
+'package.json' does not have a 'typesVersions' field.
+Found 'package.json' at 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/package.json'. Package ID is '@types/jquery/index.d.ts@3.3.29'.
+'package.json' does not have a 'typesVersions' field.
+'package.json' does not have a 'typings' field.
+'package.json' has 'types' field 'index' that references 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index'.
+File 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index' does not exist.
+Loading module as file / folder, candidate module location 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index', target file type 'TypeScript'.
+File 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index.ts' does not exist.
+File 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index.tsx' does not exist.
+File 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index.d.ts' exist - use it as a name resolution result.
+Resolving real path for 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index.d.ts', result 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index.d.ts'.
+======== Type reference directive 'jquery' was successfully resolved to 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index.d.ts', primary: true. ========
+======== Resolving type reference directive 'sizzle', containing file 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/src/__inferred type names__.ts', root directory 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types'. ========
+Resolving with primary search path 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types'.
+'package.json' does not have a 'typings' field.
+'package.json' does not have a 'types' field.
+'package.json' has 'main' field '' that references 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/sizzle'.
+'package.json' does not have a 'typesVersions' field.
+Found 'package.json' at 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/sizzle/package.json'. Package ID is '@types/sizzle/index.d.ts@2.3.2'.
+'package.json' does not have a 'typesVersions' field.
+'package.json' does not have a 'typings' field.
+'package.json' does not have a 'types' field.
+File 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/sizzle/index.d.ts' exist - use it as a name resolution result.
+Resolving real path for 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/sizzle/index.d.ts', result 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/sizzle/index.d.ts'.
+======== Type reference directive 'sizzle' was successfully resolved to 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/sizzle/index.d.ts', primary: true. ========
+======== Resolving type reference directive 'sizzle', containing file 'C:\Users\Сошины\source\repos\TimeLineApp2\TimeLineApp\node_modules\@types\jquery\index.d.ts', root directory 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types'. ========
+Resolving with primary search path 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types'.
+'package.json' does not have a 'typings' field.
+'package.json' does not have a 'types' field.
+'package.json' has 'main' field '' that references 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/sizzle'.
+'package.json' does not have a 'typesVersions' field.
+Found 'package.json' at 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/sizzle/package.json'. Package ID is '@types/sizzle/index.d.ts@2.3.2'.
+'package.json' does not have a 'typesVersions' field.
+'package.json' does not have a 'typings' field.
+'package.json' does not have a 'types' field.
+File 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/sizzle/index.d.ts' exist - use it as a name resolution result.
+Resolving real path for 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/sizzle/index.d.ts', result 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/sizzle/index.d.ts'.
+======== Type reference directive 'sizzle' was successfully resolved to 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/sizzle/index.d.ts', primary: true. ========
+======== Resolving type reference directive 'jquery', containing file 'C:\Users\Сошины\source\repos\TimeLineApp2\TimeLineApp\node_modules\@types\bootstrap\index.d.ts', root directory 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types'. ========
+Resolving with primary search path 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types'.
+'package.json' does not have a 'typings' field.
+'package.json' has 'types' field 'index' that references 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index'.
+'package.json' does not have a 'typesVersions' field.
+Found 'package.json' at 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/package.json'. Package ID is '@types/jquery/index.d.ts@3.3.29'.
+'package.json' does not have a 'typesVersions' field.
+'package.json' does not have a 'typings' field.
+'package.json' has 'types' field 'index' that references 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index'.
+File 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index' does not exist.
+Loading module as file / folder, candidate module location 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index', target file type 'TypeScript'.
+File 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index.ts' does not exist.
+File 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index.tsx' does not exist.
+File 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index.d.ts' exist - use it as a name resolution result.
+Resolving real path for 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index.d.ts', result 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index.d.ts'.
+======== Type reference directive 'jquery' was successfully resolved to 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index.d.ts', primary: true. ========
+======== Resolving type reference directive 'bootstrap', containing file 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/src/__inferred type names__.ts', root directory 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types'. ========
+Resolving with primary search path 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types'.
+'package.json' does not have a 'typings' field.
+'package.json' has 'types' field 'index' that references 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/bootstrap/index'.
+'package.json' does not have a 'typesVersions' field.
+Found 'package.json' at 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/bootstrap/package.json'. Package ID is '@types/bootstrap/index.d.ts@4.2.0'.
+'package.json' does not have a 'typesVersions' field.
+'package.json' does not have a 'typings' field.
+'package.json' has 'types' field 'index' that references 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/bootstrap/index'.
+File 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/bootstrap/index' does not exist.
+Loading module as file / folder, candidate module location 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/bootstrap/index', target file type 'TypeScript'.
+File 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/bootstrap/index.ts' does not exist.
+File 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/bootstrap/index.tsx' does not exist.
+File 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/bootstrap/index.d.ts' exist - use it as a name resolution result.
+Resolving real path for 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/bootstrap/index.d.ts', result 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/bootstrap/index.d.ts'.
+======== Type reference directive 'bootstrap' was successfully resolved to 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/bootstrap/index.d.ts', primary: true. ========
+======== Resolving type reference directive 'jquery', containing file 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/src/__inferred type names__.ts', root directory 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types'. ========
+Resolving with primary search path 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types'.
+'package.json' does not have a 'typings' field.
+'package.json' has 'types' field 'index' that references 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index'.
+'package.json' does not have a 'typesVersions' field.
+Found 'package.json' at 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/package.json'. Package ID is '@types/jquery/index.d.ts@3.3.29'.
+'package.json' does not have a 'typesVersions' field.
+'package.json' does not have a 'typings' field.
+'package.json' has 'types' field 'index' that references 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index'.
+File 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index' does not exist.
+Loading module as file / folder, candidate module location 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index', target file type 'TypeScript'.
+File 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index.ts' does not exist.
+File 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index.tsx' does not exist.
+File 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index.d.ts' exist - use it as a name resolution result.
+Resolving real path for 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index.d.ts', result 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index.d.ts'.
+======== Type reference directive 'jquery' was successfully resolved to 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/jquery/index.d.ts', primary: true. ========
+======== Resolving type reference directive 'sizzle', containing file 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/src/__inferred type names__.ts', root directory 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types'. ========
+Resolving with primary search path 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types'.
+'package.json' does not have a 'typings' field.
+'package.json' does not have a 'types' field.
+'package.json' has 'main' field '' that references 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/sizzle'.
+'package.json' does not have a 'typesVersions' field.
+Found 'package.json' at 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/sizzle/package.json'. Package ID is '@types/sizzle/index.d.ts@2.3.2'.
+'package.json' does not have a 'typesVersions' field.
+'package.json' does not have a 'typings' field.
+'package.json' does not have a 'types' field.
+File 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/sizzle/index.d.ts' exist - use it as a name resolution result.
+Resolving real path for 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/sizzle/index.d.ts', result 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/sizzle/index.d.ts'.
+======== Type reference directive 'sizzle' was successfully resolved to 'C:/Users/Сошины/source/repos/TimeLineApp2/TimeLineApp/node_modules/@types/sizzle/index.d.ts', primary: true. ========
+[[90m19:32:07[39m] Version: webpack 4.29.0
+Built at: 2019-01-24 19:32:07
+      Asset     Size  Chunks             Chunk Names
+    main.js  538 KiB    main  [emitted]  main
+main.js.map  692 KiB    main  [emitted]  main
+Entrypoint main = main.js main.js.map
+[[90m19:32:07[39m] Finished 'ts_compileDev' after 3.92 s
+[[90m19:32:07[39m] Finished 'default' after 3.93 s
