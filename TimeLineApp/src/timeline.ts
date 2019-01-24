@@ -1,7 +1,7 @@
 import { DateUtils } from './dateutils'
 import { saaGraph } from './saagraph'
 import { TimeLineData, TLEvent, EnumPeriod, TLPeriod } from './TLEvent'
-
+import * as $ from 'jquery'
 
 export class TimeLine {
   ctx: CanvasRenderingContext2D

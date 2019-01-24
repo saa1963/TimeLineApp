@@ -1,4 +1,6 @@
-﻿export class RegisterHandlers {
+﻿import * as $ from 'jquery'
+
+export class RegisterHandlers {
   static OpenRegisterWindow(): boolean {
     $('#regLogin').val('')
     $('#regEmail').val('')

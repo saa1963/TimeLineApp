@@ -1,4 +1,5 @@
 import { Globals } from './Globals';
+//import * as $ from 'jquery'
 export class LogonHandlers {
     // Открытие окна входа пользователя
     static OpenLogonWindow() {

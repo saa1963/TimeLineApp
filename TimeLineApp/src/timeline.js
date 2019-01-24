@@ -1,6 +1,7 @@
 import { DateUtils } from './dateutils';
 import { saaGraph } from './saagraph';
 import { EnumPeriod } from './TLEvent';
+import * as $ from 'jquery';
 export class TimeLine {
     constructor(ctx, curPeriod = null, y = 0, color = null, period = null, name = 'нет имени', data = []) {
         this.ctx = ctx;

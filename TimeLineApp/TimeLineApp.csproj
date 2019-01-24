@@ -43,7 +43,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="src\js\" />
     <Folder Include="wwwroot\dist\" />
     <Folder Include="wwwroot\lib\fontawesome-free-5.5.0-web\svgs\" />
     <Folder Include="wwwroot\lib\fontawesome-free-5.5.0-web\webfonts\" />

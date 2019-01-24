@@ -1,7 +1,7 @@
 ﻿export class Globals {
   static IsAuthentificated: boolean = false
 
-  static getCookie(name) {
+  static getCookie(name: string) {
     let c = document.cookie
     var matches = document.cookie.match(new RegExp(
       "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
