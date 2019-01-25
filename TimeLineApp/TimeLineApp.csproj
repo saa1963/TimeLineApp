@@ -23,6 +23,8 @@
     <Content Remove="src\stringutils.ts" />
     <Content Remove="src\timeline.ts" />
     <Content Remove="src\TLEvent.ts" />
+    <Content Remove="wwwroot\dist\main.css" />
+    <Content Remove="wwwroot\dist\main.css.map" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,9 +45,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\dist\" />
     <Folder Include="wwwroot\lib\fontawesome-free-5.5.0-web\svgs\" />
     <Folder Include="wwwroot\lib\fontawesome-free-5.5.0-web\webfonts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\dist\main.css" />
+    <None Include="wwwroot\dist\main.css.map" />
   </ItemGroup>
 
   <ItemGroup>

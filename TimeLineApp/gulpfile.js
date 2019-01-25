@@ -7,6 +7,9 @@ var gulp = require("gulp"),
   concat = require("gulp-concat"),
   fs = require("fs");
 const webpack = require('webpack-stream');
+var sass = require('gulp-sass');
+sass.compiler = require('node-sass');
+var sourcemaps = require('gulp-sourcemaps');
 
 var paths = {
   webroot: "./wwwroot/"
@@ -52,4 +55,12 @@ function ts_compileDev(cb) {
     .pipe(gulp.dest(paths.webroot + 'dist/'));
 }
 
-exports.default = series(clean, replace_popper , ts_compileDev);
+function compile_sass(cb) {
+  return gulp.src('./scss/**/main.scss')
+    .pipe(sourcemaps.init())
+    .pipe(sass().on('error', sass.logError))
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest(paths.webroot + 'dist'));
+}
+
+exports.default = series(replace_popper , compile_sass, ts_compileDev);

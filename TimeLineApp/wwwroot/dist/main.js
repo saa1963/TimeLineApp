@@ -17371,25 +17371,27 @@ Globals.IsAuthentificated = false;
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LogonHandlers", function() { return LogonHandlers; });
 /* harmony import */ var _Globals__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Globals */ "./src/Globals.ts");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_1__);
 
-//import * as $ from 'jquery'
+
 class LogonHandlers {
     // Открытие окна входа пользователя
     static OpenLogonWindow() {
         if (!_Globals__WEBPACK_IMPORTED_MODULE_0__["Globals"].IsAuthentificated) {
-            $('#logLogin').val(_Globals__WEBPACK_IMPORTED_MODULE_0__["Globals"].getCookie('timelineuser') || '');
-            $('#logPassword').val('');
-            $('#tmLoginModal').modal();
-            $('#log_server_error').css('display', 'none');
+            jquery__WEBPACK_IMPORTED_MODULE_1__('#logLogin').val(_Globals__WEBPACK_IMPORTED_MODULE_0__["Globals"].getCookie('timelineuser') || '');
+            jquery__WEBPACK_IMPORTED_MODULE_1__('#logPassword').val('');
+            jquery__WEBPACK_IMPORTED_MODULE_1__('#tmLoginModal').modal();
+            jquery__WEBPACK_IMPORTED_MODULE_1__('#log_server_error').css('display', 'none');
         }
         else {
-            $.ajax('api/register/logout')
+            jquery__WEBPACK_IMPORTED_MODULE_1__["ajax"]('api/register/logout')
                 .done(data => {
                 if (data) {
                     _Globals__WEBPACK_IMPORTED_MODULE_0__["Globals"].IsAuthentificated = false;
-                    $('#btnLogin').text('Вход');
-                    $('#lblUser').css('display', 'none');
-                    $('#lblUser').text('');
+                    jquery__WEBPACK_IMPORTED_MODULE_1__('#btnLogin').text('Вход');
+                    jquery__WEBPACK_IMPORTED_MODULE_1__('#lblUser').css('display', 'none');
+                    jquery__WEBPACK_IMPORTED_MODULE_1__('#lblUser').text('');
                 }
             });
         }
@@ -17397,26 +17399,26 @@ class LogonHandlers {
     }
     // Вход пользователя
     static LoginLogout() {
-        if ($('#logLogin')[0].reportValidity()
-            && $('#logPassword')[0].reportValidity()) {
-            $.ajax('api/register/log', {
+        if (jquery__WEBPACK_IMPORTED_MODULE_1__('#logLogin')[0].reportValidity()
+            && jquery__WEBPACK_IMPORTED_MODULE_1__('#logPassword')[0].reportValidity()) {
+            jquery__WEBPACK_IMPORTED_MODULE_1__["ajax"]('api/register/log', {
                 type: 'POST',
                 data: {
-                    Login: $('#logLogin').val(),
-                    Password: $('#logPassword').val()
+                    Login: jquery__WEBPACK_IMPORTED_MODULE_1__('#logLogin').val(),
+                    Password: jquery__WEBPACK_IMPORTED_MODULE_1__('#logPassword').val()
                 }
             })
                 .done(data => {
                 if (data === '') {
                     _Globals__WEBPACK_IMPORTED_MODULE_0__["Globals"].IsAuthentificated = true;
-                    $('#tmLoginModal').modal('hide');
-                    $('#btnLogin').text('Выход');
-                    $('#lblUser').css('display', 'unset');
-                    $('#lblUser').text($('#logLogin').val());
+                    jquery__WEBPACK_IMPORTED_MODULE_1__('#tmLoginModal').modal('hide');
+                    jquery__WEBPACK_IMPORTED_MODULE_1__('#btnLogin').text('Выход');
+                    jquery__WEBPACK_IMPORTED_MODULE_1__('#lblUser').css('display', 'unset');
+                    jquery__WEBPACK_IMPORTED_MODULE_1__('#lblUser').text(jquery__WEBPACK_IMPORTED_MODULE_1__('#logLogin').val());
                 }
                 else {
-                    $('#log_server_error').text(data);
-                    $('#log_server_error').css('display', 'unset');
+                    jquery__WEBPACK_IMPORTED_MODULE_1__('#log_server_error').text(data);
+                    jquery__WEBPACK_IMPORTED_MODULE_1__('#log_server_error').css('display', 'unset');
                 }
             });
         }
