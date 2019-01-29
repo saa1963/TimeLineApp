@@ -19,11 +19,13 @@
     "typescript": "^3.2.4"
   },
   "devDependencies": {
+    "autoprefixer": "^9.4.7",
     "console-control-strings": "^1.1.0",
     "css-loader": "^2.1.0",
     "gulp": "^4.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-cssmin": "^0.2.0",
+    "gulp-postcss": "^8.0.0",
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify": "^3.0.1",

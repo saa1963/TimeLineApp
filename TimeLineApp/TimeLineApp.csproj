@@ -25,6 +25,7 @@
     <Content Remove="src\TLEvent.ts" />
     <Content Remove="wwwroot\dist\main.css" />
     <Content Remove="wwwroot\dist\main.css.map" />
+    <Content Remove="wwwroot\dist\main.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,13 +46,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\lib\fontawesome-free-5.5.0-web\svgs\" />
-    <Folder Include="wwwroot\lib\fontawesome-free-5.5.0-web\webfonts\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="wwwroot\dist\main.css" />
     <None Include="wwwroot\dist\main.css.map" />
+    <None Include="wwwroot\dist\main.js" />
   </ItemGroup>
 
   <ItemGroup>

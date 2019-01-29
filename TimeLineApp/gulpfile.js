@@ -2,14 +2,14 @@
 "use strict";
 
 const { series } = require('gulp');
-var gulp = require("gulp"),
-  rimraf = require("rimraf"),
-  concat = require("gulp-concat"),
-  fs = require("fs");
+var gulp = require("gulp");
+var fs = require("fs");
 const webpack = require('webpack-stream');
 var sass = require('gulp-sass');
 sass.compiler = require('node-sass');
 var sourcemaps = require('gulp-sourcemaps');
+var postcss = require('gulp-postcss');
+var autoprefixer = require('autoprefixer');
 
 var paths = {
   webroot: "./wwwroot/"
@@ -39,16 +39,6 @@ function replace_popper(cb) {
   cb();
 }
 
-function clean(cb) {
-  rimraf(paths.distFiles, cb);
-}
-
-function min_css1(cb) {
-  return gulp.src(paths.css)
-    .pipe(concat("main.css"))
-    .pipe(gulp.dest(paths.dist));
-}
-
 function ts_compileDev(cb) {
   return gulp.src('src/*.ts')
     .pipe(webpack(require('./webpack.config.js')))
@@ -56,9 +46,13 @@ function ts_compileDev(cb) {
 }
 
 function compile_sass(cb) {
+  let options = {
+    includePaths: ['./scss/fontawesome', './scss/bootstrap']
+  };
   return gulp.src('./scss/**/main.scss')
     .pipe(sourcemaps.init())
-    .pipe(sass().on('error', sass.logError))
+    .pipe(sass(options).on('error', sass.logError))
+    .pipe(postcss([autoprefixer()]))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(paths.webroot + 'dist'));
 }
