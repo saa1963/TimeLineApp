@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
-    "module": "esnext",
+    "module": "commonjs",
     "noEmitOnError": true,
     "noImplicitAny": false,
     "removeComments": false,
-    "sourceMap": true,
+    "inlineSourceMap": true,
     "target": "esnext"
   },
-  "include": ["src/*.ts", "webpack.config.js"]
+  "include": ["src/*.ts"]
 }

@@ -1,19 +1,6 @@
 const path = require('path');
+//const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-//module.exports = {
-//  entry: './src/index.js',
-//  devtool: 'eval-source-map',
-//  devServer: {
-//    contentBase: './dist'
-//  },
-//  output: {
-//    filename: 'main.js',
-//    path: path.resolve(__dirname, 'dist')
-//  },
-//  resolve: {
-//    modules: [ 'node_modules' ]
-//  }
-//};
 module.exports = {
   entry: './src/index.ts',
   devtool: 'source-map',
@@ -32,6 +19,23 @@ module.exports = {
         test: /\.tsx?$/,
         use: 'ts-loader'
       }
+      //{
+      //  test: /\.scss$/,
+      //  use: [{
+      //      loader: "style-loader"
+      //  }, {
+      //      loader: "css-loader"
+      //  }, {
+      //      loader: "sass-loader",
+      //      options: {
+      //          includePaths: ["scss/bootstrap", "scss/fontawesome"]
+      //      }
+      //  }]
+      //  },
+      //  {
+      //    test: /\.(woff|woff2|eot|ttf|otf|svg)$/,
+      //    use: ['file-loader']
+      //  }
     ]
   }
 };

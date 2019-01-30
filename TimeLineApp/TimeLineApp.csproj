@@ -23,9 +23,6 @@
     <Content Remove="src\stringutils.ts" />
     <Content Remove="src\timeline.ts" />
     <Content Remove="src\TLEvent.ts" />
-    <Content Remove="wwwroot\dist\main.css" />
-    <Content Remove="wwwroot\dist\main.css.map" />
-    <Content Remove="wwwroot\dist\main.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,12 +43,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\dist\main.css" />
-    <None Include="wwwroot\dist\main.css.map" />
-    <None Include="wwwroot\dist\main.js" />
-  </ItemGroup>
-
-  <ItemGroup>
     <TypeScriptCompile Include="src\colorutils.ts" />
     <TypeScriptCompile Include="src\contextmenu.ts" />
     <TypeScriptCompile Include="src\dateutils.ts" />
@@ -63,6 +54,28 @@
     <TypeScriptCompile Include="src\stringutils.ts" />
     <TypeScriptCompile Include="src\timeline.ts" />
     <TypeScriptCompile Include="src\TLEvent.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\dist\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\fonts\fa-brands-400.eot" />
+    <None Include="wwwroot\fonts\fa-brands-400.svg" />
+    <None Include="wwwroot\fonts\fa-brands-400.ttf" />
+    <None Include="wwwroot\fonts\fa-brands-400.woff" />
+    <None Include="wwwroot\fonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\fonts\fa-regular-400.eot" />
+    <None Include="wwwroot\fonts\fa-regular-400.svg" />
+    <None Include="wwwroot\fonts\fa-regular-400.ttf" />
+    <None Include="wwwroot\fonts\fa-regular-400.woff" />
+    <None Include="wwwroot\fonts\fa-regular-400.woff2" />
+    <None Include="wwwroot\fonts\fa-solid-900.eot" />
+    <None Include="wwwroot\fonts\fa-solid-900.svg" />
+    <None Include="wwwroot\fonts\fa-solid-900.ttf" />
+    <None Include="wwwroot\fonts\fa-solid-900.woff" />
+    <None Include="wwwroot\fonts\fa-solid-900.woff2" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">

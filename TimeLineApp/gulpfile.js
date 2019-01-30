@@ -1,4 +1,4 @@
-/// <binding BeforeBuild='default' />
+/// <binding />
 "use strict";
 
 const { series } = require('gulp');
