@@ -6,23 +6,24 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="src\ts\**" />
-    <Content Remove="src\ts\**" />
-    <EmbeddedResource Remove="src\ts\**" />
-    <None Remove="src\ts\**" />
+    <Compile Remove="wwwroot\src\ts\**" />
+    <Content Remove="wwwroot\src\ts\**" />
+    <EmbeddedResource Remove="wwwroot\src\ts\**" />
+    <None Remove="wwwroot\src\ts\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="src\colorutils.ts" />
-    <Content Remove="src\dateutils.ts" />
-    <Content Remove="src\Globals.ts" />
-    <Content Remove="src\index.ts" />
-    <Content Remove="src\LogonHandlers.ts" />
-    <Content Remove="src\RegisterHandlers.ts" />
-    <Content Remove="src\saagraph.ts" />
-    <Content Remove="src\stringutils.ts" />
-    <Content Remove="src\timeline.ts" />
-    <Content Remove="src\TLEvent.ts" />
+    <Content Remove="tsconfig.json" />
+    <Content Remove="wwwroot\src\colorutils.ts" />
+    <Content Remove="wwwroot\src\dateutils.ts" />
+    <Content Remove="wwwroot\src\Globals.ts" />
+    <Content Remove="wwwroot\src\index.ts" />
+    <Content Remove="wwwroot\src\LogonHandlers.ts" />
+    <Content Remove="wwwroot\src\RegisterHandlers.ts" />
+    <Content Remove="wwwroot\src\saagraph.ts" />
+    <Content Remove="wwwroot\src\stringutils.ts" />
+    <Content Remove="wwwroot\src\timeline.ts" />
+    <Content Remove="wwwroot\src\TLEvent.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,7 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="src\contextmenu.ts" />
     <Content Include="webpack.config.js" />
   </ItemGroup>
 
@@ -40,20 +40,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <TypeScriptCompile Include="src\colorutils.ts" />
-    <TypeScriptCompile Include="src\contextmenu.ts" />
-    <TypeScriptCompile Include="src\dateutils.ts" />
-    <TypeScriptCompile Include="src\index.ts" />
-    <TypeScriptCompile Include="src\LogonHandlers.ts" />
-    <TypeScriptCompile Include="src\Globals.ts" />
-    <TypeScriptCompile Include="src\RegisterHandlers.ts" />
-    <TypeScriptCompile Include="src\saagraph.ts" />
-    <TypeScriptCompile Include="src\stringutils.ts" />
-    <TypeScriptCompile Include="src\timeline.ts" />
-    <TypeScriptCompile Include="src\TLEvent.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -76,6 +62,17 @@
     <None Include="wwwroot\fonts\fa-solid-900.ttf" />
     <None Include="wwwroot\fonts\fa-solid-900.woff" />
     <None Include="wwwroot\fonts\fa-solid-900.woff2" />
+    <None Include="wwwroot\src\colorutils.ts" />
+    <None Include="wwwroot\src\contextmenu.ts" />
+    <None Include="wwwroot\src\dateutils.ts" />
+    <None Include="wwwroot\src\Globals.ts" />
+    <None Include="wwwroot\src\index.ts" />
+    <None Include="wwwroot\src\LogonHandlers.ts" />
+    <None Include="wwwroot\src\RegisterHandlers.ts" />
+    <None Include="wwwroot\src\saagraph.ts" />
+    <None Include="wwwroot\src\stringutils.ts" />
+    <None Include="wwwroot\src\timeline.ts" />
+    <None Include="wwwroot\src\TLEvent.ts" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">

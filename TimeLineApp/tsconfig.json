@@ -1,11 +1,9 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
     "noEmitOnError": true,
     "noImplicitAny": false,
     "removeComments": false,
-    "inlineSourceMap": true,
+    "sourceMap": true,
     "target": "esnext"
-  },
-  "include": ["src/*.ts"]
+  }
 }
