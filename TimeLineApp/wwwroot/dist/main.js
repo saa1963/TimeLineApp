@@ -81,15 +81,15 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./wwwroot/src/index.ts");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/index.ts");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./node_modules/bootstrap/dist/js/bootstrap.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/bootstrap/dist/js/bootstrap.js ***!
-  \*****************************************************/
+/***/ "../node_modules/bootstrap/dist/js/bootstrap.js":
+/*!******************************************************!*\
+  !*** ../node_modules/bootstrap/dist/js/bootstrap.js ***!
+  \******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -99,7 +99,7 @@
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
   */
 (function (global, factory) {
-   true ? factory(exports, __webpack_require__(/*! popper.js */ "./node_modules/popper.js/dist/esm/popper.js"), __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")) :
+   true ? factory(exports, __webpack_require__(/*! popper.js */ "../node_modules/popper.js/dist/esm/popper.js"), __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js")) :
   undefined;
 }(this, (function (exports,Popper,$) { 'use strict';
 
@@ -4345,10 +4345,10 @@
 
 /***/ }),
 
-/***/ "./node_modules/jquery/dist/jquery.js":
-/*!********************************************!*\
-  !*** ./node_modules/jquery/dist/jquery.js ***!
-  \********************************************/
+/***/ "../node_modules/jquery/dist/jquery.js":
+/*!*********************************************!*\
+  !*** ../node_modules/jquery/dist/jquery.js ***!
+  \*********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14721,10 +14721,10 @@ return jQuery;
 
 /***/ }),
 
-/***/ "./node_modules/popper.js/dist/esm/popper.js":
-/*!***************************************************!*\
-  !*** ./node_modules/popper.js/dist/esm/popper.js ***!
-  \***************************************************/
+/***/ "../node_modules/popper.js/dist/esm/popper.js":
+/*!****************************************************!*\
+  !*** ../node_modules/popper.js/dist/esm/popper.js ***!
+  \****************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -17303,14 +17303,14 @@ Popper.Defaults = Defaults;
 /* harmony default export */ __webpack_exports__["default"] = (Popper);
 //# sourceMappingURL=popper.js.map
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../webpack/buildin/global.js */ "../node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
-/***/ "./node_modules/webpack/buildin/global.js":
-/*!***********************************!*\
-  !*** (webpack)/buildin/global.js ***!
-  \***********************************/
+/***/ "../node_modules/webpack/buildin/global.js":
+/*!*************************************************!*\
+  !*** ../node_modules/webpack/buildin/global.js ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -17338,16 +17338,16 @@ module.exports = g;
 
 /***/ }),
 
-/***/ "./wwwroot/src/Globals.ts":
-/*!********************************!*\
-  !*** ./wwwroot/src/Globals.ts ***!
-  \********************************/
-/*! exports provided: Globals */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./src/Globals.ts":
+/*!************************!*\
+  !*** ./src/Globals.ts ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Globals", function() { return Globals; });
+
+Object.defineProperty(exports, "__esModule", { value: true });
 class Globals {
     static getCookie(name) {
         let c = document.cookie;
@@ -17356,42 +17356,40 @@ class Globals {
     }
 }
 Globals.IsAuthentificated = false;
+exports.Globals = Globals;
 
 
 /***/ }),
 
-/***/ "./wwwroot/src/LogonHandlers.ts":
-/*!**************************************!*\
-  !*** ./wwwroot/src/LogonHandlers.ts ***!
-  \**************************************/
-/*! exports provided: LogonHandlers */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./src/LogonHandlers.ts":
+/*!******************************!*\
+  !*** ./src/LogonHandlers.ts ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LogonHandlers", function() { return LogonHandlers; });
-/* harmony import */ var _Globals__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Globals */ "./wwwroot/src/Globals.ts");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_1__);
 
-
+Object.defineProperty(exports, "__esModule", { value: true });
+const Globals_1 = __webpack_require__(/*! ./Globals */ "./src/Globals.ts");
+const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
 class LogonHandlers {
     // Открытие окна входа пользователя
     static OpenLogonWindow() {
-        if (!_Globals__WEBPACK_IMPORTED_MODULE_0__["Globals"].IsAuthentificated) {
-            jquery__WEBPACK_IMPORTED_MODULE_1__('#logLogin').val(_Globals__WEBPACK_IMPORTED_MODULE_0__["Globals"].getCookie('timelineuser') || '');
-            jquery__WEBPACK_IMPORTED_MODULE_1__('#logPassword').val('');
-            jquery__WEBPACK_IMPORTED_MODULE_1__('#tmLoginModal').modal();
-            jquery__WEBPACK_IMPORTED_MODULE_1__('#log_server_error').css('display', 'none');
+        if (!Globals_1.Globals.IsAuthentificated) {
+            $('#logLogin').val(Globals_1.Globals.getCookie('timelineuser') || '');
+            $('#logPassword').val('');
+            $('#tmLoginModal').modal();
+            $('#log_server_error').css('display', 'none');
         }
         else {
-            jquery__WEBPACK_IMPORTED_MODULE_1__["ajax"]('api/register/logout')
+            $.ajax('api/register/logout')
                 .done(data => {
                 if (data) {
-                    _Globals__WEBPACK_IMPORTED_MODULE_0__["Globals"].IsAuthentificated = false;
-                    jquery__WEBPACK_IMPORTED_MODULE_1__('#btnLogin').text('Вход');
-                    jquery__WEBPACK_IMPORTED_MODULE_1__('#lblUser').css('display', 'none');
-                    jquery__WEBPACK_IMPORTED_MODULE_1__('#lblUser').text('');
+                    Globals_1.Globals.IsAuthentificated = false;
+                    $('#btnLogin').text('Вход');
+                    $('#lblUser').css('display', 'none');
+                    $('#lblUser').text('');
                 }
             });
         }
@@ -17399,115 +17397,105 @@ class LogonHandlers {
     }
     // Вход пользователя
     static LoginLogout() {
-        if (jquery__WEBPACK_IMPORTED_MODULE_1__('#logLogin')[0].reportValidity()
-            && jquery__WEBPACK_IMPORTED_MODULE_1__('#logPassword')[0].reportValidity()) {
-            jquery__WEBPACK_IMPORTED_MODULE_1__["ajax"]('api/register/log', {
+        if ($('#logLogin')[0].reportValidity()
+            && $('#logPassword')[0].reportValidity()) {
+            $.ajax('api/register/log', {
                 type: 'POST',
                 data: {
-                    Login: jquery__WEBPACK_IMPORTED_MODULE_1__('#logLogin').val(),
-                    Password: jquery__WEBPACK_IMPORTED_MODULE_1__('#logPassword').val()
+                    Login: $('#logLogin').val(),
+                    Password: $('#logPassword').val()
                 }
             })
                 .done(data => {
                 if (data === '') {
-                    _Globals__WEBPACK_IMPORTED_MODULE_0__["Globals"].IsAuthentificated = true;
-                    jquery__WEBPACK_IMPORTED_MODULE_1__('#tmLoginModal').modal('hide');
-                    jquery__WEBPACK_IMPORTED_MODULE_1__('#btnLogin').text('Выход');
-                    jquery__WEBPACK_IMPORTED_MODULE_1__('#lblUser').css('display', 'unset');
-                    jquery__WEBPACK_IMPORTED_MODULE_1__('#lblUser').text(jquery__WEBPACK_IMPORTED_MODULE_1__('#logLogin').val());
+                    Globals_1.Globals.IsAuthentificated = true;
+                    $('#tmLoginModal').modal('hide');
+                    $('#btnLogin').text('Выход');
+                    $('#lblUser').css('display', 'unset');
+                    $('#lblUser').text($('#logLogin').val());
                 }
                 else {
-                    jquery__WEBPACK_IMPORTED_MODULE_1__('#log_server_error').text(data);
-                    jquery__WEBPACK_IMPORTED_MODULE_1__('#log_server_error').css('display', 'unset');
+                    $('#log_server_error').text(data);
+                    $('#log_server_error').css('display', 'unset');
                 }
             });
         }
     }
 }
+exports.LogonHandlers = LogonHandlers;
 
 
 /***/ }),
 
-/***/ "./wwwroot/src/RegisterHandlers.ts":
-/*!*****************************************!*\
-  !*** ./wwwroot/src/RegisterHandlers.ts ***!
-  \*****************************************/
-/*! exports provided: RegisterHandlers */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./src/RegisterHandlers.ts":
+/*!*********************************!*\
+  !*** ./src/RegisterHandlers.ts ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RegisterHandlers", function() { return RegisterHandlers; });
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
 
+Object.defineProperty(exports, "__esModule", { value: true });
+const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
 class RegisterHandlers {
     static OpenRegisterWindow() {
-        jquery__WEBPACK_IMPORTED_MODULE_0__('#regLogin').val('');
-        jquery__WEBPACK_IMPORTED_MODULE_0__('#regEmail').val('');
-        jquery__WEBPACK_IMPORTED_MODULE_0__('#regPassword1').val('');
-        jquery__WEBPACK_IMPORTED_MODULE_0__('#regPassword2').val('');
-        jquery__WEBPACK_IMPORTED_MODULE_0__('#tmRegisterModal').modal();
-        jquery__WEBPACK_IMPORTED_MODULE_0__('#passw_not_matches').css('display', 'none');
-        jquery__WEBPACK_IMPORTED_MODULE_0__('#reg_server_error').css('display', 'none');
+        $('#regLogin').val('');
+        $('#regEmail').val('');
+        $('#regPassword1').val('');
+        $('#regPassword2').val('');
+        $('#tmRegisterModal').modal();
+        $('#passw_not_matches').css('display', 'none');
+        $('#reg_server_error').css('display', 'none');
         return false;
     }
     static RegisterUser() {
-        if (jquery__WEBPACK_IMPORTED_MODULE_0__('#regLogin')[0].reportValidity()
-            && jquery__WEBPACK_IMPORTED_MODULE_0__('#regEmail')[0].reportValidity()
-            && jquery__WEBPACK_IMPORTED_MODULE_0__('#regPassword1')[0].reportValidity()
-            && jquery__WEBPACK_IMPORTED_MODULE_0__('#regPassword2')[0].reportValidity()) {
-            if (jquery__WEBPACK_IMPORTED_MODULE_0__('#regPassword1').val() === jquery__WEBPACK_IMPORTED_MODULE_0__('#regPassword2').val()) {
-                jquery__WEBPACK_IMPORTED_MODULE_0__["ajax"]('api/register/reg', {
+        if ($('#regLogin')[0].reportValidity()
+            && $('#regEmail')[0].reportValidity()
+            && $('#regPassword1')[0].reportValidity()
+            && $('#regPassword2')[0].reportValidity()) {
+            if ($('#regPassword1').val() === $('#regPassword2').val()) {
+                $.ajax('api/register/reg', {
                     type: 'POST',
                     data: {
-                        Login: jquery__WEBPACK_IMPORTED_MODULE_0__('#regLogin').val(),
-                        Email: jquery__WEBPACK_IMPORTED_MODULE_0__('#regEmail').val(),
-                        Password1: jquery__WEBPACK_IMPORTED_MODULE_0__('#regPassword1').val(),
-                        Password2: jquery__WEBPACK_IMPORTED_MODULE_0__('#regPassword2').val()
+                        Login: $('#regLogin').val(),
+                        Email: $('#regEmail').val(),
+                        Password1: $('#regPassword1').val(),
+                        Password2: $('#regPassword2').val()
                     }
                 })
                     .done(data => {
                     if (data === '') {
-                        jquery__WEBPACK_IMPORTED_MODULE_0__('#tmRegisterModal').modal('hide');
+                        $('#tmRegisterModal').modal('hide');
                     }
                     else {
-                        jquery__WEBPACK_IMPORTED_MODULE_0__('#reg_server_error').text(data);
-                        jquery__WEBPACK_IMPORTED_MODULE_0__('#reg_server_error').css('display', 'unset');
+                        $('#reg_server_error').text(data);
+                        $('#reg_server_error').css('display', 'unset');
                     }
                 });
             }
             else {
-                jquery__WEBPACK_IMPORTED_MODULE_0__('#passw_not_matches').css('display', 'unset');
+                $('#passw_not_matches').css('display', 'unset');
             }
         }
     }
 }
+exports.RegisterHandlers = RegisterHandlers;
 
 
 /***/ }),
 
-/***/ "./wwwroot/src/TLEvent.ts":
-/*!********************************!*\
-  !*** ./wwwroot/src/TLEvent.ts ***!
-  \********************************/
-/*! exports provided: EnumPeriod, TLEvent, TLEventDay, TLEventMonth, TLEventYear, TLEventDecade, TLEventCentury, TLPeriod, TimeLineData, TLPeriodEvent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./src/TLEvent.ts":
+/*!************************!*\
+  !*** ./src/TLEvent.ts ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EnumPeriod", function() { return EnumPeriod; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TLEvent", function() { return TLEvent; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TLEventDay", function() { return TLEventDay; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TLEventMonth", function() { return TLEventMonth; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TLEventYear", function() { return TLEventYear; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TLEventDecade", function() { return TLEventDecade; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TLEventCentury", function() { return TLEventCentury; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TLPeriod", function() { return TLPeriod; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TimeLineData", function() { return TimeLineData; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TLPeriodEvent", function() { return TLPeriodEvent; });
-/* harmony import */ var _dateutils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dateutils */ "./wwwroot/src/dateutils.ts");
 
+Object.defineProperty(exports, "__esModule", { value: true });
+const dateutils_1 = __webpack_require__(/*! ./dateutils */ "./src/dateutils.ts");
 var EnumPeriod;
 (function (EnumPeriod) {
     EnumPeriod[EnumPeriod["day"] = 1] = "day";
@@ -17515,7 +17503,7 @@ var EnumPeriod;
     EnumPeriod[EnumPeriod["year"] = 3] = "year";
     EnumPeriod[EnumPeriod["decade"] = 4] = "decade";
     EnumPeriod[EnumPeriod["century"] = 5] = "century";
-})(EnumPeriod || (EnumPeriod = {}));
+})(EnumPeriod = exports.EnumPeriod || (exports.EnumPeriod = {}));
 class TLDate {
     constructor(year, month, day, fromCrismas) {
         if (fromCrismas === undefined) {
@@ -17538,7 +17526,7 @@ class TLDate {
                     throw new Error('Неверный день месяца');
                 if (year >= 1 && year <= 9999) {
                     var dt = new Date(year, month - 1, day);
-                    if (_dateutils__WEBPACK_IMPORTED_MODULE_0__["DateUtils"].leapYear(year)) {
+                    if (dateutils_1.DateUtils.leapYear(year)) {
                         if (day > 27)
                             throw new Error('Неверный день месяца');
                     }
@@ -17551,11 +17539,11 @@ class TLDate {
             this.Day = day;
             this.Month = month;
             this.Year = year;
-            this.FromCrismas = _dateutils__WEBPACK_IMPORTED_MODULE_0__["DateUtils"].DaysFromAD(year, month, day);
+            this.FromCrismas = dateutils_1.DateUtils.DaysFromAD(year, month, day);
         }
         else {
             this.FromCrismas = fromCrismas;
-            let temp = _dateutils__WEBPACK_IMPORTED_MODULE_0__["DateUtils"].YMDFromAD(fromCrismas);
+            let temp = dateutils_1.DateUtils.YMDFromAD(fromCrismas);
             this.Day = temp.day;
             this.Month = temp.month;
             this.Year = temp.year;
@@ -17589,7 +17577,7 @@ class TLDate {
     AddMonths(n) {
         let rt;
         let mth;
-        let mmn = _dateutils__WEBPACK_IMPORTED_MODULE_0__["DateUtils"].makeMonthNumber(this.Year, this.Month, n < 0);
+        let mmn = dateutils_1.DateUtils.makeMonthNumber(this.Year, this.Month, n < 0);
         for (let i = 0; i < n; i++) {
             mth = mmn.next().value;
         }
@@ -17657,6 +17645,7 @@ class TLEvent {
         return rt;
     }
 }
+exports.TLEvent = TLEvent;
 class TLEventDay extends TLEvent {
     constructor(name, year, month, day) {
         super(name);
@@ -17668,6 +17657,7 @@ class TLEventDay extends TLEvent {
         this.Type = EnumPeriod.day;
     }
 }
+exports.TLEventDay = TLEventDay;
 class TLEventMonth extends TLEvent {
     constructor(name, par1, par2) {
         super(name);
@@ -17689,6 +17679,7 @@ class TLEventMonth extends TLEvent {
         this.Type = EnumPeriod.month;
     }
 }
+exports.TLEventMonth = TLEventMonth;
 class TLEventYear extends TLEvent {
     constructor(name, year) {
         super(name);
@@ -17698,6 +17689,7 @@ class TLEventYear extends TLEvent {
         this.Type = EnumPeriod.year;
     }
 }
+exports.TLEventYear = TLEventYear;
 class TLEventDecade extends TLEvent {
     constructor(name, par1, par2) {
         super(name);
@@ -17717,6 +17709,7 @@ class TLEventDecade extends TLEvent {
         this.Type = EnumPeriod.decade;
     }
 }
+exports.TLEventDecade = TLEventDecade;
 class TLEventCentury extends TLEvent {
     constructor(name, century) {
         super(name);
@@ -17724,6 +17717,7 @@ class TLEventCentury extends TLEvent {
         this.Type = EnumPeriod.century;
     }
 }
+exports.TLEventCentury = TLEventCentury;
 class TLPeriod {
     constructor(o) {
         this.Name = o.Name;
@@ -17836,6 +17830,7 @@ class TLPeriod {
         return dt.GreaterOrEqual(dt1) && dt.LessOrEqual(dt2);
     }
 }
+exports.TLPeriod = TLPeriod;
 class TimeLineData {
     constructor(o) {
         /** Здесь только события с конкретными датами */
@@ -17851,26 +17846,28 @@ class TimeLineData {
         });
     }
 }
+exports.TimeLineData = TimeLineData;
 class TLPeriodEvent extends TLPeriod {
     constructor(o) {
         super(o);
     }
 }
+exports.TLPeriodEvent = TLPeriodEvent;
 
 
 /***/ }),
 
-/***/ "./wwwroot/src/colorutils.ts":
-/*!***********************************!*\
-  !*** ./wwwroot/src/colorutils.ts ***!
-  \***********************************/
-/*! exports provided: makeColor */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./src/colorutils.ts":
+/*!***************************!*\
+  !*** ./src/colorutils.ts ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "makeColor", function() { return makeColor; });
-let makeColor = function* () {
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.makeColor = function* () {
     var index = 0;
     let colors = ['magenta', 'green', 'rgba(255, 0, 0, 1.0)', 'blue', 'magenta', 'orange'];
     while (true) {
@@ -17887,17 +17884,16 @@ let makeColor = function* () {
 
 /***/ }),
 
-/***/ "./wwwroot/src/contextmenu.ts":
-/*!************************************!*\
-  !*** ./wwwroot/src/contextmenu.ts ***!
-  \************************************/
-/*! exports provided: ContextMenu, ContextUtil */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./src/contextmenu.ts":
+/*!****************************!*\
+  !*** ./src/contextmenu.ts ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ContextMenu", function() { return ContextMenu; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ContextUtil", function() { return ContextUtil; });
+
+Object.defineProperty(exports, "__esModule", { value: true });
 class ContextMenu {
     constructor(menu, options) {
         this.contextTarget = null;
@@ -18051,6 +18047,7 @@ class ContextMenu {
 }
 ContextMenu.count = 0;
 ContextMenu.DIVIDER = 'cm_divider';
+exports.ContextMenu = ContextMenu;
 class ContextUtil {
     static getProperty(options, opt, def) {
         if (typeof options[opt] !== 'undefined') {
@@ -18094,24 +18091,24 @@ class ContextUtil {
         };
     }
 }
+exports.ContextUtil = ContextUtil;
 class MyHTMLLIElement extends HTMLLIElement {
 }
 
 
 /***/ }),
 
-/***/ "./wwwroot/src/dateutils.ts":
-/*!**********************************!*\
-  !*** ./wwwroot/src/dateutils.ts ***!
-  \**********************************/
-/*! exports provided: DateUtils */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./src/dateutils.ts":
+/*!**************************!*\
+  !*** ./src/dateutils.ts ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DateUtils", function() { return DateUtils; });
-/* harmony import */ var _stringutils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./stringutils */ "./wwwroot/src/stringutils.ts");
 
+Object.defineProperty(exports, "__esModule", { value: true });
+const stringutils_1 = __webpack_require__(/*! ./stringutils */ "./src/stringutils.ts");
 class DateUtils {
     /**
      * Дни от РХ в год, месяц, день
@@ -18203,7 +18200,7 @@ class DateUtils {
         return dateCopy;
     }
     static formatDate(dt) {
-        return _stringutils__WEBPACK_IMPORTED_MODULE_0__["stringUtils"].pad(dt.getDate(), 2) + '.' + _stringutils__WEBPACK_IMPORTED_MODULE_0__["stringUtils"].pad(dt.getMonth() + 1, 2) + '.' + (dt.getFullYear() + '').substring(2);
+        return stringutils_1.stringUtils.pad(dt.getDate(), 2) + '.' + stringutils_1.stringUtils.pad(dt.getMonth() + 1, 2) + '.' + (dt.getFullYear() + '').substring(2);
     }
     static getMonthFromDate(dt) {
         return (dt.getFullYear() - 1) * 12 + dt.getMonth() + 1;
@@ -18243,7 +18240,7 @@ class DateUtils {
     static formatMonth(period) {
         let year = Math.floor((period - 1) / 12) + 1;
         let month = period - (year - 1) * 12;
-        return this.mth[month - 1] + ' ' + _stringutils__WEBPACK_IMPORTED_MODULE_0__["stringUtils"].pad(year, 4);
+        return this.mth[month - 1] + ' ' + stringutils_1.stringUtils.pad(year, 4);
     }
     static formatYear(period) {
         return period.toString();
@@ -18279,6 +18276,7 @@ DateUtils.makeMonthNumber = function* (_initYear, _initMonth, reverse = false) {
         yield DateUtils.getMonthFromNumber(init);
     }
 };
+exports.DateUtils = DateUtils;
 function romanize(num) {
     if (!+num) {
         return null;
@@ -18298,35 +18296,26 @@ function romanize(num) {
 
 /***/ }),
 
-/***/ "./wwwroot/src/index.ts":
-/*!******************************!*\
-  !*** ./wwwroot/src/index.ts ***!
-  \******************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./src/index.ts":
+/*!**********************!*\
+  !*** ./src/index.ts ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _timeline__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./timeline */ "./wwwroot/src/timeline.ts");
-/* harmony import */ var _colorutils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./colorutils */ "./wwwroot/src/colorutils.ts");
-/* harmony import */ var _contextmenu__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./contextmenu */ "./wwwroot/src/contextmenu.ts");
-/* harmony import */ var _LogonHandlers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./LogonHandlers */ "./wwwroot/src/LogonHandlers.ts");
-/* harmony import */ var _RegisterHandlers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./RegisterHandlers */ "./wwwroot/src/RegisterHandlers.ts");
-/* harmony import */ var _TLEvent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./TLEvent */ "./wwwroot/src/TLEvent.ts");
-/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.js");
-/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(bootstrap__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_7__);
 
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+const timeline_1 = __webpack_require__(/*! ./timeline */ "./src/timeline.ts");
+const colorutils_1 = __webpack_require__(/*! ./colorutils */ "./src/colorutils.ts");
+const contextmenu_1 = __webpack_require__(/*! ./contextmenu */ "./src/contextmenu.ts");
+const LogonHandlers_1 = __webpack_require__(/*! ./LogonHandlers */ "./src/LogonHandlers.ts");
+const RegisterHandlers_1 = __webpack_require__(/*! ./RegisterHandlers */ "./src/RegisterHandlers.ts");
+const TLEvent_1 = __webpack_require__(/*! ./TLEvent */ "./src/TLEvent.ts");
+__webpack_require__(/*! bootstrap */ "../node_modules/bootstrap/dist/js/bootstrap.js");
+const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
 const MIN_GAP = 100;
-let PERIOD_TYPE = _TLEvent__WEBPACK_IMPORTED_MODULE_5__["EnumPeriod"].day;
+let PERIOD_TYPE = TLEvent_1.EnumPeriod.day;
 const HTOP = 56;
 let timeLines = [];
 let ctx;
@@ -18341,23 +18330,23 @@ let ctx;
         { id: 'save', text: 'Сохранить', icon: '<i class="far fa-save"></i>',
             enabled: false,
             events: { click: () => timeLines[indLine].save() } },
-        { id: 'line', type: _contextmenu__WEBPACK_IMPORTED_MODULE_2__["ContextMenu"].DIVIDER },
+        { id: 'line', type: contextmenu_1.ContextMenu.DIVIDER },
         { id: 'period', text: 'Периодичность',
             sub: [
-                { id: _TLEvent__WEBPACK_IMPORTED_MODULE_5__["EnumPeriod"].day, text: 'День', icon: '<i class="fas fa-angle-down"></i>',
-                    events: { click: () => SwitchPeriod(menuCtx, _TLEvent__WEBPACK_IMPORTED_MODULE_5__["EnumPeriod"].day) } },
-                { id: _TLEvent__WEBPACK_IMPORTED_MODULE_5__["EnumPeriod"].month, text: 'Месяц',
-                    events: { click: () => SwitchPeriod(menuCtx, _TLEvent__WEBPACK_IMPORTED_MODULE_5__["EnumPeriod"].month) } },
-                { id: _TLEvent__WEBPACK_IMPORTED_MODULE_5__["EnumPeriod"].year, text: 'Год',
-                    events: { click: () => SwitchPeriod(menuCtx, _TLEvent__WEBPACK_IMPORTED_MODULE_5__["EnumPeriod"].year) } },
-                { id: _TLEvent__WEBPACK_IMPORTED_MODULE_5__["EnumPeriod"].decade, text: 'Десятилетие',
-                    events: { click: () => SwitchPeriod(menuCtx, _TLEvent__WEBPACK_IMPORTED_MODULE_5__["EnumPeriod"].decade) } },
-                { id: _TLEvent__WEBPACK_IMPORTED_MODULE_5__["EnumPeriod"].century, text: 'Век',
-                    events: { click: () => SwitchPeriod(menuCtx, _TLEvent__WEBPACK_IMPORTED_MODULE_5__["EnumPeriod"].century) } }
+                { id: TLEvent_1.EnumPeriod.day, text: 'День', icon: '<i class="fas fa-angle-down"></i>',
+                    events: { click: () => SwitchPeriod(menuCtx, TLEvent_1.EnumPeriod.day) } },
+                { id: TLEvent_1.EnumPeriod.month, text: 'Месяц',
+                    events: { click: () => SwitchPeriod(menuCtx, TLEvent_1.EnumPeriod.month) } },
+                { id: TLEvent_1.EnumPeriod.year, text: 'Год',
+                    events: { click: () => SwitchPeriod(menuCtx, TLEvent_1.EnumPeriod.year) } },
+                { id: TLEvent_1.EnumPeriod.decade, text: 'Десятилетие',
+                    events: { click: () => SwitchPeriod(menuCtx, TLEvent_1.EnumPeriod.decade) } },
+                { id: TLEvent_1.EnumPeriod.century, text: 'Век',
+                    events: { click: () => SwitchPeriod(menuCtx, TLEvent_1.EnumPeriod.century) } }
             ]
         }
     ];
-    let menuCtx = new _contextmenu__WEBPACK_IMPORTED_MODULE_2__["ContextMenu"](menuitems);
+    let menuCtx = new contextmenu_1.ContextMenu(menuitems);
     //document.getElementById('cm_' + num)
     let canvas = document.getElementById('canvas');
     ctx = canvas.getContext('2d');
@@ -18403,7 +18392,7 @@ let ctx;
         canvas.height = window.innerHeight - HTOP;
         drawAll();
     })();
-    jquery__WEBPACK_IMPORTED_MODULE_7__('#canvas').on('contextmenu', (e) => {
+    $('#canvas').on('contextmenu', (e) => {
         let pos = getMousePos(canvas, e);
         indLine = getIndexLine(pos.y);
         let pMenu = menuCtx.menu.find(el => el.id === 'save');
@@ -18422,88 +18411,88 @@ let ctx;
         menuCtx.display(e);
         e.preventDefault();
     });
-    jquery__WEBPACK_IMPORTED_MODULE_7__('#newTimeline').click((ev) => {
+    $('#newTimeline').click((ev) => {
         OpenNewTLDialog();
     });
-    jquery__WEBPACK_IMPORTED_MODULE_7__('#load').click((ev) => {
+    $('#load').click((ev) => {
         LoadTimeLine();
     });
-    jquery__WEBPACK_IMPORTED_MODULE_7__('#save').click((ev) => {
+    $('#save').click((ev) => {
         alert('save');
     });
-    jquery__WEBPACK_IMPORTED_MODULE_7__('#options').click((ev) => {
-        jquery__WEBPACK_IMPORTED_MODULE_7__('#typePeriod').val(_TLEvent__WEBPACK_IMPORTED_MODULE_5__["EnumPeriod"].year);
-        jquery__WEBPACK_IMPORTED_MODULE_7__('#tmOptionsModal').modal();
+    $('#options').click((ev) => {
+        $('#typePeriod').val(TLEvent_1.EnumPeriod.year);
+        $('#tmOptionsModal').modal();
     });
-    jquery__WEBPACK_IMPORTED_MODULE_7__('#btnNewName').click((ev) => {
-        jquery__WEBPACK_IMPORTED_MODULE_7__('#tmNameModal').modal('hide');
-        NewTimeLine(jquery__WEBPACK_IMPORTED_MODULE_7__('#tmName').val());
+    $('#btnNewName').click((ev) => {
+        $('#tmNameModal').modal('hide');
+        NewTimeLine($('#tmName').val());
     });
-    jquery__WEBPACK_IMPORTED_MODULE_7__('.closenamemodal').click((ev) => {
-        jquery__WEBPACK_IMPORTED_MODULE_7__('#tmNameModal').modal('hide');
+    $('.closenamemodal').click((ev) => {
+        $('#tmNameModal').modal('hide');
     });
-    jquery__WEBPACK_IMPORTED_MODULE_7__('.closeoptionmodal').click((ev) => {
-        jquery__WEBPACK_IMPORTED_MODULE_7__('#tmOptionsModal').modal('hide');
+    $('.closeoptionmodal').click((ev) => {
+        $('#tmOptionsModal').modal('hide');
     });
-    jquery__WEBPACK_IMPORTED_MODULE_7__('.closeregistermodal').click((ev) => {
-        jquery__WEBPACK_IMPORTED_MODULE_7__('#tmRegisterModal').modal('hide');
+    $('.closeregistermodal').click((ev) => {
+        $('#tmRegisterModal').modal('hide');
     });
-    jquery__WEBPACK_IMPORTED_MODULE_7__('.closeloginmodal').click((ev) => {
-        jquery__WEBPACK_IMPORTED_MODULE_7__('#tmLoginModal').modal('hide');
+    $('.closeloginmodal').click((ev) => {
+        $('#tmLoginModal').modal('hide');
     });
-    jquery__WEBPACK_IMPORTED_MODULE_7__('.closeloadmodal').click((ev) => {
-        jquery__WEBPACK_IMPORTED_MODULE_7__('#tmLoadModal').modal('hide');
+    $('.closeloadmodal').click((ev) => {
+        $('#tmLoadModal').modal('hide');
     });
-    jquery__WEBPACK_IMPORTED_MODULE_7__('#tmName').keyup((ev) => {
-        if (jquery__WEBPACK_IMPORTED_MODULE_7__('#tmName').val().trim() !== '') {
-            jquery__WEBPACK_IMPORTED_MODULE_7__('#btnNewName').prop('disabled', false);
+    $('#tmName').keyup((ev) => {
+        if ($('#tmName').val().trim() !== '') {
+            $('#btnNewName').prop('disabled', false);
             if (ev.keyCode === 13) {
-                jquery__WEBPACK_IMPORTED_MODULE_7__('#tmNameModal').modal('hide');
-                NewTimeLine(jquery__WEBPACK_IMPORTED_MODULE_7__('#tmName').val());
+                $('#tmNameModal').modal('hide');
+                NewTimeLine($('#tmName').val());
             }
         }
         else {
-            jquery__WEBPACK_IMPORTED_MODULE_7__('#btnNewName').prop('disabled', true);
+            $('#btnNewName').prop('disabled', true);
         }
     });
-    jquery__WEBPACK_IMPORTED_MODULE_7__('#tmNameModal').on('shown.bs.modal', function () {
-        jquery__WEBPACK_IMPORTED_MODULE_7__('#tmName').trigger('focus');
+    $('#tmNameModal').on('shown.bs.modal', function () {
+        $('#tmName').trigger('focus');
     });
-    jquery__WEBPACK_IMPORTED_MODULE_7__('#action01').click((ev) => {
+    $('#action01').click((ev) => {
         alert('action01');
     });
-    jquery__WEBPACK_IMPORTED_MODULE_7__('#regPassword1').focus(ev => {
-        jquery__WEBPACK_IMPORTED_MODULE_7__('#passw_not_matches').css('display', 'none');
+    $('#regPassword1').focus(ev => {
+        $('#passw_not_matches').css('display', 'none');
     });
-    jquery__WEBPACK_IMPORTED_MODULE_7__('#regPassword2').focus(ev => {
-        jquery__WEBPACK_IMPORTED_MODULE_7__('#passw_not_matches').css('display', 'none');
+    $('#regPassword2').focus(ev => {
+        $('#passw_not_matches').css('display', 'none');
     });
-    jquery__WEBPACK_IMPORTED_MODULE_7__('#logPassword').focus(ev => {
-        jquery__WEBPACK_IMPORTED_MODULE_7__('#log_server_error').css('display', 'none');
+    $('#logPassword').focus(ev => {
+        $('#log_server_error').css('display', 'none');
     });
     // Открытие окна регистрации пользователя btnReg
-    jquery__WEBPACK_IMPORTED_MODULE_7__('#btnReg').click(_RegisterHandlers__WEBPACK_IMPORTED_MODULE_4__["RegisterHandlers"].OpenRegisterWindow);
+    $('#btnReg').click(RegisterHandlers_1.RegisterHandlers.OpenRegisterWindow);
     // Регистрация пользователя btnRegisterUser
-    jquery__WEBPACK_IMPORTED_MODULE_7__('#btnRegisterUser').click(_RegisterHandlers__WEBPACK_IMPORTED_MODULE_4__["RegisterHandlers"].RegisterUser);
+    $('#btnRegisterUser').click(RegisterHandlers_1.RegisterHandlers.RegisterUser);
     // Открытие окна входа пользователя btnLogin
-    jquery__WEBPACK_IMPORTED_MODULE_7__('#btnLogin').click(_LogonHandlers__WEBPACK_IMPORTED_MODULE_3__["LogonHandlers"].OpenLogonWindow);
+    $('#btnLogin').click(LogonHandlers_1.LogonHandlers.OpenLogonWindow);
     // Вход пользователя btnLoginUser
-    jquery__WEBPACK_IMPORTED_MODULE_7__('#btnLoginUser').click(_LogonHandlers__WEBPACK_IMPORTED_MODULE_3__["LogonHandlers"].LoginLogout);
+    $('#btnLoginUser').click(LogonHandlers_1.LogonHandlers.LoginLogout);
     // Загрузка TL btnLoadTL
-    jquery__WEBPACK_IMPORTED_MODULE_7__('#btnLoadTL').click(LoadTimeLine);
+    $('#btnLoadTL').click(LoadTimeLine);
 })();
 function LoadTimeLine() {
-    jquery__WEBPACK_IMPORTED_MODULE_7__["ajax"]('api/storage/load', { data: {
-            fname: jquery__WEBPACK_IMPORTED_MODULE_7__('#files_list').val()
+    $.ajax('api/storage/load', { data: {
+            fname: $('#files_list').val()
         }
     })
         .done(data => {
-        let tldata = new _TLEvent__WEBPACK_IMPORTED_MODULE_5__["TimeLineData"](JSON.parse(data));
-        let tl = new _timeline__WEBPACK_IMPORTED_MODULE_0__["TimeLine"](ctx);
+        let tldata = new TLEvent_1.TimeLineData(JSON.parse(data));
+        let tl = new timeline_1.TimeLine(ctx);
         tl.name = tldata.Name;
         tl.tldata = tldata;
         NewTimeLine(tldata.Name, tl);
-        jquery__WEBPACK_IMPORTED_MODULE_7__('#tmLoadModal').modal('hide');
+        $('#tmLoadModal').modal('hide');
     })
         .fail(data => {
         alert('Ошибка загрузки\n'
@@ -18513,14 +18502,14 @@ function LoadTimeLine() {
     });
 }
 function OpenLoadTLDialog() {
-    _timeline__WEBPACK_IMPORTED_MODULE_0__["TimeLine"].getList()
+    timeline_1.TimeLine.getList()
         .then(value => {
-        let files_list = jquery__WEBPACK_IMPORTED_MODULE_7__('#files_list');
+        let files_list = $('#files_list');
         files_list.find('option').remove();
         for (let i = 0; i < value.length; i++) {
-            files_list.append(jquery__WEBPACK_IMPORTED_MODULE_7__('<option></option>', { value: value[i], text: value[i] }));
+            files_list.append($('<option></option>', { value: value[i], text: value[i] }));
         }
-        jquery__WEBPACK_IMPORTED_MODULE_7__('#tmLoadModal').modal();
+        $('#tmLoadModal').modal();
     })
         .catch(responseText => {
         alert('Ошибка сервера.\n' + responseText);
@@ -18530,17 +18519,17 @@ function OpenLoadTLDialog() {
 }
 function NewTimeLine(name, tl = null) {
     let aY;
-    if ((((timeLines.length + 2) * MIN_GAP) + (timeLines.length + 1) * _timeline__WEBPACK_IMPORTED_MODULE_0__["TimeLine"].LINE_THICKNESS) > ctx.canvas.clientHeight) {
+    if ((((timeLines.length + 2) * MIN_GAP) + (timeLines.length + 1) * timeline_1.TimeLine.LINE_THICKNESS) > ctx.canvas.clientHeight) {
         alert('Достигнуто максимальное количество линий времени');
         return;
     }
     else {
         aY = splitWorkspace(timeLines.length + 1);
     }
-    let dt = _timeline__WEBPACK_IMPORTED_MODULE_0__["TimeLine"].getCurPeriod(PERIOD_TYPE);
-    let nColor = Object(_colorutils__WEBPACK_IMPORTED_MODULE_1__["makeColor"])();
+    let dt = timeline_1.TimeLine.getCurPeriod(PERIOD_TYPE);
+    let nColor = colorutils_1.makeColor();
     if (tl === null) {
-        tl = new _timeline__WEBPACK_IMPORTED_MODULE_0__["TimeLine"](ctx, dt, 0, 0, PERIOD_TYPE, name);
+        tl = new timeline_1.TimeLine(ctx, dt, 0, 0, PERIOD_TYPE, name);
     }
     timeLines.push(tl);
     for (let i = 0; i < timeLines.length; i++) {
@@ -18551,15 +18540,15 @@ function NewTimeLine(name, tl = null) {
 }
 function splitWorkspace(n) {
     let rt = [];
-    let m = (ctx.canvas.clientHeight - n * _timeline__WEBPACK_IMPORTED_MODULE_0__["TimeLine"].LINE_THICKNESS) / (n + 1) + 0.5;
-    for (let i = 0, y = m; i < n; i++, y += (m + _timeline__WEBPACK_IMPORTED_MODULE_0__["TimeLine"].LINE_THICKNESS)) {
+    let m = (ctx.canvas.clientHeight - n * timeline_1.TimeLine.LINE_THICKNESS) / (n + 1) + 0.5;
+    for (let i = 0, y = m; i < n; i++, y += (m + timeline_1.TimeLine.LINE_THICKNESS)) {
         rt.push(y);
     }
     return rt;
 }
 function getIndexLine(y) {
     for (let i = 0; i < timeLines.length; i++) {
-        if (y >= timeLines[i].y && y < timeLines[i].y + _timeline__WEBPACK_IMPORTED_MODULE_0__["TimeLine"].LINE_THICKNESS) {
+        if (y >= timeLines[i].y && y < timeLines[i].y + timeline_1.TimeLine.LINE_THICKNESS) {
             return i;
         }
     }
@@ -18580,9 +18569,9 @@ function getMousePos(canvas, evt) {
     };
 }
 function OpenNewTLDialog() {
-    jquery__WEBPACK_IMPORTED_MODULE_7__('#tmName').val('');
-    jquery__WEBPACK_IMPORTED_MODULE_7__('#btnNewName').prop('disabled', true);
-    jquery__WEBPACK_IMPORTED_MODULE_7__('#tmNameModal').modal();
+    $('#tmName').val('');
+    $('#btnNewName').prop('disabled', true);
+    $('#tmNameModal').modal();
 }
 function SwitchPeriod(menuCtx, idPeriod) {
     menuCtx.menu.find(el => el.id === 'period').sub.forEach((el, nd, arr) => {
@@ -18601,17 +18590,17 @@ function SwitchPeriod(menuCtx, idPeriod) {
 
 /***/ }),
 
-/***/ "./wwwroot/src/saagraph.ts":
-/*!*********************************!*\
-  !*** ./wwwroot/src/saagraph.ts ***!
-  \*********************************/
-/*! exports provided: saaGraph */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./src/saagraph.ts":
+/*!*************************!*\
+  !*** ./src/saagraph.ts ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saaGraph", function() { return saaGraph; });
-let saaGraph = (function () {
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.saaGraph = (function () {
     return {
         roundedRect: function (ctx, x, y, width, height, radius) {
             ctx.beginPath();
@@ -18630,17 +18619,17 @@ let saaGraph = (function () {
 
 /***/ }),
 
-/***/ "./wwwroot/src/stringutils.ts":
-/*!************************************!*\
-  !*** ./wwwroot/src/stringutils.ts ***!
-  \************************************/
-/*! exports provided: stringUtils */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./src/stringutils.ts":
+/*!****************************!*\
+  !*** ./src/stringutils.ts ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "stringUtils", function() { return stringUtils; });
-let stringUtils = (function () {
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.stringUtils = (function () {
     return {
         pad: function (num, size) {
             var s = num + '';
@@ -18654,25 +18643,20 @@ let stringUtils = (function () {
 
 /***/ }),
 
-/***/ "./wwwroot/src/timeline.ts":
-/*!*********************************!*\
-  !*** ./wwwroot/src/timeline.ts ***!
-  \*********************************/
-/*! exports provided: TimeLine */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./src/timeline.ts":
+/*!*************************!*\
+  !*** ./src/timeline.ts ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TimeLine", function() { return TimeLine; });
-/* harmony import */ var _dateutils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dateutils */ "./wwwroot/src/dateutils.ts");
-/* harmony import */ var _saagraph__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./saagraph */ "./wwwroot/src/saagraph.ts");
-/* harmony import */ var _TLEvent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TLEvent */ "./wwwroot/src/TLEvent.ts");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_3__);
 
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+const dateutils_1 = __webpack_require__(/*! ./dateutils */ "./src/dateutils.ts");
+const saagraph_1 = __webpack_require__(/*! ./saagraph */ "./src/saagraph.ts");
+const TLEvent_1 = __webpack_require__(/*! ./TLEvent */ "./src/TLEvent.ts");
+const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
 class TimeLine {
     constructor(ctx, curPeriod = null, y = 0, color = null, period = null, name = 'нет имени', data = []) {
         this.ctx = ctx;
@@ -18686,7 +18670,7 @@ class TimeLine {
     }
     static getList() {
         return new Promise(function (resolve, reject) {
-            jquery__WEBPACK_IMPORTED_MODULE_3__["ajax"]('api/storage/list')
+            $.ajax('api/storage/list')
                 .done(data => {
                 resolve(data);
             })
@@ -18696,7 +18680,7 @@ class TimeLine {
         });
     }
     save() {
-        jquery__WEBPACK_IMPORTED_MODULE_3__["ajax"]('api/storage/save', {
+        $.ajax('api/storage/save', {
             method: 'POST',
             data: {
                 s1: this.name,
@@ -18772,7 +18756,7 @@ class TimeLine {
         this.ctx.textAlign = 'center';
         this.ctx.font = '16px serif';
         let wBookmark = this.ctx.measureText(this.name).width + INDENT / 2;
-        _saagraph__WEBPACK_IMPORTED_MODULE_1__["saaGraph"].roundedRect(this.ctx, INDENT, this.y - HBOOKMARK, wBookmark, HBOOKMARK, RADIUS);
+        saagraph_1.saaGraph.roundedRect(this.ctx, INDENT, this.y - HBOOKMARK, wBookmark, HBOOKMARK, RADIUS);
         this.ctx.fillStyle = 'white';
         this.ctx.fillText(this.name, INDENT + wBookmark / 2, this.y - HBOOKMARK / 2);
         this.ctx.restore();
@@ -18826,21 +18810,21 @@ class TimeLine {
     static getCurPeriod(periodType) {
         let rt;
         switch (periodType) {
-            case _TLEvent__WEBPACK_IMPORTED_MODULE_2__["EnumPeriod"].month:
-                rt = _dateutils__WEBPACK_IMPORTED_MODULE_0__["DateUtils"].getMonthFromDate(_dateutils__WEBPACK_IMPORTED_MODULE_0__["DateUtils"].getCurDate());
+            case TLEvent_1.EnumPeriod.month:
+                rt = dateutils_1.DateUtils.getMonthFromDate(dateutils_1.DateUtils.getCurDate());
                 break;
-            case _TLEvent__WEBPACK_IMPORTED_MODULE_2__["EnumPeriod"].year:
-                rt = _dateutils__WEBPACK_IMPORTED_MODULE_0__["DateUtils"].getYearFromDate(_dateutils__WEBPACK_IMPORTED_MODULE_0__["DateUtils"].getCurDate());
+            case TLEvent_1.EnumPeriod.year:
+                rt = dateutils_1.DateUtils.getYearFromDate(dateutils_1.DateUtils.getCurDate());
                 break;
-            case _TLEvent__WEBPACK_IMPORTED_MODULE_2__["EnumPeriod"].decade:
-                rt = _dateutils__WEBPACK_IMPORTED_MODULE_0__["DateUtils"].getDecadeFromDate(_dateutils__WEBPACK_IMPORTED_MODULE_0__["DateUtils"].getCurDate());
+            case TLEvent_1.EnumPeriod.decade:
+                rt = dateutils_1.DateUtils.getDecadeFromDate(dateutils_1.DateUtils.getCurDate());
                 break;
-            case _TLEvent__WEBPACK_IMPORTED_MODULE_2__["EnumPeriod"].century:
-                rt = _dateutils__WEBPACK_IMPORTED_MODULE_0__["DateUtils"].getCenturyFromDate(_dateutils__WEBPACK_IMPORTED_MODULE_0__["DateUtils"].getCurDate());
+            case TLEvent_1.EnumPeriod.century:
+                rt = dateutils_1.DateUtils.getCenturyFromDate(dateutils_1.DateUtils.getCurDate());
                 break;
-            case _TLEvent__WEBPACK_IMPORTED_MODULE_2__["EnumPeriod"].day:
+            case TLEvent_1.EnumPeriod.day:
             default:
-                rt = _dateutils__WEBPACK_IMPORTED_MODULE_0__["DateUtils"].getCurDate();
+                rt = dateutils_1.DateUtils.getCurDate();
                 break;
         }
         return rt;
@@ -18848,21 +18832,21 @@ class TimeLine {
     formatPeriod(period) {
         let rt;
         switch (this.period) {
-            case _TLEvent__WEBPACK_IMPORTED_MODULE_2__["EnumPeriod"].month:
-                rt = _dateutils__WEBPACK_IMPORTED_MODULE_0__["DateUtils"].formatMonth(period);
+            case TLEvent_1.EnumPeriod.month:
+                rt = dateutils_1.DateUtils.formatMonth(period);
                 break;
-            case _TLEvent__WEBPACK_IMPORTED_MODULE_2__["EnumPeriod"].year:
-                rt = _dateutils__WEBPACK_IMPORTED_MODULE_0__["DateUtils"].formatYear(period);
+            case TLEvent_1.EnumPeriod.year:
+                rt = dateutils_1.DateUtils.formatYear(period);
                 break;
-            case _TLEvent__WEBPACK_IMPORTED_MODULE_2__["EnumPeriod"].decade:
-                rt = _dateutils__WEBPACK_IMPORTED_MODULE_0__["DateUtils"].formatDecade(period);
+            case TLEvent_1.EnumPeriod.decade:
+                rt = dateutils_1.DateUtils.formatDecade(period);
                 break;
-            case _TLEvent__WEBPACK_IMPORTED_MODULE_2__["EnumPeriod"].century:
-                rt = _dateutils__WEBPACK_IMPORTED_MODULE_0__["DateUtils"].formatCentury(period);
+            case TLEvent_1.EnumPeriod.century:
+                rt = dateutils_1.DateUtils.formatCentury(period);
                 break;
-            case _TLEvent__WEBPACK_IMPORTED_MODULE_2__["EnumPeriod"].day:
+            case TLEvent_1.EnumPeriod.day:
             default:
-                rt = _dateutils__WEBPACK_IMPORTED_MODULE_0__["DateUtils"].formatDate(period);
+                rt = dateutils_1.DateUtils.formatDate(period);
                 break;
         }
         return rt;
@@ -18870,20 +18854,20 @@ class TimeLine {
     getPeriodAgo(period, offset) {
         let dt0;
         switch (this.period) {
-            case _TLEvent__WEBPACK_IMPORTED_MODULE_2__["EnumPeriod"].month:
-            case _TLEvent__WEBPACK_IMPORTED_MODULE_2__["EnumPeriod"].year:
-            case _TLEvent__WEBPACK_IMPORTED_MODULE_2__["EnumPeriod"].decade:
+            case TLEvent_1.EnumPeriod.month:
+            case TLEvent_1.EnumPeriod.year:
+            case TLEvent_1.EnumPeriod.decade:
                 dt0 = period + offset;
                 break;
-            case _TLEvent__WEBPACK_IMPORTED_MODULE_2__["EnumPeriod"].century:
+            case TLEvent_1.EnumPeriod.century:
                 dt0 = period + offset;
                 if (dt0 === 0) {
                     dt0 = dt0 + offset;
                 }
                 break;
-            case _TLEvent__WEBPACK_IMPORTED_MODULE_2__["EnumPeriod"].day:
+            case TLEvent_1.EnumPeriod.day:
             default:
-                dt0 = _dateutils__WEBPACK_IMPORTED_MODULE_0__["DateUtils"].getDateAgo(period, offset);
+                dt0 = dateutils_1.DateUtils.getDateAgo(period, offset);
                 break;
         }
         return dt0;
@@ -18893,6 +18877,7 @@ TimeLine.LINE_THICKNESS = 25;
 TimeLine.HALF_LINE_THICKNESS = TimeLine.LINE_THICKNESS / 2;
 TimeLine.INTERVAL_WIDTH = 100;
 TimeLine.HALF_INTERVAL_WIDTH = TimeLine.INTERVAL_WIDTH / 2;
+exports.TimeLine = TimeLine;
 class CellData {
     constructor(value, x1, y1, x2, y2, path) {
         this.value = value;

@@ -4,6 +4,12 @@
     "noImplicitAny": false,
     "removeComments": false,
     "sourceMap": true,
-    "target": "esnext"
-  }
+    "target": "esnext",
+    "module": "commonjs"
+  },
+  "exclude": [
+    "node_modules",
+    "obj",
+    "bin"
+  ]
 }
