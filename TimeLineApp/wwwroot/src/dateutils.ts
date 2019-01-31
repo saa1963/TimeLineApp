@@ -1,5 +1,13 @@
 import { stringUtils } from './stringutils'
 
+export class SaaDate {
+  constructor(
+    public day: number,
+    public month: number,
+    public year: number
+  ) {}
+}
+
 export interface YearMonth {
   year: number
   month: number

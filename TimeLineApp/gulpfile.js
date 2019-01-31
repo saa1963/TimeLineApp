@@ -1,4 +1,4 @@
-/// <binding />
+/// <binding ProjectOpened='watch' />
 "use strict";
 
 const { series } = require('gulp');
@@ -10,6 +10,7 @@ sass.compiler = require('node-sass');
 var sourcemaps = require('gulp-sourcemaps');
 var postcss = require('gulp-postcss');
 var autoprefixer = require('autoprefixer');
+const { watch } = require('gulp');
 
 var paths = {
   webroot: "./wwwroot/"
@@ -57,4 +58,13 @@ function compile_sass(cb) {
     .pipe(gulp.dest(paths.webroot + 'dist'));
 }
 
-exports.default = series(replace_popper , compile_sass, ts_compileDev);
+function Init_watch(cb) {
+    watch([paths.webroot + 'src/*.ts'], ts_compileDev);
+    cb();
+}
+
+//exports.default = series(compile_sass, ts_compileDev);
+exports.watch = Init_watch;
+exports.ts_compileDev = ts_compileDev;
+exports.compile_sass = compile_sass;
+exports.replace_popper = replace_popper;

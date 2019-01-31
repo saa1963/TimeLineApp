@@ -1,4 +1,4 @@
-import { DateUtils } from './dateutils'
+import { DateUtils, SaaDate } from './dateutils'
 import { saaGraph } from './saagraph'
 import { TimeLineData, TLEvent, EnumPeriod, TLPeriod } from './TLEvent'
 import * as $ from 'jquery'
@@ -6,7 +6,7 @@ import * as $ from 'jquery'
 export class TimeLine {
   ctx: CanvasRenderingContext2D
   /** Значение ОВ с которого начинается отрисовка справа налево */
-  curPeriod: number | Date
+  curPeriod: number
   /** координата x с которой отрисовывается ЛВ, сначала справа налево, потом слева направо */
   x: number
   y: number
@@ -114,11 +114,13 @@ export class TimeLine {
    */
   findperiods(dt: number | Date): TLPeriod[] {
     let rt: TLPeriod[] = []
-    this.tldata.Periods.forEach(v => {
-      if (v.Contains(this.period, dt)) {
-        rt.push(v)
-      }
-    })
+    if (this.tldata !== undefined) {
+        this.tldata.Periods.forEach(v => {
+            if (v.Contains(this.period, dt)) {
+                rt.push(v)
+            }
+        })
+    }
     return rt
   }
 
@@ -192,7 +194,7 @@ export class TimeLine {
     this.x += movementX
   }
 
-  static getCurPeriod (periodType: EnumPeriod): number | Date {
+  static getCurPeriod (periodType: EnumPeriod): number {
     let rt
     switch (periodType) {
       case EnumPeriod.month:
@@ -238,23 +240,21 @@ export class TimeLine {
     return rt
   }
 
-  getPeriodAgo (period: number | Date, offset: number): Date {
+  getPeriodAgo (period: number, offset: number): number {
     let dt0
     switch (this.period) {
       case EnumPeriod.month:
       case EnumPeriod.year:
       case EnumPeriod.decade:
-        dt0 = <number>period + offset
-        break
       case EnumPeriod.century:
-        dt0 = <number>period + offset
+        dt0 = period + offset
         if (dt0 === 0) {
           dt0 = dt0 + offset
         }
         break
       case EnumPeriod.day:
       default:
-        dt0 = DateUtils.getDateAgo(<Date>period, offset)
+        dt0 = DateUtils.getDateAgo(period, offset)
         break
     }
     return dt0
