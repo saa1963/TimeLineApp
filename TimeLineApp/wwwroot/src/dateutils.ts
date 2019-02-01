@@ -1,13 +1,5 @@
 import { stringUtils } from './stringutils'
 
-export class SaaDate {
-  constructor(
-    public day: number,
-    public month: number,
-    public year: number
-  ) {}
-}
-
 export interface YearMonth {
   year: number
   month: number
@@ -106,6 +98,66 @@ export class DateUtils {
     }
     return (days_from_Crismas + day) * (year / _year)
   }
+  /**
+   * Первый день месяца (и месяц и день от РХ)
+   * @param month может быть с минусом
+   */
+  static FirstDayOfMonth(month: number): number {
+    let absMonth = Math.abs(month)
+    let days = 0
+    for (let m = 1, mth = 1, year = 1; m < absMonth; m++) {
+      let leap = DateUtils.leapYear(year)
+      if (leap) {
+        days += DateUtils.dth[mth - 1]
+      } else {
+        days += DateUtils.dth_leap[mth - 1]
+      }
+      if (mth === 12) {
+        mth = 1
+        year++
+      }
+    }
+    return (days + 1) * (month / absMonth)
+  }
+  /**
+   * Первый день года
+   * @param year может быть отрицательным
+   */
+  static FirstDayOfYear(year: number): number {
+    let absYear = Math.abs(year)
+    let days = 0
+    for (let y = 1; y < absYear; y++) {
+      let leap = DateUtils.leapYear(y)
+      if (leap) {
+        days += 366
+      } else {
+        days += 365
+      }
+    }
+    return (days + 1) * (year / absYear)
+  }
+  /**
+   * Первый день десятилетия
+   * @param decade может быть отрицательным
+   */
+  static FirstDayOfDecade(decade: number) {
+    let absDecade = Math.abs(decade)
+    let days = 0, yr = 1
+    for (let d = 1; d < absDecade; d++) {
+      for (let y = 0; y < 10; y++, yr++) {
+        let leap = DateUtils.leapYear(yr)
+        if (leap) {
+          days += 366
+        } else {
+          days += 365
+        }
+      }
+    }
+    return (days + 1) * (decade / absDecade)
+  }
+  static FirstDayOfCentury(century: number): number {
+
+  }
   static getCurDate(): Date {
     let dt = new Date()
     return new Date(dt.getFullYear(), dt.getMonth(), dt.getDate())
@@ -115,8 +167,11 @@ export class DateUtils {
     dateCopy.setDate(dateCopy.getDate() + days)
     return dateCopy
   }
-  static formatDate(dt: Date): string {
-    return stringUtils.pad(dt.getDate(), 2) + '.' + stringUtils.pad(dt.getMonth() + 1, 2) + '.' + (dt.getFullYear() + '').substring(2)
+  static formatDate(period: number): string {
+    let o = DateUtils.YMDFromAD(period)
+    return stringUtils.pad(o.day.toString(), 2) + '.'
+      + stringUtils.pad(o.month.toString(), 2) + '.'
+      + o.year.toString()
   }
   static getMonthFromDate(dt: Date): number {
     return (dt.getFullYear() - 1) * 12 + dt.getMonth() + 1

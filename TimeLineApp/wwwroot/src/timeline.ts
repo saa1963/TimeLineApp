@@ -1,4 +1,4 @@
-import { DateUtils, SaaDate } from './dateutils'
+import { DateUtils } from './dateutils'
 import { saaGraph } from './saagraph'
 import { TimeLineData, TLEvent, EnumPeriod, TLPeriod } from './TLEvent'
 import * as $ from 'jquery'
@@ -112,7 +112,7 @@ export class TimeLine {
    * @param dt 
    * Текущее значение ОВ, которое в данный момент отрисовывается
    */
-  findperiods(dt: number | Date): TLPeriod[] {
+  findperiods(dt: number): TLPeriod[] {
     let rt: TLPeriod[] = []
     if (this.tldata !== undefined) {
         this.tldata.Periods.forEach(v => {
@@ -195,7 +195,7 @@ export class TimeLine {
   }
 
   static getCurPeriod (periodType: EnumPeriod): number {
-    let rt
+    let rt: number
     switch (periodType) {
       case EnumPeriod.month:
         rt = DateUtils.getMonthFromDate(DateUtils.getCurDate())
@@ -211,7 +211,8 @@ export class TimeLine {
         break
       case EnumPeriod.day:
       default:
-        rt = DateUtils.getCurDate()
+        let o = DateUtils.getCurDate()
+        rt = DateUtils.DaysFromAD(o.getFullYear(), o.getMonth() + 1, o.getDate())
         break
     }
     return rt
@@ -242,20 +243,9 @@ export class TimeLine {
 
   getPeriodAgo (period: number, offset: number): number {
     let dt0
-    switch (this.period) {
-      case EnumPeriod.month:
-      case EnumPeriod.year:
-      case EnumPeriod.decade:
-      case EnumPeriod.century:
-        dt0 = period + offset
-        if (dt0 === 0) {
-          dt0 = dt0 + offset
-        }
-        break
-      case EnumPeriod.day:
-      default:
-        dt0 = DateUtils.getDateAgo(period, offset)
-        break
+    dt0 = period + offset
+    if (dt0 === 0) {
+      dt0 = dt0 + offset
     }
     return dt0
   }

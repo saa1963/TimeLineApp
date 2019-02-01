@@ -17490,370 +17490,9 @@ exports.RegisterHandlers = RegisterHandlers;
   !*** ./src/TLEvent.ts ***!
   \************************/
 /*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const dateutils_1 = __webpack_require__(/*! ./dateutils */ "./src/dateutils.ts");
-var EnumPeriod;
-(function (EnumPeriod) {
-    EnumPeriod[EnumPeriod["day"] = 1] = "day";
-    EnumPeriod[EnumPeriod["month"] = 2] = "month";
-    EnumPeriod[EnumPeriod["year"] = 3] = "year";
-    EnumPeriod[EnumPeriod["decade"] = 4] = "decade";
-    EnumPeriod[EnumPeriod["century"] = 5] = "century";
-})(EnumPeriod = exports.EnumPeriod || (exports.EnumPeriod = {}));
-class TLDate {
-    constructor(year, month, day, fromCrismas) {
-        if (fromCrismas === undefined) {
-            if (year == 0)
-                throw new Error('Год равен 0');
-            if (month > 12 || month < 1)
-                throw new Error('Неверный месяц месяца');
-            if (day < 1)
-                throw new Error('День меньше 1');
-            if (this.Includes([1, 3, 5, 7, 8, 10, 12], month)) {
-                if (day > 31)
-                    throw new Error('Неверный день месяца');
-            }
-            else if (this.Includes([4, 6, 9, 11], month)) {
-                if (day > 30)
-                    throw new Error('Неверный день месяца');
-            }
-            else {
-                if (day > 29)
-                    throw new Error('Неверный день месяца');
-                if (year >= 1 && year <= 9999) {
-                    var dt = new Date(year, month - 1, day);
-                    if (dateutils_1.DateUtils.leapYear(year)) {
-                        if (day > 27)
-                            throw new Error('Неверный день месяца');
-                    }
-                    else {
-                        if (day > 28)
-                            throw new Error('Неверный день месяца');
-                    }
-                }
-            }
-            this.Day = day;
-            this.Month = month;
-            this.Year = year;
-            this.FromCrismas = dateutils_1.DateUtils.DaysFromAD(year, month, day);
-        }
-        else {
-            this.FromCrismas = fromCrismas;
-            let temp = dateutils_1.DateUtils.YMDFromAD(fromCrismas);
-            this.Day = temp.day;
-            this.Month = temp.month;
-            this.Year = temp.year;
-        }
-    }
-    Includes(arr, value) {
-        arr.forEach((v) => {
-            if (v === value)
-                return true;
-        });
-        return false;
-    }
-    Greater(o) {
-        return this.FromCrismas > o.FromCrismas;
-    }
-    GreaterOrEqual(o) {
-        return this.FromCrismas >= o.FromCrismas;
-    }
-    Less(o) {
-        return this.FromCrismas < o.FromCrismas;
-    }
-    LessOrEqual(o) {
-        return this.FromCrismas <= o.FromCrismas;
-    }
-    Equal(o) {
-        return this.FromCrismas === o.FromCrismas;
-    }
-    AddDays(n) {
-        return new TLDate(null, null, null, this.FromCrismas + n);
-    }
-    AddMonths(n) {
-        let rt;
-        let mth;
-        let mmn = dateutils_1.DateUtils.makeMonthNumber(this.Year, this.Month, n < 0);
-        for (let i = 0; i < n; i++) {
-            mth = mmn.next().value;
-        }
-        let day = this.Day;
-        while (true) {
-            try {
-                rt = new TLDate(mth.year, mth.month, day);
-                break;
-            }
-            catch (ex) {
-                day--;
-                continue;
-            }
-        }
-        return rt;
-    }
-}
-class TLEvent {
-    constructor(name) {
-        this.Name = name;
-        this.Day = null;
-        this.Month = null;
-        this.Year = null;
-        this.Decade = null;
-        this.Century = null;
-    }
-    DecadeFromYear(year) {
-        return year / 10 + (year / Math.abs(year));
-    }
-    CenturyFromDecade(decade) {
-        return decade / 10 + (decade / Math.abs(decade));
-    }
-    YearFromMonth(month) {
-        return (month - 1) / 12 + (month / Math.abs(month));
-    }
-    static GetType(o) {
-        if (o.Day !== null)
-            return EnumPeriod.day;
-        if (o.Month !== null)
-            return EnumPeriod.month;
-        if (o.Year !== null)
-            return EnumPeriod.year;
-        if (o.Decade !== null)
-            return EnumPeriod.decade;
-        if (o.Century !== null)
-            return EnumPeriod.century;
-    }
-    /**
-     * Попадает ли событие this в текущее значение ОВ
-     * @param period
-     * Текущая дробность отображения для ЛВ
-     * @param vl
-     * Текущее значение ОВ, которое в данный момент отрисовывается
-     */
-    static Equal(o1, o2) {
-        let rt = false;
-        if (o1.Century === o2.Century
-            && o1.Decade === o2.Decade
-            && o1.Year === o2.Year
-            && o1.Month === o2.Month
-            && o1.Day.Year === o2.Day.Year
-            && o1.Day.Month === o2.Day.Month
-            && o1.Day.Day === o2.Day.Day)
-            rt = true;
-        return rt;
-    }
-}
-exports.TLEvent = TLEvent;
-class TLEventDay extends TLEvent {
-    constructor(name, year, month, day) {
-        super(name);
-        this.Day = new TLDate(year, month, day);
-        this.Month = ((Math.abs(year) - 1) * 12 + month) * (year / Math.abs(year));
-        this.Year = year;
-        this.Decade = this.DecadeFromYear(year);
-        this.Century = this.CenturyFromDecade(this.Decade);
-        this.Type = EnumPeriod.day;
-    }
-}
-exports.TLEventDay = TLEventDay;
-class TLEventMonth extends TLEvent {
-    constructor(name, par1, par2) {
-        super(name);
-        if (par2 !== undefined) {
-            let year = par1;
-            let month = par2;
-            this.Month = ((Math.abs(year) - 1) * 12 + month) * (year / Math.abs(year));
-            this.Year = year;
-            this.Decade = this.DecadeFromYear(year);
-            this.Century = this.CenturyFromDecade(this.Decade);
-        }
-        else {
-            let month = par1;
-            this.Month = month;
-            this.Year = this.YearFromMonth(month);
-            this.Decade = this.DecadeFromYear(this.Year);
-            this.Century = this.CenturyFromDecade(this.Decade);
-        }
-        this.Type = EnumPeriod.month;
-    }
-}
-exports.TLEventMonth = TLEventMonth;
-class TLEventYear extends TLEvent {
-    constructor(name, year) {
-        super(name);
-        this.Year = year;
-        this.Decade = this.DecadeFromYear(year);
-        this.Century = this.CenturyFromDecade(this.Decade);
-        this.Type = EnumPeriod.year;
-    }
-}
-exports.TLEventYear = TLEventYear;
-class TLEventDecade extends TLEvent {
-    constructor(name, par1, par2) {
-        super(name);
-        if (par2 !== undefined) {
-            let century = par1;
-            let decade = par2;
-            if (decade < 0 || decade > 9)
-                throw Error('Неверный номер десятилетия');
-            this.Decade = ((Math.abs(century) - 1) * 10 + decade + 1) * (century / Math.abs(century));
-            this.Century = century;
-        }
-        else {
-            let decade = par1;
-            this.Decade = decade;
-            this.Century = this.CenturyFromDecade(decade);
-        }
-        this.Type = EnumPeriod.decade;
-    }
-}
-exports.TLEventDecade = TLEventDecade;
-class TLEventCentury extends TLEvent {
-    constructor(name, century) {
-        super(name);
-        this.Century = century;
-        this.Type = EnumPeriod.century;
-    }
-}
-exports.TLEventCentury = TLEventCentury;
-class TLPeriod {
-    constructor(o) {
-        this.Name = o.Name;
-        let type;
-        type = TLEvent.GetType(o.Begin);
-        if (type === EnumPeriod.day) {
-            this.Begin = new TLEventDay(o.Begin.Name, o.Begin.Day.Year, o.Begin.Day.Month, o.Begin.Day.Day);
-        }
-        else if (type === EnumPeriod.month) {
-            this.Begin = new TLEventMonth(o.Begin.Name, o.Begin.Month);
-        }
-        else if (type === EnumPeriod.year) {
-            this.Begin = new TLEventYear(o.Begin.Name, o.Begin.Year);
-        }
-        else if (type === EnumPeriod.decade) {
-            this.Begin = new TLEventDecade(o.Begin.Name, o.Begin.Decade);
-        }
-        else if (type === EnumPeriod.century) {
-            this.Begin = new TLEventCentury(o.Begin.Name, o.Begin.Century);
-        }
-        type = TLEvent.GetType(o.End);
-        if (type === EnumPeriod.day) {
-            this.End = new TLEventDay(o.End.Name, o.End.Day.Year, o.End.Day.Month, o.End.Day.Day);
-        }
-        else if (type === EnumPeriod.month) {
-            this.End = new TLEventMonth(o.End.Name, o.End.Month);
-        }
-        else if (type === EnumPeriod.year) {
-            this.End = new TLEventYear(o.End.Name, o.End.Year);
-        }
-        else if (type === EnumPeriod.decade) {
-            this.End = new TLEventDecade(o.End.Name, o.End.Decade);
-        }
-        else if (type === EnumPeriod.century) {
-            this.End = new TLEventCentury(o.End.Name, o.End.Century);
-        }
-    }
-    /**
-     * Попадает текущее значение ОВ в период this
-     * @param period
-     * Текущая дробность отображения для ЛВ
-     * @param vl
-     * Текущее значение ОВ, которое в данный момент отрисовывается
-     */
-    Contains(period, vl) {
-        let rt = false;
-        switch (period) {
-            case EnumPeriod.day:
-                let dt = vl;
-                rt = this.ContainsDay(new TLDate(dt.getFullYear(), dt.getMonth() + 1, dt.getDate()));
-                break;
-            case EnumPeriod.month:
-                //rt = (vl === this.Month)
-                break;
-            case EnumPeriod.year:
-                //rt = (vl === this.Year)
-                break;
-            case EnumPeriod.decade:
-                //rt = (vl === this.Decade)
-                break;
-            case EnumPeriod.century:
-                //rt = (vl === this.Century)
-                break;
-            default:
-                break;
-        }
-        return rt;
-    }
-    /**
-     *
-     * @param dt отображаемый ОВ
-     * @param this объект насчет которого принимается решение включать или нет
-     */
-    ContainsDay(dt) {
-        let dt1, dt2;
-        switch (this.Begin.Type) {
-            case EnumPeriod.day:
-                dt1 = this.Begin.Day;
-                break;
-            case EnumPeriod.month:
-                dt1 = new TLDate(this.Begin.Day.Year, this.Begin.Day.Month, 1);
-                break;
-            case EnumPeriod.year:
-                dt1 = new TLDate(this.Begin.Day.Year, 1, 1);
-                break;
-            case EnumPeriod.decade:
-                dt1 = new TLDate(Math.floor(this.Begin.Year / 10) + 1, 1, 1);
-                break;
-            case EnumPeriod.century:
-                dt1 = new TLDate(Math.floor(this.Begin.Year / 100) + 1, 1, 1);
-                break;
-        }
-        switch (this.End.Type) {
-            case EnumPeriod.day:
-                dt2 = this.End.Day;
-                break;
-            case EnumPeriod.month:
-                dt2 = new TLDate(this.Begin.Day.Year, this.Begin.Day.Month, 1);
-                break;
-            case EnumPeriod.year:
-                dt2 = new TLDate(this.Begin.Day.Year, 1, 1);
-                break;
-            case EnumPeriod.decade:
-                dt2 = new TLDate(Math.floor(this.Begin.Year / 10) + 1, 1, 1);
-                break;
-            case EnumPeriod.century:
-                dt2 = new TLDate(Math.floor(this.Begin.Year / 100) + 1, 1, 1);
-                break;
-        }
-        return dt.GreaterOrEqual(dt1) && dt.LessOrEqual(dt2);
-    }
-}
-exports.TLPeriod = TLPeriod;
-class TimeLineData {
-    constructor(o) {
-        /** Здесь только события с конкретными датами */
-        //Events: TLEvent[] = []
-        /** Здесь периоды, события у которых нет конкретной даты тоже относятся к периодам */
-        this.Periods = [];
-        this.Name = o.Name;
-        o.Periods.forEach(data => {
-            if (TLEvent.Equal(data.Begin, data.End))
-                this.Periods.push(new TLPeriodEvent(data));
-            else
-                this.Periods.push(new TLPeriod(data));
-        });
-    }
-}
-exports.TimeLineData = TimeLineData;
-class TLPeriodEvent extends TLPeriod {
-    constructor(o) {
-        super(o);
-    }
-}
-exports.TLPeriodEvent = TLPeriodEvent;
-
+throw new Error("Module build failed (from ../node_modules/ts-loader/index.js):\nError: TypeScript emitted no output for C:\\Users\\soshin.OPER\\Documents\\Visual Studio 2017\\Projects\\TimeLineApp\\TimeLineApp\\wwwroot\\src\\TLEvent.ts.\n    at makeSourceMapAndFinish (C:\\Users\\soshin.OPER\\Documents\\Visual Studio 2017\\Projects\\TimeLineApp\\TimeLineApp\\node_modules\\ts-loader\\dist\\index.js:78:15)\n    at successLoader (C:\\Users\\soshin.OPER\\Documents\\Visual Studio 2017\\Projects\\TimeLineApp\\TimeLineApp\\node_modules\\ts-loader\\dist\\index.js:68:9)\n    at Object.loader (C:\\Users\\soshin.OPER\\Documents\\Visual Studio 2017\\Projects\\TimeLineApp\\TimeLineApp\\node_modules\\ts-loader\\dist\\index.js:22:12)");
 
 /***/ }),
 
@@ -18103,204 +17742,9 @@ class MyHTMLLIElement extends HTMLLIElement {
   !*** ./src/dateutils.ts ***!
   \**************************/
 /*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const stringutils_1 = __webpack_require__(/*! ./stringutils */ "./src/stringutils.ts");
-class SaaDate {
-    constructor(day, month, year) {
-        this.day = day;
-        this.month = month;
-        this.year = year;
-    }
-}
-exports.SaaDate = SaaDate;
-class DateUtils {
-    /**
-     * Дни от РХ в год, месяц, день
-     * @param days день от РХ
-     */
-    static YMDFromAD(days) {
-        let d = 0;
-        let yr, delta;
-        if (days > 0) {
-            delta = yr = 1;
-        }
-        else if (days < 0) {
-            delta = yr = -1;
-        }
-        else {
-            return null;
-        }
-        let abs_days = Math.abs(days);
-        while (Math.abs(d) < abs_days) {
-            if (DateUtils.leapYear(yr)) {
-                d += (366 * delta);
-            }
-            else {
-                d += (365 * delta);
-            }
-            yr += delta;
-        }
-        // отматываем год назад
-        yr -= delta;
-        if (DateUtils.leapYear(yr)) {
-            d -= (366 * delta);
-        }
-        else {
-            d -= (365 * delta);
-        }
-        let dth0;
-        if (DateUtils.leapYear(yr)) {
-            dth0 = this.dth_leap;
-        }
-        else {
-            dth0 = this.dth;
-        }
-        let mth = 0;
-        while (Math.abs(d) < abs_days) {
-            d += (dth0[mth] * delta);
-            mth++;
-        }
-        mth--;
-        d -= (dth0[mth] * delta);
-        let ds = Math.abs(days) - Math.abs(d);
-        return { year: yr, month: mth + 1, day: ds };
-    }
-    /**
-     * День от Рождества Христова + -
-     * @param year может быть с минусом
-     * @param month 1-12
-     * @param day
-     */
-    static DaysFromAD(_year, month, day) {
-        let year = Math.abs(_year);
-        let days_from_Crismas = 0;
-        for (let i = 1; i < year; i++) {
-            if (DateUtils.leapYear(i)) {
-                days_from_Crismas += 366;
-            }
-            else {
-                days_from_Crismas += 365;
-            }
-        }
-        if (DateUtils.leapYear(year)) {
-            this.dth_leap.slice(0, month - 1).forEach(s => {
-                days_from_Crismas += s;
-            });
-        }
-        else {
-            this.dth.slice(0, month - 1).forEach(s => {
-                days_from_Crismas += s;
-            });
-        }
-        return (days_from_Crismas + day) * (year / _year);
-    }
-    static getCurDate() {
-        let dt = new Date();
-        return new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
-    }
-    static getDateAgo(date, days) {
-        var dateCopy = new Date(date);
-        dateCopy.setDate(dateCopy.getDate() + days);
-        return dateCopy;
-    }
-    static formatDate(dt) {
-        return stringutils_1.stringUtils.pad(dt.getDate(), 2) + '.' + stringutils_1.stringUtils.pad(dt.getMonth() + 1, 2) + '.' + (dt.getFullYear() + '').substring(2);
-    }
-    static getMonthFromDate(dt) {
-        return (dt.getFullYear() - 1) * 12 + dt.getMonth() + 1;
-    }
-    static getNumberFromMonth(year, month) {
-        let rt;
-        let delta = year / Math.abs(year);
-        rt = (year - delta) * 12 + (month * delta);
-        return rt;
-    }
-    static getMonthFromNumber(num) {
-        let year;
-        let month;
-        let rt;
-        if (num > 0) {
-            year = Math.floor(num / 12);
-            rt = { year: year + 1, month: num - year * 12 };
-        }
-        else {
-            year = Math.ceil(num / 12);
-            rt = { year: year - 1, month: Math.abs(num) - Math.abs(year * 12) };
-        }
-        return rt;
-    }
-    static getYearFromDate(dt) {
-        return dt.getFullYear();
-    }
-    static getDecadeFromDate(dt) {
-        return Math.floor(dt.getFullYear() / 10) + 1;
-    }
-    static getCenturyFromDate(dt) {
-        return Math.floor(dt.getFullYear() / 100) + 1;
-    }
-    static getDecade(century, decade) {
-        return (century - 1) * 10 + decade + 1;
-    }
-    static formatMonth(period) {
-        let year = Math.floor((period - 1) / 12) + 1;
-        let month = period - (year - 1) * 12;
-        return this.mth[month - 1] + ' ' + stringutils_1.stringUtils.pad(year, 4);
-    }
-    static formatYear(period) {
-        return period.toString();
-    }
-    static formatDecade(period) {
-        let century = Math.floor((period - 1) / 10) + 1;
-        let decade = period - (century - 1) * 10;
-        return romanize(century) + ' ' + (decade - 1) * 10 + 'е';
-    }
-    static formatCentury(num) {
-        return romanize(num);
-    }
-    static getDecadeComponent(decade) {
-        let century = Math.floor((decade - 1) / 10) + 1;
-        return decade - (century - 1) * 10;
-    }
-    static leapYear(year) {
-        return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
-    }
-}
-DateUtils.mth = ['ЯНВ', 'ФЕВ', 'МАР', 'АПР', 'МАЙ', 'ИЮН', 'ИЮЛ', 'АВГ', 'СЕН', 'ОКТ', 'НОЯ', 'ДЕК'];
-DateUtils.dth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-DateUtils.dth_leap = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-DateUtils.makeMonthNumber = function* (_initYear, _initMonth, reverse = false) {
-    let delta = reverse ? -1 : 1;
-    let absinitYear = Math.abs(_initYear);
-    let init = DateUtils.getNumberFromMonth(_initYear, _initMonth);
-    while (true) {
-        init += delta;
-        if (init === 0) {
-            init += delta;
-        }
-        yield DateUtils.getMonthFromNumber(init);
-    }
-};
-exports.DateUtils = DateUtils;
-function romanize(num) {
-    if (!+num) {
-        return null;
-    }
-    var digits = String(+num).split('');
-    var key = ['', 'C', 'CC', 'CCC', 'CD', 'D', 'DC', 'DCC', 'DCCC', 'CM',
-        '', 'X', 'XX', 'XXX', 'XL', 'L', 'LX', 'LXX', 'LXXX', 'XC',
-        '', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX'];
-    var roman = '';
-    var i = 3;
-    while (i--) {
-        roman = (key[+digits.pop() + (i * 10)] || '') + roman;
-    }
-    return Array(+digits.join('') + 1).join('M') + roman;
-}
-
+throw new Error("Module build failed (from ../node_modules/ts-loader/index.js):\nError: TypeScript emitted no output for C:\\Users\\soshin.OPER\\Documents\\Visual Studio 2017\\Projects\\TimeLineApp\\TimeLineApp\\wwwroot\\src\\dateutils.ts.\n    at makeSourceMapAndFinish (C:\\Users\\soshin.OPER\\Documents\\Visual Studio 2017\\Projects\\TimeLineApp\\TimeLineApp\\node_modules\\ts-loader\\dist\\index.js:78:15)\n    at successLoader (C:\\Users\\soshin.OPER\\Documents\\Visual Studio 2017\\Projects\\TimeLineApp\\TimeLineApp\\node_modules\\ts-loader\\dist\\index.js:68:9)\n    at Object.loader (C:\\Users\\soshin.OPER\\Documents\\Visual Studio 2017\\Projects\\TimeLineApp\\TimeLineApp\\node_modules\\ts-loader\\dist\\index.js:22:12)");
 
 /***/ }),
 
@@ -18598,23 +18042,28 @@ function SwitchPeriod(menuCtx, idPeriod) {
 
 /***/ }),
 
-/***/ "./src/stringutils.ts":
-/*!****************************!*\
-  !*** ./src/stringutils.ts ***!
-  \****************************/
+/***/ "./src/saagraph.ts":
+/*!*************************!*\
+  !*** ./src/saagraph.ts ***!
+  \*************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.stringUtils = (function () {
+exports.saaGraph = (function () {
     return {
-        pad: function (num, size) {
-            var s = num + '';
-            while (s.length < size)
-                s = '0' + s;
-            return s;
+        roundedRect: function (ctx, x, y, width, height, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x, y + radius);
+            ctx.lineTo(x, y + height);
+            ctx.lineTo(x + width, y + height);
+            ctx.lineTo(x + width, y + radius);
+            ctx.quadraticCurveTo(x + width, y, x + width - radius, y);
+            ctx.lineTo(x + radius, y);
+            ctx.quadraticCurveTo(x, y, x, y + radius);
+            ctx.fill();
         }
     };
 })();
@@ -18627,9 +18076,237 @@ exports.stringUtils = (function () {
   !*** ./src/timeline.ts ***!
   \*************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-throw new Error("Module build failed (from ../node_modules/ts-loader/index.js):\nError: TypeScript emitted no output for C:\\Users\\soshin.OPER\\Documents\\Visual Studio 2017\\Projects\\TimeLineApp\\TimeLineApp\\wwwroot\\src\\timeline.ts.\n    at makeSourceMapAndFinish (C:\\Users\\soshin.OPER\\Documents\\Visual Studio 2017\\Projects\\TimeLineApp\\TimeLineApp\\node_modules\\ts-loader\\dist\\index.js:78:15)\n    at successLoader (C:\\Users\\soshin.OPER\\Documents\\Visual Studio 2017\\Projects\\TimeLineApp\\TimeLineApp\\node_modules\\ts-loader\\dist\\index.js:68:9)\n    at Object.loader (C:\\Users\\soshin.OPER\\Documents\\Visual Studio 2017\\Projects\\TimeLineApp\\TimeLineApp\\node_modules\\ts-loader\\dist\\index.js:22:12)");
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const dateutils_1 = __webpack_require__(/*! ./dateutils */ "./src/dateutils.ts");
+const saagraph_1 = __webpack_require__(/*! ./saagraph */ "./src/saagraph.ts");
+const TLEvent_1 = __webpack_require__(/*! ./TLEvent */ "./src/TLEvent.ts");
+const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
+class TimeLine {
+    constructor(ctx, curPeriod = null, y = 0, color = null, period = null, name = 'нет имени', data = []) {
+        this.ctx = ctx;
+        this.curPeriod = curPeriod;
+        this.x = ctx.canvas.clientWidth - 1 + TimeLine.INTERVAL_WIDTH + 0.5;
+        this.y = y;
+        this.color = color;
+        this.period = period;
+        this.name = name;
+        this.data = data;
+    }
+    static getList() {
+        return new Promise(function (resolve, reject) {
+            $.ajax('api/storage/list')
+                .done(data => {
+                resolve(data);
+            })
+                .fail((data) => {
+                reject(data.responseText);
+            });
+        });
+    }
+    save() {
+        $.ajax('api/storage/save', {
+            method: 'POST',
+            data: {
+                s1: this.name,
+                s2: JSON.stringify(this.tldata)
+            }
+        })
+            .done((_) => {
+            alert('Сохранение прошло успешно.');
+        })
+            .fail((jqXHR) => {
+            alert('Ошибка при сохранении.\n' + jqXHR.responseText);
+        });
+    }
+    set Period(period) {
+        this.x = this.ctx.canvas.clientWidth - 1 + TimeLine.INTERVAL_WIDTH + 0.5;
+        this.curPeriod = TimeLine.getCurPeriod(period);
+        this.period = period;
+    }
+    draw() {
+        this.data = [];
+        this.curdata = -1;
+        let x0 = this.x;
+        let dt = this.curPeriod;
+        while (x0 >= 0) {
+            this.drawCell(x0, dt);
+            x0 -= TimeLine.INTERVAL_WIDTH;
+            dt = this.getPeriodAgo(dt, -1);
+        }
+        x0 = this.x;
+        dt = this.curPeriod;
+        while (x0 <= this.ctx.canvas.clientWidth - 1 + TimeLine.INTERVAL_WIDTH) {
+            this.drawCell(x0, dt);
+            x0 += TimeLine.INTERVAL_WIDTH;
+            dt = this.getPeriodAgo(dt, 1);
+        }
+        this.drawName();
+    }
+    /**
+     * Формирует массив событий для текущего ОВ
+     * @param dt
+     * Текущее значение ОВ, которое в данный момент отрисовывается
+     */
+    //findevents(dt: number | Date): TLEvent[] {
+    //  let rt: TLEvent[] = []
+    //  this.tldata.Events.forEach(v => {
+    //    if (v.Equal(this.period, dt)) {
+    //      rt.push(v)
+    //    }
+    //  })
+    //  return rt
+    //}
+    /**
+     * Формирует массив периодов для текущего ОВ
+     * @param dt
+     * Текущее значение ОВ, которое в данный момент отрисовывается
+     */
+    findperiods(dt) {
+        let rt = [];
+        if (this.tldata !== undefined) {
+            this.tldata.Periods.forEach(v => {
+                if (v.Contains(this.period, dt)) {
+                    rt.push(v);
+                }
+            });
+        }
+        return rt;
+    }
+    drawName() {
+        const HBOOKMARK = 30;
+        const INDENT = 10;
+        const RADIUS = 10;
+        this.ctx.save();
+        this.ctx.fillStyle = this.color;
+        this.ctx.textBaseline = 'middle';
+        this.ctx.textAlign = 'center';
+        this.ctx.font = '16px serif';
+        let wBookmark = this.ctx.measureText(this.name).width + INDENT / 2;
+        saagraph_1.saaGraph.roundedRect(this.ctx, INDENT, this.y - HBOOKMARK, wBookmark, HBOOKMARK, RADIUS);
+        this.ctx.fillStyle = 'white';
+        this.ctx.fillText(this.name, INDENT + wBookmark / 2, this.y - HBOOKMARK / 2);
+        this.ctx.restore();
+    }
+    drawCell(x0, dt) {
+        let path = new Path2D();
+        path.rect(x0 - TimeLine.INTERVAL_WIDTH + 1, this.y, TimeLine.INTERVAL_WIDTH, TimeLine.LINE_THICKNESS);
+        this.ctx.fillStyle = this.color;
+        this.ctx.strokeStyle = 'white';
+        this.ctx.fill(path);
+        this.ctx.stroke(path);
+        this.ctx.textBaseline = 'middle';
+        this.ctx.textAlign = 'center';
+        this.ctx.font = '14px serif';
+        this.ctx.fillStyle = 'white';
+        this.ctx.fillText(this.formatPeriod(dt), x0 - TimeLine.HALF_INTERVAL_WIDTH, this.y + TimeLine.HALF_LINE_THICKNESS);
+        let cellData = new CellData(dt, x0 - TimeLine.INTERVAL_WIDTH + 1, this.y, x0, this.y + TimeLine.LINE_THICKNESS - 1, path);
+        //cellData.events = this.findevents(dt)
+        cellData.periods = this.findperiods(dt);
+        this.data.push(cellData);
+    }
+    /**
+     * Получить индекс в массиве this.data для данной координаты курсора
+     *
+     * @param {number} x
+     * @param {number} y
+     * @returns number
+     * @memberof TimeLine
+     */
+    getCellValue(x, y) {
+        for (let i = 0; i < this.data.length; i++) {
+            if (x > this.data[i].x1 && x < this.data[i].x2 && y > this.data[i].y1 && y < this.data[i].y2) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    onBox(_data) {
+        let data = this.data[_data];
+        this.ctx.strokeStyle = 'black';
+        this.ctx.stroke(data.path);
+    }
+    offBox() {
+        let data = this.data[this.curdata];
+        this.ctx.strokeStyle = 'white';
+        this.ctx.stroke(data.path);
+    }
+    shift(movementX) {
+        this.x += movementX;
+    }
+    static getCurPeriod(periodType) {
+        let rt;
+        switch (periodType) {
+            case TLEvent_1.EnumPeriod.month:
+                rt = dateutils_1.DateUtils.getMonthFromDate(dateutils_1.DateUtils.getCurDate());
+                break;
+            case TLEvent_1.EnumPeriod.year:
+                rt = dateutils_1.DateUtils.getYearFromDate(dateutils_1.DateUtils.getCurDate());
+                break;
+            case TLEvent_1.EnumPeriod.decade:
+                rt = dateutils_1.DateUtils.getDecadeFromDate(dateutils_1.DateUtils.getCurDate());
+                break;
+            case TLEvent_1.EnumPeriod.century:
+                rt = dateutils_1.DateUtils.getCenturyFromDate(dateutils_1.DateUtils.getCurDate());
+                break;
+            case TLEvent_1.EnumPeriod.day:
+            default:
+                let o = dateutils_1.DateUtils.getCurDate();
+                rt = dateutils_1.DateUtils.DaysFromAD(o.getFullYear(), o.getMonth() + 1, o.getDate());
+                break;
+        }
+        return rt;
+    }
+    formatPeriod(period) {
+        let rt;
+        switch (this.period) {
+            case TLEvent_1.EnumPeriod.month:
+                rt = dateutils_1.DateUtils.formatMonth(period);
+                break;
+            case TLEvent_1.EnumPeriod.year:
+                rt = dateutils_1.DateUtils.formatYear(period);
+                break;
+            case TLEvent_1.EnumPeriod.decade:
+                rt = dateutils_1.DateUtils.formatDecade(period);
+                break;
+            case TLEvent_1.EnumPeriod.century:
+                rt = dateutils_1.DateUtils.formatCentury(period);
+                break;
+            case TLEvent_1.EnumPeriod.day:
+            default:
+                rt = dateutils_1.DateUtils.formatDate(period);
+                break;
+        }
+        return rt;
+    }
+    getPeriodAgo(period, offset) {
+        let dt0;
+        dt0 = period + offset;
+        if (dt0 === 0) {
+            dt0 = dt0 + offset;
+        }
+        return dt0;
+    }
+}
+TimeLine.LINE_THICKNESS = 25;
+TimeLine.HALF_LINE_THICKNESS = TimeLine.LINE_THICKNESS / 2;
+TimeLine.INTERVAL_WIDTH = 100;
+TimeLine.HALF_INTERVAL_WIDTH = TimeLine.INTERVAL_WIDTH / 2;
+exports.TimeLine = TimeLine;
+class CellData {
+    constructor(value, x1, y1, x2, y2, path) {
+        this.value = value;
+        this.x1 = x1;
+        this.y1 = y1;
+        this.x2 = x2;
+        this.y2 = y2;
+        this.path = path;
+    }
+}
+
 
 /***/ })
 

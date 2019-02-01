@@ -19,7 +19,9 @@ class TLDate {
       } else if (this.Includes([4, 6, 9, 11], month)) {
         if (day > 30) throw new Error('Неверный день месяца')
       } else {
-        if (day > 29) throw new Error('Неверный день месяца')
+        if (day > 29) {
+          throw new Error('Неверный день месяца')
+        }
         if (year >= 1 && year <= 9999) {
           var dt = new Date(year, month - 1, day);
           if (DateUtils.leapYear(year)) {
@@ -44,9 +46,9 @@ class TLDate {
   }
 
   private Includes(arr: number[], value: number): boolean {
-    arr.forEach((v) => {
-      if (v === value) return true
-    });
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i] === value) return true
+    }
     return false
   }
   
@@ -98,7 +100,7 @@ class TLDate {
 
 export abstract class TLEvent {
   Name: string
-  Day: TLDate
+  Day: number
   Month: number
   Year: number
   Decade: number
@@ -141,21 +143,20 @@ export abstract class TLEvent {
       && o1.Decade === o2.Decade
       && o1.Year === o2.Year
       && o1.Month === o2.Month
-      && o1.Day.Year === o2.Day.Year
-      && o1.Day.Month === o2.Day.Month
-      && o1.Day.Day === o2.Day.Day
+      && o1.Day === o2.Day
     ) rt = true
     return rt
   }
 }
 
 export class TLEventDay extends TLEvent {
-  constructor(name: string, year: number, month: number, day: number) {
+  constructor(name: string, day: number) {
     super(name);
-    this.Day = new TLDate(year, month, day)
-    this.Month = ((Math.abs(year) - 1) * 12 + month) * (year / Math.abs(year));
-    this.Year = year;
-    this.Decade = this.DecadeFromYear(year)
+    this.Day = day
+    let o = DateUtils.YMDFromAD(day)
+    this.Month = ((Math.abs(o.year) - 1) * 12 + o.month) * (o.year / Math.abs(o.year));
+    this.Year = o.year;
+    this.Decade = this.DecadeFromYear(o.year)
     this.Century = this.CenturyFromDecade(this.Decade);
     this.Type = EnumPeriod.day
   }
@@ -227,7 +228,7 @@ export class TLPeriod {
     let type: EnumPeriod
     type = TLEvent.GetType(o.Begin)
     if (type === EnumPeriod.day) {
-      this.Begin = new TLEventDay(o.Begin.Name, o.Begin.Day.Year, o.Begin.Day.Month, o.Begin.Day.Day)
+      this.Begin = new TLEventDay(o.Begin.Name, o.Begin.Day)
     } else if (type === EnumPeriod.month) {
       this.Begin = new TLEventMonth(o.Begin.Name, o.Begin.Month)
     } else if (type === EnumPeriod.year) {
@@ -239,7 +240,7 @@ export class TLPeriod {
     }
     type = TLEvent.GetType(o.End)
     if (type === EnumPeriod.day) {
-      this.End = new TLEventDay(o.End.Name, o.End.Day.Year, o.End.Day.Month, o.End.Day.Day)
+      this.End = new TLEventDay(o.End.Name, o.End.Day)
     } else if (type === EnumPeriod.month) {
       this.End = new TLEventMonth(o.End.Name, o.End.Month)
     } else if (type === EnumPeriod.year) {
@@ -257,12 +258,11 @@ export class TLPeriod {
    * @param vl
    * Текущее значение ОВ, которое в данный момент отрисовывается
    */
-  Contains(period: EnumPeriod, vl: number | Date): boolean {
+  Contains(period: EnumPeriod, vl: number): boolean {
     let rt = false
     switch (period) {
       case EnumPeriod.day:
-        let dt = <Date>vl
-        rt = this.ContainsDay(new TLDate(dt.getFullYear(), dt.getMonth() + 1, dt.getDate()))
+        rt = this.ContainsDay(vl)
         break
       case EnumPeriod.month:
         //rt = (vl === this.Month)
@@ -283,23 +283,23 @@ export class TLPeriod {
   }
   /**
    * 
-   * @param dt отображаемый ОВ
+   * @param day отображаемый ОВ день от РХ
    * @param this объект насчет которого принимается решение включать или нет
    */
-  private ContainsDay(dt: TLDate): boolean {
-    let dt1: TLDate, dt2: TLDate
+  private ContainsDay(day: number): boolean {
+    let dt1: number, dt2: number
     switch (this.Begin.Type) {
       case EnumPeriod.day:
         dt1 = this.Begin.Day
         break
       case EnumPeriod.month:
-        dt1 = new TLDate(this.Begin.Day.Year, this.Begin.Day.Month, 1)
+        dt1 = DateUtils.FirstDayOfMonth(this.Begin.Month)
         break
       case EnumPeriod.year:
-        dt1 = new TLDate(this.Begin.Day.Year, 1, 1)
+        dt1 = DateUtils.FirstDayOfYear(this.Begin.Year)
         break
       case EnumPeriod.decade:
-        dt1 = new TLDate(Math.floor(this.Begin.Year / 10) + 1, 1, 1)
+        dt1 = DateUtils.FirstDayOfDecade(this.Begin.Decade)
         break
       case EnumPeriod.century:
         dt1 = new TLDate(Math.floor(this.Begin.Year / 100) + 1, 1, 1)
@@ -310,13 +310,13 @@ export class TLPeriod {
         dt2 = this.End.Day
         break
       case EnumPeriod.month:
-        dt2 = new TLDate(this.Begin.Day.Year, this.Begin.Day.Month, 1)
+        dt2 = DateUtils.FirstDayOfMonth(this.End.Month + 1) - 1
         break
       case EnumPeriod.year:
-        dt2 = new TLDate(this.Begin.Day.Year, 1, 1)
+        dt2 = DateUtils.FirstDayOfYear(this.End.Year)
         break
       case EnumPeriod.decade:
-        dt2 = new TLDate(Math.floor(this.Begin.Year / 10) + 1, 1, 1)
+        dt2 = DateUtils.FirstDayOfDecade(this.End.Decade)
         break
       case EnumPeriod.century:
         dt2 = new TLDate(Math.floor(this.Begin.Year / 100) + 1, 1, 1)
