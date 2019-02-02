@@ -1,4 +1,4 @@
-﻿import { DateUtils, YearMonth } from './dateutils'
+﻿import { DateUtils, YearMonth } from './dateutils';
 
 export enum EnumPeriod {
   day = 1, month = 2, year = 3, decade = 4, century = 5
@@ -265,7 +265,7 @@ export class TLPeriod {
         rt = this.ContainsDay(vl)
         break
       case EnumPeriod.month:
-        //rt = (vl === this.Month)
+        rt = this.ContainsMonth(vl)
         break
       case EnumPeriod.year:
         //rt = (vl === this.Year)
@@ -280,6 +280,15 @@ export class TLPeriod {
         break
     }
     return rt
+  }
+  /**
+   * Содержит ли this (текущий период) ОВ vl
+   * @param vl - месяц от РХ
+   */
+  ContainsMonth(month: number): boolean {
+    let absMonth = Math.abs(month)
+    let begin = DateUtils.FirstDayOfMonth(month)
+    let end = 
   }
   /**
    * 
@@ -302,7 +311,7 @@ export class TLPeriod {
         dt1 = DateUtils.FirstDayOfDecade(this.Begin.Decade)
         break
       case EnumPeriod.century:
-        dt1 = new TLDate(Math.floor(this.Begin.Year / 100) + 1, 1, 1)
+        dt1 = DateUtils.FirstDayOfCentury(this.Begin.Century)
         break
     }
     switch (this.End.Type) {
@@ -313,16 +322,16 @@ export class TLPeriod {
         dt2 = DateUtils.FirstDayOfMonth(this.End.Month + 1) - 1
         break
       case EnumPeriod.year:
-        dt2 = DateUtils.FirstDayOfYear(this.End.Year)
+        dt2 = DateUtils.FirstDayOfYear(this.End.Year + 1) - 1
         break
       case EnumPeriod.decade:
-        dt2 = DateUtils.FirstDayOfDecade(this.End.Decade)
+        dt2 = DateUtils.FirstDayOfDecade(this.End.Decade + 1) - 1
         break
       case EnumPeriod.century:
-        dt2 = new TLDate(Math.floor(this.Begin.Year / 100) + 1, 1, 1)
+        dt2 = DateUtils.FirstDayOfCentury(this.End.Century + 1) - 1
         break
     }
-    return dt.GreaterOrEqual(dt1) && dt.LessOrEqual(dt2)
+    return day >= dt1 && day <= dt2
   }
 }
 

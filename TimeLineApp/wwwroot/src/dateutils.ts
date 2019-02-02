@@ -155,8 +155,24 @@ export class DateUtils {
     }
     return (days + 1) * (decade / absDecade)
   }
+  /**
+   * Первый день века
+   * @param century может быть отрицательным
+   */
   static FirstDayOfCentury(century: number): number {
-
+    let absCentury = Math.abs(century)
+    let days = 0, yr = 1
+    for (let c = 1; c < absCentury; c++) {
+      for (let y = 0; y < 100; y++ , yr++) {
+        let leap = DateUtils.leapYear(yr)
+        if (leap) {
+          days += 366
+        } else {
+          days += 365
+        }
+      }
+    }
+    return (days + 1) * (century / absCentury)
   }
   static getCurDate(): Date {
     let dt = new Date()
