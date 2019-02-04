@@ -17492,7 +17492,7 @@ exports.RegisterHandlers = RegisterHandlers;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed (from ../node_modules/ts-loader/index.js):\nError: TypeScript emitted no output for C:\\Users\\Сошины\\Source\\Repos\\TimeLineApp2\\TimeLineApp\\wwwroot\\src\\TLEvent.ts.\n    at makeSourceMapAndFinish (C:\\Users\\Сошины\\Source\\Repos\\TimeLineApp2\\TimeLineApp\\node_modules\\ts-loader\\dist\\index.js:78:15)\n    at successLoader (C:\\Users\\Сошины\\Source\\Repos\\TimeLineApp2\\TimeLineApp\\node_modules\\ts-loader\\dist\\index.js:68:9)\n    at Object.loader (C:\\Users\\Сошины\\Source\\Repos\\TimeLineApp2\\TimeLineApp\\node_modules\\ts-loader\\dist\\index.js:22:12)");
+throw new Error("Module build failed (from ../node_modules/ts-loader/index.js):\nError: TypeScript emitted no output for C:\\Users\\soshin.OPER\\Documents\\Visual Studio 2017\\Projects\\TimeLineApp\\TimeLineApp\\wwwroot\\src\\TLEvent.ts.\n    at makeSourceMapAndFinish (C:\\Users\\soshin.OPER\\Documents\\Visual Studio 2017\\Projects\\TimeLineApp\\TimeLineApp\\node_modules\\ts-loader\\dist\\index.js:78:15)\n    at successLoader (C:\\Users\\soshin.OPER\\Documents\\Visual Studio 2017\\Projects\\TimeLineApp\\TimeLineApp\\node_modules\\ts-loader\\dist\\index.js:68:9)\n    at Object.loader (C:\\Users\\soshin.OPER\\Documents\\Visual Studio 2017\\Projects\\TimeLineApp\\TimeLineApp\\node_modules\\ts-loader\\dist\\index.js:22:12)");
 
 /***/ }),
 

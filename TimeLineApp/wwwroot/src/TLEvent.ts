@@ -290,6 +290,12 @@ export class TLPeriod {
     let begin = DateUtils.FirstDayOfMonth(month)
     let end = 
   }
+  IsIntersectIntervals(l1: number, r1: number, l2: number, r2: number) {
+    let l = Math.min(l1, l2)
+    let r = Math.max(r1, r2)
+    let s = r - l
+    if (s <= (r1 - l1) + (r2 - l2))
+  }
   /**
    * 
    * @param day отображаемый ОВ день от РХ
