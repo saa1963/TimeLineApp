@@ -133,6 +133,19 @@ export class DateUtils {
     return f
   }
   /**
+   * Последний день года
+   * @param month
+   */
+  static LastDayOfYear(year: number): number {
+    let f: number
+    if (year > 0) {
+      f = this.FirstDayOfYear(year + 1) - 1
+    } else {
+      f = this.FirstDayOfMonth(year - 1) + 1
+    }
+    return f
+  }
+  /**
    * Первый день года
    * @param year может быть отрицательным
    */
