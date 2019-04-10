@@ -286,15 +286,30 @@ export class TLPeriod {
    * @param vl - месяц от РХ
    */
   ContainsMonth(month: number): boolean {
-    let absMonth = Math.abs(month)
-    let begin = DateUtils.FirstDayOfMonth(month)
-    let end = 
+    let begin: number, end: number
+    if (month > 0) {
+      begin = DateUtils.FirstDayOfMonth(month)
+      end = DateUtils.LastDayOfMonth(month)
+    } else {
+      begin = DateUtils.LastDayOfMonth(month)
+      end = DateUtils.FirstDayOfMonth(month)
+    }
+    //let end = 
+    //let qq = this.IsIntersectIntervals()
+    return true
   }
-  IsIntersectIntervals(l1: number, r1: number, l2: number, r2: number) {
+  /**
+   * Есть ли пересечение 2-х целочисленных интервалов
+   * @param l1 левая граница интервал 1
+   * @param r1 правая граница интервал 1
+   * @param l2 левая граница интервал 2
+   * @param r2 правая граница интервал 2
+   */
+  IsIntersectIntervals(l1: number, r1: number, l2: number, r2: number): boolean {
     let l = Math.min(l1, l2)
     let r = Math.max(r1, r2)
     let s = r - l
-    if (s <= (r1 - l1) + (r2 - l2))
+    return s <= (r1 - l1) + (r2 - l2)
   }
   /**
    * 

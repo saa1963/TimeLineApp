@@ -120,6 +120,19 @@ export class DateUtils {
     return (days + 1) * (month / absMonth)
   }
   /**
+   * Последний день месяца
+   * @param month
+   */
+  static LastDayOfMonth(month: number): number {
+    let f: number
+    if (month > 0) {
+      f = this.FirstDayOfMonth(month + 1) - 1
+    } else {
+      f = this.FirstDayOfMonth(month - 1) + 1
+    }
+    return f
+  }
+  /**
    * Первый день года
    * @param year может быть отрицательным
    */

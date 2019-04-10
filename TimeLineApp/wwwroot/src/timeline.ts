@@ -4,23 +4,23 @@ import { TimeLineData, TLEvent, EnumPeriod, TLPeriod } from './TLEvent'
 import * as $ from 'jquery'
 
 export class TimeLine {
-  ctx: CanvasRenderingContext2D
-  /** Значение ОВ с которого начинается отрисовка справа налево */
-  curPeriod: number
-  /** координата x с которой отрисовывается ЛВ, сначала справа налево, потом слева направо */
-  x: number
   y: number
   color: string | CanvasGradient | CanvasPattern
   /** Текущий вид ОВ */
   period: EnumPeriod
   name: string
-  /** Массив данных для отображаемых ОВ */
-  data: CellData[]
   /** Текущий индекс в массиве this.data  */ 
   curdata: number
   /** Массив событий и периодов для всей ЛВ */
   tldata: TimeLineData
 
+  /** Значение ОВ с которого начинается отрисовка справа налево */
+  private curPeriod: number
+  /** Массив данных для отображаемых ОВ */
+  private data: CellData[]
+  /** координата x с которой отрисовывается ЛВ, сначала справа налево, потом слева направо */
+  private x: number
+  private ctx: CanvasRenderingContext2D
   static readonly LINE_THICKNESS: number = 25
   private static readonly HALF_LINE_THICKNESS: number = TimeLine.LINE_THICKNESS / 2
   private static readonly INTERVAL_WIDTH: number = 100
