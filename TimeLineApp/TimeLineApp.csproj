@@ -27,6 +27,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="tests\test1.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\dist\main.min.css" />
   </ItemGroup>
 
@@ -73,6 +77,10 @@
     <None Include="wwwroot\src\stringutils.ts" />
     <None Include="wwwroot\src\timeline.ts" />
     <None Include="wwwroot\src\TLEvent.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="tests\test1.ts" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
