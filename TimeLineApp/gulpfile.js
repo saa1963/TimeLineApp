@@ -1,4 +1,4 @@
-/// <binding ProjectOpened='watch' />
+/// <binding />
 "use strict";
 
 const { series } = require('gulp');
