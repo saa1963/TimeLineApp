@@ -88,7 +88,14 @@ class DateUtils {
         for (let i = 1; i < year; i++) {
             days_from_Crismas += TLeapData.getDaysInYear(i);
         }
-        leapData.dth.slice(0, month - 1).forEach(s => {
+        let sliceMonth;
+        if (_year > 0) {
+            sliceMonth = leapData.dth.slice(0, month - 1);
+        }
+        else {
+            sliceMonth = leapData.dth.reverse().slice(0, -(month + 1));
+        }
+        sliceMonth.forEach(s => {
             days_from_Crismas += s;
         });
         return (days_from_Crismas + day) * (year / _year);

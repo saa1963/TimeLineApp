@@ -64,13 +64,7 @@ function Init_watch(cb) {
     cb();
 }
 
-function Run_mocha(cb) {
-  return gulp.src('tests/test1.ts', { read: false }).pipe(mocha());
-}
-
-//exports.default = series(compile_sass, ts_compileDev);
 exports.watch = Init_watch;
 exports.ts_compileDev = ts_compileDev;
 exports.compile_sass = compile_sass;
 exports.replace_popper = replace_popper;
-exports.run_mocha = Run_mocha;
