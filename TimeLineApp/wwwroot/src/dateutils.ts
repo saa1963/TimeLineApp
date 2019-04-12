@@ -1,14 +1,45 @@
 import { stringUtils } from './stringutils'
 
-export interface YearMonth {
+export interface YearMonthDay {
   year: number
   month: number
+  day: number
+}
+
+export class TLeapData {
+  private static dth: number[] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+  private static dth_leap: number[] = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+  isLeap: boolean
+  daysInYear: number
+  daysInFeb: number
+  dth: number[]
+  constructor(year: number) {
+    if (TLeapData.leapYear(year)) {
+      this.isLeap = true
+      this.daysInYear = 366
+      this.daysInFeb = 29
+      this.dth = [].concat(TLeapData.dth_leap)
+    } else {
+      this.isLeap = false
+      this.daysInYear = 365
+      this.daysInFeb = 28
+      this.dth = [].concat(TLeapData.dth)
+    }
+  }
+  static getDaysInYear(year): number {
+    if (TLeapData.leapYear(year))
+      return 366
+    else
+      return 365
+  }
+  static leapYear(year) {
+    return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
+  }
 }
 
 export class DateUtils {
   private static mth: string[] = ['ЯНВ', 'ФЕВ', 'МАР', 'АПР', 'МАЙ', 'ИЮН', 'ИЮЛ', 'АВГ', 'СЕН', 'ОКТ', 'НОЯ', 'ДЕК']
-  private static dth: number[] =      [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-  private static dth_leap: number[] = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+  
   static makeMonthNumber = function* (_initYear: number, _initMonth: number, reverse: boolean = false) {
     let delta = reverse ? -1 : 1
     let absinitYear = Math.abs(_initYear)
@@ -25,7 +56,7 @@ export class DateUtils {
    * Дни от РХ в год, месяц, день
    * @param days день от РХ
    */
-  static YMDFromAD(days: number): { year: number, month: number, day: number } {
+  static YMDFromAD(days: number): YearMonthDay {
     let d: number = 0
     let yr: number, delta: number
     if (days > 0) {
@@ -37,40 +68,26 @@ export class DateUtils {
     }
     let abs_days = Math.abs(days)
     while (Math.abs(d) < abs_days) {
-      if (DateUtils.leapYear(yr)) {
-        d += (366 * delta)
-      } else {
-        d += (365 * delta)
-      }
+      d += (TLeapData.getDaysInYear(yr) * delta)
       yr += delta
     }
 
     // отматываем год назад
     yr -= delta
-    if (DateUtils.leapYear(yr)) {
-      d -= (366 * delta)
-    } else {
-      d -= (365 * delta)
-    }
+    d -= (TLeapData.getDaysInYear(yr) * delta)
 
-    let dth0: number[]
-    if (DateUtils.leapYear(yr)) {
-      dth0 = this.dth_leap
-    } else {
-      dth0 = this.dth
-    }
+    let leapData = new TLeapData(yr)
     let mth = 0
     while (Math.abs(d) < abs_days) {
-      d += (dth0[mth] * delta)
+      d += (leapData.dth[mth] * delta)
       mth++
     }
     mth--
-    d -= (dth0[mth] * delta)
-
+    d -= (leapData.dth[mth] * delta)
     let ds =  Math.abs(days) - Math.abs(d)
-
     return {year:yr, month:mth + 1, day:ds}
   }
+
   /**
    * День от Рождества Христова + -
    * @param year может быть с минусом
@@ -79,48 +96,50 @@ export class DateUtils {
    */
   static DaysFromAD(_year: number, month: number, day: number): number {
     let year = Math.abs(_year)
-    let days_from_Crismas: number = 0
-    for (let i = 1; i < year; i++) {
-      if (DateUtils.leapYear(i)) {
-        days_from_Crismas += 366
-      } else {
-        days_from_Crismas += 365
+    let leapData = new TLeapData(year)
+    if (month !== 2) {
+      if (day > leapData.dth[month - 1] || day < 1) {
+        throw "Неверное значение номера месяца"
       }
     }
-    if (DateUtils.leapYear(year)) {
-      this.dth_leap.slice(0, month - 1).forEach(s => {
-        days_from_Crismas += s
-      })
-    } else {
-      this.dth.slice(0, month - 1).forEach(s => {
-        days_from_Crismas += s
-      })
+    else {
+      if (day > leapData.dth[1] || day < 1) {
+        throw "Неверное значение номера месяца"
+      }
     }
+    let days_from_Crismas: number = 0
+    for (let i = 1; i < year; i++) {
+      days_from_Crismas += TLeapData.getDaysInYear(i)
+    }
+    leapData.dth.slice(0, month - 1).forEach(s => {
+      days_from_Crismas += s
+    })
     return (days_from_Crismas + day) * (year / _year)
   }
   /**
    * Первый день месяца (и месяц и день от РХ)
+   * Для отрицательных месяцев 1-ый день месяца позже последнего -31 ... -1
    * @param month может быть с минусом
    */
   static FirstDayOfMonth(month: number): number {
     let absMonth = Math.abs(month)
     let days = 0
     for (let m = 1, mth = 1, year = 1; m < absMonth; m++) {
-      let leap = DateUtils.leapYear(year)
-      if (leap) {
-        days += DateUtils.dth[mth - 1]
-      } else {
-        days += DateUtils.dth_leap[mth - 1]
-      }
+      let leapData = new TLeapData(year)
+      days += leapData.dth[mth - 1]
       if (mth === 12) {
         mth = 1
         year++
+      }
+      else {
+        mth++;
       }
     }
     return (days + 1) * (month / absMonth)
   }
   /**
    * Последний день месяца
+   * Для отрицательных месяцев Последний день раньше Первого -31 ... -1
    * @param month
    */
   static LastDayOfMonth(month: number): number {
@@ -134,6 +153,7 @@ export class DateUtils {
   }
   /**
    * Последний день года
+   * Для отрицательных лет сначала идет последний день потом первый
    * @param month
    */
   static LastDayOfYear(year: number): number {
@@ -141,24 +161,20 @@ export class DateUtils {
     if (year > 0) {
       f = this.FirstDayOfYear(year + 1) - 1
     } else {
-      f = this.FirstDayOfMonth(year - 1) + 1
+      f = this.FirstDayOfYear(year - 1) + 1
     }
     return f
   }
   /**
    * Первый день года
+   * Для отрицательных лет сначала идет последний день потом первый
    * @param year может быть отрицательным
    */
   static FirstDayOfYear(year: number): number {
     let absYear = Math.abs(year)
     let days = 0
     for (let y = 1; y < absYear; y++) {
-      let leap = DateUtils.leapYear(y)
-      if (leap) {
-        days += 366
-      } else {
-        days += 365
-      }
+      days += TLeapData.getDaysInYear(y)
     }
     return (days + 1) * (year / absYear)
   }
@@ -171,12 +187,7 @@ export class DateUtils {
     let days = 0, yr = 1
     for (let d = 1; d < absDecade; d++) {
       for (let y = 0; y < 10; y++, yr++) {
-        let leap = DateUtils.leapYear(yr)
-        if (leap) {
-          days += 366
-        } else {
-          days += 365
-        }
+        days += TLeapData.getDaysInYear(y)
       }
     }
     return (days + 1) * (decade / absDecade)
@@ -190,12 +201,7 @@ export class DateUtils {
     let days = 0, yr = 1
     for (let c = 1; c < absCentury; c++) {
       for (let y = 0; y < 100; y++ , yr++) {
-        let leap = DateUtils.leapYear(yr)
-        if (leap) {
-          days += 366
-        } else {
-          days += 365
-        }
+        days += TLeapData.getDaysInYear(y)
       }
     }
     return (days + 1) * (century / absCentury)
@@ -224,16 +230,16 @@ export class DateUtils {
     rt = (year - delta) * 12 + (month * delta)
     return rt
   }
-  static getMonthFromNumber(num: number): YearMonth {
+  static getMonthFromNumber(num: number): YearMonthDay {
     let year: number
     let month: number
-    let rt: YearMonth
+    let rt: YearMonthDay
     if (num > 0) {
       year = Math.floor(num / 12)
-      rt = { year: year + 1, month: num - year * 12 }
+      rt = { year: year + 1, month: num - year * 12, day: 1 }
     } else {
       year = Math.ceil(num / 12)
-      rt = { year: year - 1, month: Math.abs(num) - Math.abs(year * 12) }
+      rt = { year: year - 1, month: Math.abs(num) - Math.abs(year * 12), day: 1 }
     }
     return rt
   }
@@ -269,10 +275,7 @@ export class DateUtils {
     let century = Math.floor((decade - 1) / 10) + 1
     return decade - (century - 1) * 10
   }
-
-  static leapYear(year) {
-    return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
-  }
+  
 }
 
 function romanize (num: number): string {

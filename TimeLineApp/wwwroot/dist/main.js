@@ -18610,6 +18610,10 @@ class MyHTMLLIElement extends HTMLLIElement {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const stringutils_1 = __webpack_require__(/*! ./stringutils */ "./src/stringutils.ts");
+//export type TMonth = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
+//export type TDay = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13
+//  | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27
+//  | 28 | 29 | 30 | 31
 class DateUtils {
     /**
      * Дни от РХ в год, месяц, день
@@ -18669,6 +18673,11 @@ class DateUtils {
      * @param day
      */
     static DaysFromAD(_year, month, day) {
+        if (month !== 2) {
+            if (day > DateUtils.dth[month - 1]) {
+                throw "Неверное значение параметра";
+            }
+        }
         let year = Math.abs(_year);
         let days_from_Crismas = 0;
         for (let i = 1; i < year; i++) {
