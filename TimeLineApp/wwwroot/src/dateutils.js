@@ -57,12 +57,22 @@ class DateUtils {
         let leapData = new TLeapData(yr);
         let mth = 0;
         while (Math.abs(d) < abs_days) {
-            d += (leapData.dth[mth] * delta);
+            if (days > 0) {
+                d += leapData.dth[mth];
+            }
+            else {
+                d += leapData.dth.reverse()[mth];
+            }
             mth++;
         }
         mth--;
-        d -= (leapData.dth[mth] * delta);
-        let ds = Math.abs(days) - Math.abs(d);
+        if (days > 0) {
+            d -= leapData.dth[mth];
+        }
+        else {
+            d -= leapData.dth.reverse()[mth];
+        }
+        let ds = abs_days - Math.abs(d);
         return { year: yr, month: mth + 1, day: ds };
     }
     /**
