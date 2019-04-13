@@ -7,14 +7,14 @@ describe('DateUtils', () => {
 
   describe('YMDFromAD', () => {
 
-    it('(1) -> { year: 1, month: 1, day: 1 }', () => {
-      const result = DateUtils.YMDFromAD(1);
-      expect(result).to.deep.equal({ year: 1, month: 1, day: 1 });
+    it('(730) -> { year: 2, month: 12, day: 31 }', () => {
+      const result = DateUtils.YMDFromAD(730);
+      expect(result).to.deep.equal({ year: 2, month: 12, day: 31 });
     });
 
-    it('(-1) -> { year: -1, month: 1, day: 1 }', () => {
-      const result = DateUtils.YMDFromAD(-1);
-      expect(result).to.deep.equal({ year: -1, month: 1, day: 1 });
+    it('(-730) -> { year: -2, month: 1, day: 1 }', () => {
+      const result = DateUtils.YMDFromAD(-730);
+      expect(result).to.deep.equal({ year: -2, month: 1, day: 1 });
     });
 
     it('(0) -> null', () => {
@@ -46,6 +46,17 @@ describe('DateUtils', () => {
       expect(() => fn(2019, 3, 31)).to.not.throw();
     });
 
+  });
+
+  describe('DaysFromAD - YMDFromAD', () => {
+    it('5.6.1963 -> 5.6.1963', () => {
+      const result = DateUtils.YMDFromAD(DateUtils.DaysFromAD(1963, 6, 5))
+      expect(result).to.deep.equal({ year: 1963, month: 6, day: 5 });
+    });
+    it('5.6.-1963 -> 5.6.-1963', () => {
+      const result = DateUtils.YMDFromAD(DateUtils.DaysFromAD(-1963, 6, 5))
+      expect(result).to.deep.equal({ year: -1963, month: 6, day: 5 });
+    });
   });
 
   describe('FirstDayOfMonth', () => {

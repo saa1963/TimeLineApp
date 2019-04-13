@@ -93,12 +93,18 @@ class DateUtils {
             sliceMonth = leapData.dth.slice(0, month - 1);
         }
         else {
-            sliceMonth = leapData.dth.reverse().slice(0, -(month + 1));
+            sliceMonth = leapData.dth.reverse().slice(month - 1);
         }
         sliceMonth.forEach(s => {
             days_from_Crismas += s;
         });
-        return (days_from_Crismas + day) * (year / _year);
+        let kf = year / _year;
+        if (_year > 0) {
+            return days_from_Crismas + day;
+        }
+        else {
+            return -days_from_Crismas - day + 1;
+        }
     }
     /**
      * Первый день месяца (и месяц и день от РХ)

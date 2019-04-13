@@ -6,13 +6,13 @@ require("mocha");
 //import { describe } from 'mocha';
 describe('DateUtils', () => {
     describe('YMDFromAD', () => {
-        it('(1) -> { year: 1, month: 1, day: 1 }', () => {
-            const result = dateutils_1.DateUtils.YMDFromAD(1);
-            chai_1.expect(result).to.deep.equal({ year: 1, month: 1, day: 1 });
+        it('(730) -> { year: 2, month: 12, day: 31 }', () => {
+            const result = dateutils_1.DateUtils.YMDFromAD(730);
+            chai_1.expect(result).to.deep.equal({ year: 2, month: 12, day: 31 });
         });
-        it('(-1) -> { year: -1, month: 1, day: 1 }', () => {
-            const result = dateutils_1.DateUtils.YMDFromAD(-1);
-            chai_1.expect(result).to.deep.equal({ year: -1, month: 1, day: 1 });
+        it('(-730) -> { year: -2, month: 1, day: 1 }', () => {
+            const result = dateutils_1.DateUtils.YMDFromAD(-730);
+            chai_1.expect(result).to.deep.equal({ year: -2, month: 1, day: 1 });
         });
         it('(0) -> null', () => {
             const result = dateutils_1.DateUtils.YMDFromAD(0);
@@ -35,6 +35,16 @@ describe('DateUtils', () => {
         it('{ year = 1, month = 3, day = 31 } -> not exception', () => {
             let fn = dateutils_1.DateUtils.DaysFromAD;
             chai_1.expect(() => fn(2019, 3, 31)).to.not.throw();
+        });
+    });
+    describe('DaysFromAD - YMDFromAD', () => {
+        it('5.6.1963 -> 5.6.1963', () => {
+            const result = dateutils_1.DateUtils.YMDFromAD(dateutils_1.DateUtils.DaysFromAD(1963, 6, 5));
+            chai_1.expect(result).to.deep.equal({ year: 1963, month: 6, day: 5 });
+        });
+        it('5.6.-1963 -> 5.6.-1963', () => {
+            const result = dateutils_1.DateUtils.YMDFromAD(dateutils_1.DateUtils.DaysFromAD(-1963, 6, 5));
+            chai_1.expect(result).to.deep.equal({ year: -1963, month: 6, day: 5 });
         });
     });
     describe('FirstDayOfMonth', () => {
