@@ -66,14 +66,15 @@ class DateUtils {
             mth++;
         }
         mth--;
+        let ds = abs_days - Math.abs(d);
         if (days > 0) {
             d -= leapData.dth[mth];
+            return { year: yr, month: mth + 1, day: ds };
         }
         else {
             d -= leapData.dth.reverse()[mth];
+            return { year: yr, month: mth + 1, day: leapData.dth[mth] - ds };
         }
-        let ds = abs_days - Math.abs(d);
-        return { year: yr, month: mth + 1, day: ds };
     }
     /**
      * День от Рождества Христова + -

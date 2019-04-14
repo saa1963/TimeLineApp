@@ -59,24 +59,19 @@ export class DateUtils {
   static YMDFromAD(days: number): YearMonthDay {
     let d: number = 0
     let yr: number, delta: number
-    if (days > 0) {
-      delta = yr = 1
-    } else if (days < 0) {
-      delta = yr = -1
-    } else {
-      return null
-    }
     let abs_days = Math.abs(days)
+    if (days === 0) return null
+    delta = yr = days / abs_days
+    
     while (Math.abs(d) < abs_days) {
       d += (TLeapData.getDaysInYear(yr) * delta)
       yr += delta
     }
-
     // отматываем год назад
     yr -= delta
     d -= (TLeapData.getDaysInYear(yr) * delta)
 
-    let leapData = new TLeapData(yr)
+    let leapData = new TLeapData(yr + delta)
     let mth = 0
     while (Math.abs(d) < abs_days) {
       if (days > 0) {
@@ -87,13 +82,15 @@ export class DateUtils {
       mth++
     }
     mth--
+    let ds = abs_days - Math.abs(d)
     if (days > 0) {
       d -= leapData.dth[mth]
+      return { year: yr, month: mth + 1, day: ds }
     } else {
+      
       d -= leapData.dth.reverse()[mth]
+      return { year: yr, month: mth + 1, day: leapData.dth[mth] - ds }
     }
-    let ds =  abs_days - Math.abs(d)
-    return {year:yr, month:mth + 1, day:ds}
   }
 
   /**
