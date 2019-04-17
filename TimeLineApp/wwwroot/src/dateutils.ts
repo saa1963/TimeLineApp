@@ -247,7 +247,13 @@ export class DateUtils {
   }
   static getMonthFromYMD(dt: YearMonthDay) {
     let delta = dt.year / Math.abs(dt.year)
-    return (dt.year - delta) * 12 + dt.month * delta
+    if (delta === 1) {
+      return (dt.year - 1) * 12 + dt.month
+    } else {
+
+      return (dt.year + 1) * 12 - (12 - dt.month)
+    }
+    
   }
   static getNumberFromMonth(year: number, month: number): number {
     let rt: number

@@ -229,7 +229,12 @@ class DateUtils {
     }
     static getMonthFromYMD(dt) {
         let delta = dt.year / Math.abs(dt.year);
-        return (dt.year - delta) * 12 + dt.month * delta;
+        if (delta === 1) {
+            return (dt.year - 1) * 12 + dt.month;
+        }
+        else {
+            return (dt.year + 1) * 12 - (12 - dt.month);
+        }
     }
     static getNumberFromMonth(year, month) {
         let rt;
