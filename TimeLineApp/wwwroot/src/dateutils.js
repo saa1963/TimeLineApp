@@ -14,6 +14,7 @@ class TLeapData {
             this.daysInYear = 365;
             this.daysInFeb = 28;
             this.dth = [].concat(TLeapData.dth);
+            this.dth_reverse = [].concat(TLeapData.dth).reverse();
         }
     }
     static getDaysInYear(year) {
@@ -48,26 +49,30 @@ class DateUtils {
         // отматываем год назад
         yr -= delta;
         d -= (TLeapData.getDaysInYear(yr) * delta);
-        let leapData = new TLeapData(yr + delta);
+        let leapData = new TLeapData(yr);
         let mth = 0;
         while (Math.abs(d) < abs_days) {
             if (days > 0) {
                 d += leapData.dth[mth];
             }
             else {
-                d += leapData.dth.reverse()[mth];
+                d -= leapData.dth_reverse[mth];
             }
             mth++;
         }
         mth--;
-        let ds = abs_days - Math.abs(d);
         if (days > 0) {
             d -= leapData.dth[mth];
+        }
+        else {
+            d += leapData.dth_reverse[mth];
+        }
+        let ds = abs_days - Math.abs(d);
+        if (days > 0) {
             return { year: yr, month: mth + 1, day: ds };
         }
         else {
-            d -= leapData.dth.reverse()[mth];
-            return { year: yr, month: mth + 1, day: leapData.dth[mth] - ds };
+            return { year: yr, month: 12 - mth, day: leapData.dth_reverse[mth] - ds + 1 };
         }
     }
     /**
@@ -98,7 +103,12 @@ class DateUtils {
             sliceMonth = leapData.dth.slice(0, month - 1);
         }
         else {
-            sliceMonth = leapData.dth.reverse().slice(month - 1);
+            if (month !== 12) {
+                sliceMonth = leapData.dth.slice(month);
+            }
+            else {
+                sliceMonth = [];
+            }
         }
         sliceMonth.forEach(s => {
             days_from_Crismas += s;
@@ -108,7 +118,7 @@ class DateUtils {
             return days_from_Crismas + day;
         }
         else {
-            return -days_from_Crismas - day + 1;
+            return -(days_from_Crismas + (leapData.dth[month - 1] - day + 1));
         }
     }
     /**
@@ -220,6 +230,10 @@ class DateUtils {
     }
     static getMonthFromDate(dt) {
         return (dt.getFullYear() - 1) * 12 + dt.getMonth() + 1;
+    }
+    static getMonthFromYMD(dt) {
+        let delta = dt.year / Math.abs(dt.year);
+        return (dt.year - delta) * 12 + dt.month * delta;
     }
     static getNumberFromMonth(year, month) {
         let rt;

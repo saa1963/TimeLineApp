@@ -13,6 +13,7 @@ export class TLeapData {
   daysInYear: number
   daysInFeb: number
   dth: number[]
+  dth_reverse: number[]
   constructor(year: number) {
     if (TLeapData.leapYear(year)) {
       this.isLeap = true
@@ -24,6 +25,7 @@ export class TLeapData {
       this.daysInYear = 365
       this.daysInFeb = 28
       this.dth = [].concat(TLeapData.dth)
+      this.dth_reverse = [].concat(TLeapData.dth).reverse()
     }
   }
   static getDaysInYear(year): number {
@@ -72,25 +74,27 @@ export class DateUtils {
     yr -= delta
     d -= (TLeapData.getDaysInYear(yr) * delta)
 
-    let leapData = new TLeapData(yr + delta)
+    let leapData = new TLeapData(yr)
     let mth = 0
     while (Math.abs(d) < abs_days) {
       if (days > 0) {
         d += leapData.dth[mth]
       } else {
-        d += leapData.dth.reverse()[mth]
+        d -= leapData.dth_reverse[mth]
       }
       mth++
     }
     mth--
-    let ds = abs_days - Math.abs(d)
     if (days > 0) {
       d -= leapData.dth[mth]
+    } else {
+      d += leapData.dth_reverse[mth]
+    }
+    let ds = abs_days - Math.abs(d)
+    if (days > 0) {
       return { year: yr, month: mth + 1, day: ds }
     } else {
-      
-      d -= leapData.dth.reverse()[mth]
-      return { year: yr, month: mth + 1, day: leapData.dth[mth] - ds }
+      return { year: yr, month: 12 - mth, day: leapData.dth_reverse[mth] - ds + 1}
     }
   }
 
@@ -121,7 +125,11 @@ export class DateUtils {
     if (_year > 0) {
       sliceMonth = leapData.dth.slice(0, month - 1)
     } else {
-      sliceMonth = leapData.dth.reverse().slice(month - 1)
+      if (month !== 12) {
+        sliceMonth = leapData.dth.slice(month)
+      } else {
+        sliceMonth = []
+      }
     }
     sliceMonth.forEach(s => {
       days_from_Crismas += s
@@ -130,12 +138,11 @@ export class DateUtils {
     if (_year > 0) {
       return days_from_Crismas + day
     } else {
-      return -days_from_Crismas - day + 1
+      return -(days_from_Crismas + (leapData.dth[month - 1] - day + 1))
     }
   }
   /**
    * Первый день месяца (и месяц и день от РХ)
-   * Для отрицательных месяцев 1-ый день месяца позже последнего -31 ... -1
    * @param month может быть с минусом
    */
   static FirstDayOfMonth(month: number): number {
@@ -156,7 +163,6 @@ export class DateUtils {
   }
   /**
    * Последний день месяца
-   * Для отрицательных месяцев Последний день раньше Первого -31 ... -1
    * @param month
    */
   static LastDayOfMonth(month: number): number {
@@ -170,7 +176,6 @@ export class DateUtils {
   }
   /**
    * Последний день года
-   * Для отрицательных лет сначала идет последний день потом первый
    * @param month
    */
   static LastDayOfYear(year: number): number {
@@ -184,7 +189,6 @@ export class DateUtils {
   }
   /**
    * Первый день года
-   * Для отрицательных лет сначала идет последний день потом первый
    * @param year может быть отрицательным
    */
   static FirstDayOfYear(year: number): number {
@@ -240,6 +244,10 @@ export class DateUtils {
   }
   static getMonthFromDate(dt: Date): number {
     return (dt.getFullYear() - 1) * 12 + dt.getMonth() + 1
+  }
+  static getMonthFromYMD(dt: YearMonthDay) {
+    let delta = dt.year / Math.abs(dt.year)
+    return (dt.year - delta) * 12 + dt.month * delta
   }
   static getNumberFromMonth(year: number, month: number): number {
     let rt: number
