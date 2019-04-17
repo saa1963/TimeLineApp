@@ -34,9 +34,9 @@ describe('DateUtils', () => {
             const result = dateutils_1.DateUtils.FirstDayOfMonth(13);
             chai_1.expect(result).to.equal(366);
         });
-        it('-13 -> -366', () => {
+        it('-13 -> -396', () => {
             const result = dateutils_1.DateUtils.FirstDayOfMonth(-13);
-            chai_1.expect(result).to.equal(-366);
+            chai_1.expect(result).to.equal(-396);
         });
     });
     describe('LastDayOfMonth', () => {

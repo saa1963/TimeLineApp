@@ -8,6 +8,7 @@ class TLeapData {
             this.daysInYear = 366;
             this.daysInFeb = 29;
             this.dth = [].concat(TLeapData.dth_leap);
+            this.dth_reverse = [].concat(TLeapData.dth_leap).reverse();
         }
         else {
             this.isLeap = false;
@@ -126,20 +127,44 @@ class DateUtils {
      * @param month может быть с минусом
      */
     static FirstDayOfMonth(month) {
-        let absMonth = Math.abs(month);
         let days = 0;
-        for (let m = 1, mth = 1, year = 1; m < absMonth; m++) {
-            let leapData = new TLeapData(year);
-            days += leapData.dth[mth - 1];
-            if (mth === 12) {
-                mth = 1;
-                year++;
+        let year;
+        let mth;
+        let leapData;
+        if (month > 0) {
+            year = 1;
+            mth = 1;
+            leapData = new TLeapData(year);
+            for (let m = 1; m < month; m++) {
+                days += leapData.dth[mth - 1];
+                if (mth === 12) {
+                    mth = 1;
+                    year++;
+                    leapData = new TLeapData(year);
+                }
+                else {
+                    mth++;
+                }
             }
-            else {
-                mth++;
-            }
+            return days + 1;
         }
-        return (days + 1) * (month / absMonth);
+        else {
+            year = -1;
+            mth = 12;
+            leapData = new TLeapData(year);
+            for (let m = -1; m > month; m--) {
+                days -= leapData.dth[mth - 1];
+                if (mth === 1) {
+                    mth = 12;
+                    year--;
+                    leapData = new TLeapData(year);
+                }
+                else {
+                    mth--;
+                }
+            }
+            return days - leapData.dth[mth - 1];
+        }
     }
     /**
      * Последний день месяца
@@ -233,7 +258,7 @@ class DateUtils {
             return (dt.year - 1) * 12 + dt.month;
         }
         else {
-            return (dt.year + 1) * 12 - (12 - dt.month);
+            return (dt.year + 1) * 12 - (13 - dt.month);
         }
     }
     static getNumberFromMonth(year, month) {
