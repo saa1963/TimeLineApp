@@ -47,9 +47,9 @@ describe('DateUtils', () => {
       const result = DateUtils.LastDayOfMonth(13);
       expect(result).to.equal(396);
     });
-    it('-13 -> -396', () => {
+    it('-13 -> -366', () => {
       const result = DateUtils.LastDayOfMonth(-13);
-      expect(result).to.equal(-396);
+      expect(result).to.equal(-366);
     });
   })
 
@@ -69,9 +69,9 @@ describe('DateUtils', () => {
       const result = DateUtils.LastDayOfYear(2);
       expect(result).to.equal(730);
     });
-    it('-2 -> -730', () => {
+    it('-2 -> -366', () => {
       const result = DateUtils.LastDayOfYear(-2);
-      expect(result).to.equal(-730);
+      expect(result).to.equal(-366);
     });
   })
 

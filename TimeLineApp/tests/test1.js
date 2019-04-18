@@ -44,9 +44,9 @@ describe('DateUtils', () => {
             const result = dateutils_1.DateUtils.LastDayOfMonth(13);
             chai_1.expect(result).to.equal(396);
         });
-        it('-13 -> -396', () => {
+        it('-13 -> -366', () => {
             const result = dateutils_1.DateUtils.LastDayOfMonth(-13);
-            chai_1.expect(result).to.equal(-396);
+            chai_1.expect(result).to.equal(-366);
         });
     });
     describe('FirstDayOfYear', () => {
@@ -64,9 +64,9 @@ describe('DateUtils', () => {
             const result = dateutils_1.DateUtils.LastDayOfYear(2);
             chai_1.expect(result).to.equal(730);
         });
-        it('-2 -> -730', () => {
+        it('-2 -> -366', () => {
             const result = dateutils_1.DateUtils.LastDayOfYear(-2);
-            chai_1.expect(result).to.equal(-730);
+            chai_1.expect(result).to.equal(-366);
         });
     });
 });

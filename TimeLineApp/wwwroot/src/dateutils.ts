@@ -194,7 +194,7 @@ export class DateUtils {
     if (month > 0) {
       f = this.FirstDayOfMonth(month + 1) - 1
     } else {
-      f = this.FirstDayOfMonth(month - 1) + 1
+      f = this.FirstDayOfMonth(month + 1) - 1
     }
     return f
   }
