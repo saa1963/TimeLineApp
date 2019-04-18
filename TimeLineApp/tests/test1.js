@@ -54,9 +54,9 @@ describe('DateUtils', () => {
             const result = dateutils_1.DateUtils.FirstDayOfYear(2);
             chai_1.expect(result).to.equal(366);
         });
-        it('-2 -> -366', () => {
+        it('-2 -> -730', () => {
             const result = dateutils_1.DateUtils.FirstDayOfYear(-2);
-            chai_1.expect(result).to.equal(-366);
+            chai_1.expect(result).to.equal(-730);
         });
     });
     describe('LastDayOfYear', () => {

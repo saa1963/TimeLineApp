@@ -172,12 +172,7 @@ class DateUtils {
      */
     static LastDayOfMonth(month) {
         let f;
-        if (month > 0) {
-            f = this.FirstDayOfMonth(month + 1) - 1;
-        }
-        else {
-            f = this.FirstDayOfMonth(month + 1) - 1;
-        }
+        f = this.FirstDayOfMonth(month + 1) - 1;
         return f;
     }
     /**
@@ -186,12 +181,7 @@ class DateUtils {
      */
     static LastDayOfYear(year) {
         let f;
-        if (year > 0) {
-            f = this.FirstDayOfYear(year + 1) - 1;
-        }
-        else {
-            f = this.FirstDayOfYear(year - 1) + 1;
-        }
+        f = this.FirstDayOfYear(year + 1) - 1;
         return f;
     }
     /**
@@ -199,12 +189,20 @@ class DateUtils {
      * @param year может быть отрицательным
      */
     static FirstDayOfYear(year) {
-        let absYear = Math.abs(year);
+        //let absYear = Math.abs(year)
         let days = 0;
-        for (let y = 1; y < absYear; y++) {
-            days += TLeapData.getDaysInYear(y);
+        if (year > 0) {
+            for (let y = 1; y < year; y++) {
+                days += TLeapData.getDaysInYear(y);
+            }
+            return days + 1;
         }
-        return (days + 1) * (year / absYear);
+        else {
+            for (let y = -1; y >= year; y--) {
+                days -= TLeapData.getDaysInYear(y);
+            }
+            return days;
+        }
     }
     /**
      * Первый день десятилетия
