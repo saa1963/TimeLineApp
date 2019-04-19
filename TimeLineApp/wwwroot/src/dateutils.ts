@@ -191,11 +191,7 @@ export class DateUtils {
    */
   static LastDayOfMonth(month: number): number {
     let f: number
-    if (month > 0) {
-      f = this.FirstDayOfMonth(month + 1) - 1
-    } else {
-      f = this.FirstDayOfMonth(month + 1) - 1
-    }
+    f = this.FirstDayOfMonth(month + 1) - 1
     return f
   }
   /**
@@ -204,11 +200,7 @@ export class DateUtils {
    */
   static LastDayOfYear(year: number): number {
     let f: number
-    if (year > 0) {
-      f = this.FirstDayOfYear(year + 1) - 1
-    } else {
-      f = this.FirstDayOfYear(year - 1) + 1
-    }
+    f = this.FirstDayOfYear(year + 1) - 1
     return f
   }
   /**
@@ -216,40 +208,71 @@ export class DateUtils {
    * @param year может быть отрицательным
    */
   static FirstDayOfYear(year: number): number {
-    let absYear = Math.abs(year)
     let days = 0
-    for (let y = 1; y < absYear; y++) {
-      days += TLeapData.getDaysInYear(y)
+    if (year > 0) {
+      for (let y = 1; y < year; y++) {
+        days += TLeapData.getDaysInYear(y)
+      }
+      return days + 1
+    } else {
+      for (let y = -1; y >= year; y--) {
+        days -= TLeapData.getDaysInYear(y)
+      }
+      return days
     }
-    return (days + 1) * (year / absYear)
   }
   /**
    * Первый день десятилетия
    * @param decade может быть отрицательным
    */
   static FirstDayOfDecade(decade: number) {
-    let absDecade = Math.abs(decade)
-    let days = 0, yr = 1
-    for (let d = 1; d < absDecade; d++) {
-      for (let y = 0; y < 10; y++, yr++) {
-        days += TLeapData.getDaysInYear(y)
+    let days = 0, yr = 0
+    if (decade > 0) {
+      for (let d = 1; d < decade; d++) {
+        for (let y = 0; y < 10; y++, yr++) {
+          days += TLeapData.getDaysInYear(yr + 1)
+        }
       }
+      return days + 1
+    } else {
+      for (let d = -1; d >= decade; d--) {
+        for (let y = 0; y > -10; y--, yr--) {
+          days -= TLeapData.getDaysInYear(yr - 1)
+        }
+      }
+      return days
     }
-    return (days + 1) * (decade / absDecade)
   }
   /**
-   * Первый день века
+   * Последний день десятилетия
+   * @param decade может быть отрицательным
+   */
+  static LastDayOfDecade(decade: number) {
+    let f: number
+    f = this.FirstDayOfDecade(decade + 1) - 1
+    return f
+  }
+  /**
+   * Первый день столетия
    * @param century может быть отрицательным
    */
-  static FirstDayOfCentury(century: number): number {
-    let absCentury = Math.abs(century)
-    let days = 0, yr = 1
-    for (let c = 1; c < absCentury; c++) {
-      for (let y = 0; y < 100; y++ , yr++) {
-        days += TLeapData.getDaysInYear(y)
+  static FirstDayOfCentury(century: number) {
+    let days = 0, yr = 0
+    if (century > 0) {
+      for (let d = 1; d < century; d++) {
+        for (let y = 0; y < 100; y++, yr++) {
+          days += TLeapData.getDaysInYear(yr + 1)
+        }
       }
+      return days + 1
+    } else {
+      for (let d = -1; d >= century; d--) {
+        for (let y = 0; y > -100; y--, yr--) {
+          days -= TLeapData.getDaysInYear(yr - 1)
+        }
+      }
+      return days
     }
-    return (days + 1) * (century / absCentury)
   }
   static getCurDate(): Date {
     let dt = new Date()

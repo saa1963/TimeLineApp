@@ -172,12 +172,7 @@ class DateUtils {
      */
     static LastDayOfMonth(month) {
         let f;
-        if (month > 0) {
-            f = this.FirstDayOfMonth(month + 1) - 1;
-        }
-        else {
-            f = this.FirstDayOfMonth(month + 1) - 1;
-        }
+        f = this.FirstDayOfMonth(month + 1) - 1;
         return f;
     }
     /**
@@ -186,12 +181,7 @@ class DateUtils {
      */
     static LastDayOfYear(year) {
         let f;
-        if (year > 0) {
-            f = this.FirstDayOfYear(year + 1) - 1;
-        }
-        else {
-            f = this.FirstDayOfYear(year - 1) + 1;
-        }
+        f = this.FirstDayOfYear(year + 1) - 1;
         return f;
     }
     /**
@@ -199,40 +189,74 @@ class DateUtils {
      * @param year может быть отрицательным
      */
     static FirstDayOfYear(year) {
-        let absYear = Math.abs(year);
         let days = 0;
-        for (let y = 1; y < absYear; y++) {
-            days += TLeapData.getDaysInYear(y);
+        if (year > 0) {
+            for (let y = 1; y < year; y++) {
+                days += TLeapData.getDaysInYear(y);
+            }
+            return days + 1;
         }
-        return (days + 1) * (year / absYear);
+        else {
+            for (let y = -1; y >= year; y--) {
+                days -= TLeapData.getDaysInYear(y);
+            }
+            return days;
+        }
     }
     /**
      * Первый день десятилетия
      * @param decade может быть отрицательным
      */
     static FirstDayOfDecade(decade) {
-        let absDecade = Math.abs(decade);
-        let days = 0, yr = 1;
-        for (let d = 1; d < absDecade; d++) {
-            for (let y = 0; y < 10; y++, yr++) {
-                days += TLeapData.getDaysInYear(y);
+        let days = 0, yr = 0;
+        if (decade > 0) {
+            for (let d = 1; d < decade; d++) {
+                for (let y = 0; y < 10; y++, yr++) {
+                    days += TLeapData.getDaysInYear(yr + 1);
+                }
             }
+            return days + 1;
         }
-        return (days + 1) * (decade / absDecade);
+        else {
+            for (let d = -1; d >= decade; d--) {
+                for (let y = 0; y > -10; y--, yr--) {
+                    days -= TLeapData.getDaysInYear(yr - 1);
+                }
+            }
+            return days;
+        }
     }
     /**
-     * Первый день века
+     * Последний день десятилетия
+     * @param decade может быть отрицательным
+     */
+    static LastDayOfDecade(decade) {
+        let f;
+        f = this.FirstDayOfDecade(decade + 1) - 1;
+        return f;
+    }
+    /**
+     * Первый день столетия
      * @param century может быть отрицательным
      */
     static FirstDayOfCentury(century) {
-        let absCentury = Math.abs(century);
-        let days = 0, yr = 1;
-        for (let c = 1; c < absCentury; c++) {
-            for (let y = 0; y < 100; y++, yr++) {
-                days += TLeapData.getDaysInYear(y);
+        let days = 0, yr = 0;
+        if (century > 0) {
+            for (let d = 1; d < century; d++) {
+                for (let y = 0; y < 100; y++, yr++) {
+                    days += TLeapData.getDaysInYear(yr + 1);
+                }
             }
+            return days + 1;
         }
-        return (days + 1) * (century / absCentury);
+        else {
+            for (let d = -1; d >= century; d--) {
+                for (let y = 0; y > -100; y--, yr--) {
+                    days -= TLeapData.getDaysInYear(yr - 1);
+                }
+            }
+            return days;
+        }
     }
     static getCurDate() {
         let dt = new Date();

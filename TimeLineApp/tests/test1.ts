@@ -16,7 +16,7 @@ describe('DateUtils', () => {
     });
   });
 
-  describe('FirstDayOfMonth', () => {
+  describe('FirstDayOfMonth - сборный', () => {
     it('111', () => {
       const result = DateUtils.getMonthFromYMD({ year: 1963, month: 6, day: 5 });
       const result0 = DateUtils.FirstDayOfMonth(result);
@@ -58,9 +58,9 @@ describe('DateUtils', () => {
       const result = DateUtils.FirstDayOfYear(2);
       expect(result).to.equal(366);
     });
-    it('-2 -> -366', () => {
+    it('-2 -> -730', () => {
       const result = DateUtils.FirstDayOfYear(-2);
-      expect(result).to.equal(-366);
+      expect(result).to.equal(-730);
     });
   })
 
@@ -72,6 +72,28 @@ describe('DateUtils', () => {
     it('-2 -> -366', () => {
       const result = DateUtils.LastDayOfYear(-2);
       expect(result).to.equal(-366);
+    });
+  })
+
+  describe('FirstDayOfDecade', () => {
+    it('2 -> 3653', () => {
+      const result = DateUtils.FirstDayOfDecade(2);
+      expect(result).to.equal(3653);
+    });
+    it('-2 -> -7305', () => {
+      const result = DateUtils.FirstDayOfDecade(-2);
+      expect(result).to.equal(-7305);
+    });
+  })
+
+  describe('LastDayOfDecade', () => {
+    it('2 -> 7305', () => {
+      const result = DateUtils.LastDayOfDecade(2);
+      expect(result).to.equal(7305);
+    });
+    it('-2 -> -3653', () => {
+      const result = DateUtils.LastDayOfDecade(-2);
+      expect(result).to.equal(-3653);
     });
   })
 
