@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const dateutils_1 = require("../wwwroot/src/dateutils");
 const chai_1 = require("chai");
 require("mocha");
-//import { describe } from 'mocha';
 describe('DateUtils', () => {
     describe('DaysFromAD - YMDFromAD', () => {
         it('5.6.1963 -> 5.6.1963', () => {
