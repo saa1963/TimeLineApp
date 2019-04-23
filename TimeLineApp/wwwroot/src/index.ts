@@ -187,7 +187,7 @@ function LoadTimeLine() {
     }
     })
     .done(data => {
-      let tldata = new TimeLineData(JSON.parse(data))
+      let tldata = TimeLineData.CreateTimeLineData(JSON.parse(data))
       let tl = new TimeLine(ctx)
       tl.name = tldata.Name
       tl.tldata = tldata
