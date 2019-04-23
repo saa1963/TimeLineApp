@@ -4,7 +4,7 @@
   "description": "timelineapp",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -r ts-node/register tests/**/test1.ts",
+    "test": "mocha -r ts-node/register tests/**/*.ts",
     "scss": "node-sass --include-path scss/bootstrap scss/fontawesome --output-style compressed scss/main.scss wwwroot/dist/main.css"
   },
   "author": "",

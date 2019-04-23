@@ -290,30 +290,22 @@ export class TLPeriod {
    * @param vl
    */
   ContainsYear(year: number): boolean {
-    let begin: number, end: number
-    if (year > 0) {
-      begin = DateUtils.FirstDayOfYear(year)
-      end = DateUtils.LastDayOfYear(year)
-    } else {
-      begin = DateUtils.LastDayOfYear(year)
-      end = DateUtils.FirstDayOfYear(year)
-    }
-    return this.IsIntersectIntervals(begin, end, this.m_BeginDay, this.m_EndDay)
+    return this.IsIntersectIntervals(
+      DateUtils.FirstDayOfYear(year),
+      DateUtils.LastDayOfYear(year),
+      this.m_BeginDay,
+      this.m_EndDay)
   }
   /**
    * Содержит ли this (текущий период) ОВ vl
    * @param vl - месяц от РХ
    */
   ContainsMonth(month: number): boolean {
-    let begin: number, end: number
-    if (month > 0) {
-      begin = DateUtils.FirstDayOfMonth(month)
-      end = DateUtils.LastDayOfMonth(month)
-    } else {
-      begin = DateUtils.LastDayOfMonth(month)
-      end = DateUtils.FirstDayOfMonth(month)
-    }
-    return this.IsIntersectIntervals(begin, end, this.m_BeginDay, this.m_EndDay)
+    return this.IsIntersectIntervals(
+      DateUtils.FirstDayOfMonth(month),
+      DateUtils.LastDayOfMonth(month),
+      this.m_BeginDay,
+      this.m_EndDay)
   }
   /**
    * Есть ли пересечение 2-х целочисленных интервалов

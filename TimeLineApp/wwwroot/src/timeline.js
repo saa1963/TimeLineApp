@@ -88,6 +88,7 @@ class TimeLine {
         let rt = [];
         if (this.tldata !== undefined) {
             this.tldata.Periods.forEach(v => {
+                // v - это период из общего массива периодов данной TL
                 if (v.Contains(this.period, dt)) {
                     rt.push(v);
                 }
