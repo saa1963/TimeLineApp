@@ -157,7 +157,6 @@ export class TimeLine {
     this.ctx.fillText(this.formatPeriod(dt), x0 - TimeLine.HALF_INTERVAL_WIDTH, this.y + TimeLine.HALF_LINE_THICKNESS)
 
     let cellData = new CellData(dt, x0 - TimeLine.INTERVAL_WIDTH + 1, this.y, x0, this.y + TimeLine.LINE_THICKNESS - 1, path)
-    //cellData.events = this.findevents(dt)
     cellData.periods = this.findperiods(dt)
     this.data.push(cellData)
 
@@ -254,7 +253,6 @@ export class TimeLine {
 }
 
 class CellData {
-  //events: TLEvent[]
   periods: TLPeriod[]
   constructor (
     public value: any,
