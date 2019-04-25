@@ -255,7 +255,7 @@ export class TimeLine {
 class CellData {
   periods: TLPeriod[]
   constructor (
-    public value: any,
+    public value: number,
     public x1: number,
     public y1: number,
     public x2: number,
