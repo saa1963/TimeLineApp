@@ -17939,6 +17939,7 @@ exports.RegisterHandlers = RegisterHandlers;
 Object.defineProperty(exports, "__esModule", { value: true });
 const dateutils_1 = __webpack_require__(/*! ./dateutils */ "./src/dateutils.ts");
 const TLPeriod_1 = __webpack_require__(/*! ./TLPeriod */ "./src/TLPeriod.ts");
+const TLPeriodEvent_1 = __webpack_require__(/*! ./TLPeriodEvent */ "./src/TLPeriodEvent.ts");
 var EnumPeriod;
 (function (EnumPeriod) {
     EnumPeriod[EnumPeriod["day"] = 1] = "day";
@@ -18171,7 +18172,7 @@ class TimeLineData {
         rt.Periods = [];
         data.Periods.forEach(o => {
             if (TLEvent.Equal(o.Begin, o.End))
-                rt.Periods.push(new TLPeriodEvent(o));
+                rt.Periods.push(new TLPeriodEvent_1.TLPeriodEvent(o));
             else
                 rt.Periods.push(new TLPeriod_1.TLPeriod(o));
         });
@@ -18179,12 +18180,6 @@ class TimeLineData {
     }
 }
 exports.TimeLineData = TimeLineData;
-class TLPeriodEvent extends TLPeriod_1.TLPeriod {
-    constructor(o) {
-        super(o);
-    }
-}
-exports.TLPeriodEvent = TLPeriodEvent;
 
 
 /***/ }),
@@ -18275,27 +18270,28 @@ class TLPeriod {
      * @param vl
      */
     ContainsYear(year) {
-        return this.IsIntersectIntervals(dateutils_1.DateUtils.FirstDayOfYear(year), dateutils_1.DateUtils.LastDayOfYear(year), this.m_BeginDay, this.m_EndDay);
+        return this.IsIntersectIntervals(dateutils_1.DateUtils.FirstDayOfYear(year), dateutils_1.DateUtils.LastDayOfYear(year));
     }
     /**
      * Содержит ли this (текущий период) ОВ vl
      * @param vl - месяц от РХ
      */
     ContainsMonth(month) {
-        return this.IsIntersectIntervals(dateutils_1.DateUtils.FirstDayOfMonth(month), dateutils_1.DateUtils.LastDayOfMonth(month), this.m_BeginDay, this.m_EndDay);
+        return this.IsIntersectIntervals(dateutils_1.DateUtils.FirstDayOfMonth(month), dateutils_1.DateUtils.LastDayOfMonth(month));
     }
     /**
      * Есть ли пересечение 2-х целочисленных интервалов
      * @param l1 левая граница интервал 1
      * @param r1 правая граница интервал 1
-     * @param l2 левая граница интервал 2
-     * @param r2 правая граница интервал 2
      */
-    IsIntersectIntervals(l1, r1, l2, r2) {
+    IsIntersectIntervals(l1, r1) {
+        return TLPeriod.isIntersectIntervals(l1, r1, this.m_BeginDay, this.m_EndDay);
+    }
+    static isIntersectIntervals(l1, r1, l2, r2) {
         let l = Math.min(l1, l2);
         let r = Math.max(r1, r2);
         let s = r - l;
-        return s <= (r1 - l1) + (r2 - l2);
+        return s <= (r1 - l1) + (r2 - r1);
     }
     /**
      * Первый день интервала
@@ -18355,6 +18351,27 @@ class TLPeriod {
     }
 }
 exports.TLPeriod = TLPeriod;
+
+
+/***/ }),
+
+/***/ "./src/TLPeriodEvent.ts":
+/*!******************************!*\
+  !*** ./src/TLPeriodEvent.ts ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const TLPeriod_1 = __webpack_require__(/*! ./TLPeriod */ "./src/TLPeriod.ts");
+class TLPeriodEvent extends TLPeriod_1.TLPeriod {
+    constructor(o) {
+        super(o);
+    }
+}
+exports.TLPeriodEvent = TLPeriodEvent;
 
 
 /***/ }),
@@ -19403,20 +19420,6 @@ class TimeLine {
         }
         this.drawName();
     }
-    /**
-     * Формирует массив событий для текущего ОВ
-     * @param dt
-     * Текущее значение ОВ, которое в данный момент отрисовывается
-     */
-    //findevents(dt: number | Date): TLEvent[] {
-    //  let rt: TLEvent[] = []
-    //  this.tldata.Events.forEach(v => {
-    //    if (v.Equal(this.period, dt)) {
-    //      rt.push(v)
-    //    }
-    //  })
-    //  return rt
-    //}
     /**
      * Формирует массив периодов для текущего ОВ
      * @param dt

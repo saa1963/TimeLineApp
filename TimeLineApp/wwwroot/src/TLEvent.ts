@@ -1,5 +1,6 @@
 ﻿import { DateUtils, TLeapData, YearMonthDay } from './dateutils';
 import { TLPeriod } from './TLPeriod';
+import { TLPeriodEvent } from './TLPeriodEvent';
 
 export enum EnumPeriod {
   day = 1, month = 2, year = 3, decade = 4, century = 5
@@ -238,8 +239,3 @@ export class TimeLineData {
   }
 }
 
-export class TLPeriodEvent extends TLPeriod {
-  constructor(o: TLPeriod) {
-    super(o)
-  }
-}

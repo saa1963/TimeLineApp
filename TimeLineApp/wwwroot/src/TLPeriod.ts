@@ -1,5 +1,6 @@
 ﻿import { DateUtils } from './dateutils';
 import { TLEvent, EnumPeriod, TLEventDay, TLEventMonth, TLEventYear, TLEventDecade, TLEventCentury } from './TLEvent';
+
 export class TLPeriod {
     Name: string;
     Begin: TLEvent;
@@ -79,28 +80,33 @@ export class TLPeriod {
      * @param vl
      */
     ContainsYear(year: number): boolean {
-        return this.IsIntersectIntervals(DateUtils.FirstDayOfYear(year), DateUtils.LastDayOfYear(year), this.m_BeginDay, this.m_EndDay);
+        return this.IsIntersectIntervals(DateUtils.FirstDayOfYear(year), DateUtils.LastDayOfYear(year));
     }
     /**
      * Содержит ли this (текущий период) ОВ vl
      * @param vl - месяц от РХ
      */
     ContainsMonth(month: number): boolean {
-        return this.IsIntersectIntervals(DateUtils.FirstDayOfMonth(month), DateUtils.LastDayOfMonth(month), this.m_BeginDay, this.m_EndDay);
+        return this.IsIntersectIntervals(DateUtils.FirstDayOfMonth(month), DateUtils.LastDayOfMonth(month));
     }
     /**
      * Есть ли пересечение 2-х целочисленных интервалов
      * @param l1 левая граница интервал 1
      * @param r1 правая граница интервал 1
-     * @param l2 левая граница интервал 2
-     * @param r2 правая граница интервал 2
      */
-    IsIntersectIntervals(l1: number, r1: number, l2: number, r2: number): boolean {
-        let l = Math.min(l1, l2);
-        let r = Math.max(r1, r2);
-        let s = r - l;
-        return s <= (r1 - l1) + (r2 - l2);
+    IsIntersectIntervals(l1: number, r1: number): boolean {
+        return TLPeriod.isIntersectIntervals(l1, r1, this.m_BeginDay, this.m_EndDay)
     }
+
+    static isIntersectIntervals(
+      l1: number, r1: number,
+      l2: number, r2: number): boolean {
+      let l = Math.min(l1, l2);
+      let r = Math.max(r1, r2);
+      let s = r - l;
+      return s <= (r1 - l1) + (r2 - r1);
+    }
+
     /**
      * Первый день интервала
      * */
@@ -158,3 +164,5 @@ export class TLPeriod {
         return day >= this.m_BeginDay && day <= this.m_EndDay;
     }
 }
+
+

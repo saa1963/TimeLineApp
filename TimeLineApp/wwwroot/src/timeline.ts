@@ -95,20 +95,6 @@ export class TimeLine {
   }
 
   /**
-   * Формирует массив событий для текущего ОВ
-   * @param dt 
-   * Текущее значение ОВ, которое в данный момент отрисовывается
-   */
-  //findevents(dt: number | Date): TLEvent[] {
-  //  let rt: TLEvent[] = []
-  //  this.tldata.Events.forEach(v => {
-  //    if (v.Equal(this.period, dt)) {
-  //      rt.push(v)
-  //    }
-  //  })
-  //  return rt
-  //}
-  /**
    * Формирует массив периодов для текущего ОВ
    * @param dt 
    * Текущее значение ОВ, которое в данный момент отрисовывается

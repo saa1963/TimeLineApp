@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const dateutils_1 = require("./dateutils");
 const TLPeriod_1 = require("./TLPeriod");
+const TLPeriodEvent_1 = require("./TLPeriodEvent");
 var EnumPeriod;
 (function (EnumPeriod) {
     EnumPeriod[EnumPeriod["day"] = 1] = "day";
@@ -234,7 +235,7 @@ class TimeLineData {
         rt.Periods = [];
         data.Periods.forEach(o => {
             if (TLEvent.Equal(o.Begin, o.End))
-                rt.Periods.push(new TLPeriodEvent(o));
+                rt.Periods.push(new TLPeriodEvent_1.TLPeriodEvent(o));
             else
                 rt.Periods.push(new TLPeriod_1.TLPeriod(o));
         });
@@ -242,10 +243,4 @@ class TimeLineData {
     }
 }
 exports.TimeLineData = TimeLineData;
-class TLPeriodEvent extends TLPeriod_1.TLPeriod {
-    constructor(o) {
-        super(o);
-    }
-}
-exports.TLPeriodEvent = TLPeriodEvent;
 //# sourceMappingURL=TLEvent.js.map

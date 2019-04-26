@@ -76,27 +76,28 @@ class TLPeriod {
      * @param vl
      */
     ContainsYear(year) {
-        return this.IsIntersectIntervals(dateutils_1.DateUtils.FirstDayOfYear(year), dateutils_1.DateUtils.LastDayOfYear(year), this.m_BeginDay, this.m_EndDay);
+        return this.IsIntersectIntervals(dateutils_1.DateUtils.FirstDayOfYear(year), dateutils_1.DateUtils.LastDayOfYear(year));
     }
     /**
      * Содержит ли this (текущий период) ОВ vl
      * @param vl - месяц от РХ
      */
     ContainsMonth(month) {
-        return this.IsIntersectIntervals(dateutils_1.DateUtils.FirstDayOfMonth(month), dateutils_1.DateUtils.LastDayOfMonth(month), this.m_BeginDay, this.m_EndDay);
+        return this.IsIntersectIntervals(dateutils_1.DateUtils.FirstDayOfMonth(month), dateutils_1.DateUtils.LastDayOfMonth(month));
     }
     /**
      * Есть ли пересечение 2-х целочисленных интервалов
      * @param l1 левая граница интервал 1
      * @param r1 правая граница интервал 1
-     * @param l2 левая граница интервал 2
-     * @param r2 правая граница интервал 2
      */
-    IsIntersectIntervals(l1, r1, l2, r2) {
+    IsIntersectIntervals(l1, r1) {
+        return TLPeriod.isIntersectIntervals(l1, r1, this.m_BeginDay, this.m_EndDay);
+    }
+    static isIntersectIntervals(l1, r1, l2, r2) {
         let l = Math.min(l1, l2);
         let r = Math.max(r1, r2);
         let s = r - l;
-        return s <= (r1 - l1) + (r2 - l2);
+        return s <= (r1 - l1) + (r2 - r1);
     }
     /**
      * Первый день интервала

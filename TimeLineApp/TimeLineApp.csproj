@@ -28,6 +28,7 @@
 
   <ItemGroup>
     <None Remove="tests\DateUtilsTest.ts" />
+    <None Remove="tests\TLPeriodTest.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -81,6 +82,7 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="tests\DateUtilsTest.ts" />
+    <TypeScriptCompile Include="tests\TLPeriodTest.ts" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
