@@ -3,7 +3,8 @@ import { makeColor } from './colorutils'
 import { ContextMenu } from './contextmenu'
 import { LogonHandlers } from './LogonHandlers';
 import { RegisterHandlers } from './RegisterHandlers'
-import { TimeLineData, EnumPeriod } from './TLEvent'
+import { EnumPeriod } from './TLEvent'
+import { TimeLineData } from "./TimeLineData";
 import 'bootstrap'
 import * as $ from 'jquery'
 

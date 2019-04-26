@@ -9,6 +9,14 @@ describe('TLPeriod', () => {
             const result = TLPeriod_1.TLPeriod.isIntersectIntervals(-1, 1, 1, 2);
             chai_1.expect(result).to.equal(true);
         });
+        it('-1;1;2;3', () => {
+            const result = TLPeriod_1.TLPeriod.isIntersectIntervals(-1, 1, 2, 3);
+            chai_1.expect(result).to.equal(false);
+        });
+        it('-1;1;0;3', () => {
+            const result = TLPeriod_1.TLPeriod.isIntersectIntervals(-1, 1, 0, 3);
+            chai_1.expect(result).to.equal(true);
+        });
     });
 });
 //# sourceMappingURL=TLPeriodTest.js.map

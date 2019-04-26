@@ -1,6 +1,4 @@
 ﻿import { DateUtils, TLeapData, YearMonthDay } from './dateutils';
-import { TLPeriod } from './TLPeriod';
-import { TLPeriodEvent } from './TLPeriodEvent';
 
 export enum EnumPeriod {
   day = 1, month = 2, year = 3, decade = 4, century = 5
@@ -218,24 +216,6 @@ export class TLEventCentury extends TLEvent {
     super(name)
     this.Century = century
     this.Type = EnumPeriod.century
-  }
-}
-
-export class TimeLineData {
-  Periods: TLPeriod[] = []
-  Name: string
-
-  static CreateTimeLineData(data: any): TimeLineData {
-    let rt = new TimeLineData()
-    rt.Name = data.Name
-    rt.Periods = []
-    data.Periods.forEach(o => {
-      if (TLEvent.Equal(o.Begin, o.End))
-        rt.Periods.push(new TLPeriodEvent(o))
-      else
-        rt.Periods.push(new TLPeriod(o))
-    })
-    return rt
   }
 }
 

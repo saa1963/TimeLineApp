@@ -97,7 +97,7 @@ class TLPeriod {
         let l = Math.min(l1, l2);
         let r = Math.max(r1, r2);
         let s = r - l;
-        return s <= (r1 - l1) + (r2 - r1);
+        return s <= (r1 - l1) + (r2 - l2);
     }
     /**
      * Первый день интервала

@@ -1,6 +1,7 @@
 import { DateUtils } from './dateutils'
 import { saaGraph } from './saagraph'
-import { TimeLineData, TLEvent, EnumPeriod } from './TLEvent'
+import { TLEvent, EnumPeriod } from './TLEvent'
+import { TimeLineData } from "./TimeLineData";
 import { TLPeriod } from "./TLPeriod";
 import * as $ from 'jquery'
 

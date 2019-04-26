@@ -6,6 +6,7 @@ const contextmenu_1 = require("./contextmenu");
 const LogonHandlers_1 = require("./LogonHandlers");
 const RegisterHandlers_1 = require("./RegisterHandlers");
 const TLEvent_1 = require("./TLEvent");
+const TimeLineData_1 = require("./TimeLineData");
 require("bootstrap");
 const $ = require("jquery");
 const MIN_GAP = 100;
@@ -181,7 +182,7 @@ function LoadTimeLine() {
         }
     })
         .done(data => {
-        let tldata = TLEvent_1.TimeLineData.CreateTimeLineData(JSON.parse(data));
+        let tldata = TimeLineData_1.TimeLineData.CreateTimeLineData(JSON.parse(data));
         let tl = new timeline_1.TimeLine(ctx);
         tl.name = tldata.Name;
         tl.tldata = tldata;
