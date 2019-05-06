@@ -3,43 +3,49 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const dateutils_1 = require("./dateutils");
 const TLEvent_1 = require("./TLEvent");
 class TLPeriod {
-    constructor(o) {
-        this.Name = o.Name;
+    /**
+     * создает TLPeriod из объекта десериализированного из JSON
+     * @param o
+     */
+    static CreateTLPeriod(o) {
+        let rt;
+        rt.Name = o.Name;
         let type;
         type = TLEvent_1.TLEvent.GetType(o.Begin);
         if (type === TLEvent_1.EnumPeriod.day) {
-            this.Begin = new TLEvent_1.TLEventDay(o.Begin.Name, o.Begin.Day);
+            rt.Begin = new TLEvent_1.TLEventDay(o.Begin.Name, o.Begin.Day);
         }
         else if (type === TLEvent_1.EnumPeriod.month) {
-            this.Begin = new TLEvent_1.TLEventMonth(o.Begin.Name, o.Begin.Month);
+            rt.Begin = new TLEvent_1.TLEventMonth(o.Begin.Name, o.Begin.Month);
         }
         else if (type === TLEvent_1.EnumPeriod.year) {
-            this.Begin = new TLEvent_1.TLEventYear(o.Begin.Name, o.Begin.Year);
+            rt.Begin = new TLEvent_1.TLEventYear(o.Begin.Name, o.Begin.Year);
         }
         else if (type === TLEvent_1.EnumPeriod.decade) {
-            this.Begin = new TLEvent_1.TLEventDecade(o.Begin.Name, o.Begin.Decade);
+            rt.Begin = new TLEvent_1.TLEventDecade(o.Begin.Name, o.Begin.Decade);
         }
         else if (type === TLEvent_1.EnumPeriod.century) {
-            this.Begin = new TLEvent_1.TLEventCentury(o.Begin.Name, o.Begin.Century);
+            rt.Begin = new TLEvent_1.TLEventCentury(o.Begin.Name, o.Begin.Century);
         }
         type = TLEvent_1.TLEvent.GetType(o.End);
         if (type === TLEvent_1.EnumPeriod.day) {
-            this.End = new TLEvent_1.TLEventDay(o.End.Name, o.End.Day);
+            rt.End = new TLEvent_1.TLEventDay(o.End.Name, o.End.Day);
         }
         else if (type === TLEvent_1.EnumPeriod.month) {
-            this.End = new TLEvent_1.TLEventMonth(o.End.Name, o.End.Month);
+            rt.End = new TLEvent_1.TLEventMonth(o.End.Name, o.End.Month);
         }
         else if (type === TLEvent_1.EnumPeriod.year) {
-            this.End = new TLEvent_1.TLEventYear(o.End.Name, o.End.Year);
+            rt.End = new TLEvent_1.TLEventYear(o.End.Name, o.End.Year);
         }
         else if (type === TLEvent_1.EnumPeriod.decade) {
-            this.End = new TLEvent_1.TLEventDecade(o.End.Name, o.End.Decade);
+            rt.End = new TLEvent_1.TLEventDecade(o.End.Name, o.End.Decade);
         }
         else if (type === TLEvent_1.EnumPeriod.century) {
-            this.End = new TLEvent_1.TLEventCentury(o.End.Name, o.End.Century);
+            rt.End = new TLEvent_1.TLEventCentury(o.End.Name, o.End.Century);
         }
-        this.m_BeginDay = this.GetBeginDate();
-        this.m_EndDay = this.GetEndDate();
+        rt.m_BeginDay = rt.GetBeginDate();
+        rt.m_EndDay = rt.GetEndDate();
+        return rt;
     }
     /**
      * Попадает текущее значение ОВ в период this

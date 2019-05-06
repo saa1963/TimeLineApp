@@ -10,9 +10,9 @@ export class TimeLineData {
         rt.Periods = [];
         data.Periods.forEach(o => {
             if (TLEvent.Equal(o.Begin, o.End))
-                rt.Periods.push(new TLPeriodEvent(o));
+                rt.Periods.push(TLPeriodEvent.CreateTLPeriodEvent(o));
             else
-                rt.Periods.push(new TLPeriod(o));
+                rt.Periods.push(TLPeriod.CreateTLPeriod(o));
         });
         return rt;
     }
