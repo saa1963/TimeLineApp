@@ -126,7 +126,7 @@ let ctx: CanvasRenderingContext2D
   })
   $('#btnNewName').click((ev) => {
     $('#tmNameModal').modal('hide')
-    NewTimeLine(<string>$('#tmName').val())
+    DrawTimeLine(<string>$('#tmName').val())
   })
   $('.closenamemodal').click((ev) => {
     $('#tmNameModal').modal('hide')
@@ -148,7 +148,7 @@ let ctx: CanvasRenderingContext2D
       $('#btnNewName').prop('disabled', false)
       if (ev.keyCode === 13) {
         $('#tmNameModal').modal('hide')
-        NewTimeLine(<string>$('#tmName').val())
+        DrawTimeLine(<string>$('#tmName').val())
       }
     } else {
       $('#btnNewName').prop('disabled', true)
@@ -192,7 +192,7 @@ function LoadTimeLine() {
       let tl = new TimeLine(ctx)
       tl.name = tldata.Name
       tl.tldata = tldata
-      NewTimeLine(tldata.Name, tl)
+      DrawTimeLine(tldata.Name, tl)
       $('#tmLoadModal').modal('hide')
     })
     .fail(data => {
@@ -222,8 +222,8 @@ function OpenLoadTLDialog() {
   //NewTimeLine(tl.name, tl)
 }
 
-function NewTimeLine (name: string, tl: TimeLine = null) {
-  let aY
+function DrawTimeLine (name: string, tl: TimeLine = null) {
+  let aY: number[]
   if ((((timeLines.length + 2) * MIN_GAP) + (timeLines.length + 1) * TimeLine.LINE_THICKNESS) > ctx.canvas.clientHeight) {
     alert('Достигнуто максимальное количество линий времени')
     return
@@ -243,8 +243,8 @@ function NewTimeLine (name: string, tl: TimeLine = null) {
   drawAll()
 }
 
-function splitWorkspace (n) {
-  let rt = []
+function splitWorkspace (n): number[] {
+  let rt: number[] = []
   let m = (ctx.canvas.clientHeight - n * TimeLine.LINE_THICKNESS) / (n + 1) + 0.5
   for (let i = 0, y = m; i < n; i++, y += (m + TimeLine.LINE_THICKNESS)) {
     rt.push(y)

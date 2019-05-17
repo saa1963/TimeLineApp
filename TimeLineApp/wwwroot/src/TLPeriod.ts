@@ -12,7 +12,7 @@ export class TLPeriod {
    * @param o 
    */
   static CreateTLPeriod(o: any): TLPeriod {
-    let rt: TLPeriod
+    let rt = new TLPeriod();
     rt.Name = o.Name;
     let type: EnumPeriod;
     type = TLEvent.GetType(o.Begin);
@@ -71,28 +71,40 @@ export class TLPeriod {
                 rt = this.ContainsYear(vl);
                 break;
             case EnumPeriod.decade:
-                //rt = (vl === this.Decade)
+                rt = this.ContainsDecade(vl)
                 break;
             case EnumPeriod.century:
-                //rt = (vl === this.Century)
+                rt = this.ContainsYear(vl)
                 break;
             default:
                 break;
         }
         return rt;
-    }
+  }
+  protected ContainsCentury(century: number): boolean {
+    return this.IsIntersectIntervals(DateUtils.FirstDayOfCentury(century), DateUtils.LastDayOfCentury(century));
+  }
+  /**
+   * Содержит ли this ОВ vl
+   * @param decade
+   */
+  protected ContainsDecade(decade: number): boolean {
+    return this.IsIntersectIntervals(DateUtils.FirstDayOfDecade(decade), DateUtils.LastDayOfDecade(decade));
+  }
     /**
      * Содержит ли this ОВ vl
      * @param vl
      */
-    ContainsYear(year: number): boolean {
-        return this.IsIntersectIntervals(DateUtils.FirstDayOfYear(year), DateUtils.LastDayOfYear(year));
+  protected ContainsYear(year: number): boolean {
+    let first: number = DateUtils.FirstDayOfYear(year)
+    let last: number = DateUtils.LastDayOfYear(year)
+        return this.IsIntersectIntervals(first, last)
     }
     /**
      * Содержит ли this (текущий период) ОВ vl
      * @param vl - месяц от РХ
      */
-    ContainsMonth(month: number): boolean {
+    protected ContainsMonth(month: number): boolean {
         return this.IsIntersectIntervals(DateUtils.FirstDayOfMonth(month), DateUtils.LastDayOfMonth(month));
     }
     /**

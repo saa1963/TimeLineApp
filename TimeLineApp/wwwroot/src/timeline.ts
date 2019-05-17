@@ -144,7 +144,14 @@ export class TimeLine {
     this.ctx.fillText(this.formatPeriod(dt), x0 - TimeLine.HALF_INTERVAL_WIDTH, this.y + TimeLine.HALF_LINE_THICKNESS)
 
     let cellData = new CellData(dt, x0 - TimeLine.INTERVAL_WIDTH + 1, this.y, x0, this.y + TimeLine.LINE_THICKNESS - 1, path)
-    cellData.periods = this.findperiods(dt)
+    if (dt === 1980) {
+      console.log(1980)
+      cellData.periods = this.findperiods(dt)
+    }
+    
+    //if (cellData.periods.length > 0) {
+    //  console.log(cellData.periods)
+    //}
     this.data.push(cellData)
 
   }

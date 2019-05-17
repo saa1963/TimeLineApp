@@ -17938,8 +17938,6 @@ exports.RegisterHandlers = RegisterHandlers;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const dateutils_1 = __webpack_require__(/*! ./dateutils */ "./src/dateutils.ts");
-const TLPeriod_1 = __webpack_require__(/*! ./TLPeriod */ "./src/TLPeriod.ts");
-const TLPeriodEvent_1 = __webpack_require__(/*! ./TLPeriodEvent */ "./src/TLPeriodEvent.ts");
 var EnumPeriod;
 (function (EnumPeriod) {
     EnumPeriod[EnumPeriod["day"] = 1] = "day";
@@ -18162,24 +18160,6 @@ class TLEventCentury extends TLEvent {
     }
 }
 exports.TLEventCentury = TLEventCentury;
-class TimeLineData {
-    constructor() {
-        this.Periods = [];
-    }
-    static CreateTimeLineData(data) {
-        let rt = new TimeLineData();
-        rt.Name = data.Name;
-        rt.Periods = [];
-        data.Periods.forEach(o => {
-            if (TLEvent.Equal(o.Begin, o.End))
-                rt.Periods.push(new TLPeriodEvent_1.TLPeriodEvent(o));
-            else
-                rt.Periods.push(new TLPeriod_1.TLPeriod(o));
-        });
-        return rt;
-    }
-}
-exports.TimeLineData = TimeLineData;
 
 
 /***/ }),
@@ -18197,43 +18177,49 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const dateutils_1 = __webpack_require__(/*! ./dateutils */ "./src/dateutils.ts");
 const TLEvent_1 = __webpack_require__(/*! ./TLEvent */ "./src/TLEvent.ts");
 class TLPeriod {
-    constructor(o) {
-        this.Name = o.Name;
+    /**
+     * создает TLPeriod из объекта десериализированного из JSON
+     * @param o
+     */
+    static CreateTLPeriod(o) {
+        let rt = new TLPeriod();
+        rt.Name = o.Name;
         let type;
         type = TLEvent_1.TLEvent.GetType(o.Begin);
         if (type === TLEvent_1.EnumPeriod.day) {
-            this.Begin = new TLEvent_1.TLEventDay(o.Begin.Name, o.Begin.Day);
+            rt.Begin = new TLEvent_1.TLEventDay(o.Begin.Name, o.Begin.Day);
         }
         else if (type === TLEvent_1.EnumPeriod.month) {
-            this.Begin = new TLEvent_1.TLEventMonth(o.Begin.Name, o.Begin.Month);
+            rt.Begin = new TLEvent_1.TLEventMonth(o.Begin.Name, o.Begin.Month);
         }
         else if (type === TLEvent_1.EnumPeriod.year) {
-            this.Begin = new TLEvent_1.TLEventYear(o.Begin.Name, o.Begin.Year);
+            rt.Begin = new TLEvent_1.TLEventYear(o.Begin.Name, o.Begin.Year);
         }
         else if (type === TLEvent_1.EnumPeriod.decade) {
-            this.Begin = new TLEvent_1.TLEventDecade(o.Begin.Name, o.Begin.Decade);
+            rt.Begin = new TLEvent_1.TLEventDecade(o.Begin.Name, o.Begin.Decade);
         }
         else if (type === TLEvent_1.EnumPeriod.century) {
-            this.Begin = new TLEvent_1.TLEventCentury(o.Begin.Name, o.Begin.Century);
+            rt.Begin = new TLEvent_1.TLEventCentury(o.Begin.Name, o.Begin.Century);
         }
         type = TLEvent_1.TLEvent.GetType(o.End);
         if (type === TLEvent_1.EnumPeriod.day) {
-            this.End = new TLEvent_1.TLEventDay(o.End.Name, o.End.Day);
+            rt.End = new TLEvent_1.TLEventDay(o.End.Name, o.End.Day);
         }
         else if (type === TLEvent_1.EnumPeriod.month) {
-            this.End = new TLEvent_1.TLEventMonth(o.End.Name, o.End.Month);
+            rt.End = new TLEvent_1.TLEventMonth(o.End.Name, o.End.Month);
         }
         else if (type === TLEvent_1.EnumPeriod.year) {
-            this.End = new TLEvent_1.TLEventYear(o.End.Name, o.End.Year);
+            rt.End = new TLEvent_1.TLEventYear(o.End.Name, o.End.Year);
         }
         else if (type === TLEvent_1.EnumPeriod.decade) {
-            this.End = new TLEvent_1.TLEventDecade(o.End.Name, o.End.Decade);
+            rt.End = new TLEvent_1.TLEventDecade(o.End.Name, o.End.Decade);
         }
         else if (type === TLEvent_1.EnumPeriod.century) {
-            this.End = new TLEvent_1.TLEventCentury(o.End.Name, o.End.Century);
+            rt.End = new TLEvent_1.TLEventCentury(o.End.Name, o.End.Century);
         }
-        this.m_BeginDay = this.GetBeginDate();
-        this.m_EndDay = this.GetEndDate();
+        rt.m_BeginDay = rt.GetBeginDate();
+        rt.m_EndDay = rt.GetEndDate();
+        return rt;
     }
     /**
      * Попадает текущее значение ОВ в период this
@@ -18255,22 +18241,34 @@ class TLPeriod {
                 rt = this.ContainsYear(vl);
                 break;
             case TLEvent_1.EnumPeriod.decade:
-                //rt = (vl === this.Decade)
+                rt = this.ContainsDecade(vl);
                 break;
             case TLEvent_1.EnumPeriod.century:
-                //rt = (vl === this.Century)
+                rt = this.ContainsYear(vl);
                 break;
             default:
                 break;
         }
         return rt;
     }
+    ContainsCentury(century) {
+        return this.IsIntersectIntervals(dateutils_1.DateUtils.FirstDayOfCentury(century), dateutils_1.DateUtils.LastDayOfCentury(century));
+    }
+    /**
+     * Содержит ли this ОВ vl
+     * @param decade
+     */
+    ContainsDecade(decade) {
+        return this.IsIntersectIntervals(dateutils_1.DateUtils.FirstDayOfDecade(decade), dateutils_1.DateUtils.LastDayOfDecade(decade));
+    }
     /**
      * Содержит ли this ОВ vl
      * @param vl
      */
     ContainsYear(year) {
-        return this.IsIntersectIntervals(dateutils_1.DateUtils.FirstDayOfYear(year), dateutils_1.DateUtils.LastDayOfYear(year));
+        let first = dateutils_1.DateUtils.FirstDayOfYear(year);
+        let last = dateutils_1.DateUtils.LastDayOfYear(year);
+        return this.IsIntersectIntervals(first, last);
     }
     /**
      * Содержит ли this (текущий период) ОВ vl
@@ -18291,7 +18289,7 @@ class TLPeriod {
         let l = Math.min(l1, l2);
         let r = Math.max(r1, r2);
         let s = r - l;
-        return s <= (r1 - l1) + (r2 - r1);
+        return s <= (r1 - l1) + (r2 - l2);
     }
     /**
      * Первый день интервала
@@ -18367,11 +18365,52 @@ exports.TLPeriod = TLPeriod;
 Object.defineProperty(exports, "__esModule", { value: true });
 const TLPeriod_1 = __webpack_require__(/*! ./TLPeriod */ "./src/TLPeriod.ts");
 class TLPeriodEvent extends TLPeriod_1.TLPeriod {
-    constructor(o) {
-        super(o);
+    /**
+     * Создает TLPeriodEvent из объекта десериализованного из JSON
+     * @param o
+     */
+    static CreateTLPeriodEvent(o) {
+        let rt;
+        rt = TLPeriod_1.TLPeriod.CreateTLPeriod(o);
+        return rt;
     }
 }
 exports.TLPeriodEvent = TLPeriodEvent;
+
+
+/***/ }),
+
+/***/ "./src/TimeLineData.ts":
+/*!*****************************!*\
+  !*** ./src/TimeLineData.ts ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const TLPeriod_1 = __webpack_require__(/*! ./TLPeriod */ "./src/TLPeriod.ts");
+const TLPeriodEvent_1 = __webpack_require__(/*! ./TLPeriodEvent */ "./src/TLPeriodEvent.ts");
+const TLEvent_1 = __webpack_require__(/*! ./TLEvent */ "./src/TLEvent.ts");
+class TimeLineData {
+    constructor() {
+        this.Periods = [];
+    }
+    static CreateTimeLineData(data) {
+        let rt = new TimeLineData();
+        rt.Name = data.Name;
+        rt.Periods = [];
+        data.Periods.forEach(o => {
+            if (TLEvent_1.TLEvent.Equal(o.Begin, o.End))
+                rt.Periods.push(TLPeriodEvent_1.TLPeriodEvent.CreateTLPeriodEvent(o));
+            else
+                rt.Periods.push(TLPeriod_1.TLPeriod.CreateTLPeriod(o));
+        });
+        return rt;
+    }
+}
+exports.TimeLineData = TimeLineData;
 
 
 /***/ }),
@@ -18885,6 +18924,15 @@ class DateUtils {
             return days;
         }
     }
+    /**
+     * Последний день столетия
+     * @param century может быть отрицательным
+     */
+    static LastDayOfCentury(century) {
+        let f;
+        f = this.FirstDayOfCentury(century + 1) - 1;
+        return f;
+    }
     static getCurDate() {
         let dt = new Date();
         return new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
@@ -19014,6 +19062,7 @@ const contextmenu_1 = __webpack_require__(/*! ./contextmenu */ "./src/contextmen
 const LogonHandlers_1 = __webpack_require__(/*! ./LogonHandlers */ "./src/LogonHandlers.ts");
 const RegisterHandlers_1 = __webpack_require__(/*! ./RegisterHandlers */ "./src/RegisterHandlers.ts");
 const TLEvent_1 = __webpack_require__(/*! ./TLEvent */ "./src/TLEvent.ts");
+const TimeLineData_1 = __webpack_require__(/*! ./TimeLineData */ "./src/TimeLineData.ts");
 __webpack_require__(/*! bootstrap */ "../node_modules/bootstrap/dist/js/bootstrap.js");
 const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
 const MIN_GAP = 100;
@@ -19128,7 +19177,7 @@ let ctx;
     });
     $('#btnNewName').click((ev) => {
         $('#tmNameModal').modal('hide');
-        NewTimeLine($('#tmName').val());
+        DrawTimeLine($('#tmName').val());
     });
     $('.closenamemodal').click((ev) => {
         $('#tmNameModal').modal('hide');
@@ -19150,7 +19199,7 @@ let ctx;
             $('#btnNewName').prop('disabled', false);
             if (ev.keyCode === 13) {
                 $('#tmNameModal').modal('hide');
-                NewTimeLine($('#tmName').val());
+                DrawTimeLine($('#tmName').val());
             }
         }
         else {
@@ -19189,11 +19238,11 @@ function LoadTimeLine() {
         }
     })
         .done(data => {
-        let tldata = TLEvent_1.TimeLineData.CreateTimeLineData(JSON.parse(data));
+        let tldata = TimeLineData_1.TimeLineData.CreateTimeLineData(JSON.parse(data));
         let tl = new timeline_1.TimeLine(ctx);
         tl.name = tldata.Name;
         tl.tldata = tldata;
-        NewTimeLine(tldata.Name, tl);
+        DrawTimeLine(tldata.Name, tl);
         $('#tmLoadModal').modal('hide');
     })
         .fail(data => {
@@ -19219,7 +19268,7 @@ function OpenLoadTLDialog() {
     //let tl = TimeLine.load(ctx)
     //NewTimeLine(tl.name, tl)
 }
-function NewTimeLine(name, tl = null) {
+function DrawTimeLine(name, tl = null) {
     let aY;
     if ((((timeLines.length + 2) * MIN_GAP) + (timeLines.length + 1) * timeline_1.TimeLine.LINE_THICKNESS) > ctx.canvas.clientHeight) {
         alert('Достигнуто максимальное количество линий времени');
@@ -19465,7 +19514,13 @@ class TimeLine {
         this.ctx.fillStyle = 'white';
         this.ctx.fillText(this.formatPeriod(dt), x0 - TimeLine.HALF_INTERVAL_WIDTH, this.y + TimeLine.HALF_LINE_THICKNESS);
         let cellData = new CellData(dt, x0 - TimeLine.INTERVAL_WIDTH + 1, this.y, x0, this.y + TimeLine.LINE_THICKNESS - 1, path);
-        cellData.periods = this.findperiods(dt);
+        if (dt === 1980) {
+            console.log(1980);
+            cellData.periods = this.findperiods(dt);
+        }
+        //if (cellData.periods.length > 0) {
+        //  console.log(cellData.periods)
+        //}
         this.data.push(cellData);
     }
     /**

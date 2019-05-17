@@ -274,6 +274,15 @@ export class DateUtils {
       return days
     }
   }
+  /**
+   * Последний день столетия
+   * @param century может быть отрицательным
+   */
+  static LastDayOfCentury(century: number) {
+    let f: number
+    f = this.FirstDayOfCentury(century + 1) - 1
+    return f
+  }
   static getCurDate(): Date {
     let dt = new Date()
     return new Date(dt.getFullYear(), dt.getMonth(), dt.getDate())
