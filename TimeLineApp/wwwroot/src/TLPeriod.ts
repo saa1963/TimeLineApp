@@ -1,4 +1,4 @@
-﻿import { DateUtils } from './dateutils';
+﻿import { DateUtils, YearMonthDay } from './dateutils';
 import { TLEvent, EnumPeriod, TLEventDay, TLEventMonth, TLEventYear, TLEventDecade, TLEventCentury } from './TLEvent';
 
 export class TLPeriod {
@@ -17,7 +17,7 @@ export class TLPeriod {
     let type: EnumPeriod;
     type = TLEvent.GetType(o.Begin);
     if (type === EnumPeriod.day) {
-      rt.Begin = new TLEventDay(o.Begin.Name, o.Begin.Day);
+      rt.Begin = new TLEventDay(o.Begin.Name, DateUtils.DaysFromAD(o.Begin.Day.year, o.Begin.Day.month, o.Begin.Day.day));
     }
     else if (type === EnumPeriod.month) {
       rt.Begin = new TLEventMonth(o.Begin.Name, o.Begin.Month);
