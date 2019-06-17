@@ -19,4 +19,16 @@ describe('TLPeriod', () => {
     });
   });
 
+  describe('CreateTLPeriod', () => {
+    it('Test_1', () => {
+      const json = '{"Name": "Рождение","Begin": {"Name": "Начало","Day": \
+                    {"Day": 5,"Month": 6,"Year": 1963},"Month": 23550,"Year": 1963,\
+                    "Decade": 197,"Century": 20},"End": {"Name": "Конец","Day": \
+                    {"Day": 5,"Month": 6,"Year": 1963},"Month": 23550,"Year": 1963,"Decade": 197,"Century": 20}}';
+      const data = JSON.parse(json);
+      const period = TLPeriod.CreateTLPeriod(data);
+      console.log(period);
+      expect(period.Name).to.equal('Рождение');
+    });
+  });
 });

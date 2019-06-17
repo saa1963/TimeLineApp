@@ -108,6 +108,33 @@
         "Decade": 199,
         "Century": 20
       }
+    },
+    {
+      "Name": "Отказ от алко",
+      "Begin": {
+        "Name": "Начало",
+        "Day": {
+          "Day": 4,
+          "Month": 2,
+          "Year": 2018
+        },
+        "Month": 24206,
+        "Year": 2018,
+        "Decade": 202,
+        "Century": 21
+      },
+      "End": {
+        "Name": "Конец",
+        "Day": {
+          "Day": 4,
+          "Month": 2,
+          "Year": 2018
+        },
+        "Month": 24206,
+        "Year": 2018,
+        "Decade": 202,
+        "Century": 21
+      }
     }
   ]
 }
