@@ -17,7 +17,14 @@ export class TLPeriod {
     let type: EnumPeriod;
     type = TLEvent.GetType(o.Begin);
     if (type === EnumPeriod.day) {
-      rt.Begin = new TLEventDay(o.Begin.Name, DateUtils.DaysFromAD(o.Begin.Day.year, o.Begin.Day.month, o.Begin.Day.day));
+      rt.Begin = TLEventDay.CreateTLEventDay(
+        o.Begin.Name,
+        DateUtils.DaysFromAD(o.Begin.Day.Year, o.Begin.Day.Month, o.Begin.Day.Day),
+        o.Begin.Month,
+        o.Begin.Year,
+        o.Begin.Decade,
+        o.Begin.Century
+      );
     }
     else if (type === EnumPeriod.month) {
       rt.Begin = new TLEventMonth(o.Begin.Name, o.Begin.Month);
@@ -33,7 +40,14 @@ export class TLPeriod {
     }
     type = TLEvent.GetType(o.End);
     if (type === EnumPeriod.day) {
-      rt.End = new TLEventDay(o.End.Name, o.End.Day);
+      rt.End = TLEventDay.CreateTLEventDay(
+        o.End.Name,
+        DateUtils.DaysFromAD(o.End.Day.Year, o.End.Day.Month, o.End.Day.Day),
+        o.End.Month,
+        o.End.Year,
+        o.End.Decade,
+        o.End.Century
+      );
     }
     else if (type === EnumPeriod.month) {
       rt.End = new TLEventMonth(o.End.Name, o.End.Month);

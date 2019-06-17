@@ -18088,15 +18088,24 @@ class TLEvent {
 }
 exports.TLEvent = TLEvent;
 class TLEventDay extends TLEvent {
-    constructor(name, day) {
-        super(name);
-        this.Day = day;
-        let o = dateutils_1.DateUtils.YMDFromAD(day);
-        this.Month = ((Math.abs(o.year) - 1) * 12 + o.month) * (o.year / Math.abs(o.year));
-        this.Year = o.year;
-        this.Decade = this.DecadeFromYear(o.year);
-        this.Century = this.CenturyFromDecade(this.Decade);
-        this.Type = EnumPeriod.day;
+    //constructor(name: string, day: number) {
+    //  super(name);
+    //  this.Day = day
+    //  let o = DateUtils.YMDFromAD(day)
+    //  this.Month = ((Math.abs(o.year) - 1) * 12 + o.month) * (o.year / Math.abs(o.year));
+    //  this.Year = o.year;
+    //  this.Decade = this.DecadeFromYear(o.year)
+    //  this.Century = this.CenturyFromDecade(this.Decade);
+    //  this.Type = EnumPeriod.day
+    //}
+    static CreateTLEventDay(name, day, month, year, decade, century) {
+        let rt = new TLEventDay(name);
+        rt.Day = day;
+        rt.Month = month;
+        rt.Year = year;
+        rt.Decade = decade;
+        rt.Century = century;
+        return rt;
     }
 }
 exports.TLEventDay = TLEventDay;
@@ -18187,7 +18196,7 @@ class TLPeriod {
         let type;
         type = TLEvent_1.TLEvent.GetType(o.Begin);
         if (type === TLEvent_1.EnumPeriod.day) {
-            rt.Begin = new TLEvent_1.TLEventDay(o.Begin.Name, dateutils_1.DateUtils.DaysFromAD(o.Begin.Day.year, o.Begin.Day.month, o.Begin.Day.day));
+            rt.Begin = TLEvent_1.TLEventDay.CreateTLEventDay(o.Begin.Name, dateutils_1.DateUtils.DaysFromAD(o.Begin.Day.Year, o.Begin.Day.Month, o.Begin.Day.Day), o.Begin.Month, o.Begin.Year, o.Begin.Decade, o.Begin.Century);
         }
         else if (type === TLEvent_1.EnumPeriod.month) {
             rt.Begin = new TLEvent_1.TLEventMonth(o.Begin.Name, o.Begin.Month);
@@ -18203,7 +18212,7 @@ class TLPeriod {
         }
         type = TLEvent_1.TLEvent.GetType(o.End);
         if (type === TLEvent_1.EnumPeriod.day) {
-            rt.End = new TLEvent_1.TLEventDay(o.End.Name, o.End.Day);
+            rt.End = TLEvent_1.TLEventDay.CreateTLEventDay(o.End.Name, dateutils_1.DateUtils.DaysFromAD(o.End.Day.Year, o.End.Day.Month, o.End.Day.Day), o.End.Month, o.End.Year, o.End.Decade, o.End.Century);
         }
         else if (type === TLEvent_1.EnumPeriod.month) {
             rt.End = new TLEvent_1.TLEventMonth(o.End.Name, o.End.Month);

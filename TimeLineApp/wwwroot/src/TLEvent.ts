@@ -150,15 +150,24 @@ export abstract class TLEvent {
 }
 
 export class TLEventDay extends TLEvent {
-  constructor(name: string, day: number) {
-    super(name);
-    this.Day = day
-    let o = DateUtils.YMDFromAD(day)
-    this.Month = ((Math.abs(o.year) - 1) * 12 + o.month) * (o.year / Math.abs(o.year));
-    this.Year = o.year;
-    this.Decade = this.DecadeFromYear(o.year)
-    this.Century = this.CenturyFromDecade(this.Decade);
-    this.Type = EnumPeriod.day
+  //constructor(name: string, day: number) {
+  //  super(name);
+  //  this.Day = day
+  //  let o = DateUtils.YMDFromAD(day)
+  //  this.Month = ((Math.abs(o.year) - 1) * 12 + o.month) * (o.year / Math.abs(o.year));
+  //  this.Year = o.year;
+  //  this.Decade = this.DecadeFromYear(o.year)
+  //  this.Century = this.CenturyFromDecade(this.Decade);
+  //  this.Type = EnumPeriod.day
+  //}
+  public static CreateTLEventDay(name: string, day: number, month: number, year: number, decade: number, century: number): TLEventDay {
+    let rt = new TLEventDay(name)
+    rt.Day = day
+    rt.Month = month
+    rt.Year = year
+    rt.Decade = decade
+    rt.Century = century
+    return rt
   }
 }
 
