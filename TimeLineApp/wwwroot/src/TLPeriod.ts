@@ -14,8 +14,7 @@ export class TLPeriod {
   static CreateTLPeriod(o: any): TLPeriod {
     let rt = new TLPeriod();
     rt.Name = o.Name;
-    let type: EnumPeriod;
-    type = TLEvent.GetType(o.Begin);
+    let type: EnumPeriod = TLEvent.GetType(o.Begin);
     if (type === EnumPeriod.day) {
       rt.Begin = TLEventDay.CreateTLEventDay(
         o.Begin.Name,
@@ -23,20 +22,20 @@ export class TLPeriod {
         o.Begin.Month,
         o.Begin.Year,
         o.Begin.Decade,
-        o.Begin.Century
+        o.Begin.Century,
       );
     }
     else if (type === EnumPeriod.month) {
-      rt.Begin = new TLEventMonth(o.Begin.Name, o.Begin.Month);
+      rt.Begin = TLEventMonth.CreateTLEventMonth(o.Begin.Name, o.Begin.Month, o.Begin.Year, o.Begin.Decade, o.Begin.Century);
     }
     else if (type === EnumPeriod.year) {
-      rt.Begin = new TLEventYear(o.Begin.Name, o.Begin.Year);
+      rt.Begin = TLEventYear.CreateTLEventYear(o.Begin.Name, o.Begin.Year, o.Begin.Decade, o.Begin.Century);
     }
     else if (type === EnumPeriod.decade) {
-      rt.Begin = new TLEventDecade(o.Begin.Name, o.Begin.Decade);
+      rt.Begin = TLEventDecade.CreateTLEventDecade(o.Begin.Name, o.Begin.Decade, o.Begin.Century);
     }
     else if (type === EnumPeriod.century) {
-      rt.Begin = new TLEventCentury(o.Begin.Name, o.Begin.Century);
+      rt.Begin = TLEventCentury.CreateTLEventCentury(o.Begin.Name, o.Begin.Century);
     }
     type = TLEvent.GetType(o.End);
     if (type === EnumPeriod.day) {
@@ -50,16 +49,16 @@ export class TLPeriod {
       );
     }
     else if (type === EnumPeriod.month) {
-      rt.End = new TLEventMonth(o.End.Name, o.End.Month);
+      rt.End = TLEventMonth.CreateTLEventMonth(o.End.Name, o.End.Month, o.End.Year, o.End.Decade, o.End.Century);
     }
     else if (type === EnumPeriod.year) {
-      rt.End = new TLEventYear(o.End.Name, o.End.Year);
+      rt.End = TLEventYear.CreateTLEventYear(o.End.Name, o.End.Year, o.End.Decade, o.End.Century);
     }
     else if (type === EnumPeriod.decade) {
-      rt.End = new TLEventDecade(o.End.Name, o.End.Decade);
+      rt.End = TLEventDecade.CreateTLEventDecade(o.End.Name, o.End.Decade, o.End.Century);
     }
     else if (type === EnumPeriod.century) {
-      rt.End = new TLEventCentury(o.End.Name, o.End.Century);
+      rt.End = TLEventCentury.CreateTLEventCentury(o.End.Name, o.End.Century);
     }
     rt.m_BeginDay = rt.GetBeginDate();
     rt.m_EndDay = rt.GetEndDate();

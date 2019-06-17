@@ -18105,67 +18105,105 @@ class TLEventDay extends TLEvent {
         rt.Year = year;
         rt.Decade = decade;
         rt.Century = century;
+        rt.Type = EnumPeriod.day;
         return rt;
     }
 }
 exports.TLEventDay = TLEventDay;
 class TLEventMonth extends TLEvent {
-    constructor(name, par1, par2) {
-        super(name);
-        if (par2 !== undefined) {
-            let year = par1;
-            let month = par2;
-            this.Month = ((Math.abs(year) - 1) * 12 + month) * (year / Math.abs(year));
-            this.Year = year;
-            this.Decade = this.DecadeFromYear(year);
-            this.Century = this.CenturyFromDecade(this.Decade);
-        }
-        else {
-            let month = par1;
-            this.Month = month;
-            this.Year = this.YearFromMonth(month);
-            this.Decade = this.DecadeFromYear(this.Year);
-            this.Century = this.CenturyFromDecade(this.Decade);
-        }
-        this.Type = EnumPeriod.month;
+    //constructor(name: string, par1: number, par2?: number) {
+    //  super(name)
+    //  if (par2 !== undefined) {
+    //    let year = par1
+    //    let month = par2
+    //    this.Month = ((Math.abs(year) - 1) * 12 + month) * (year / Math.abs(year))
+    //    this.Year = year
+    //    this.Decade = this.DecadeFromYear(year)
+    //    this.Century = this.CenturyFromDecade(this.Decade)
+    //  } else {
+    //    let month = par1
+    //    this.Month = month
+    //    this.Year = this.YearFromMonth(month)
+    //    this.Decade = this.DecadeFromYear(this.Year)
+    //    this.Century = this.CenturyFromDecade(this.Decade);
+    //  }
+    //  this.Type = EnumPeriod.month
+    //}
+    static CreateTLEventMonth(name, month, year, decade, century) {
+        let rt = new TLEventDay(name);
+        rt.Day = null;
+        rt.Month = month;
+        rt.Year = year;
+        rt.Decade = decade;
+        rt.Century = century;
+        rt.Type = EnumPeriod.month;
+        return rt;
     }
 }
 exports.TLEventMonth = TLEventMonth;
 class TLEventYear extends TLEvent {
-    constructor(name, year) {
-        super(name);
-        this.Year = year;
-        this.Decade = this.DecadeFromYear(year);
-        this.Century = this.CenturyFromDecade(this.Decade);
-        this.Type = EnumPeriod.year;
+    //constructor(name: string, year: number) {
+    //  super(name)
+    //  this.Year = year
+    //  this.Decade = this.DecadeFromYear(year)
+    //  this.Century = this.CenturyFromDecade(this.Decade);
+    //  this.Type = EnumPeriod.year
+    //}
+    static CreateTLEventYear(name, year, decade, century) {
+        let rt = new TLEventDay(name);
+        rt.Day = null;
+        rt.Month = null;
+        rt.Year = year;
+        rt.Decade = decade;
+        rt.Century = century;
+        rt.Type = EnumPeriod.year;
+        return rt;
     }
 }
 exports.TLEventYear = TLEventYear;
 class TLEventDecade extends TLEvent {
-    constructor(name, par1, par2) {
-        super(name);
-        if (par2 !== undefined) {
-            let century = par1;
-            let decade = par2;
-            if (decade < 0 || decade > 9)
-                throw Error('Неверный номер десятилетия');
-            this.Decade = ((Math.abs(century) - 1) * 10 + decade + 1) * (century / Math.abs(century));
-            this.Century = century;
-        }
-        else {
-            let decade = par1;
-            this.Decade = decade;
-            this.Century = this.CenturyFromDecade(decade);
-        }
-        this.Type = EnumPeriod.decade;
+    //constructor(name: string, par1: number, par2?: number) {
+    //  super(name)
+    //  if (par2 !== undefined) {
+    //    let century = par1
+    //    let decade = par2
+    //    if(decade < 0 || decade > 9) throw Error('Неверный номер десятилетия')
+    //    this.Decade = ((Math.abs(century) - 1) * 10 + decade + 1) * (century / Math.abs(century))
+    //    this.Century = century;
+    //  } else {
+    //    let decade = par1
+    //    this.Decade = decade;
+    //    this.Century = this.CenturyFromDecade(decade)
+    //  }
+    //  this.Type = EnumPeriod.decade
+    //}
+    static CreateTLEventDecade(name, decade, century) {
+        let rt = new TLEventDay(name);
+        rt.Day = null;
+        rt.Month = null;
+        rt.Year = null;
+        rt.Decade = decade;
+        rt.Century = century;
+        rt.Type = EnumPeriod.decade;
+        return rt;
     }
 }
 exports.TLEventDecade = TLEventDecade;
 class TLEventCentury extends TLEvent {
-    constructor(name, century) {
-        super(name);
-        this.Century = century;
-        this.Type = EnumPeriod.century;
+    //constructor(name: string, century: number) {
+    //  super(name)
+    //  this.Century = century
+    //  this.Type = EnumPeriod.century
+    //}
+    static CreateTLEventCentury(name, century) {
+        let rt = new TLEventDay(name);
+        rt.Day = null;
+        rt.Month = null;
+        rt.Year = null;
+        rt.Decade = null;
+        rt.Century = century;
+        rt.Type = EnumPeriod.century;
+        return rt;
     }
 }
 exports.TLEventCentury = TLEventCentury;
@@ -18193,38 +18231,37 @@ class TLPeriod {
     static CreateTLPeriod(o) {
         let rt = new TLPeriod();
         rt.Name = o.Name;
-        let type;
-        type = TLEvent_1.TLEvent.GetType(o.Begin);
+        let type = TLEvent_1.TLEvent.GetType(o.Begin);
         if (type === TLEvent_1.EnumPeriod.day) {
             rt.Begin = TLEvent_1.TLEventDay.CreateTLEventDay(o.Begin.Name, dateutils_1.DateUtils.DaysFromAD(o.Begin.Day.Year, o.Begin.Day.Month, o.Begin.Day.Day), o.Begin.Month, o.Begin.Year, o.Begin.Decade, o.Begin.Century);
         }
         else if (type === TLEvent_1.EnumPeriod.month) {
-            rt.Begin = new TLEvent_1.TLEventMonth(o.Begin.Name, o.Begin.Month);
+            rt.Begin = TLEvent_1.TLEventMonth.CreateTLEventMonth(o.Begin.Name, o.Begin.Month, o.Begin.Year, o.Begin.Decade, o.Begin.Century);
         }
         else if (type === TLEvent_1.EnumPeriod.year) {
-            rt.Begin = new TLEvent_1.TLEventYear(o.Begin.Name, o.Begin.Year);
+            rt.Begin = TLEvent_1.TLEventYear.CreateTLEventYear(o.Begin.Name, o.Begin.Year, o.Begin.Decade, o.Begin.Century);
         }
         else if (type === TLEvent_1.EnumPeriod.decade) {
-            rt.Begin = new TLEvent_1.TLEventDecade(o.Begin.Name, o.Begin.Decade);
+            rt.Begin = TLEvent_1.TLEventDecade.CreateTLEventDecade(o.Begin.Name, o.Begin.Decade, o.Begin.Century);
         }
         else if (type === TLEvent_1.EnumPeriod.century) {
-            rt.Begin = new TLEvent_1.TLEventCentury(o.Begin.Name, o.Begin.Century);
+            rt.Begin = TLEvent_1.TLEventCentury.CreateTLEventCentury(o.Begin.Name, o.Begin.Century);
         }
         type = TLEvent_1.TLEvent.GetType(o.End);
         if (type === TLEvent_1.EnumPeriod.day) {
             rt.End = TLEvent_1.TLEventDay.CreateTLEventDay(o.End.Name, dateutils_1.DateUtils.DaysFromAD(o.End.Day.Year, o.End.Day.Month, o.End.Day.Day), o.End.Month, o.End.Year, o.End.Decade, o.End.Century);
         }
         else if (type === TLEvent_1.EnumPeriod.month) {
-            rt.End = new TLEvent_1.TLEventMonth(o.End.Name, o.End.Month);
+            rt.End = TLEvent_1.TLEventMonth.CreateTLEventMonth(o.End.Name, o.End.Month, o.End.Year, o.End.Decade, o.End.Century);
         }
         else if (type === TLEvent_1.EnumPeriod.year) {
-            rt.End = new TLEvent_1.TLEventYear(o.End.Name, o.End.Year);
+            rt.End = TLEvent_1.TLEventYear.CreateTLEventYear(o.End.Name, o.End.Year, o.End.Decade, o.End.Century);
         }
         else if (type === TLEvent_1.EnumPeriod.decade) {
-            rt.End = new TLEvent_1.TLEventDecade(o.End.Name, o.End.Decade);
+            rt.End = TLEvent_1.TLEventDecade.CreateTLEventDecade(o.End.Name, o.End.Decade, o.End.Century);
         }
         else if (type === TLEvent_1.EnumPeriod.century) {
-            rt.End = new TLEvent_1.TLEventCentury(o.End.Name, o.End.Century);
+            rt.End = TLEvent_1.TLEventCentury.CreateTLEventCentury(o.End.Name, o.End.Century);
         }
         rt.m_BeginDay = rt.GetBeginDate();
         rt.m_EndDay = rt.GetEndDate();
@@ -19455,9 +19492,12 @@ class TimeLine {
         });
     }
     set Period(period) {
-        this.x = this.ctx.canvas.clientWidth - 1 + TimeLine.INTERVAL_WIDTH + 0.5;
-        this.curPeriod = TimeLine.getCurPeriod(period);
-        this.period = period;
+        if (this.period != period) {
+            this.x = this.ctx.canvas.clientWidth - 1 + TimeLine.INTERVAL_WIDTH + 0.5;
+            this.curPeriod = TimeLine.getCurPeriod(period);
+            this.period = period;
+            this.time_data = new Map();
+        }
     }
     draw() {
         this.data = [];
@@ -19484,16 +19524,19 @@ class TimeLine {
      * Текущее значение ОВ, которое в данный момент отрисовывается
      */
     findperiods(dt) {
-        let rt = [];
+        //let rt: TLPeriod[] = []
         if (this.tldata !== undefined) {
             this.tldata.Periods.forEach(v => {
                 // v - это период из общего массива периодов данной TL
                 if (v.Contains(this.period, dt)) {
-                    rt.push(v);
+                    if (!this.time_data.has(dt)) {
+                        this.time_data.set(dt, v);
+                        console.log(v);
+                    }
                 }
             });
         }
-        return rt;
+        return;
     }
     drawName() {
         const HBOOKMARK = 30;
@@ -19523,11 +19566,8 @@ class TimeLine {
         this.ctx.fillStyle = 'white';
         this.ctx.fillText(this.formatPeriod(dt), x0 - TimeLine.HALF_INTERVAL_WIDTH, this.y + TimeLine.HALF_LINE_THICKNESS);
         let cellData = new CellData(dt, x0 - TimeLine.INTERVAL_WIDTH + 1, this.y, x0, this.y + TimeLine.LINE_THICKNESS - 1, path);
-        cellData.periods = this.findperiods(dt);
-        if (cellData.periods.length > 0) {
-            console.log(cellData.periods);
-        }
         this.data.push(cellData);
+        this.findperiods(dt);
     }
     /**
      * Получить индекс в массиве this.data для данной координаты курсора

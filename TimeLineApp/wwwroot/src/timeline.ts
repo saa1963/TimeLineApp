@@ -8,8 +8,8 @@ import * as $ from 'jquery'
 export class TimeLine {
   y: number
   color: string | CanvasGradient | CanvasPattern
-  /** Текущий вид ОВ */
-  period: EnumPeriod
+/** Текущий вид ОВ */
+  private period: EnumPeriod
   name: string
   /** Текущий индекс в массиве this.data  */ 
   curdata: number
@@ -20,6 +20,7 @@ export class TimeLine {
   private curPeriod: number
   /** Массив данных для отображаемых ОВ */
   private data: CellData[]
+  private time_data: Map<number, TLPeriod>
   /** координата x с которой отрисовывается ЛВ, сначала справа налево, потом слева направо */
   private x: number
   private ctx: CanvasRenderingContext2D
@@ -69,10 +70,13 @@ export class TimeLine {
       })
   }
 
-  set Period (period) {
-    this.x = this.ctx.canvas.clientWidth - 1 + TimeLine.INTERVAL_WIDTH + 0.5
-    this.curPeriod = TimeLine.getCurPeriod(period)
-    this.period = period
+  set Period(period) {
+    if (this.period != period) {
+      this.x = this.ctx.canvas.clientWidth - 1 + TimeLine.INTERVAL_WIDTH + 0.5
+      this.curPeriod = TimeLine.getCurPeriod(period)
+      this.period = period
+      this.time_data = new Map<number, TLPeriod>()
+    }
   }
 
   draw () {
@@ -100,17 +104,20 @@ export class TimeLine {
    * @param dt 
    * Текущее значение ОВ, которое в данный момент отрисовывается
    */
-  findperiods(dt: number): TLPeriod[] {
-    let rt: TLPeriod[] = []
+  findperiods(dt: number): void {
+    //let rt: TLPeriod[] = []
     if (this.tldata !== undefined) {
       this.tldata.Periods.forEach(v => {
           // v - это период из общего массива периодов данной TL
           if (v.Contains(this.period, dt)) {
-              rt.push(v)
+            if (!this.time_data.has(dt)) {
+              this.time_data.set(dt, v);
+              console.log(v);
+            }
           }
         })
     }
-    return rt
+    return
   }
 
   drawName () {
@@ -144,13 +151,8 @@ export class TimeLine {
     this.ctx.fillText(this.formatPeriod(dt), x0 - TimeLine.HALF_INTERVAL_WIDTH, this.y + TimeLine.HALF_LINE_THICKNESS)
 
     let cellData = new CellData(dt, x0 - TimeLine.INTERVAL_WIDTH + 1, this.y, x0, this.y + TimeLine.LINE_THICKNESS - 1, path)
-    cellData.periods = this.findperiods(dt)
-    
-    if (cellData.periods.length > 0) {
-      console.log(cellData.periods)
-    }
     this.data.push(cellData)
-
+    this.findperiods(dt)
   }
 
   /**
@@ -244,7 +246,6 @@ export class TimeLine {
 }
 
 class CellData {
-  periods: TLPeriod[]
   constructor (
     public value: number,
     public x1: number,

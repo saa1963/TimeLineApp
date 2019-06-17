@@ -167,64 +167,105 @@ export class TLEventDay extends TLEvent {
     rt.Year = year
     rt.Decade = decade
     rt.Century = century
+    rt.Type = EnumPeriod.day
     return rt
   }
 }
 
 export class TLEventMonth extends TLEvent {
-  constructor(name: string, par1: number, par2?: number) {
-    super(name)
-    if (par2 !== undefined) {
-      let year = par1
-      let month = par2
-      this.Month = ((Math.abs(year) - 1) * 12 + month) * (year / Math.abs(year))
-      this.Year = year
-      this.Decade = this.DecadeFromYear(year)
-      this.Century = this.CenturyFromDecade(this.Decade)
-    } else {
-      let month = par1
-      this.Month = month
-      this.Year = this.YearFromMonth(month)
-      this.Decade = this.DecadeFromYear(this.Year)
-      this.Century = this.CenturyFromDecade(this.Decade);
-    }
-    this.Type = EnumPeriod.month
+  //constructor(name: string, par1: number, par2?: number) {
+  //  super(name)
+  //  if (par2 !== undefined) {
+  //    let year = par1
+  //    let month = par2
+  //    this.Month = ((Math.abs(year) - 1) * 12 + month) * (year / Math.abs(year))
+  //    this.Year = year
+  //    this.Decade = this.DecadeFromYear(year)
+  //    this.Century = this.CenturyFromDecade(this.Decade)
+  //  } else {
+  //    let month = par1
+  //    this.Month = month
+  //    this.Year = this.YearFromMonth(month)
+  //    this.Decade = this.DecadeFromYear(this.Year)
+  //    this.Century = this.CenturyFromDecade(this.Decade);
+  //  }
+  //  this.Type = EnumPeriod.month
+  //}
+  public static CreateTLEventMonth(name: string, month: number, year: number, decade: number, century: number): TLEventDay {
+    let rt = new TLEventDay(name)
+    rt.Day = null
+    rt.Month = month
+    rt.Year = year
+    rt.Decade = decade
+    rt.Century = century
+    rt.Type = EnumPeriod.month
+    return rt
   }
 }
 
 export class TLEventYear extends TLEvent {
-  constructor(name: string, year: number) {
-    super(name)
-    this.Year = year
-    this.Decade = this.DecadeFromYear(year)
-    this.Century = this.CenturyFromDecade(this.Decade);
-    this.Type = EnumPeriod.year
+  //constructor(name: string, year: number) {
+  //  super(name)
+  //  this.Year = year
+  //  this.Decade = this.DecadeFromYear(year)
+  //  this.Century = this.CenturyFromDecade(this.Decade);
+  //  this.Type = EnumPeriod.year
+  //}
+  public static CreateTLEventYear(name: string, year: number, decade: number, century: number): TLEventDay {
+    let rt = new TLEventDay(name)
+    rt.Day = null
+    rt.Month = null
+    rt.Year = year
+    rt.Decade = decade
+    rt.Century = century
+    rt.Type = EnumPeriod.year
+    return rt
   }
 }
 
 export class TLEventDecade extends TLEvent {
-  constructor(name: string, par1: number, par2?: number) {
-    super(name)
-    if (par2 !== undefined) {
-      let century = par1
-      let decade = par2
-      if(decade < 0 || decade > 9) throw Error('Неверный номер десятилетия')
-      this.Decade = ((Math.abs(century) - 1) * 10 + decade + 1) * (century / Math.abs(century))
-      this.Century = century;
-    } else {
-      let decade = par1
-      this.Decade = decade;
-      this.Century = this.CenturyFromDecade(decade)
-    }
-    this.Type = EnumPeriod.decade
+  //constructor(name: string, par1: number, par2?: number) {
+  //  super(name)
+  //  if (par2 !== undefined) {
+  //    let century = par1
+  //    let decade = par2
+  //    if(decade < 0 || decade > 9) throw Error('Неверный номер десятилетия')
+  //    this.Decade = ((Math.abs(century) - 1) * 10 + decade + 1) * (century / Math.abs(century))
+  //    this.Century = century;
+  //  } else {
+  //    let decade = par1
+  //    this.Decade = decade;
+  //    this.Century = this.CenturyFromDecade(decade)
+  //  }
+  //  this.Type = EnumPeriod.decade
+  //}
+  public static CreateTLEventDecade(name: string, decade: number, century: number): TLEventDay {
+    let rt = new TLEventDay(name)
+    rt.Day = null
+    rt.Month = null
+    rt.Year = null
+    rt.Decade = decade
+    rt.Century = century
+    rt.Type = EnumPeriod.decade
+    return rt
   }
 }
 
 export class TLEventCentury extends TLEvent {
-  constructor(name: string, century: number) {
-    super(name)
-    this.Century = century
-    this.Type = EnumPeriod.century
+  //constructor(name: string, century: number) {
+  //  super(name)
+  //  this.Century = century
+  //  this.Type = EnumPeriod.century
+  //}
+  public static CreateTLEventCentury(name: string, century: number): TLEventDay {
+    let rt = new TLEventDay(name)
+    rt.Day = null
+    rt.Month = null
+    rt.Year = null
+    rt.Decade = null
+    rt.Century = century
+    rt.Type = EnumPeriod.century
+    return rt
   }
 }
 
