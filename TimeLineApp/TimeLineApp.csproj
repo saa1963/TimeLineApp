@@ -19,11 +19,12 @@
     <Content Remove="wwwroot\src\Globals.ts" />
     <Content Remove="wwwroot\src\index.ts" />
     <Content Remove="wwwroot\src\LogonHandlers.ts" />
+    <Content Remove="wwwroot\src\MainPresenter.ts" />
     <Content Remove="wwwroot\src\RegisterHandlers.ts" />
     <Content Remove="wwwroot\src\saagraph.ts" />
     <Content Remove="wwwroot\src\stringutils.ts" />
     <Content Remove="wwwroot\src\timeline.ts" />
-    <Content Remove="wwwroot\src\TimeLineViewModel.ts" />
+    <Content Remove="wwwroot\src\TimeLinePresenter.ts" />
     <Content Remove="wwwroot\src\TLEvent.ts" />
   </ItemGroup>
 
@@ -84,7 +85,8 @@
   <ItemGroup>
     <TypeScriptCompile Include="tests\DateUtilsTest.ts" />
     <TypeScriptCompile Include="tests\TLPeriodTest.ts" />
-    <TypeScriptCompile Include="wwwroot\src\TimeLineViewModel.ts" />
+    <TypeScriptCompile Include="wwwroot\src\MainPresenter.ts" />
+    <TypeScriptCompile Include="wwwroot\src\TimeLinePresenter.ts" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
