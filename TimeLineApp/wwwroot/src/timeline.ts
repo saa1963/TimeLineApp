@@ -6,15 +6,19 @@ import { TLPeriod } from "./TLPeriod";
 import * as $ from 'jquery'
 
 export class TimeLine {
+  // Модель
+  name: string
+  /** Массив событий и периодов для всей ЛВ */
+  tldata: TimeLineData
+
   y: number
   color: string | CanvasGradient | CanvasPattern
 /** Текущий вид ОВ */
   private period: EnumPeriod
-  name: string
+  
   /** Текущий индекс в массиве this.data  */ 
   curdata: number
-  /** Массив событий и периодов для всей ЛВ */
-  tldata: TimeLineData
+  
 
   /** Значение ОВ с которого начинается отрисовка справа налево */
   private curPeriod: number
@@ -96,7 +100,7 @@ export class TimeLine {
       x0 += TimeLine.INTERVAL_WIDTH
       dt = this.getPeriodAgo(dt, 1)
     }
-    this.drawName()
+    //this.drawName()
   }
 
   /**

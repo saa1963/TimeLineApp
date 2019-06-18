@@ -23,6 +23,7 @@
     <Content Remove="wwwroot\src\saagraph.ts" />
     <Content Remove="wwwroot\src\stringutils.ts" />
     <Content Remove="wwwroot\src\timeline.ts" />
+    <Content Remove="wwwroot\src\TimeLineViewModel.ts" />
     <Content Remove="wwwroot\src\TLEvent.ts" />
   </ItemGroup>
 
@@ -83,6 +84,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="tests\DateUtilsTest.ts" />
     <TypeScriptCompile Include="tests\TLPeriodTest.ts" />
+    <TypeScriptCompile Include="wwwroot\src\TimeLineViewModel.ts" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">

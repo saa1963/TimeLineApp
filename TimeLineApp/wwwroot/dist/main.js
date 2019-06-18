@@ -19516,7 +19516,7 @@ class TimeLine {
             x0 += TimeLine.INTERVAL_WIDTH;
             dt = this.getPeriodAgo(dt, 1);
         }
-        this.drawName();
+        //this.drawName()
     }
     /**
      * Формирует массив периодов для текущего ОВ
