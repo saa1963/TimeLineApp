@@ -2,7 +2,7 @@ const path = require('path');
 //const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-  entry: './src/index.ts',
+  entry: './src/index0.ts',
   devtool: 'source-map',
   context: path.resolve(__dirname, 'wwwroot'),
   mode: 'development',

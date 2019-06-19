@@ -1,21 +1,25 @@
+export enum MenuItemType {
+  default, divider
+}
+
 export class ContextMenu {
   private static count: number = 0
-  private options: object
-  private menu: object[]
+  private options: MenuOptions
+  public menu: MenuItem[]
   private contextTarget: EventTarget = null
   static readonly DIVIDER: string = 'cm_divider'
 
-  constructor(menu: object[], options?: object) {
+  constructor(menu: MenuItem[], options?: MenuOptions) {
     let num = ContextMenu.count++
     this.menu = menu
-    if (options == undefined) this.options = {}
+    if (options == undefined) this.options = new MenuOptions()
     else this.options = options
     window.addEventListener('resize', () => this.onresize())
     this.reload()
   }
 
   private onresize() {
-    if (ContextUtil.getProperty(this.options, 'close_on_resize', true)) {
+    if (this.options.close_on_resize) {
       this.hide()
     }
   }
@@ -25,17 +29,9 @@ export class ContextMenu {
     window.removeEventListener('click', () => this.documentClick())
   }
 
-  setOptions(_options: object) {
+  setOptions(_options: MenuOptions) {
       this.options = _options
   }
-
-  changeOption(option: string, value: any) {
-      this.options[option] = value
-  }
-
-  //getOptions() {
-  //  return this.options
-  //}
 
   reload() {
     if (document.getElementById('cm_' + ContextMenu.count) == null) {
@@ -52,13 +48,13 @@ export class ContextMenu {
     container.appendChild(this.renderLevel(this.menu))
   }
 
-  private renderLevel(level) {
+  private renderLevel(level: MenuItem[]) {
     var ulOuter = document.createElement('ul')
     level.forEach((item) => {
       let li = <MyHTMLLIElement>document.createElement('li')
       li.menu = this
 
-      if (typeof item.type === 'undefined') {
+      if (item.type === MenuItemType.default) {
         var iconSpan = document.createElement('span')
         iconSpan.className = 'cm_icon_span'
 
@@ -108,7 +104,7 @@ export class ContextMenu {
           }
         }
       } else {
-        if (item.type == ContextMenu.DIVIDER) {
+        if (item.type == MenuItemType.divider) {
           li.className = 'cm_divider'
         }
       }
@@ -236,4 +232,44 @@ export class ContextUtil {
 
 class MyHTMLLIElement extends HTMLLIElement {
   menu: ContextMenu
+}
+
+export class MenuItem {
+  id: string = null
+  text: string = null
+  icon: string = ''
+  events: Map<string, () => void> = null
+  enabled: Boolean = true
+  sub: MenuItem[] = null
+  type: MenuItemType = MenuItemType.default
+  public constructor(id: string, text?: string, icon?: string, events?: Map<string, () => void>, enabled?: boolean, sub?: MenuItem[], type?: MenuItemType) {
+    this.id = id
+    this.text = text || null
+    this.icon = icon || ''
+    this.events = events || null
+    this.enabled = enabled || true
+    this.sub = sub || null
+    this.type = type || MenuItemType.default
+  }
+}
+
+export class MenuItemDivider extends MenuItem {
+  public constructor() {
+    super(null, null, null, null, true, null, MenuItemType.divider)
+  }
+}
+
+export class MenuItemSub extends MenuItem {
+  public constructor(id: string, sub: MenuItem[]) {
+    super(id, null, null, null, true, sub)
+  }
+}
+
+export class MenuOptions {
+  default_icon: string = ''
+  default_text: string = 'item'
+  sub_icon: string = ''
+  mouse_offset: number = 2
+  close_on_click: boolean = true
+  close_on_resize: boolean = true
 }
