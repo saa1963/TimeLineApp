@@ -58,27 +58,27 @@ export class ContextMenu {
         var iconSpan = document.createElement('span')
         iconSpan.className = 'cm_icon_span'
 
-        if (ContextUtil.getProperty(item, 'icon', '') != '') {
-          iconSpan.innerHTML = ContextUtil.getProperty(item, 'icon', '')
+        if (item.icon != '') {
+          iconSpan.innerHTML = item.icon
         } else {
-          iconSpan.innerHTML = ContextUtil.getProperty(this.options, 'default_icon', '')
+          iconSpan.innerHTML = this.options.default_icon
         }
 
         var textSpan = document.createElement('span')
         textSpan.className = 'cm_text'
 
-        if (ContextUtil.getProperty(item, 'text', '') != '') {
-          textSpan.innerHTML = ContextUtil.getProperty(item, 'text', '')
+        if (item.text != '') {
+          textSpan.innerHTML = item.text
         } else {
-          textSpan.innerHTML = ContextUtil.getProperty(this.options, 'default_text', 'item')
+          textSpan.innerHTML = this.options.default_text
         }
 
         var subSpan = document.createElement('span')
         subSpan.className = 'cm_sub_span'
 
-        if (typeof item.sub !== 'undefined') {
-          if (ContextUtil.getProperty(this.options, 'sub_icon', '') != '') {
-            subSpan.innerHTML = ContextUtil.getProperty(this.options, 'sub_icon', '')
+        if (item.sub != null) {
+          if (this.options.sub_icon != '') {
+            subSpan.innerHTML = this.options.sub_icon
           } else {
             subSpan.innerHTML = '&#155;'
           }
@@ -88,7 +88,7 @@ export class ContextMenu {
         li.appendChild(textSpan)
         li.appendChild(subSpan)
 
-        if (!ContextUtil.getProperty(item, 'enabled', true)) {
+        if (!item.enabled) {
           li.setAttribute('disabled', '')
         } else {
           if (typeof item.events === 'object') {
@@ -175,15 +175,6 @@ export class ContextMenu {
     this.hide()
   }
 }
-
-export class ContextUtil {
-  static getProperty(options: object, opt: string, def: any) {
-    if (typeof options[opt] !== 'undefined') {
-      return options[opt]
-    } else {
-      return def
-    }
-  }
 
   static getSizes(obj) {
     var lis = obj.getElementsByTagName('li')

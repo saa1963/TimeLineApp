@@ -2,13 +2,14 @@
 import { ContextMenu, MenuItem, MenuItemType, MenuItemDivider, MenuItemSub } from "./contextmenu";
 import { EnumPeriod } from "./TLEvent";
 import { TimeLine } from "./timeline";
+import { LiteEvent } from "./LightEvent";
 
 export class MainView {
   // private свойства
   private ctx: CanvasRenderingContext2D
   private menuCtx: ContextMenu
 
-  //
+  // пункты меню с периодами
   private PeriodDay: MenuItem
   private PeriodMonth: MenuItem
   private PeriodYear: MenuItem
@@ -28,54 +29,63 @@ export class MainView {
     menuitems.push(new MenuItem('save', 'Сохранить', '<i class="far fa-save"></i>', m, false))
     menuitems.push(new MenuItemDivider())
     let sub: MenuItem[] = []
-    m = new Map<string, () => void>().set('click', this.SwitchPeriodToDay)
-    //sub.push(new MenuItem('switch_to_day', 'День', '<i class="fas fa-angle-down"></i>', m))
+    m = new Map<string, () => void>().set('click', () => { this.Presenter.Period = EnumPeriod.day })
     sub.push(this.PeriodDay = new MenuItem('switch_to_day', 'День', null, m))
-    m = new Map<string, () => void>().set('click', this.SwitchPeriodToMonth)
+    m = new Map<string, () => void>().set('click', () => { this.Presenter.Period = EnumPeriod.month })
     sub.push(this.PeriodMonth = new MenuItem('switch_to_month', 'Месяц', null, m))
-    m = new Map<string, () => void>().set('click', this.SwitchPeriodToYear)
+    m = new Map<string, () => void>().set('click', () => { this.Presenter.Period = EnumPeriod.year })
     sub.push(this.PeriodYear = new MenuItem('switch_to_year', 'Год', null, m))
-    m = new Map<string, () => void>().set('click', this.SwitchPeriodToDecade)
+    m = new Map<string, () => void>().set('click', () => { this.Presenter.Period = EnumPeriod.decade })
     sub.push(this.PeriodDecade = new MenuItem('switch_to_decade', 'Десятилетие', null, m))
-    m = new Map<string, () => void>().set('click', this.SwitchPeriodToCentury)
+    m = new Map<string, () => void>().set('click', () => { this.Presenter.Period = EnumPeriod.century })
     sub.push(this.PeriodCentury = new MenuItem('switch_to_century', 'Век', null, m))
     menuitems.push(new MenuItemSub('Периодичность', sub))
-
     this.menuCtx = new ContextMenu(menuitems)
-    this.Presenter = new MainPresenter()
-    this.RefreshStateFromPresenter()
+
+    this.Presenter = new MainPresenter(this)
+    this.Presenter.ChangePeriod.on(this.OnChangePeriod)
+
+    this.OnChangePeriod(this.Presenter.Period)
+
+    //let canvas: HTMLCanvasElement = document.getElementById('canvas') as HTMLCanvasElement
+    //ctx = canvas.getContext('2d')
   }
 
-  private RefreshStateFromPresenter() {
-    this.RefreshPeriod()
+  // В презентере изменился Period
+  private OnChangePeriod(period: EnumPeriod) {
+    this.ChangeIconMenuPeriod(period)
+    this.Draw()
   }
 
-  private RefreshPeriod() {
+  private ChangeIconMenuPeriod(period: EnumPeriod) {
+    const fa_angle_down = '<i class="fas fa-angle-down"></i>'
     this.PeriodDay = null
     this.PeriodMonth = null
     this.PeriodYear = null
     this.PeriodDecade = null
     this.PeriodCentury = null
-    switch (this.Presenter.Period === EnumPeriod.day) {
-
+    switch (period) {
+      case EnumPeriod.day:
+        this.PeriodDay.icon = fa_angle_down
+        break;
+      case EnumPeriod.month:
+        this.PeriodMonth.icon = fa_angle_down
+        break;
+      case EnumPeriod.year:
+        this.PeriodYear.icon = fa_angle_down
+        break;
+      case EnumPeriod.decade:
+        this.PeriodDecade.icon = fa_angle_down
+        break;
+      case EnumPeriod.century:
+        this.PeriodCentury.icon = fa_angle_down
+        break;
     }
   }
 
+  // отрисовка Линий Времени 
   public Draw() {
     throw new Error("Method not implemented.");
-  }
-
-  private SwitchPeriod(menuCtx: ContextMenu, day: EnumPeriod) {
-    menuCtx.menu.find(el => el.id === 'period').sub.forEach((el, nd, arr) => {
-      if (el.id === idPeriod) {
-        el.icon = '<i class="fas fa-angle-down"></i>'
-      } else {
-        el.icon = ''
-      }
-    })
-    PERIOD_TYPE = idPeriod
-    drawAll()
-    menuCtx.reload()
   }
 
   private OpenNewTLDialog() {
@@ -103,32 +113,16 @@ export class MainView {
 
   }
 
-  private SwitchPeriodToDay() {
-
+  public OnResizeWindow(width: number, height: number) {
+    this.Draw()
+    //canvas.style.top = HTOP + 'px'
+    //canvas.width = window.innerWidth
+    //canvas.height = window.innerHeight - HTOP
+    //drawAll()
   }
 
-  private SwitchPeriodToMonth() {
-    this.menuCtx.menu.find(el => el.id === 'period').sub.forEach((el, nd, arr) => {
-      if (el.id === 'switch_to_month') {
-        el.icon = '<i class="fas fa-angle-down"></i>'
-      } else {
-        el.icon = ''
-      }
-    })
-    PERIOD_TYPE = idPeriod
-    drawAll()
+  public OnContextMenu(e: MouseEvent) {
     this.menuCtx.reload()
-  }
-
-  private SwitchPeriodToYear() {
-
-  }
-
-  private SwitchPeriodToDecade() {
-
-  }
-
-  private SwitchPeriodToCentury() {
-
+    this.menuCtx.display(e)
   }
 }
