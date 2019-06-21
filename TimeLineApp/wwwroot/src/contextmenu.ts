@@ -91,15 +91,13 @@ export class ContextMenu {
         if (!item.enabled) {
           li.setAttribute('disabled', '')
         } else {
-          if (typeof item.events === 'object') {
-            var keys = Object.keys(item.events)
-
-            for (var i = 0; i < keys.length; i++) {
-              li.addEventListener(keys[i], item.events[keys[i]])
+          if (item.events !== null) {
+            for (var [key, value] of item.events) {
+              li.addEventListener(key, value)
             }
           }
 
-          if (typeof item.sub !== 'undefined') {
+          if (item.sub !== null) {
             li.appendChild(this.renderLevel(item.sub))
           }
         }
@@ -134,7 +132,7 @@ export class ContextMenu {
     var windowWidth = window.innerWidth
     var windowHeight = window.innerHeight
 
-    var mouseOffset = parseInt(ContextUtil.getProperty(this.options, 'mouse_offset', 2))
+    var mouseOffset = this.options.mouse_offset
 
     if ((windowWidth - clickCoordsX) < menuWidth) {
       menu.style.left = windowWidth - menuWidth + 'px'
@@ -164,7 +162,7 @@ export class ContextMenu {
 
     menu.classList.add('display')
 
-    if (ContextUtil.getProperty(this.options, 'close_on_click', true)) {
+    if (this.options.close_on_click) {
       window.addEventListener('click', () => { this.documentClick() })
     }
 
@@ -176,6 +174,7 @@ export class ContextMenu {
   }
 }
 
+class ContextUtil {
   static getSizes(obj) {
     var lis = obj.getElementsByTagName('li')
 

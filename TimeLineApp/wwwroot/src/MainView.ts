@@ -59,11 +59,11 @@ export class MainView {
 
   private ChangeIconMenuPeriod(period: EnumPeriod) {
     const fa_angle_down = '<i class="fas fa-angle-down"></i>'
-    this.PeriodDay = null
-    this.PeriodMonth = null
-    this.PeriodYear = null
-    this.PeriodDecade = null
-    this.PeriodCentury = null
+    this.PeriodDay.icon = ''
+    this.PeriodMonth.icon = ''
+    this.PeriodYear.icon = ''
+    this.PeriodDecade.icon = ''
+    this.PeriodCentury.icon = ''
     switch (period) {
       case EnumPeriod.day:
         this.PeriodDay.icon = fa_angle_down
@@ -85,7 +85,7 @@ export class MainView {
 
   // отрисовка Линий Времени 
   public Draw() {
-    throw new Error("Method not implemented.");
+    
   }
 
   private OpenNewTLDialog() {
@@ -124,5 +124,12 @@ export class MainView {
   public OnContextMenu(e: MouseEvent) {
     this.menuCtx.reload()
     this.menuCtx.display(e)
+  }
+
+  public handleEvent(event: Event) {
+    if (event.type === 'contextmenu') {
+      this.OnContextMenu(<MouseEvent>event)
+      event.preventDefault()
+    }
   }
 }
