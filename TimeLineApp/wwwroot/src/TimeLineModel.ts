@@ -1,11 +1,11 @@
 ﻿import { TLPeriod } from './TLPeriod';
 import { TLPeriodEvent } from './TLPeriodEvent';
 import { TLEvent } from './TLEvent';
-export class TimeLineData {
+export class TimeLineModel {
     Periods: TLPeriod[] = [];
     Name: string;
-    static CreateTimeLineData(data: any): TimeLineData {
-        let rt = new TimeLineData();
+    static CreateTimeLineData(data: any): TimeLineModel {
+        let rt = new TimeLineModel();
         rt.Name = data.Name;
         rt.Periods = [];
         data.Periods.forEach(o => {

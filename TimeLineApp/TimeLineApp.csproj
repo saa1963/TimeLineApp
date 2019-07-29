@@ -21,6 +21,7 @@
     <Content Remove="wwwroot\src\index0.ts" />
     <Content Remove="wwwroot\src\LightEvent.ts" />
     <Content Remove="wwwroot\src\LogonHandlers.ts" />
+    <Content Remove="wwwroot\src\MainModel.ts" />
     <Content Remove="wwwroot\src\MainPresenter.ts" />
     <Content Remove="wwwroot\src\MainView.ts" />
     <Content Remove="wwwroot\src\RegisterHandlers.ts" />
@@ -90,6 +91,7 @@
     <TypeScriptCompile Include="tests\TLPeriodTest.ts" />
     <TypeScriptCompile Include="wwwroot\src\index0.ts" />
     <TypeScriptCompile Include="wwwroot\src\LightEvent.ts" />
+    <TypeScriptCompile Include="wwwroot\src\MainModel.ts" />
     <TypeScriptCompile Include="wwwroot\src\MainPresenter.ts" />
     <TypeScriptCompile Include="wwwroot\src\MainView.ts" />
     <TypeScriptCompile Include="wwwroot\src\TimeLinePresenter.ts" />

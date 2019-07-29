@@ -4,7 +4,7 @@ import { ContextMenu } from './contextmenu'
 import { LogonHandlers } from './LogonHandlers';
 import { RegisterHandlers } from './RegisterHandlers'
 import { EnumPeriod } from './TLEvent'
-import { TimeLineData } from "./TimeLineData";
+import { TimeLineData } from "./TimeLineModel";
 import 'bootstrap'
 import * as $ from 'jquery'
 

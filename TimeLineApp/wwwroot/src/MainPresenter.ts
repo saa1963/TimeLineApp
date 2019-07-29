@@ -1,5 +1,5 @@
 ﻿import {TimeLinePresenter} from "./TimeLinePresenter"
-import { TimeLineData } from "./TimeLineData";
+import { TimeLineData } from "./TimeLineModel";
 import { EnumPeriod } from "./TLEvent";
 import { LiteEvent } from "./LightEvent";
 import { MainView } from "./MainView";
