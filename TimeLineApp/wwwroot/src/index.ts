@@ -4,7 +4,7 @@ import { ContextMenu } from './contextmenu'
 import { LogonHandlers } from './LogonHandlers';
 import { RegisterHandlers } from './RegisterHandlers'
 import { EnumPeriod } from './TLEvent'
-import { TimeLineData } from "./TimeLineModel";
+import { TimeLineModel } from "./TimeLineModel";
 import 'bootstrap'
 import * as $ from 'jquery'
 
@@ -188,7 +188,7 @@ function LoadTimeLine() {
     }
     })
     .done(data => {
-      let tldata = TimeLineData.CreateTimeLineData(JSON.parse(data))
+      let tldata = TimeLineModel.CreateTimeLineData(JSON.parse(data))
       let tl = new TimeLine(ctx)
       tl.name = tldata.Name
       tl.tldata = tldata

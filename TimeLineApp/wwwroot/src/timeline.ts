@@ -1,7 +1,7 @@
 import { DateUtils } from './dateutils'
 import { saaGraph } from './saagraph'
 import { TLEvent, EnumPeriod } from './TLEvent'
-import { TimeLineData } from "./TimeLineModel";
+import { TimeLineModel } from "./TimeLineModel";
 import { TLPeriod } from "./TLPeriod";
 import * as $ from 'jquery'
 
@@ -9,7 +9,7 @@ export class TimeLine {
   // Модель
   name: string
   /** Массив событий и периодов для всей ЛВ */
-  tldata: TimeLineData
+  tldata: TimeLineModel
 
   y: number
   color: string | CanvasGradient | CanvasPattern

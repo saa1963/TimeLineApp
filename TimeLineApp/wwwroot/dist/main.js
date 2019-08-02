@@ -17793,6 +17793,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class LiteEvent {
     constructor() {
         this.handlers = [];
+        this.trigger = ((data) => {
+            this.handlers.slice(0).forEach(h => h(data));
+        });
     }
     on(handler) {
         this.handlers.push(handler);
@@ -17800,14 +17803,28 @@ class LiteEvent {
     off(handler) {
         this.handlers = this.handlers.filter(h => h !== handler);
     }
-    trigger(data) {
-        this.handlers.slice(0).forEach(h => h(data));
-    }
     expose() {
         return this;
     }
 }
 exports.LiteEvent = LiteEvent;
+
+
+/***/ }),
+
+/***/ "./src/MainModel.ts":
+/*!**************************!*\
+  !*** ./src/MainModel.ts ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+class MainModel {
+}
+exports.MainModel = MainModel;
 
 
 /***/ }),
@@ -17824,12 +17841,20 @@ exports.LiteEvent = LiteEvent;
 Object.defineProperty(exports, "__esModule", { value: true });
 const TLEvent_1 = __webpack_require__(/*! ./TLEvent */ "./src/TLEvent.ts");
 const LightEvent_1 = __webpack_require__(/*! ./LightEvent */ "./src/LightEvent.ts");
+const MainModel_1 = __webpack_require__(/*! ./MainModel */ "./src/MainModel.ts");
 class MainPresenter {
+    // ! свойство Period
+    // ****************** ! Свойства ********************************
     constructor(view) {
-        // само событие
+        // ****************** События ***********************************
+        // событие ChangePeriod
         this.onChangePeriod = new LightEvent_1.LiteEvent();
+        // ! событие ChangePeriod
+        // ******************* ! События ********************************
+        // ******************* Свойства *********************************
+        // свойство Period
         this.m_Period = TLEvent_1.EnumPeriod.day;
-        this.TimeLinePresenters = [];
+        this.model = new MainModel_1.MainModel();
     }
     // свойство для доступа к событию
     get ChangePeriod() { return this.onChangePeriod.expose(); }

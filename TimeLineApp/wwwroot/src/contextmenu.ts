@@ -24,16 +24,16 @@ export class ContextMenu {
     }
   }
 
-  hide() {
+  public hide() {
     document.getElementById('cm_' + ContextMenu.count).classList.remove('display')
     window.removeEventListener('click', () => this.documentClick())
   }
 
-  setOptions(_options: MenuOptions) {
+  public setOptions(_options: MenuOptions) {
       this.options = _options
   }
 
-  reload() {
+  public reload() {
     if (document.getElementById('cm_' + ContextMenu.count) == null) {
       var cnt = document.createElement('div')
       cnt.className = 'cm_container'
@@ -113,7 +113,7 @@ export class ContextMenu {
     return ulOuter
   }
 
-  display(e: MouseEvent, target?: EventTarget) {
+  public display(e: MouseEvent, target?: EventTarget) {
     if (typeof target !== 'undefined') {
       this.contextTarget = target
     } else {
