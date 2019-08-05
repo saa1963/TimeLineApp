@@ -2,7 +2,6 @@
 import { ContextMenu, MenuItem, MenuItemType, MenuItemDivider, MenuItemSub } from "./contextmenu";
 import { EnumPeriod } from "./TLEvent";
 import { TimeLine } from "./timeline";
-import { LiteEvent } from "./LightEvent";
 
 export class MainView {
   // private свойства
@@ -39,22 +38,15 @@ export class MainView {
     sub.push(this.PeriodDecade = new MenuItem('switch_to_decade', 'Десятилетие', null, m))
     m = new Map<string, () => void>().set('click', () => { this.Presenter.Period = EnumPeriod.century })
     sub.push(this.PeriodCentury = new MenuItem('switch_to_century', 'Век', null, m))
-    menuitems.push(new MenuItemSub('Периодичность', sub))
+    menuitems.push(new MenuItemSub('period', 'Периодичность', sub))
     this.menuCtx = new ContextMenu(menuitems)
 
     this.Presenter = new MainPresenter(this)
-    this.Presenter.ChangePeriod.on(this.OnChangePeriod)
-
-    this.OnChangePeriod(this.Presenter.Period)
-
-    //let canvas: HTMLCanvasElement = document.getElementById('canvas') as HTMLCanvasElement
-    //ctx = canvas.getContext('2d')
-  }
-
-  // В презентере изменился Period
-  private OnChangePeriod(period: EnumPeriod) {
-    this.ChangeIconMenuPeriod(period)
-    this.Draw()
+    this.Presenter.evChangePeriod.subscribe((sender, period) => {
+      this.ChangeIconMenuPeriod(period)
+      this.Draw()
+    })
+    this.ChangeIconMenuPeriod(EnumPeriod.day)
   }
 
   private ChangeIconMenuPeriod(period: EnumPeriod) {

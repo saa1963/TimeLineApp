@@ -77,7 +77,7 @@ export class ContextMenu {
         subSpan.className = 'cm_sub_span'
 
         if (item.sub != null) {
-          if (this.options.sub_icon != '') {
+          if (this.options.sub_icon != null) {
             subSpan.innerHTML = this.options.sub_icon
           } else {
             subSpan.innerHTML = '&#155;'
@@ -250,15 +250,15 @@ export class MenuItemDivider extends MenuItem {
 }
 
 export class MenuItemSub extends MenuItem {
-  public constructor(id: string, sub: MenuItem[]) {
-    super(id, null, null, null, true, sub)
+  public constructor(id: string, text: string, sub: MenuItem[]) {
+    super(id, text, null, null, true, sub)
   }
 }
 
 export class MenuOptions {
   default_icon: string = ''
   default_text: string = 'item'
-  sub_icon: string = ''
+  sub_icon: string = '<i class="far fa-arrow-alt-circle-right"></i>'
   mouse_offset: number = 2
   close_on_click: boolean = true
   close_on_resize: boolean = true

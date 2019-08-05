@@ -11224,21 +11224,18 @@ a.text-dark:hover, a.text-dark:focus {
     .cm_container li .cm_icon_span {
       width: 1.5em;
       height: 1.2em;
-      vertical-align: bottom;
       display: inline-block;
       border-right: 1px solid #aaa;
       margin-right: 5px;
       padding-right: 5px;
       text-align: center; }
     .cm_container li .cm_sub_span {
-      width: 1em;
+      width: 1.5em;
+      height: 1.2em;
       display: inline-block;
-      text-align: center;
-      position: absolute;
-      top: 50%;
-      right: 0.5em;
-      -webkit-transform: translateY(-50%);
-              transform: translateY(-50%); }
+      margin-right: 5px;
+      padding-right: 5px;
+      text-align: center; }
     .cm_container li * {
       position: relative;
       box-sizing: border-box; }

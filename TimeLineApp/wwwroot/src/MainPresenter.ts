@@ -1,20 +1,20 @@
 ﻿import {TimeLinePresenter} from "./TimeLinePresenter"
 import { TimeLineModel } from "./TimeLineModel";
 import { EnumPeriod } from "./TLEvent";
-import { LiteEvent } from "./LightEvent";
 import { MainView } from "./MainView";
 import { MainModel } from "./MainModel";
+import {EventDispatcher, IEvent} from "strongly-typed-events"
 
 export class MainPresenter {
   private model: MainModel
+  private view: MainView
 
   // ****************** События ***********************************
 
-  // событие ChangePeriod
-  private readonly onChangePeriod = new LiteEvent<EnumPeriod>();
-  // свойство для доступа к событию
-  public get ChangePeriod() { return this.onChangePeriod.expose(); }
-  // ! событие ChangePeriod
+  private e_ChangePeriod = new EventDispatcher<MainPresenter, EnumPeriod>();
+  public get evChangePeriod(): IEvent<MainPresenter, EnumPeriod> {
+    return this.e_ChangePeriod.asEvent();
+  }
 
   // ******************* ! События ********************************
 
@@ -29,8 +29,7 @@ export class MainPresenter {
   public set Period(value: EnumPeriod) {
     if (this.m_Period !== value) {
       this.m_Period = value
-      //this.onChangePeriod.trigger(value as EnumPeriod.day & EnumPeriod.month & EnumPeriod.year & EnumPeriod.decade & EnumPeriod.century)
-      this.onChangePeriod.trigger(value)
+      this.e_ChangePeriod.dispatch(this, value);	
     }
   }
   // ! свойство Period
@@ -39,5 +38,6 @@ export class MainPresenter {
   
   constructor(view: MainView) {
     this.model = new MainModel()
+    this.view = view
   }
 }
