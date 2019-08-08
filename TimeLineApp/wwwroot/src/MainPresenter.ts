@@ -3,7 +3,7 @@ import { TimeLineModel } from "./TimeLineModel";
 import { EnumPeriod } from "./TLEvent";
 import { MainView } from "./MainView";
 import { MainModel } from "./MainModel";
-import {EventDispatcher, IEvent} from "strongly-typed-events"
+import { ISimpleEvent, SimpleEventDispatcher} from "strongly-typed-events"
 
 export class MainPresenter {
   private model: MainModel
@@ -11,8 +11,8 @@ export class MainPresenter {
 
   // ****************** События ***********************************
 
-  private e_ChangePeriod = new EventDispatcher<MainPresenter, EnumPeriod>();
-  public get evChangePeriod(): IEvent<MainPresenter, EnumPeriod> {
+  private e_ChangePeriod = new SimpleEventDispatcher<EnumPeriod>();
+  public get evChangePeriod(): ISimpleEvent<EnumPeriod> {
     return this.e_ChangePeriod.asEvent();
   }
 
@@ -29,7 +29,7 @@ export class MainPresenter {
   public set Period(value: EnumPeriod) {
     if (this.m_Period !== value) {
       this.m_Period = value
-      this.e_ChangePeriod.dispatch(this, value);	
+      this.e_ChangePeriod.dispatch(value);	
     }
   }
   // ! свойство Period

@@ -8,4 +8,7 @@ import * as $ from 'jquery'
     mainView.OnResizeWindow(window.innerWidth, window.innerHeight)
   })()
   document.addEventListener('contextmenu', mainView)
+  document.getElementById('btnLogin').onclick = () => {
+    mainView.OnLogin()
+  }
 })()

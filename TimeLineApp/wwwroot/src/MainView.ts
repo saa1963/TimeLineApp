@@ -2,6 +2,8 @@
 import { ContextMenu, MenuItem, MenuItemType, MenuItemDivider, MenuItemSub } from "./contextmenu";
 import { EnumPeriod } from "./TLEvent";
 import { TimeLine } from "./timeline";
+import { LogonHandlers } from "./LogonHandlers";
+import { LoginView } from "./LoginView";
 
 export class MainView {
   // private свойства
@@ -39,18 +41,18 @@ export class MainView {
     m = new Map<string, () => void>().set('click', () => { this.Presenter.Period = EnumPeriod.century })
     sub.push(this.PeriodCentury = new MenuItem('switch_to_century', 'Век', null, m))
     menuitems.push(new MenuItemSub('period', 'Периодичность', sub))
+
+    this.ChangeIconMenuPeriod(EnumPeriod.day)
     this.menuCtx = new ContextMenu(menuitems)
 
     this.Presenter = new MainPresenter(this)
-    this.Presenter.evChangePeriod.subscribe((sender, period) => {
+    this.Presenter.evChangePeriod.subscribe((period) => {
       this.ChangeIconMenuPeriod(period)
-      this.Draw()
     })
-    this.ChangeIconMenuPeriod(EnumPeriod.day)
   }
 
   private ChangeIconMenuPeriod(period: EnumPeriod) {
-    const fa_angle_down = '<i class="fas fa-angle-down"></i>'
+    const fa_angle_down = '<i class="far fa-check-square"></i>'
     this.PeriodDay.icon = ''
     this.PeriodMonth.icon = ''
     this.PeriodYear.icon = ''
@@ -107,15 +109,21 @@ export class MainView {
 
   public OnResizeWindow(width: number, height: number) {
     this.Draw()
-    //canvas.style.top = HTOP + 'px'
-    //canvas.width = window.innerWidth
-    //canvas.height = window.innerHeight - HTOP
-    //drawAll()
   }
 
   public OnContextMenu(e: MouseEvent) {
     this.menuCtx.reload()
     this.menuCtx.display(e)
+  }
+
+  OnLogin() {
+    let loginView = new LoginView()
+    document.getElementById('logLogin').onkeydown = () => {
+      loginView.OnChangeLogin()
+    }
+    if (loginView.ShowDialog()) {
+
+    }
   }
 
   public handleEvent(event: Event) {

@@ -18721,6 +18721,126 @@ module.exports = g;
 
 /***/ }),
 
+/***/ "./src/Globals.ts":
+/*!************************!*\
+  !*** ./src/Globals.ts ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+class Globals {
+    static getCookie(name) {
+        let c = document.cookie;
+        var matches = document.cookie.match(new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"));
+        return matches ? decodeURIComponent(matches[1]) : undefined;
+    }
+}
+Globals.IsAuthentificated = false;
+exports.Globals = Globals;
+
+
+/***/ }),
+
+/***/ "./src/LoginModel.ts":
+/*!***************************!*\
+  !*** ./src/LoginModel.ts ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+class LoginModel {
+}
+exports.LoginModel = LoginModel;
+
+
+/***/ }),
+
+/***/ "./src/LoginPresenter.ts":
+/*!*******************************!*\
+  !*** ./src/LoginPresenter.ts ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const LoginModel_1 = __webpack_require__(/*! ./LoginModel */ "./src/LoginModel.ts");
+const Globals_1 = __webpack_require__(/*! ./Globals */ "./src/Globals.ts");
+const strongly_typed_events_1 = __webpack_require__(/*! strongly-typed-events */ "../node_modules/strongly-typed-events/dist/index.js");
+class LoginPresenter {
+    constructor() {
+        this.e_ChangeLogin = new strongly_typed_events_1.SimpleEventDispatcher();
+        this.e_ChangePassword = new strongly_typed_events_1.SimpleEventDispatcher();
+        this.model = new LoginModel_1.LoginModel();
+        this.Login = Globals_1.Globals.getCookie('timelineuser') || '';
+        this.Password = '';
+    }
+    get evChangeLogin() {
+        return this.e_ChangeLogin.asEvent();
+    }
+    get evChangePassword() {
+        return this.e_ChangePassword.asEvent();
+    }
+    get Login() {
+        return this.model.Login;
+    }
+    set Login(value) {
+        this.model.Login = value;
+        this.e_ChangeLogin.dispatch(value);
+    }
+    get Password() {
+        return this.model.Password;
+    }
+    set Password(value) {
+        this.model.Password = value;
+        this.e_ChangePassword.dispatch(value);
+    }
+}
+exports.LoginPresenter = LoginPresenter;
+
+
+/***/ }),
+
+/***/ "./src/LoginView.ts":
+/*!**************************!*\
+  !*** ./src/LoginView.ts ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const LoginPresenter_1 = __webpack_require__(/*! ./LoginPresenter */ "./src/LoginPresenter.ts");
+const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
+class LoginView {
+    constructor() {
+        this.Presenter = new LoginPresenter_1.LoginPresenter();
+        this.Presenter.evChangeLogin.subscribe((login) => {
+            $('#logLogin').val(this.Presenter.Login);
+        });
+        this.Presenter.evChangePassword.subscribe((password) => {
+            $('#logPassword').val(this.Presenter.Password);
+        });
+    }
+    ShowDialog() {
+        $('#tmLoginModal').modal();
+        $('#log_server_error').css('display', 'none');
+        return true;
+    }
+}
+exports.LoginView = LoginView;
+
+
+/***/ }),
+
 /***/ "./src/MainModel.ts":
 /*!**************************!*\
   !*** ./src/MainModel.ts ***!
@@ -18756,7 +18876,7 @@ class MainPresenter {
     // ****************** ! Свойства ********************************
     constructor(view) {
         // ****************** События ***********************************
-        this.e_ChangePeriod = new strongly_typed_events_1.EventDispatcher();
+        this.e_ChangePeriod = new strongly_typed_events_1.SimpleEventDispatcher();
         // ******************* ! События ********************************
         // ******************* Свойства *********************************
         // свойство Period
@@ -18773,7 +18893,7 @@ class MainPresenter {
     set Period(value) {
         if (this.m_Period !== value) {
             this.m_Period = value;
-            this.e_ChangePeriod.dispatch(this, value);
+            this.e_ChangePeriod.dispatch(value);
         }
     }
 }
@@ -18796,6 +18916,7 @@ const MainPresenter_1 = __webpack_require__(/*! ./MainPresenter */ "./src/MainPr
 const contextmenu_1 = __webpack_require__(/*! ./contextmenu */ "./src/contextmenu.ts");
 const TLEvent_1 = __webpack_require__(/*! ./TLEvent */ "./src/TLEvent.ts");
 const timeline_1 = __webpack_require__(/*! ./timeline */ "./src/timeline.ts");
+const LoginView_1 = __webpack_require__(/*! ./LoginView */ "./src/LoginView.ts");
 class MainView {
     constructor() {
         let menuitems = [];
@@ -18818,16 +18939,15 @@ class MainView {
         m = new Map().set('click', () => { this.Presenter.Period = TLEvent_1.EnumPeriod.century; });
         sub.push(this.PeriodCentury = new contextmenu_1.MenuItem('switch_to_century', 'Век', null, m));
         menuitems.push(new contextmenu_1.MenuItemSub('period', 'Периодичность', sub));
+        this.ChangeIconMenuPeriod(TLEvent_1.EnumPeriod.day);
         this.menuCtx = new contextmenu_1.ContextMenu(menuitems);
         this.Presenter = new MainPresenter_1.MainPresenter(this);
-        this.Presenter.evChangePeriod.subscribe((sender, period) => {
+        this.Presenter.evChangePeriod.subscribe((period) => {
             this.ChangeIconMenuPeriod(period);
-            this.Draw();
         });
-        this.ChangeIconMenuPeriod(TLEvent_1.EnumPeriod.day);
     }
     ChangeIconMenuPeriod(period) {
-        const fa_angle_down = '<i class="fas fa-angle-down"></i>';
+        const fa_angle_down = '<i class="far fa-check-square"></i>';
         this.PeriodDay.icon = '';
         this.PeriodMonth.icon = '';
         this.PeriodYear.icon = '';
@@ -18877,14 +18997,18 @@ class MainView {
     }
     OnResizeWindow(width, height) {
         this.Draw();
-        //canvas.style.top = HTOP + 'px'
-        //canvas.width = window.innerWidth
-        //canvas.height = window.innerHeight - HTOP
-        //drawAll()
     }
     OnContextMenu(e) {
         this.menuCtx.reload();
         this.menuCtx.display(e);
+    }
+    OnLogin() {
+        let loginView = new LoginView_1.LoginView();
+        if (loginView.ShowDialog()) {
+        }
+    }
+    OnChangeLogin() {
+        let b = 0;
     }
     handleEvent(event) {
         if (event.type === 'contextmenu') {
@@ -19835,6 +19959,12 @@ __webpack_require__(/*! bootstrap */ "../node_modules/bootstrap/dist/js/bootstra
         mainView.OnResizeWindow(window.innerWidth, window.innerHeight);
     })();
     document.addEventListener('contextmenu', mainView);
+    document.getElementById('btnLogin').onclick = () => {
+        mainView.OnLogin();
+    };
+    document.getElementById('logLogin').onkeydown = (x) => {
+        mainView.OnChangeLogin();
+    };
 })();
 
 

@@ -99,6 +99,7 @@ export class ContextMenu {
 
           if (item.sub !== null) {
             li.appendChild(this.renderLevel(item.sub))
+
           }
         }
       } else {
