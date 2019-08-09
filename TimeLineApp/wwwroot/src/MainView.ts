@@ -4,6 +4,8 @@ import { EnumPeriod } from "./TLEvent";
 import { TimeLine } from "./timeline";
 import { LogonHandlers } from "./LogonHandlers";
 import { LoginView } from "./LoginView";
+import { Globals } from "./Globals";
+import { LoginModel } from "./LoginModel";
 
 export class MainView {
   // private свойства
@@ -117,10 +119,8 @@ export class MainView {
   }
 
   OnLogin() {
-    let loginView = new LoginView()
-    document.getElementById('logLogin').onkeydown = () => {
-      loginView.OnChangeLogin()
-    }
+    let loginModel = new LoginModel(Globals.getCookie('timelineuser') || '')
+    let loginView = new LoginView(loginModel)
     if (loginView.ShowDialog()) {
 
     }

@@ -1,26 +1,52 @@
 ﻿import { LoginPresenter } from "./LoginPresenter";
 import * as $ from 'jquery'
+import { LoginModel } from "./LoginModel";
 
 export class LoginView {
   private Presenter: LoginPresenter
 
-  constructor() {
-    this.Presenter = new LoginPresenter()
-    this.Presenter.evChangeLogin.subscribe((login) => {
-      $('#logLogin').val(this.Presenter.Login)
-    })
-    this.Presenter.evChangePassword.subscribe((password) => {
-      $('#logPassword').val(this.Presenter.Password)
-    })
+  constructor(model: LoginModel) {
+    document.getElementById('logLogin').onchange = () => {
+      this.OnChangeLogin()
+    }
+    document.getElementById('logPassword').onchange = () => {
+      this.OnChangePassword()
+    }
+    this.Presenter = new LoginPresenter(this, model)
   }
 
   public ShowDialog(): boolean {
     $('#tmLoginModal').modal()
     $('#log_server_error').css('display', 'none')
+
     return true
   }
 
-  public OnChangeLogin() {
-    this.Presenter.Login = 
+  private Ok() {
+
+  }
+
+  public UpdateLogin(login) {
+    $('logLogin').val(login)
+  }
+
+  public UpdatePassword(password) {
+    $('logPassword').val(password)
+  }
+
+  private OnChangeLogin() {
+    this.Presenter.OnChangeLoginInView()
+  }
+
+  private OnChangePassword() {
+    this.Presenter.OnChangeLoginInView()
+  }
+
+  public GetLogin(): string {
+    return <string>$('logLogin').val()
+  }
+
+  public GetPassword(): string {
+    return <string>$('logPassword').val()
   }
 }

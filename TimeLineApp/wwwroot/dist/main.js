@@ -18754,7 +18754,38 @@ exports.Globals = Globals;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+const ste_simple_events_1 = __webpack_require__(/*! ste-simple-events */ "../node_modules/ste-simple-events/dist/index.js");
 class LoginModel {
+    constructor(login) {
+        this.e_ChangeLogin = new ste_simple_events_1.SimpleEventDispatcher();
+        this.e_ChangePassword = new ste_simple_events_1.SimpleEventDispatcher();
+        this.Login = login;
+        this.Password = '';
+    }
+    get Login() {
+        return this.m_Login;
+    }
+    set Login(value) {
+        if (value !== this.m_Login) {
+            this.m_Login = value;
+            this.e_ChangeLogin.dispatch(value);
+        }
+    }
+    get Password() {
+        return this.m_Password;
+    }
+    set Password(value) {
+        if (value !== this.m_Password) {
+            this.m_Password = value;
+            this.e_ChangePassword.dispatch(value);
+        }
+    }
+    get evChangeLogin() {
+        return this.e_ChangeLogin.asEvent();
+    }
+    get evChangePassword() {
+        return this.e_ChangePassword.asEvent();
+    }
 }
 exports.LoginModel = LoginModel;
 
@@ -18771,36 +18802,19 @@ exports.LoginModel = LoginModel;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const LoginModel_1 = __webpack_require__(/*! ./LoginModel */ "./src/LoginModel.ts");
-const Globals_1 = __webpack_require__(/*! ./Globals */ "./src/Globals.ts");
-const strongly_typed_events_1 = __webpack_require__(/*! strongly-typed-events */ "../node_modules/strongly-typed-events/dist/index.js");
 class LoginPresenter {
-    constructor() {
-        this.e_ChangeLogin = new strongly_typed_events_1.SimpleEventDispatcher();
-        this.e_ChangePassword = new strongly_typed_events_1.SimpleEventDispatcher();
-        this.model = new LoginModel_1.LoginModel();
-        this.Login = Globals_1.Globals.getCookie('timelineuser') || '';
-        this.Password = '';
+    constructor(view, model) {
+        this.model = model;
+        this.view = view;
+        this.model.evChangeLogin.subscribe((login) => {
+            this.view.UpdateLogin(login);
+        });
+        this.model.evChangePassword.subscribe((password) => {
+            this.view.UpdatePassword(password);
+        });
     }
-    get evChangeLogin() {
-        return this.e_ChangeLogin.asEvent();
-    }
-    get evChangePassword() {
-        return this.e_ChangePassword.asEvent();
-    }
-    get Login() {
-        return this.model.Login;
-    }
-    set Login(value) {
-        this.model.Login = value;
-        this.e_ChangeLogin.dispatch(value);
-    }
-    get Password() {
-        return this.model.Password;
-    }
-    set Password(value) {
-        this.model.Password = value;
-        this.e_ChangePassword.dispatch(value);
+    OnChangeLoginInView() {
+        this.model.Login = this.view.GetLogin();
     }
 }
 exports.LoginPresenter = LoginPresenter;
@@ -18821,19 +18835,28 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const LoginPresenter_1 = __webpack_require__(/*! ./LoginPresenter */ "./src/LoginPresenter.ts");
 const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
 class LoginView {
-    constructor() {
-        this.Presenter = new LoginPresenter_1.LoginPresenter();
-        this.Presenter.evChangeLogin.subscribe((login) => {
-            $('#logLogin').val(this.Presenter.Login);
-        });
-        this.Presenter.evChangePassword.subscribe((password) => {
-            $('#logPassword').val(this.Presenter.Password);
-        });
+    constructor(model) {
+        this.Presenter = new LoginPresenter_1.LoginPresenter(this, model);
     }
     ShowDialog() {
         $('#tmLoginModal').modal();
         $('#log_server_error').css('display', 'none');
         return true;
+    }
+    UpdateLogin(login) {
+        $('logLogin').val(login);
+    }
+    UpdatePassword(password) {
+        $('logPassword').val(password);
+    }
+    OnChangeLogin() {
+        this.Presenter.OnChangeLoginInView();
+    }
+    GetLogin() {
+        return $('logLogin').val();
+    }
+    GetPassword() {
+        return $('logPassword').val();
     }
 }
 exports.LoginView = LoginView;
@@ -18917,6 +18940,8 @@ const contextmenu_1 = __webpack_require__(/*! ./contextmenu */ "./src/contextmen
 const TLEvent_1 = __webpack_require__(/*! ./TLEvent */ "./src/TLEvent.ts");
 const timeline_1 = __webpack_require__(/*! ./timeline */ "./src/timeline.ts");
 const LoginView_1 = __webpack_require__(/*! ./LoginView */ "./src/LoginView.ts");
+const Globals_1 = __webpack_require__(/*! ./Globals */ "./src/Globals.ts");
+const LoginModel_1 = __webpack_require__(/*! ./LoginModel */ "./src/LoginModel.ts");
 class MainView {
     constructor() {
         let menuitems = [];
@@ -19003,12 +19028,13 @@ class MainView {
         this.menuCtx.display(e);
     }
     OnLogin() {
-        let loginView = new LoginView_1.LoginView();
+        let loginModel = new LoginModel_1.LoginModel(Globals_1.Globals.getCookie('timelineuser') || '');
+        let loginView = new LoginView_1.LoginView(loginModel);
+        document.getElementById('logLogin').onkeydown = () => {
+            loginView.OnChangeLogin();
+        };
         if (loginView.ShowDialog()) {
         }
-    }
-    OnChangeLogin() {
-        let b = 0;
     }
     handleEvent(event) {
         if (event.type === 'contextmenu') {
@@ -19961,9 +19987,6 @@ __webpack_require__(/*! bootstrap */ "../node_modules/bootstrap/dist/js/bootstra
     document.addEventListener('contextmenu', mainView);
     document.getElementById('btnLogin').onclick = () => {
         mainView.OnLogin();
-    };
-    document.getElementById('logLogin').onkeydown = (x) => {
-        mainView.OnChangeLogin();
     };
 })();
 
