@@ -4,13 +4,28 @@ import { LoginModel } from "./LoginModel";
 
 export class LoginView {
   private Presenter: LoginPresenter
+  private tbLogin: HTMLInputElement
+  private tbPassword: HTMLInputElement
+  private btnOk: HTMLButtonElement
+  private btnCancel: HTMLButtonElement
 
   constructor(model: LoginModel) {
-    document.getElementById('logLogin').onchange = () => {
-      this.OnChangeLogin()
+    this.tbLogin = <HTMLInputElement>document.getElementById('logLogin')
+    this.tbPassword = <HTMLInputElement>document.getElementById('logPassword')
+    this.btnOk = <HTMLButtonElement>document.getElementById('btnLoginUser')
+    this.btnCancel = <HTMLButtonElement>document.getElementById('btnCancelLoginUser')
+
+    this.tbLogin.onchange = () => {
+      this.Presenter.OnChangeLoginInView()
     }
-    document.getElementById('logPassword').onchange = () => {
-      this.OnChangePassword()
+    this.tbPassword.onchange = () => {
+      this.Presenter.OnChangeLoginInView()
+    }
+    this.btnOk.onclick = () => {
+      $('#tmLoginModal').modal('hide')
+    }
+    this.btnCancel.onclick = () => {
+      $('#tmLoginModal').modal('hide')
     }
     this.Presenter = new LoginPresenter(this, model)
   }
@@ -18,28 +33,15 @@ export class LoginView {
   public ShowDialog(): boolean {
     $('#tmLoginModal').modal()
     $('#log_server_error').css('display', 'none')
-
     return true
   }
 
-  private Ok() {
-
-  }
-
-  public UpdateLogin(login) {
+  public SetLogin(login) {
     $('logLogin').val(login)
   }
 
-  public UpdatePassword(password) {
+  public SetPassword(password) {
     $('logPassword').val(password)
-  }
-
-  private OnChangeLogin() {
-    this.Presenter.OnChangeLoginInView()
-  }
-
-  private OnChangePassword() {
-    this.Presenter.OnChangeLoginInView()
   }
 
   public GetLogin(): string {

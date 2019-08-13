@@ -11,16 +11,16 @@ export class LoginPresenter {
     this.view = view
     this.model.evChangeLogin.subscribe((login) => {
       if (login !== this.m_Login) {
-        this.view.UpdateLogin(login)
+        this.view.SetLogin(login)
       }
     })
     this.model.evChangePassword.subscribe((password) => {
       if (password !== this.m_Password) {
-        this.view.UpdatePassword(password)
+        this.view.SetPassword(password)
       }
     })
-    this.view.UpdateLogin(model.Login)
-    this.view.UpdatePassword(model.Password)
+    this.view.SetLogin(model.Login)
+    this.view.SetPassword(model.Password)
   }
 
   // обработчики вызовов из View

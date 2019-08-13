@@ -18807,14 +18807,26 @@ class LoginPresenter {
         this.model = model;
         this.view = view;
         this.model.evChangeLogin.subscribe((login) => {
-            this.view.UpdateLogin(login);
+            if (login !== this.m_Login) {
+                this.view.SetLogin(login);
+            }
         });
         this.model.evChangePassword.subscribe((password) => {
-            this.view.UpdatePassword(password);
+            if (password !== this.m_Password) {
+                this.view.SetPassword(password);
+            }
         });
+        this.view.SetLogin(model.Login);
+        this.view.SetPassword(model.Password);
     }
+    // обработчики вызовов из View
     OnChangeLoginInView() {
-        this.model.Login = this.view.GetLogin();
+        this.m_Login = this.view.GetLogin();
+        this.model.Login = this.m_Login;
+    }
+    OnChangePasswordInView() {
+        this.m_Password = this.view.GetPassword();
+        this.model.Password = this.m_Password;
     }
 }
 exports.LoginPresenter = LoginPresenter;
@@ -18836,6 +18848,24 @@ const LoginPresenter_1 = __webpack_require__(/*! ./LoginPresenter */ "./src/Logi
 const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
 class LoginView {
     constructor(model) {
+        this.tbLogin = document.getElementById('logLogin');
+        this.tbPassword = document.getElementById('logPassword');
+        this.btnOk = document.getElementById('btnLoginUser');
+        this.btnCancel = document.getElementById('btnCancelLoginUser');
+        this.tbLogin.onchange = () => {
+            this.Presenter.OnChangeLoginInView();
+        };
+        this.tbPassword.onchange = () => {
+            this.Presenter.OnChangeLoginInView();
+        };
+        this.btnOk.onclick = () => {
+            this.Dispose();
+            $('#tmLoginModal').modal('hide');
+        };
+        this.btnCancel.onclick = () => {
+            this.Dispose();
+            $('#tmLoginModal').modal('hide');
+        };
         this.Presenter = new LoginPresenter_1.LoginPresenter(this, model);
     }
     ShowDialog() {
@@ -18843,14 +18873,16 @@ class LoginView {
         $('#log_server_error').css('display', 'none');
         return true;
     }
-    UpdateLogin(login) {
+    Dispose() {
+        this.btnOk.onclick = null;
+        this.tbLogin.onchange = null;
+        this.tbPassword.onchange = null;
+    }
+    SetLogin(login) {
         $('logLogin').val(login);
     }
-    UpdatePassword(password) {
+    SetPassword(password) {
         $('logPassword').val(password);
-    }
-    OnChangeLogin() {
-        this.Presenter.OnChangeLoginInView();
     }
     GetLogin() {
         return $('logLogin').val();
@@ -19030,9 +19062,6 @@ class MainView {
     OnLogin() {
         let loginModel = new LoginModel_1.LoginModel(Globals_1.Globals.getCookie('timelineuser') || '');
         let loginView = new LoginView_1.LoginView(loginModel);
-        document.getElementById('logLogin').onkeydown = () => {
-            loginView.OnChangeLogin();
-        };
         if (loginView.ShowDialog()) {
         }
     }
