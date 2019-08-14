@@ -17,6 +17,7 @@
     <Content Remove="wwwroot\src\contextmenu.ts" />
     <Content Remove="wwwroot\src\dateutils.ts" />
     <Content Remove="wwwroot\src\Globals.ts" />
+    <Content Remove="wwwroot\src\ILoginView.ts" />
     <Content Remove="wwwroot\src\index.ts" />
     <Content Remove="wwwroot\src\index0.ts" />
     <Content Remove="wwwroot\src\LoginModel.ts" />
@@ -91,6 +92,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="tests\DateUtilsTest.ts" />
     <TypeScriptCompile Include="tests\TLPeriodTest.ts" />
+    <TypeScriptCompile Include="wwwroot\src\ILoginView.ts" />
     <TypeScriptCompile Include="wwwroot\src\index0.ts" />
     <TypeScriptCompile Include="wwwroot\src\LoginModel.ts" />
     <TypeScriptCompile Include="wwwroot\src\LoginPresenter.ts" />

@@ -119,10 +119,12 @@ export class MainView {
   }
 
   OnLogin() {
-    let loginModel = new LoginModel(Globals.getCookie('timelineuser') || '')
-    let loginView = new LoginView(loginModel)
-    if (loginView.ShowDialog()) {
-
+    if (!Globals.IsAuthentificated) {
+      let loginModel = new LoginModel(Globals.getCookie('timelineuser') || '')
+      let loginView = new LoginView(loginModel)
+      loginView.ShowDialog()
+    } else {
+      LoginView.Logout()
     }
   }
 

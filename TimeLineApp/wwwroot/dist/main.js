@@ -18801,7 +18801,17 @@ exports.LoginModel = LoginModel;
 
 "use strict";
 
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+const Globals_1 = __webpack_require__(/*! ./Globals */ "./src/Globals.ts");
+const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
 class LoginPresenter {
     constructor(view, model) {
         this.model = model;
@@ -18816,8 +18826,13 @@ class LoginPresenter {
                 this.view.SetPassword(password);
             }
         });
+        this.m_Login = model.Login;
+        this.m_Password = model.Password;
         this.view.SetLogin(model.Login);
         this.view.SetPassword(model.Password);
+    }
+    get Login() {
+        return this.m_Login;
     }
     // обработчики вызовов из View
     OnChangeLoginInView() {
@@ -18827,6 +18842,31 @@ class LoginPresenter {
     OnChangePasswordInView() {
         this.m_Password = this.view.GetPassword();
         this.model.Password = this.m_Password;
+    }
+    DoLogin() {
+        return __awaiter(this, void 0, void 0, function* () {
+            if ((this.m_Login || '').trim() !== '' && (this.m_Password || '').trim() !== '') {
+                let err = yield $.ajax('api/register/log', {
+                    type: 'POST',
+                    data: {
+                        Login: this.m_Login,
+                        Password: this.m_Password
+                    }
+                });
+                if (err === '') {
+                    Globals_1.Globals.IsAuthentificated = true;
+                    return true;
+                }
+                else {
+                    this.view.SetError(err);
+                    return false;
+                }
+            }
+            else {
+                this.view.SetError('Не введены логин или пароль.');
+                return false;
+            }
+        });
     }
 }
 exports.LoginPresenter = LoginPresenter;
@@ -18843,9 +18883,18 @@ exports.LoginPresenter = LoginPresenter;
 
 "use strict";
 
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const LoginPresenter_1 = __webpack_require__(/*! ./LoginPresenter */ "./src/LoginPresenter.ts");
 const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
+const Globals_1 = __webpack_require__(/*! ./Globals */ "./src/Globals.ts");
 class LoginView {
     constructor(model) {
         this.tbLogin = document.getElementById('logLogin');
@@ -18856,39 +18905,63 @@ class LoginView {
             this.Presenter.OnChangeLoginInView();
         };
         this.tbPassword.onchange = () => {
-            this.Presenter.OnChangeLoginInView();
+            this.Presenter.OnChangePasswordInView();
         };
-        this.btnOk.onclick = () => {
-            this.Dispose();
-            $('#tmLoginModal').modal('hide');
-        };
+        this.btnOk.onclick = () => __awaiter(this, void 0, void 0, function* () {
+            let success = yield this.Presenter.DoLogin();
+            if (success) {
+                $('#tmLoginModal').modal('hide');
+                $('#btnLogin').text('Выход');
+                this.SetUserLabel(this.Presenter.Login);
+            }
+            //this.Presenter.DoLogin()
+            //  .then((response) => {
+            //    if (response) {
+            //      $('#tmLoginModal').modal('hide')
+            //      $('#btnLogin').text('Выход')
+            //      this.SetUserLabel(this.Presenter.Login)
+            //    }
+            //  })
+        });
         this.btnCancel.onclick = () => {
-            this.Dispose();
             $('#tmLoginModal').modal('hide');
         };
         this.Presenter = new LoginPresenter_1.LoginPresenter(this, model);
     }
     ShowDialog() {
         $('#tmLoginModal').modal();
-        $('#log_server_error').css('display', 'none');
-        return true;
-    }
-    Dispose() {
-        this.btnOk.onclick = null;
-        this.tbLogin.onchange = null;
-        this.tbPassword.onchange = null;
+        this.ClearError();
     }
     SetLogin(login) {
-        $('logLogin').val(login);
+        $('#logLogin').val(login);
     }
     SetPassword(password) {
-        $('logPassword').val(password);
+        $('#logPassword').val(password);
+    }
+    SetError(err) {
+        $('#log_server_error').text(err);
+        $('#log_server_error').css('display', 'unset');
+    }
+    ClearError() {
+        $('#log_server_error').css('display', 'none');
+    }
+    SetUserLabel(user) {
+        $('#lblUser').text(user);
+        $('#lblUser').css('display', 'unset');
+    }
+    static ClearUserLabel() {
+        $('#lblUser').css('display', 'none');
     }
     GetLogin() {
-        return $('logLogin').val();
+        return $('#logLogin').val();
     }
     GetPassword() {
-        return $('logPassword').val();
+        return $('#logPassword').val();
+    }
+    static Logout() {
+        LoginView.ClearUserLabel();
+        $('#btnLogin').text('Вход');
+        Globals_1.Globals.IsAuthentificated = false;
     }
 }
 exports.LoginView = LoginView;
@@ -19060,9 +19133,13 @@ class MainView {
         this.menuCtx.display(e);
     }
     OnLogin() {
-        let loginModel = new LoginModel_1.LoginModel(Globals_1.Globals.getCookie('timelineuser') || '');
-        let loginView = new LoginView_1.LoginView(loginModel);
-        if (loginView.ShowDialog()) {
+        if (!Globals_1.Globals.IsAuthentificated) {
+            let loginModel = new LoginModel_1.LoginModel(Globals_1.Globals.getCookie('timelineuser') || '');
+            let loginView = new LoginView_1.LoginView(loginModel);
+            loginView.ShowDialog();
+        }
+        else {
+            LoginView_1.LoginView.Logout();
         }
     }
     handleEvent(event) {
