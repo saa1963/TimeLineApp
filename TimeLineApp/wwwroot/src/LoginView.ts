@@ -10,12 +10,14 @@ export class LoginView implements ILoginView {
   private tbPassword: HTMLInputElement
   private btnOk: HTMLButtonElement
   private btnCancel: HTMLButtonElement
+  private dlg: HTMLElement
 
   constructor(model: LoginModel) {
     this.tbLogin = <HTMLInputElement>document.getElementById('logLogin')
     this.tbPassword = <HTMLInputElement>document.getElementById('logPassword')
     this.btnOk = <HTMLButtonElement>document.getElementById('btnLoginUser')
     this.btnCancel = <HTMLButtonElement>document.getElementById('btnCancelLoginUser')
+    this.dlg = <HTMLElement>document.getElementById('tmLoginModal')
 
     this.tbLogin.onchange = () => {
       this.Presenter.OnChangeLoginInView()
@@ -24,6 +26,7 @@ export class LoginView implements ILoginView {
       this.Presenter.OnChangePasswordInView()
     }
     this.btnOk.onclick = async () => {
+      if (!Globals.ValidateElements(this.dlg)) return
       let success = await this.Presenter.DoLogin()
       if (success) {
         $('#tmLoginModal').modal('hide')

@@ -1,6 +1,5 @@
 ﻿import { MainView } from "./MainView";
 import 'bootstrap'
-import * as $ from 'jquery'
 
 (function main() {
   let mainView = new MainView();
@@ -10,5 +9,8 @@ import * as $ from 'jquery'
   document.addEventListener('contextmenu', mainView)
   document.getElementById('btnLogin').onclick = () => {
     mainView.OnLogin()
+  }
+  document.getElementById('btnReg').onclick = () => {
+    mainView.OnRegister()
   }
 })()

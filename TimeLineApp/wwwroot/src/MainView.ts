@@ -2,10 +2,12 @@
 import { ContextMenu, MenuItem, MenuItemType, MenuItemDivider, MenuItemSub } from "./contextmenu";
 import { EnumPeriod } from "./TLEvent";
 import { TimeLine } from "./timeline";
-import { LogonHandlers } from "./LogonHandlers";
 import { LoginView } from "./LoginView";
 import { Globals } from "./Globals";
 import { LoginModel } from "./LoginModel";
+import { RegisterModel } from "./RegisterModel";
+import { RegisterView } from "./RegisterView";
+import * as $ from 'jquery'
 
 export class MainView {
   // private свойства
@@ -26,7 +28,7 @@ export class MainView {
     let menuitems: MenuItem[] = []
     let m = new Map<string, () => void>().set('click', this.OpenNewTLDialog)
     menuitems.push(new MenuItem('new', 'Новая', '<i class="far fa-file"></i>', m))
-    m = new Map<string, () => void>().set('click', this.OpenLoadTLDialog)
+    m = new Map<string, () => void>().set('click', () => this.OpenLoadTLDialog())
     menuitems.push(new MenuItem('load', 'Загрузить', '<i class="far fa-folder-open"></i>', m))
     m = new Map<string, () => void>().set('click', this.SaveCurrentTL)
     menuitems.push(new MenuItem('save', 'Сохранить', '<i class="far fa-save"></i>', m, false))
@@ -90,19 +92,18 @@ export class MainView {
     $('#tmNameModal').modal()
   }
 
-  private OpenLoadTLDialog() {
-  TimeLine.getList()
-    .then(value => {
+  private async OpenLoadTLDialog() {
+    try {
+      let value = await this.Presenter.getList()
       let files_list = $('#files_list')
       files_list.find('option').remove()
       for (let i = 0; i < value.length; i++) {
         files_list.append($('<option></option>', { value: value[i], text: value[i] }))
       }
       $('#tmLoadModal').modal()
-    })
-    .catch(responseText => {
-      alert('Ошибка сервера.\n' + responseText)
-    })
+    } catch (err) {
+      alert(err)
+    }
   }
 
   private SaveCurrentTL() {
@@ -126,6 +127,12 @@ export class MainView {
     } else {
       LoginView.Logout()
     }
+  }
+
+  OnRegister() {
+    let regModel = new RegisterModel('','')
+    let regView = new RegisterView(regModel)
+    regView.ShowDialog()
   }
 
   public handleEvent(event: Event) {
