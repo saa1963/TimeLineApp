@@ -1,4 +1,5 @@
 ﻿import { TlistModel } from "./TlistModel";
+import { ITlistView } from "./ITlistView";
 
 export class TlistPresenter {
   private model: TlistModel

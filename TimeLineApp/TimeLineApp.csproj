@@ -21,6 +21,7 @@
     <Content Remove="wwwroot\src\index.ts" />
     <Content Remove="wwwroot\src\index0.ts" />
     <Content Remove="wwwroot\src\IRegisterView.ts" />
+    <Content Remove="wwwroot\src\ITlistView.ts" />
     <Content Remove="wwwroot\src\LoginModel.ts" />
     <Content Remove="wwwroot\src\LoginPresenter.ts" />
     <Content Remove="wwwroot\src\LoginView.ts" />
@@ -39,6 +40,7 @@
     <Content Remove="wwwroot\src\TLEvent.ts" />
     <Content Remove="wwwroot\src\TlistModel.ts" />
     <Content Remove="wwwroot\src\TlistPresenter.ts" />
+    <Content Remove="wwwroot\src\TlistView.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -101,6 +103,7 @@
     <TypeScriptCompile Include="wwwroot\src\ILoginView.ts" />
     <TypeScriptCompile Include="wwwroot\src\index0.ts" />
     <TypeScriptCompile Include="wwwroot\src\IRegisterView.ts" />
+    <TypeScriptCompile Include="wwwroot\src\ITlistView.ts" />
     <TypeScriptCompile Include="wwwroot\src\LoginModel.ts" />
     <TypeScriptCompile Include="wwwroot\src\LoginPresenter.ts" />
     <TypeScriptCompile Include="wwwroot\src\LoginView.ts" />
@@ -113,6 +116,7 @@
     <TypeScriptCompile Include="wwwroot\src\TimeLinePresenter.ts" />
     <TypeScriptCompile Include="wwwroot\src\TlistModel.ts" />
     <TypeScriptCompile Include="wwwroot\src\TlistPresenter.ts" />
+    <TypeScriptCompile Include="wwwroot\src\TlistView.ts" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
