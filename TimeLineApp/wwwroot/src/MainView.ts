@@ -8,6 +8,7 @@ import { LoginModel } from "./LoginModel";
 import { RegisterModel } from "./RegisterModel";
 import { RegisterView } from "./RegisterView";
 import * as $ from 'jquery'
+import { TlistView } from "./TlistView";
 
 export class MainView {
   // private свойства
@@ -95,6 +96,7 @@ export class MainView {
   private async OpenLoadTLDialog() {
     try {
       let value = await this.Presenter.getList()
+      let view = new TlistView()
       let files_list = $('#files_list')
       files_list.find('option').remove()
       for (let i = 0; i < value.length; i++) {

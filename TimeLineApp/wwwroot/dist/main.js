@@ -19175,18 +19175,6 @@ class MainView {
             catch (err) {
                 alert(err);
             }
-            //TimeLine.getList()
-            //  .then(value => {
-            //    let files_list = $('#files_list')
-            //    files_list.find('option').remove()
-            //    for (let i = 0; i < value.length; i++) {
-            //      files_list.append($('<option></option>', { value: value[i], text: value[i] }))
-            //    }
-            //    $('#tmLoadModal').modal()
-            //  })
-            //  .catch(responseText => {
-            //    alert('Ошибка сервера.\n' + responseText)
-            //  })
         });
     }
     SaveCurrentTL() {
