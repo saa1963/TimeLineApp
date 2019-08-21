@@ -2,6 +2,7 @@
 import * as $ from 'jquery'
 import { RegisterModel } from "./RegisterModel";
 import { IRegisterView } from "./IRegisterView";
+import { ApiClient } from "./ApiClient";
 
 export class RegisterPresenter {
   private model: RegisterModel
@@ -66,26 +67,7 @@ export class RegisterPresenter {
     this.model.Password2 = this.m_Password2
   }
 
-  public async DoRegister(): Promise<boolean> {
-    if (this.m_Password1 !== this.m_Password2) {
-      this.view.SetError('Не совпадают пароли')
-      return false
-    }
-    let err = await $.ajax(
-      'api/register/reg', {
-        type: 'POST',
-        data: {
-          Login: this.m_Login,
-          Email: this.m_Email,
-          Password1: this.m_Password1,
-          Password2: this.m_Password2
-        }
-      })
-    if (err === '') {
-      return true
-    } else {
-      this.view.SetError(err)
-      return false
-    }
+  public async DoRegister(): Promise<string> {
+    return await ApiClient.getInstance().DoRegister(this.m_Login, this.m_Email, this.m_Password1, this.m_Password2)
   }
 }

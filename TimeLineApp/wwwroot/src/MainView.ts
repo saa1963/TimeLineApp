@@ -9,6 +9,8 @@ import { RegisterModel } from "./RegisterModel";
 import { RegisterView } from "./RegisterView";
 import * as $ from 'jquery'
 import { TlistView } from "./TlistView";
+import { ApiClient } from "./ApiClient";
+import { BoxView } from "./BoxView";
 
 export class MainView {
   // private свойства
@@ -95,16 +97,14 @@ export class MainView {
 
   private async OpenLoadTLDialog() {
     try {
-      let value = await this.Presenter.getList()
-      let view = new TlistView()
-      let files_list = $('#files_list')
-      files_list.find('option').remove()
-      for (let i = 0; i < value.length; i++) {
-        files_list.append($('<option></option>', { value: value[i], text: value[i] }))
-      }
-      $('#tmLoadModal').modal()
+      let value = await ApiClient.getInstance().GetUsersList()
+      let view = new TlistView(value)
+      view.ShowDialog()
+        .then(async (value) => {
+          await new BoxView(value.Name).Show()
+        })
     } catch (err) {
-      alert(err)
+      await new BoxView(err).Show()
     }
   }
 
@@ -121,20 +121,39 @@ export class MainView {
     this.menuCtx.display(e)
   }
 
-  OnLogin() {
+  public async OnLogin() {
     if (!Globals.IsAuthentificated) {
       let loginModel = new LoginModel(Globals.getCookie('timelineuser') || '')
       let loginView = new LoginView(loginModel)
-      loginView.ShowDialog()
+      if (await loginView.ShowDialog()) {
+        Globals.IsAuthentificated = true
+        this.SetUserLabel(loginModel.Login)
+      }
     } else {
-      LoginView.Logout()
+      if (await ApiClient.getInstance().DoLogout()) {
+        Globals.IsAuthentificated = false
+        MainView.ClearUserLabel()
+      }
     }
   }
 
-  OnRegister() {
+  private SetUserLabel(user: string): void {
+    $('#lblUser').text(user)
+    $('#lblUser').css('display', 'unset')
+    $('#btnLogin').text('Выход')
+  }
+
+  private static ClearUserLabel(): void {
+    $('#lblUser').css('display', 'none')
+    $('#btnLogin').text('Вход')
+  }
+
+  public async OnRegister() {
     let regModel = new RegisterModel('','')
     let regView = new RegisterView(regModel)
-    regView.ShowDialog()
+    if (await regView.ShowDialog()) {
+      await new BoxView(`Пользователь ${regModel.Login} успешно зарегистрирован`).Show()
+    }
   }
 
   public handleEvent(event: Event) {

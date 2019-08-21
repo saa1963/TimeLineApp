@@ -18721,6 +18721,134 @@ module.exports = g;
 
 /***/ }),
 
+/***/ "./src/ApiClient.ts":
+/*!**************************!*\
+  !*** ./src/ApiClient.ts ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
+const Globals_1 = __webpack_require__(/*! ./Globals */ "./src/Globals.ts");
+class ApiClient {
+    constructor() {
+        // do something construct...
+    }
+    static getInstance() {
+        if (!ApiClient.instance) {
+            ApiClient.instance = new ApiClient();
+            // ... any one time initialization goes here ...
+        }
+        return ApiClient.instance;
+    }
+    DoLogin(login, password) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if ((login || '').trim() !== '' && (password || '').trim() !== '') {
+                let err = yield $.ajax('api/register/log', {
+                    type: 'POST',
+                    data: {
+                        Login: login,
+                        Password: password
+                    }
+                });
+                return err;
+            }
+            else {
+                return 'Не введены логин или пароль.';
+            }
+        });
+    }
+    DoLogout() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield $.ajax('api/register/logout');
+        });
+    }
+    GetUsersList() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let data = yield $.ajax('api/storage/list');
+                return data;
+            }
+            catch (err) {
+                throw Globals_1.Globals.ResponseErrorText(err);
+            }
+        });
+    }
+    DoRegister(login, email, password1, password2) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (password1 !== password2) {
+                return 'Не совпадают пароли';
+            }
+            let err = yield $.ajax('api/register/reg', {
+                type: 'POST',
+                data: {
+                    Login: login,
+                    Email: email,
+                    Password1: password1,
+                    Password2: password2
+                }
+            });
+            return err;
+        });
+    }
+}
+exports.ApiClient = ApiClient;
+
+
+/***/ }),
+
+/***/ "./src/BoxView.ts":
+/*!************************!*\
+  !*** ./src/BoxView.ts ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
+class BoxView {
+    constructor(text) {
+        this.btnBoxOk = document.getElementById('btnBoxOk');
+        $('#box_message').text(text);
+    }
+    Show() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve, reject) => {
+                $('#tmBoxModal').modal();
+                this.btnBoxOk.onclick = () => __awaiter(this, void 0, void 0, function* () {
+                    $('#tmBoxModal').modal('hide');
+                    resolve();
+                });
+            });
+        });
+    }
+}
+exports.BoxView = BoxView;
+
+
+/***/ }),
+
 /***/ "./src/Globals.ts":
 /*!************************!*\
   !*** ./src/Globals.ts ***!
@@ -18747,10 +18875,7 @@ class Globals {
         return true;
     }
     static ResponseErrorText(response) {
-        return 'Статус: ' +
-            response.status +
-            ' ' +
-            response.responseText;
+        return `Ошибка: Статус - ${response.status} ${response.responseText}`;
     }
 }
 Globals.IsAuthentificated = false;
@@ -18825,8 +18950,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Globals_1 = __webpack_require__(/*! ./Globals */ "./src/Globals.ts");
-const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
+const ApiClient_1 = __webpack_require__(/*! ./ApiClient */ "./src/ApiClient.ts");
 class LoginPresenter {
     constructor(view, model) {
         this.model = model;
@@ -18860,27 +18984,7 @@ class LoginPresenter {
     }
     DoLogin() {
         return __awaiter(this, void 0, void 0, function* () {
-            if ((this.m_Login || '').trim() !== '' && (this.m_Password || '').trim() !== '') {
-                let err = yield $.ajax('api/register/log', {
-                    type: 'POST',
-                    data: {
-                        Login: this.m_Login,
-                        Password: this.m_Password
-                    }
-                });
-                if (err === '') {
-                    Globals_1.Globals.IsAuthentificated = true;
-                    return true;
-                }
-                else {
-                    this.view.SetError(err);
-                    return false;
-                }
-            }
-            else {
-                this.view.SetError('Не введены логин или пароль.');
-                return false;
-            }
+            return yield ApiClient_1.ApiClient.getInstance().DoLogin(this.m_Login, this.m_Password);
         });
     }
 }
@@ -18923,24 +19027,30 @@ class LoginView {
         this.tbPassword.onchange = () => {
             this.Presenter.OnChangePasswordInView();
         };
-        this.btnOk.onclick = () => __awaiter(this, void 0, void 0, function* () {
-            if (!Globals_1.Globals.ValidateElements(this.dlg))
-                return;
-            let success = yield this.Presenter.DoLogin();
-            if (success) {
-                $('#tmLoginModal').modal('hide');
-                $('#btnLogin').text('Выход');
-                this.SetUserLabel(this.Presenter.Login);
-            }
-        });
-        this.btnCancel.onclick = () => {
-            $('#tmLoginModal').modal('hide');
-        };
         this.Presenter = new LoginPresenter_1.LoginPresenter(this, model);
     }
     ShowDialog() {
-        $('#tmLoginModal').modal();
-        this.ClearError();
+        return new Promise((resolve, reject) => {
+            $('#tmLoginModal').modal();
+            this.ClearError();
+            this.btnOk.onclick = () => __awaiter(this, void 0, void 0, function* () {
+                if (!Globals_1.Globals.ValidateElements(this.dlg))
+                    return;
+                let err = yield this.Presenter.DoLogin();
+                if (err === '') {
+                    $('#tmLoginModal').modal('hide');
+                    resolve(true);
+                }
+                else {
+                    this.SetError(err);
+                    resolve(false);
+                }
+            });
+            this.btnCancel.onclick = () => __awaiter(this, void 0, void 0, function* () {
+                $('#tmLoginModal').modal('hide');
+                reject();
+            });
+        });
     }
     SetLogin(login) {
         $('#logLogin').val(login);
@@ -18955,13 +19065,6 @@ class LoginView {
     ClearError() {
         $('#log_server_error').css('display', 'none');
     }
-    SetUserLabel(user) {
-        $('#lblUser').text(user);
-        $('#lblUser').css('display', 'unset');
-    }
-    static ClearUserLabel() {
-        $('#lblUser').css('display', 'none');
-    }
     GetLogin() {
         return $('#logLogin').val();
     }
@@ -18969,8 +19072,6 @@ class LoginView {
         return $('#logPassword').val();
     }
     static Logout() {
-        LoginView.ClearUserLabel();
-        $('#btnLogin').text('Вход');
         Globals_1.Globals.IsAuthentificated = false;
     }
 }
@@ -19053,17 +19154,6 @@ class MainPresenter {
             catch (err) {
                 throw Globals_1.Globals.ResponseErrorText(err);
             }
-            //return new Promise<string[]>(
-            //  function (resolve, reject) {
-            //    $.ajax('api/storage/list')
-            //      .done(data => {
-            //        resolve(data)
-            //      })
-            //      .fail((data) => {
-            //        reject(data.responseText)
-            //      })
-            //  }
-            //)
         });
     }
 }
@@ -19099,6 +19189,9 @@ const LoginModel_1 = __webpack_require__(/*! ./LoginModel */ "./src/LoginModel.t
 const RegisterModel_1 = __webpack_require__(/*! ./RegisterModel */ "./src/RegisterModel.ts");
 const RegisterView_1 = __webpack_require__(/*! ./RegisterView */ "./src/RegisterView.ts");
 const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
+const TlistView_1 = __webpack_require__(/*! ./TlistView */ "./src/TlistView.ts");
+const ApiClient_1 = __webpack_require__(/*! ./ApiClient */ "./src/ApiClient.ts");
+const BoxView_1 = __webpack_require__(/*! ./BoxView */ "./src/BoxView.ts");
 class MainView {
     constructor() {
         let menuitems = [];
@@ -19164,16 +19257,15 @@ class MainView {
     OpenLoadTLDialog() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                let value = yield this.Presenter.getList();
-                let files_list = $('#files_list');
-                files_list.find('option').remove();
-                for (let i = 0; i < value.length; i++) {
-                    files_list.append($('<option></option>', { value: value[i], text: value[i] }));
-                }
-                $('#tmLoadModal').modal();
+                let value = yield ApiClient_1.ApiClient.getInstance().GetUsersList();
+                let view = new TlistView_1.TlistView(value);
+                view.ShowDialog()
+                    .then((value) => __awaiter(this, void 0, void 0, function* () {
+                    yield new BoxView_1.BoxView(value.Name).Show();
+                }));
             }
             catch (err) {
-                alert(err);
+                yield new BoxView_1.BoxView(err).Show();
             }
         });
     }
@@ -19187,19 +19279,40 @@ class MainView {
         this.menuCtx.display(e);
     }
     OnLogin() {
-        if (!Globals_1.Globals.IsAuthentificated) {
-            let loginModel = new LoginModel_1.LoginModel(Globals_1.Globals.getCookie('timelineuser') || '');
-            let loginView = new LoginView_1.LoginView(loginModel);
-            loginView.ShowDialog();
-        }
-        else {
-            LoginView_1.LoginView.Logout();
-        }
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!Globals_1.Globals.IsAuthentificated) {
+                let loginModel = new LoginModel_1.LoginModel(Globals_1.Globals.getCookie('timelineuser') || '');
+                let loginView = new LoginView_1.LoginView(loginModel);
+                if (yield loginView.ShowDialog()) {
+                    Globals_1.Globals.IsAuthentificated = true;
+                    this.SetUserLabel(loginModel.Login);
+                }
+            }
+            else {
+                if (yield ApiClient_1.ApiClient.getInstance().DoLogout()) {
+                    Globals_1.Globals.IsAuthentificated = false;
+                    MainView.ClearUserLabel();
+                }
+            }
+        });
+    }
+    SetUserLabel(user) {
+        $('#lblUser').text(user);
+        $('#lblUser').css('display', 'unset');
+        $('#btnLogin').text('Выход');
+    }
+    static ClearUserLabel() {
+        $('#lblUser').css('display', 'none');
+        $('#btnLogin').text('Вход');
     }
     OnRegister() {
-        let regModel = new RegisterModel_1.RegisterModel('', '');
-        let regView = new RegisterView_1.RegisterView(regModel);
-        regView.ShowDialog();
+        return __awaiter(this, void 0, void 0, function* () {
+            let regModel = new RegisterModel_1.RegisterModel('', '');
+            let regView = new RegisterView_1.RegisterView(regModel);
+            if (yield regView.ShowDialog()) {
+                yield new BoxView_1.BoxView(`Пользователь ${regModel.Login} успешно зарегистрирован`).Show();
+            }
+        });
     }
     handleEvent(event) {
         if (event.type === 'contextmenu') {
@@ -19307,7 +19420,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
+const ApiClient_1 = __webpack_require__(/*! ./ApiClient */ "./src/ApiClient.ts");
 class RegisterPresenter {
     constructor(view, model) {
         this.model = model;
@@ -19363,26 +19476,7 @@ class RegisterPresenter {
     }
     DoRegister() {
         return __awaiter(this, void 0, void 0, function* () {
-            if (this.m_Password1 !== this.m_Password2) {
-                this.view.SetError('Не совпадают пароли');
-                return false;
-            }
-            let err = yield $.ajax('api/register/reg', {
-                type: 'POST',
-                data: {
-                    Login: this.m_Login,
-                    Email: this.m_Email,
-                    Password1: this.m_Password1,
-                    Password2: this.m_Password2
-                }
-            });
-            if (err === '') {
-                return true;
-            }
-            else {
-                this.view.SetError(err);
-                return false;
-            }
+            return yield ApiClient_1.ApiClient.getInstance().DoRegister(this.m_Login, this.m_Email, this.m_Password1, this.m_Password2);
         });
     }
 }
@@ -19433,23 +19527,30 @@ class RegisterView {
         this.tbPassword2.onchange = () => {
             this.Presenter.OnChangePassword2InView();
         };
-        this.btnOk.onclick = () => __awaiter(this, void 0, void 0, function* () {
-            if (!Globals_1.Globals.ValidateElements(this.dlg))
-                return;
-            let success = yield this.Presenter.DoRegister();
-            if (success) {
-                $('#tmRegisterModal').modal('hide');
-                alert('Пользователь ' + this.Presenter.Login + ' зарегистрирован');
-            }
-        });
-        this.btnCancel.onclick = () => {
-            $('#tmRegisterModal').modal('hide');
-        };
         this.Presenter = new RegisterPresenter_1.RegisterPresenter(this, model);
     }
     ShowDialog() {
-        $('#tmRegisterModal').modal();
-        this.ClearError();
+        return new Promise((resolve, reject) => {
+            $('#tmRegisterModal').modal();
+            this.ClearError();
+            this.btnOk.onclick = () => __awaiter(this, void 0, void 0, function* () {
+                if (!Globals_1.Globals.ValidateElements(this.dlg))
+                    return;
+                let err = yield this.Presenter.DoRegister();
+                if (err === '') {
+                    $('#tmRegisterModal').modal('hide');
+                    resolve(true);
+                }
+                else {
+                    this.SetError(err);
+                    resolve(false);
+                }
+            });
+            this.btnCancel.onclick = () => __awaiter(this, void 0, void 0, function* () {
+                $('#tmRegisterModal').modal('hide');
+                reject();
+            });
+        });
     }
     SetLogin(login) {
         $('#regLogin').val(login);
@@ -19768,6 +19869,391 @@ class TLEventCentury extends TLEvent {
     }
 }
 exports.TLEventCentury = TLEventCentury;
+
+
+/***/ }),
+
+/***/ "./src/TLPeriod.ts":
+/*!*************************!*\
+  !*** ./src/TLPeriod.ts ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const dateutils_1 = __webpack_require__(/*! ./dateutils */ "./src/dateutils.ts");
+const TLEvent_1 = __webpack_require__(/*! ./TLEvent */ "./src/TLEvent.ts");
+class TLPeriod {
+    /**
+     * создает TLPeriod из объекта десериализированного из JSON
+     * @param o
+     */
+    static CreateTLPeriod(o) {
+        let rt = new TLPeriod();
+        rt.Name = o.Name;
+        let type = TLEvent_1.TLEvent.GetType(o.Begin);
+        if (type === TLEvent_1.EnumPeriod.day) {
+            rt.Begin = TLEvent_1.TLEventDay.CreateTLEventDay(o.Begin.Name, dateutils_1.DateUtils.DaysFromAD(o.Begin.Day.Year, o.Begin.Day.Month, o.Begin.Day.Day), o.Begin.Month, o.Begin.Year, o.Begin.Decade, o.Begin.Century);
+        }
+        else if (type === TLEvent_1.EnumPeriod.month) {
+            rt.Begin = TLEvent_1.TLEventMonth.CreateTLEventMonth(o.Begin.Name, o.Begin.Month, o.Begin.Year, o.Begin.Decade, o.Begin.Century);
+        }
+        else if (type === TLEvent_1.EnumPeriod.year) {
+            rt.Begin = TLEvent_1.TLEventYear.CreateTLEventYear(o.Begin.Name, o.Begin.Year, o.Begin.Decade, o.Begin.Century);
+        }
+        else if (type === TLEvent_1.EnumPeriod.decade) {
+            rt.Begin = TLEvent_1.TLEventDecade.CreateTLEventDecade(o.Begin.Name, o.Begin.Decade, o.Begin.Century);
+        }
+        else if (type === TLEvent_1.EnumPeriod.century) {
+            rt.Begin = TLEvent_1.TLEventCentury.CreateTLEventCentury(o.Begin.Name, o.Begin.Century);
+        }
+        type = TLEvent_1.TLEvent.GetType(o.End);
+        if (type === TLEvent_1.EnumPeriod.day) {
+            rt.End = TLEvent_1.TLEventDay.CreateTLEventDay(o.End.Name, dateutils_1.DateUtils.DaysFromAD(o.End.Day.Year, o.End.Day.Month, o.End.Day.Day), o.End.Month, o.End.Year, o.End.Decade, o.End.Century);
+        }
+        else if (type === TLEvent_1.EnumPeriod.month) {
+            rt.End = TLEvent_1.TLEventMonth.CreateTLEventMonth(o.End.Name, o.End.Month, o.End.Year, o.End.Decade, o.End.Century);
+        }
+        else if (type === TLEvent_1.EnumPeriod.year) {
+            rt.End = TLEvent_1.TLEventYear.CreateTLEventYear(o.End.Name, o.End.Year, o.End.Decade, o.End.Century);
+        }
+        else if (type === TLEvent_1.EnumPeriod.decade) {
+            rt.End = TLEvent_1.TLEventDecade.CreateTLEventDecade(o.End.Name, o.End.Decade, o.End.Century);
+        }
+        else if (type === TLEvent_1.EnumPeriod.century) {
+            rt.End = TLEvent_1.TLEventCentury.CreateTLEventCentury(o.End.Name, o.End.Century);
+        }
+        rt.m_BeginDay = rt.GetBeginDate();
+        rt.m_EndDay = rt.GetEndDate();
+        return rt;
+    }
+    /**
+     * Попадает текущее значение ОВ в период this
+     * @param period
+     * Текущая дробность отображения для ЛВ
+     * @param vl
+     * Текущее значение ОВ, которое в данный момент отрисовывается
+     */
+    Contains(period, vl) {
+        let rt = false;
+        switch (period) {
+            case TLEvent_1.EnumPeriod.day:
+                rt = this.ContainsDay(vl);
+                break;
+            case TLEvent_1.EnumPeriod.month:
+                rt = this.ContainsMonth(vl);
+                break;
+            case TLEvent_1.EnumPeriod.year:
+                rt = this.ContainsYear(vl);
+                break;
+            case TLEvent_1.EnumPeriod.decade:
+                rt = this.ContainsDecade(vl);
+                break;
+            case TLEvent_1.EnumPeriod.century:
+                rt = this.ContainsYear(vl);
+                break;
+            default:
+                break;
+        }
+        return rt;
+    }
+    ContainsCentury(century) {
+        return this.IsIntersectIntervals(dateutils_1.DateUtils.FirstDayOfCentury(century), dateutils_1.DateUtils.LastDayOfCentury(century));
+    }
+    /**
+     * Содержит ли this ОВ vl
+     * @param decade
+     */
+    ContainsDecade(decade) {
+        return this.IsIntersectIntervals(dateutils_1.DateUtils.FirstDayOfDecade(decade), dateutils_1.DateUtils.LastDayOfDecade(decade));
+    }
+    /**
+     * Содержит ли this ОВ vl
+     * @param vl
+     */
+    ContainsYear(year) {
+        let first = dateutils_1.DateUtils.FirstDayOfYear(year);
+        let last = dateutils_1.DateUtils.LastDayOfYear(year);
+        return this.IsIntersectIntervals(first, last);
+    }
+    /**
+     * Содержит ли this (текущий период) ОВ vl
+     * @param vl - месяц от РХ
+     */
+    ContainsMonth(month) {
+        return this.IsIntersectIntervals(dateutils_1.DateUtils.FirstDayOfMonth(month), dateutils_1.DateUtils.LastDayOfMonth(month));
+    }
+    /**
+     * Есть ли пересечение 2-х целочисленных интервалов
+     * @param l1 левая граница интервал 1
+     * @param r1 правая граница интервал 1
+     */
+    IsIntersectIntervals(l1, r1) {
+        return TLPeriod.isIntersectIntervals(l1, r1, this.m_BeginDay, this.m_EndDay);
+    }
+    static isIntersectIntervals(l1, r1, l2, r2) {
+        let l = Math.min(l1, l2);
+        let r = Math.max(r1, r2);
+        let s = r - l;
+        return s <= (r1 - l1) + (r2 - l2);
+    }
+    /**
+     * Первый день интервала
+     * */
+    GetBeginDate() {
+        let dt;
+        switch (this.Begin.Type) {
+            case TLEvent_1.EnumPeriod.day:
+                dt = this.Begin.Day;
+                break;
+            case TLEvent_1.EnumPeriod.month:
+                dt = dateutils_1.DateUtils.FirstDayOfMonth(this.Begin.Month);
+                break;
+            case TLEvent_1.EnumPeriod.year:
+                dt = dateutils_1.DateUtils.FirstDayOfYear(this.Begin.Year);
+                break;
+            case TLEvent_1.EnumPeriod.decade:
+                dt = dateutils_1.DateUtils.FirstDayOfDecade(this.Begin.Decade);
+                break;
+            case TLEvent_1.EnumPeriod.century:
+                dt = dateutils_1.DateUtils.FirstDayOfCentury(this.Begin.Century);
+                break;
+        }
+        return dt;
+    }
+    /**
+     * Последний день интервала
+     * */
+    GetEndDate() {
+        let dt;
+        switch (this.End.Type) {
+            case TLEvent_1.EnumPeriod.day:
+                dt = this.End.Day;
+                break;
+            case TLEvent_1.EnumPeriod.month:
+                dt = dateutils_1.DateUtils.FirstDayOfMonth(this.End.Month + 1) - 1;
+                break;
+            case TLEvent_1.EnumPeriod.year:
+                dt = dateutils_1.DateUtils.FirstDayOfYear(this.End.Year + 1) - 1;
+                break;
+            case TLEvent_1.EnumPeriod.decade:
+                dt = dateutils_1.DateUtils.FirstDayOfDecade(this.End.Decade + 1) - 1;
+                break;
+            case TLEvent_1.EnumPeriod.century:
+                dt = dateutils_1.DateUtils.FirstDayOfCentury(this.End.Century + 1) - 1;
+                break;
+        }
+        return dt;
+    }
+    /**
+     *
+     * @param day отображаемый ОВ день от РХ
+     * @param this объект насчет которого принимается решение включать или нет
+     */
+    ContainsDay(day) {
+        return day >= this.m_BeginDay && day <= this.m_EndDay;
+    }
+}
+exports.TLPeriod = TLPeriod;
+
+
+/***/ }),
+
+/***/ "./src/TLPeriodEvent.ts":
+/*!******************************!*\
+  !*** ./src/TLPeriodEvent.ts ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const TLPeriod_1 = __webpack_require__(/*! ./TLPeriod */ "./src/TLPeriod.ts");
+class TLPeriodEvent extends TLPeriod_1.TLPeriod {
+    /**
+     * Создает TLPeriodEvent из объекта десериализованного из JSON
+     * @param o
+     */
+    static CreateTLPeriodEvent(o) {
+        let rt;
+        rt = TLPeriod_1.TLPeriod.CreateTLPeriod(o);
+        return rt;
+    }
+}
+exports.TLPeriodEvent = TLPeriodEvent;
+
+
+/***/ }),
+
+/***/ "./src/TimeLineModel.ts":
+/*!******************************!*\
+  !*** ./src/TimeLineModel.ts ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const TLPeriod_1 = __webpack_require__(/*! ./TLPeriod */ "./src/TLPeriod.ts");
+const TLPeriodEvent_1 = __webpack_require__(/*! ./TLPeriodEvent */ "./src/TLPeriodEvent.ts");
+const TLEvent_1 = __webpack_require__(/*! ./TLEvent */ "./src/TLEvent.ts");
+class TimeLineModel {
+    constructor() {
+        this.Periods = [];
+    }
+    static CreateTimeLineData(data) {
+        let rt = new TimeLineModel();
+        rt.Name = data.Name;
+        rt.Periods = [];
+        data.Periods.forEach(o => {
+            if (TLEvent_1.TLEvent.Equal(o.Begin, o.End))
+                rt.Periods.push(TLPeriodEvent_1.TLPeriodEvent.CreateTLPeriodEvent(o));
+            else
+                rt.Periods.push(TLPeriod_1.TLPeriod.CreateTLPeriod(o));
+        });
+        return rt;
+    }
+}
+exports.TimeLineModel = TimeLineModel;
+
+
+/***/ }),
+
+/***/ "./src/TlistPresenter.ts":
+/*!*******************************!*\
+  !*** ./src/TlistPresenter.ts ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const TimeLineModel_1 = __webpack_require__(/*! ./TimeLineModel */ "./src/TimeLineModel.ts");
+const Globals_1 = __webpack_require__(/*! ./Globals */ "./src/Globals.ts");
+const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
+class TlistPresenter {
+    constructor(view, model) {
+        this.model = model;
+        this.view = view;
+        this.m_Value = model[0];
+        //this.view.SetValue(model[0])
+    }
+    get Login() {
+        return this.m_Value;
+    }
+    // обработчики вызовов из View
+    OnChangeValueInView() {
+        this.m_Value = this.view.GetSelectedValue();
+    }
+    DoSelect() {
+        return __awaiter(this, void 0, void 0, function* () {
+            if ((this.m_Value || '').trim() === '') {
+                this.view.SetError('Не выбрано значение');
+                return null;
+            }
+            try {
+                let tl = yield $.ajax('api/storage/load', {
+                    data: {
+                        fname: this.m_Value
+                    }
+                });
+                return TimeLineModel_1.TimeLineModel.CreateTimeLineData(JSON.parse(tl));
+            }
+            catch (err) {
+                this.view.SetError(Globals_1.Globals.ResponseErrorText(err));
+                return null;
+            }
+        });
+    }
+}
+exports.TlistPresenter = TlistPresenter;
+
+
+/***/ }),
+
+/***/ "./src/TlistView.ts":
+/*!**************************!*\
+  !*** ./src/TlistView.ts ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
+const TlistPresenter_1 = __webpack_require__(/*! ./TlistPresenter */ "./src/TlistPresenter.ts");
+const Globals_1 = __webpack_require__(/*! ./Globals */ "./src/Globals.ts");
+class TlistView {
+    constructor(model) {
+        this.tbList = document.getElementById('files_list');
+        this.btnOk = document.getElementById('btnLoadTL');
+        this.btnCancel = document.getElementById('btnCancelLoadTL');
+        this.dlg = document.getElementById('tmLoadModal');
+        this.tbList.onchange = () => {
+            this.Presenter.OnChangeValueInView();
+        };
+        this.Presenter = new TlistPresenter_1.TlistPresenter(this, model);
+        let files_list = $('#files_list');
+        files_list.find('option').remove();
+        for (let i = 0; i < model.length; i++) {
+            files_list.append($('<option></option>', { value: model[i], text: model[i] }));
+        }
+    }
+    ShowDialog() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve, reject) => {
+                $('#tmLoadModal').modal();
+                this.ClearError();
+                this.btnOk.onclick = () => __awaiter(this, void 0, void 0, function* () {
+                    if (!Globals_1.Globals.ValidateElements(this.dlg))
+                        return;
+                    let tlModel = yield this.Presenter.DoSelect();
+                    if (tlModel) {
+                        $('#tmLoadModal').modal('hide');
+                        resolve(tlModel);
+                    }
+                });
+                this.btnCancel.onclick = () => __awaiter(this, void 0, void 0, function* () {
+                    $('#tmLoadModal').modal('hide');
+                    reject();
+                });
+            });
+        });
+    }
+    GetSelectedValue() {
+        return $('#files_list').children("option:selected").val();
+    }
+    SetError(err) {
+        $('#load_error').text(err);
+        $('#load_error').css('display', 'unset');
+    }
+    ClearError() {
+        $('#load_error').css('display', 'none');
+    }
+}
+exports.TlistView = TlistView;
 
 
 /***/ }),

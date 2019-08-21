@@ -2,6 +2,7 @@
 import { ITlistView } from "./ITlistView";
 import { TimeLineModel } from "./TimeLineModel";
 import { Globals } from "./Globals";
+import * as $ from 'jquery'
 
 export class TlistPresenter {
   private model: TlistModel
@@ -26,7 +27,7 @@ export class TlistPresenter {
   }
 
   public async DoSelect(): Promise<TimeLineModel> {
-    if ((this.m_Value || '').trim() != '') {
+    if ((this.m_Value || '').trim() === '') {
       this.view.SetError('Не выбрано значение')
       return null
     }

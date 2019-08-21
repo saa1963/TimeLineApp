@@ -20,9 +20,6 @@ export class Globals {
   }
 
   static ResponseErrorText(response: JQueryXHR): string {
-    return 'Статус: ' +
-            response.status +
-            ' ' +
-            response.responseText
+    return `Ошибка: Статус - ${response.status} ${response.responseText}`
   }
 }

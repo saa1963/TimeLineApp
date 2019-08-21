@@ -45,18 +45,6 @@ export class MainPresenter {
     } catch (err) {
       throw Globals.ResponseErrorText(err)
     }
-
-    //return new Promise<string[]>(
-    //  function (resolve, reject) {
-    //    $.ajax('api/storage/list')
-    //      .done(data => {
-    //        resolve(data)
-    //      })
-    //      .fail((data) => {
-    //        reject(data.responseText)
-    //      })
-    //  }
-    //)
   }
   
   constructor(view: MainView) {

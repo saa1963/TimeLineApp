@@ -25,24 +25,29 @@ export class LoginView implements ILoginView {
     this.tbPassword.onchange = () => {
       this.Presenter.OnChangePasswordInView()
     }
-    this.btnOk.onclick = async () => {
-      if (!Globals.ValidateElements(this.dlg)) return
-      let success = await this.Presenter.DoLogin()
-      if (success) {
-        $('#tmLoginModal').modal('hide')
-        $('#btnLogin').text('Выход')
-        this.SetUserLabel(this.Presenter.Login)
-      }
-    }
-    this.btnCancel.onclick = () => {
-      $('#tmLoginModal').modal('hide')
-    }
     this.Presenter = new LoginPresenter(this, model)
   }
 
-  public ShowDialog(): void {
-    $('#tmLoginModal').modal()
-    this.ClearError()
+  public ShowDialog(): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      $('#tmLoginModal').modal()
+      this.ClearError()
+      this.btnOk.onclick = async () => {
+        if (!Globals.ValidateElements(this.dlg)) return
+        let err = await this.Presenter.DoLogin()
+        if (err === '') {
+          $('#tmLoginModal').modal('hide')
+          resolve(true)
+        } else {
+          this.SetError(err)
+          resolve(false)
+        }
+      }
+      this.btnCancel.onclick = async () => {
+        $('#tmLoginModal').modal('hide')
+        reject()
+      }
+    })
   }
 
   public SetLogin(login) {
@@ -62,15 +67,6 @@ export class LoginView implements ILoginView {
     $('#log_server_error').css('display', 'none')
   }
 
-  private SetUserLabel(user: string): void {
-    $('#lblUser').text(user)
-    $('#lblUser').css('display', 'unset')
-  }
-
-  private static ClearUserLabel(): void {
-    $('#lblUser').css('display', 'none')
-  }
-
   public GetLogin(): string {
     return <string>$('#logLogin').val()
   }
@@ -80,8 +76,6 @@ export class LoginView implements ILoginView {
   }
 
   public static Logout() {
-    LoginView.ClearUserLabel()
-    $('#btnLogin').text('Вход')
     Globals.IsAuthentificated = false
   }
 }

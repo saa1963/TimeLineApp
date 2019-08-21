@@ -2,6 +2,7 @@
 import { Globals } from "./Globals";
 import * as $ from 'jquery'
 import { ILoginView } from "./ILoginView";
+import { ApiClient } from "./ApiClient";
 
 export class LoginPresenter {
   private model: LoginModel
@@ -41,26 +42,7 @@ export class LoginPresenter {
     this.model.Password = this.m_Password
   }
   
-  public async DoLogin(): Promise<boolean> {
-    if ((this.m_Login || '').trim() !== '' && (this.m_Password || '').trim() !== '') {
-      let err = await $.ajax(
-        'api/register/log', {
-        type: 'POST',
-        data: {
-          Login: this.m_Login,
-          Password: this.m_Password
-        }
-        })
-      if (err === '') {
-        Globals.IsAuthentificated = true
-        return true
-      } else {
-        this.view.SetError(err)
-        return false
-      }
-      } else {
-      this.view.SetError('Не введены логин или пароль.')
-      return false
-    }
+  public async DoLogin(): Promise<string> {
+    return await ApiClient.getInstance().DoLogin(this.m_Login, this.m_Password)
   }
 }

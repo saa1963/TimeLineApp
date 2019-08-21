@@ -13,6 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\src\ApiClient.ts" />
+    <Content Remove="wwwroot\src\BoxView.ts" />
     <Content Remove="wwwroot\src\colorutils.ts" />
     <Content Remove="wwwroot\src\contextmenu.ts" />
     <Content Remove="wwwroot\src\dateutils.ts" />
@@ -100,6 +102,8 @@
   <ItemGroup>
     <TypeScriptCompile Include="tests\DateUtilsTest.ts" />
     <TypeScriptCompile Include="tests\TLPeriodTest.ts" />
+    <TypeScriptCompile Include="wwwroot\src\ApiClient.ts" />
+    <TypeScriptCompile Include="wwwroot\src\BoxView.ts" />
     <TypeScriptCompile Include="wwwroot\src\ILoginView.ts" />
     <TypeScriptCompile Include="wwwroot\src\index0.ts" />
     <TypeScriptCompile Include="wwwroot\src\IRegisterView.ts" />

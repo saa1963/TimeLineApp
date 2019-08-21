@@ -35,23 +35,29 @@ export class RegisterView implements IRegisterView {
     this.tbPassword2.onchange = () => {
       this.Presenter.OnChangePassword2InView()
     }
-    this.btnOk.onclick = async () => {
-      if (!Globals.ValidateElements(this.dlg)) return
-      let success = await this.Presenter.DoRegister()
-      if (success) {
-        $('#tmRegisterModal').modal('hide')
-        alert('Пользователь ' + this.Presenter.Login + ' зарегистрирован')
-      }
-    }
-    this.btnCancel.onclick = () => {
-      $('#tmRegisterModal').modal('hide')
-    }
     this.Presenter = new RegisterPresenter(this, model)
   }
 
-  ShowDialog(): void {
-    $('#tmRegisterModal').modal()
-    this.ClearError()
+  ShowDialog(): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      $('#tmRegisterModal').modal()
+      this.ClearError()
+      this.btnOk.onclick = async () => {
+        if (!Globals.ValidateElements(this.dlg)) return
+        let err = await this.Presenter.DoRegister()
+        if (err === '') {
+          $('#tmRegisterModal').modal('hide')
+          resolve(true)
+        } else {
+          this.SetError(err)
+          resolve(false)
+        }
+      }
+      this.btnCancel.onclick = async () => {
+        $('#tmRegisterModal').modal('hide')
+        reject()
+      }
+    })
   }
   SetLogin(login: string): void {
     $('#regLogin').val(login)
