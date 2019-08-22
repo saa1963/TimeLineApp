@@ -13,7 +13,7 @@ export class Globals {
 
   static ValidateElements(el: HTMLElement): boolean {
     let inputs = $<HTMLInputElement>('#' + el.id + ' input')
-    for (let i = 0; i < inputs.length - 1; i++) {
+    for (let i = 0; i <= inputs.length - 1; i++) {
       if (!inputs[i].reportValidity()) return false
     }
     return true

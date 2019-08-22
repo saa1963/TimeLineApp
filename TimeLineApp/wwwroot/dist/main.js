@@ -18849,6 +18849,65 @@ exports.BoxView = BoxView;
 
 /***/ }),
 
+/***/ "./src/EditStringView.ts":
+/*!*******************************!*\
+  !*** ./src/EditStringView.ts ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
+const Globals_1 = __webpack_require__(/*! ./Globals */ "./src/Globals.ts");
+class EditStringView {
+    constructor(s) {
+        this.s = '';
+        this.btnNewName = document.getElementById('btnNewName');
+        this.btnCancelNewName = document.getElementById('btnCancelNewName');
+        this.tbName = document.getElementById('tmName');
+        this.tbModal = $('#tmNameModal');
+        this.s = s;
+        this.tbName.value = s;
+        this.tbName.onchange = () => {
+            this.s = this.tbName.value;
+        };
+    }
+    Show() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve, reject) => {
+                this.tbModal.modal();
+                this.btnNewName.onclick = () => __awaiter(this, void 0, void 0, function* () {
+                    if (Globals_1.Globals.ValidateElements(this.tbModal[0])) {
+                        this.tbModal.modal('hide');
+                        resolve(this.s);
+                    }
+                    else {
+                        return;
+                    }
+                });
+                this.btnCancelNewName.onclick = () => __awaiter(this, void 0, void 0, function* () {
+                    this.tbModal.modal('hide');
+                    reject();
+                });
+            });
+        });
+    }
+}
+exports.EditStringView = EditStringView;
+
+
+/***/ }),
+
 /***/ "./src/Globals.ts":
 /*!************************!*\
   !*** ./src/Globals.ts ***!
@@ -18868,7 +18927,7 @@ class Globals {
     }
     static ValidateElements(el) {
         let inputs = $('#' + el.id + ' input');
-        for (let i = 0; i < inputs.length - 1; i++) {
+        for (let i = 0; i <= inputs.length - 1; i++) {
             if (!inputs[i].reportValidity())
                 return false;
         }
@@ -19192,6 +19251,7 @@ const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.
 const TlistView_1 = __webpack_require__(/*! ./TlistView */ "./src/TlistView.ts");
 const ApiClient_1 = __webpack_require__(/*! ./ApiClient */ "./src/ApiClient.ts");
 const BoxView_1 = __webpack_require__(/*! ./BoxView */ "./src/BoxView.ts");
+const EditStringView_1 = __webpack_require__(/*! ./EditStringView */ "./src/EditStringView.ts");
 class MainView {
     constructor() {
         let menuitems = [];
@@ -19250,9 +19310,11 @@ class MainView {
     Draw() {
     }
     OpenNewTLDialog() {
-        $('#tmName').val('');
-        $('#btnNewName').prop('disabled', true);
-        $('#tmNameModal').modal();
+        let view = new EditStringView_1.EditStringView('');
+        view.Show()
+            .then((value) => __awaiter(this, void 0, void 0, function* () {
+            yield new BoxView_1.BoxView(value).Show();
+        }));
     }
     OpenLoadTLDialog() {
         return __awaiter(this, void 0, void 0, function* () {

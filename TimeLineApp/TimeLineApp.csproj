@@ -18,6 +18,7 @@
     <Content Remove="wwwroot\src\colorutils.ts" />
     <Content Remove="wwwroot\src\contextmenu.ts" />
     <Content Remove="wwwroot\src\dateutils.ts" />
+    <Content Remove="wwwroot\src\EditStringView.ts" />
     <Content Remove="wwwroot\src\Globals.ts" />
     <Content Remove="wwwroot\src\ILoginView.ts" />
     <Content Remove="wwwroot\src\index.ts" />
@@ -104,6 +105,7 @@
     <TypeScriptCompile Include="tests\TLPeriodTest.ts" />
     <TypeScriptCompile Include="wwwroot\src\ApiClient.ts" />
     <TypeScriptCompile Include="wwwroot\src\BoxView.ts" />
+    <TypeScriptCompile Include="wwwroot\src\EditStringView.ts" />
     <TypeScriptCompile Include="wwwroot\src\ILoginView.ts" />
     <TypeScriptCompile Include="wwwroot\src\index0.ts" />
     <TypeScriptCompile Include="wwwroot\src\IRegisterView.ts" />

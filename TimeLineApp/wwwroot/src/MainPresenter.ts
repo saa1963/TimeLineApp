@@ -4,8 +4,6 @@ import { EnumPeriod } from "./TLEvent";
 import { MainView } from "./MainView";
 import { MainModel } from "./MainModel";
 import { ISimpleEvent, SimpleEventDispatcher } from "strongly-typed-events"
-import * as $ from 'jquery'
-import { Globals } from "./Globals";
 
 export class MainPresenter {
   private model: MainModel
@@ -38,15 +36,6 @@ export class MainPresenter {
 
   // ****************** ! Свойства ********************************
 
-  public async getList(): Promise<string[]> {
-    try {
-      let data = await $.ajax('api/storage/list')
-      return data
-    } catch (err) {
-      throw Globals.ResponseErrorText(err)
-    }
-  }
-  
   constructor(view: MainView) {
     this.model = new MainModel()
     this.view = view

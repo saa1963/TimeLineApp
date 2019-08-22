@@ -11,6 +11,7 @@ import * as $ from 'jquery'
 import { TlistView } from "./TlistView";
 import { ApiClient } from "./ApiClient";
 import { BoxView } from "./BoxView";
+import { EditStringView } from "./EditStringView";
 
 export class MainView {
   // private свойства
@@ -90,9 +91,11 @@ export class MainView {
   }
 
   private OpenNewTLDialog() {
-    $('#tmName').val('')
-    $('#btnNewName').prop('disabled', true)
-    $('#tmNameModal').modal()
+    let view = new EditStringView('')
+    view.Show()
+      .then(async (value) => {
+        await new BoxView(value).Show()
+      })
   }
 
   private async OpenLoadTLDialog() {
