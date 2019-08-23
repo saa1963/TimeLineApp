@@ -1,3 +1,5 @@
+import { SimpleEventDispatcher, ISimpleEvent } from "ste-simple-events";
+
 export enum MenuItemType {
   default, divider
 }
@@ -17,6 +19,8 @@ export class ContextMenu {
     window.addEventListener('resize', () => this.onresize())
     this.reload()
   }
+
+  
 
   private onresize() {
     if (this.options.close_on_resize) {

@@ -32,6 +32,7 @@
     <Content Remove="wwwroot\src\MainModel.ts" />
     <Content Remove="wwwroot\src\MainPresenter.ts" />
     <Content Remove="wwwroot\src\MainView.ts" />
+    <Content Remove="wwwroot\src\MyContextMenu.ts" />
     <Content Remove="wwwroot\src\RegisterHandlers.ts" />
     <Content Remove="wwwroot\src\RegisterModel.ts" />
     <Content Remove="wwwroot\src\RegisterPresenter.ts" />
@@ -116,6 +117,7 @@
     <TypeScriptCompile Include="wwwroot\src\MainModel.ts" />
     <TypeScriptCompile Include="wwwroot\src\MainPresenter.ts" />
     <TypeScriptCompile Include="wwwroot\src\MainView.ts" />
+    <TypeScriptCompile Include="wwwroot\src\MyContextMenu.ts" />
     <TypeScriptCompile Include="wwwroot\src\RegisterModel.ts" />
     <TypeScriptCompile Include="wwwroot\src\RegisterPresenter.ts" />
     <TypeScriptCompile Include="wwwroot\src\RegisterView.ts" />
