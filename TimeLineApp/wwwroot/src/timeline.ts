@@ -110,17 +110,17 @@ export class TimeLine {
    */
   findperiods(dt: number): void {
     //let rt: TLPeriod[] = []
-    if (this.tldata !== undefined) {
-      this.tldata.Periods.forEach(v => {
-          // v - это период из общего массива периодов данной TL
-          if (v.Contains(this.period, dt)) {
-            if (!this.time_data.has(dt)) {
-              this.time_data.set(dt, v);
-              console.log(v);
-            }
-          }
-        })
-    }
+    //if (this.tldata !== undefined) {
+    //  this.tldata.Periods.forEach(v => {
+    //      // v - это период из общего массива периодов данной TL
+    //      if (v.Contains(this.period, dt)) {
+    //        if (!this.time_data.has(dt)) {
+    //          this.time_data.set(dt, v);
+    //          console.log(v);
+    //        }
+    //      }
+    //    })
+    //}
     return
   }
 

@@ -19149,7 +19149,47 @@ exports.LoginView = LoginView;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+const ste_simple_events_1 = __webpack_require__(/*! ste-simple-events */ "../node_modules/ste-simple-events/dist/index.js");
 class MainModel {
+    constructor() {
+        this.models = [];
+        this.e_AddTimeLine = new ste_simple_events_1.SimpleEventDispatcher();
+        this.e_RemoveTimeLine = new ste_simple_events_1.SimpleEventDispatcher();
+    }
+    Add(model) {
+        let rt = this.models.push(model);
+        this.e_AddTimeLine.dispatch(model);
+        return rt;
+    }
+    Remove(i) {
+        if (!this.validIndex(i))
+            throw "Неверный индекс";
+        this.models.splice(i, 1);
+        this.e_RemoveTimeLine.dispatch(i);
+        return true;
+    }
+    get Count() {
+        return this.models.length;
+    }
+    Item(i) {
+        if (!this.validIndex(i))
+            throw "Неверный индекс";
+        return this.models[i];
+    }
+    get evAddTimeLine() {
+        return this.e_AddTimeLine.asEvent();
+    }
+    get evRemoveTimeLine() {
+        return this.e_RemoveTimeLine.asEvent();
+    }
+    validIndex(i) {
+        if (!this.models)
+            return false;
+        if (this.models.length === 0)
+            return false;
+        if (i < 0 || i >= this.models.length)
+            return false;
+    }
 }
 exports.MainModel = MainModel;
 
@@ -19165,21 +19205,13 @@ exports.MainModel = MainModel;
 
 "use strict";
 
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const TLEvent_1 = __webpack_require__(/*! ./TLEvent */ "./src/TLEvent.ts");
 const MainModel_1 = __webpack_require__(/*! ./MainModel */ "./src/MainModel.ts");
 const strongly_typed_events_1 = __webpack_require__(/*! strongly-typed-events */ "../node_modules/strongly-typed-events/dist/index.js");
-const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
-const Globals_1 = __webpack_require__(/*! ./Globals */ "./src/Globals.ts");
 class MainPresenter {
+    // ! свойство Period
+    // ****************** ! Свойства ********************************
     constructor(view) {
         // ****************** События ***********************************
         this.e_ChangePeriod = new strongly_typed_events_1.SimpleEventDispatcher();
@@ -19201,19 +19233,6 @@ class MainPresenter {
             this.m_Period = value;
             this.e_ChangePeriod.dispatch(value);
         }
-    }
-    // ! свойство Period
-    // ****************** ! Свойства ********************************
-    getList() {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                let data = yield $.ajax('api/storage/list');
-                return data;
-            }
-            catch (err) {
-                throw Globals_1.Globals.ResponseErrorText(err);
-            }
-        });
     }
 }
 exports.MainPresenter = MainPresenter;
@@ -20163,21 +20182,66 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const TLPeriod_1 = __webpack_require__(/*! ./TLPeriod */ "./src/TLPeriod.ts");
 const TLPeriodEvent_1 = __webpack_require__(/*! ./TLPeriodEvent */ "./src/TLPeriodEvent.ts");
 const TLEvent_1 = __webpack_require__(/*! ./TLEvent */ "./src/TLEvent.ts");
+const ste_simple_events_1 = __webpack_require__(/*! ste-simple-events */ "../node_modules/ste-simple-events/dist/index.js");
 class TimeLineModel {
     constructor() {
-        this.Periods = [];
+        this.periods = [];
+        this.Name = 'Новая';
+        this.e_AddPeriod = new ste_simple_events_1.SimpleEventDispatcher();
+        this.e_RemovePeriod = new ste_simple_events_1.SimpleEventDispatcher();
     }
-    static CreateTimeLineData(data) {
+    static CreateTimeLineModel(data) {
         let rt = new TimeLineModel();
-        rt.Name = data.Name;
-        rt.Periods = [];
-        data.Periods.forEach(o => {
-            if (TLEvent_1.TLEvent.Equal(o.Begin, o.End))
-                rt.Periods.push(TLPeriodEvent_1.TLPeriodEvent.CreateTLPeriodEvent(o));
-            else
-                rt.Periods.push(TLPeriod_1.TLPeriod.CreateTLPeriod(o));
-        });
+        if (data) {
+            rt.Name = data.Name;
+            data.Periods.forEach(o => {
+                if (TLEvent_1.TLEvent.Equal(o.Begin, o.End))
+                    rt.periods.push(TLPeriodEvent_1.TLPeriodEvent.CreateTLPeriodEvent(o));
+                else
+                    rt.periods.push(TLPeriod_1.TLPeriod.CreateTLPeriod(o));
+            });
+        }
         return rt;
+    }
+    *Iterate() {
+        this.it = 0;
+        while (this.it < this.periods.length) {
+            yield this.periods[this.it];
+        }
+    }
+    Add(model) {
+        let rt = this.periods.push(model);
+        this.e_AddPeriod.dispatch(model);
+        return rt;
+    }
+    Remove(i) {
+        if (!this.validIndex(i))
+            throw "Неверный индекс";
+        this.periods.splice(i, 1);
+        this.e_RemovePeriod.dispatch(i);
+        return true;
+    }
+    get Count() {
+        return this.periods.length;
+    }
+    Item(i) {
+        if (!this.validIndex(i))
+            throw "Неверный индекс";
+        return this.periods[i];
+    }
+    get evAddPeriod() {
+        return this.e_AddPeriod.asEvent();
+    }
+    get evRemovePeriod() {
+        return this.e_RemovePeriod.asEvent();
+    }
+    validIndex(i) {
+        if (!this.periods)
+            return false;
+        if (this.periods.length === 0)
+            return false;
+        if (i < 0 || i >= this.periods.length)
+            return false;
     }
 }
 exports.TimeLineModel = TimeLineModel;
@@ -20232,7 +20296,7 @@ class TlistPresenter {
                         fname: this.m_Value
                     }
                 });
-                return TimeLineModel_1.TimeLineModel.CreateTimeLineData(JSON.parse(tl));
+                return TimeLineModel_1.TimeLineModel.CreateTimeLineModel(JSON.parse(tl));
             }
             catch (err) {
                 this.view.SetError(Globals_1.Globals.ResponseErrorText(err));
