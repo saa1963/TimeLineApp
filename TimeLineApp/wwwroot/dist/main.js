@@ -19259,7 +19259,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const MainPresenter_1 = __webpack_require__(/*! ./MainPresenter */ "./src/MainPresenter.ts");
-const contextmenu_1 = __webpack_require__(/*! ./contextmenu */ "./src/contextmenu.ts");
 const TLEvent_1 = __webpack_require__(/*! ./TLEvent */ "./src/TLEvent.ts");
 const LoginView_1 = __webpack_require__(/*! ./LoginView */ "./src/LoginView.ts");
 const Globals_1 = __webpack_require__(/*! ./Globals */ "./src/Globals.ts");
@@ -19271,33 +19270,40 @@ const TlistView_1 = __webpack_require__(/*! ./TlistView */ "./src/TlistView.ts")
 const ApiClient_1 = __webpack_require__(/*! ./ApiClient */ "./src/ApiClient.ts");
 const BoxView_1 = __webpack_require__(/*! ./BoxView */ "./src/BoxView.ts");
 const EditStringView_1 = __webpack_require__(/*! ./EditStringView */ "./src/EditStringView.ts");
+const MyContextMenu_1 = __webpack_require__(/*! ./MyContextMenu */ "./src/MyContextMenu.ts");
 class MainView {
     constructor() {
-        let menuitems = [];
-        let m = new Map().set('click', this.OpenNewTLDialog);
-        menuitems.push(new contextmenu_1.MenuItem('new', 'Новая', '<i class="far fa-file"></i>', m));
-        m = new Map().set('click', () => this.OpenLoadTLDialog());
-        menuitems.push(new contextmenu_1.MenuItem('load', 'Загрузить', '<i class="far fa-folder-open"></i>', m));
-        m = new Map().set('click', this.SaveCurrentTL);
-        menuitems.push(new contextmenu_1.MenuItem('save', 'Сохранить', '<i class="far fa-save"></i>', m, false));
-        menuitems.push(new contextmenu_1.MenuItemDivider());
-        let sub = [];
-        m = new Map().set('click', () => { this.Presenter.Period = TLEvent_1.EnumPeriod.day; });
-        sub.push(this.PeriodDay = new contextmenu_1.MenuItem('switch_to_day', 'День', null, m));
-        m = new Map().set('click', () => { this.Presenter.Period = TLEvent_1.EnumPeriod.month; });
-        sub.push(this.PeriodMonth = new contextmenu_1.MenuItem('switch_to_month', 'Месяц', null, m));
-        m = new Map().set('click', () => { this.Presenter.Period = TLEvent_1.EnumPeriod.year; });
-        sub.push(this.PeriodYear = new contextmenu_1.MenuItem('switch_to_year', 'Год', null, m));
-        m = new Map().set('click', () => { this.Presenter.Period = TLEvent_1.EnumPeriod.decade; });
-        sub.push(this.PeriodDecade = new contextmenu_1.MenuItem('switch_to_decade', 'Десятилетие', null, m));
-        m = new Map().set('click', () => { this.Presenter.Period = TLEvent_1.EnumPeriod.century; });
-        sub.push(this.PeriodCentury = new contextmenu_1.MenuItem('switch_to_century', 'Век', null, m));
-        menuitems.push(new contextmenu_1.MenuItemSub('period', 'Периодичность', sub));
-        this.ChangeIconMenuPeriod(TLEvent_1.EnumPeriod.day);
-        this.menuCtx = new contextmenu_1.ContextMenu(menuitems);
+        //let menuitems: MenuItem[] = []
+        //let m = new Map<string, () => void>().set('click', this.OpenNewTLDialog)
+        //menuitems.push(new MenuItem('new', 'Новая', '<i class="far fa-file"></i>', m))
+        //m = new Map<string, () => void>().set('click', () => this.OpenLoadTLDialog())
+        //menuitems.push(new MenuItem('load', 'Загрузить', '<i class="far fa-folder-open"></i>', m))
+        //m = new Map<string, () => void>().set('click', this.SaveCurrentTL)
+        //menuitems.push(new MenuItem('save', 'Сохранить', '<i class="far fa-save"></i>', m, false))
+        //menuitems.push(new MenuItemDivider())
+        //let sub: MenuItem[] = []
+        //m = new Map<string, () => void>().set('click', () => { this.Presenter.Period = EnumPeriod.day })
+        //sub.push(this.PeriodDay = new MenuItem('switch_to_day', 'День', null, m))
+        //m = new Map<string, () => void>().set('click', () => { this.Presenter.Period = EnumPeriod.month })
+        //sub.push(this.PeriodMonth = new MenuItem('switch_to_month', 'Месяц', null, m))
+        //m = new Map<string, () => void>().set('click', () => { this.Presenter.Period = EnumPeriod.year })
+        //sub.push(this.PeriodYear = new MenuItem('switch_to_year', 'Год', null, m))
+        //m = new Map<string, () => void>().set('click', () => { this.Presenter.Period = EnumPeriod.decade })
+        //sub.push(this.PeriodDecade = new MenuItem('switch_to_decade', 'Десятилетие', null, m))
+        //m = new Map<string, () => void>().set('click', () => { this.Presenter.Period = EnumPeriod.century })
+        //sub.push(this.PeriodCentury = new MenuItem('switch_to_century', 'Век', null, m))
+        //menuitems.push(new MenuItemSub('period', 'Периодичность', sub))
+        //this.menuCtx = new ContextMenu(menuitems)
+        this.menuCtx = MyContextMenu_1.MyContextMenu.Create();
+        this.menuCtx.evSelect.subscribe((s) => {
+            if (s === 'new') {
+                this.OpenNewTLDialog();
+            }
+        });
+        MyContextMenu_1.MyContextMenu.ChangeIconMenuPeriod(TLEvent_1.EnumPeriod.day);
         this.Presenter = new MainPresenter_1.MainPresenter(this);
         this.Presenter.evChangePeriod.subscribe((period) => {
-            this.ChangeIconMenuPeriod(period);
+            MyContextMenu_1.MyContextMenu.ChangeIconMenuPeriod(period);
         });
     }
     ChangeIconMenuPeriod(period) {
@@ -19403,6 +19409,65 @@ class MainView {
     }
 }
 exports.MainView = MainView;
+
+
+/***/ }),
+
+/***/ "./src/MyContextMenu.ts":
+/*!******************************!*\
+  !*** ./src/MyContextMenu.ts ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const contextmenu_1 = __webpack_require__(/*! ./contextmenu */ "./src/contextmenu.ts");
+const TLEvent_1 = __webpack_require__(/*! ./TLEvent */ "./src/TLEvent.ts");
+class MyContextMenu {
+    static Create() {
+        let menuitems = [];
+        menuitems.push(new contextmenu_1.MenuItem('new', 'Новая', '<i class="far fa-file"></i>'));
+        menuitems.push(new contextmenu_1.MenuItem('load', 'Загрузить', '<i class="far fa-folder-open"></i>'));
+        menuitems.push(new contextmenu_1.MenuItem('save', 'Сохранить', '<i class="far fa-save"></i>', null, false));
+        menuitems.push(new contextmenu_1.MenuItemDivider());
+        let sub = [];
+        sub.push(MyContextMenu.PeriodDay = new contextmenu_1.MenuItem('switch_to_day', 'День', null));
+        sub.push(MyContextMenu.PeriodMonth = new contextmenu_1.MenuItem('switch_to_month', 'Месяц', null));
+        sub.push(MyContextMenu.PeriodYear = new contextmenu_1.MenuItem('switch_to_year', 'Год', null));
+        sub.push(MyContextMenu.PeriodDecade = new contextmenu_1.MenuItem('switch_to_decade', 'Десятилетие', null));
+        sub.push(MyContextMenu.PeriodCentury = new contextmenu_1.MenuItem('switch_to_century', 'Век', null));
+        menuitems.push(new contextmenu_1.MenuItemSub('period', 'Периодичность', sub));
+        return new contextmenu_1.ContextMenu(menuitems);
+    }
+    static ChangeIconMenuPeriod(period) {
+        const fa_angle_down = '<i class="far fa-check-square"></i>';
+        MyContextMenu.PeriodDay.icon = '';
+        MyContextMenu.PeriodMonth.icon = '';
+        MyContextMenu.PeriodYear.icon = '';
+        MyContextMenu.PeriodDecade.icon = '';
+        MyContextMenu.PeriodCentury.icon = '';
+        switch (period) {
+            case TLEvent_1.EnumPeriod.day:
+                MyContextMenu.PeriodDay.icon = fa_angle_down;
+                break;
+            case TLEvent_1.EnumPeriod.month:
+                MyContextMenu.PeriodMonth.icon = fa_angle_down;
+                break;
+            case TLEvent_1.EnumPeriod.year:
+                MyContextMenu.PeriodYear.icon = fa_angle_down;
+                break;
+            case TLEvent_1.EnumPeriod.decade:
+                MyContextMenu.PeriodDecade.icon = fa_angle_down;
+                break;
+            case TLEvent_1.EnumPeriod.century:
+                MyContextMenu.PeriodCentury.icon = fa_angle_down;
+                break;
+        }
+    }
+}
+exports.MyContextMenu = MyContextMenu;
 
 
 /***/ }),
@@ -20203,12 +20268,6 @@ class TimeLineModel {
         }
         return rt;
     }
-    *Iterate() {
-        this.it = 0;
-        while (this.it < this.periods.length) {
-            yield this.periods[this.it];
-        }
-    }
     Add(model) {
         let rt = this.periods.push(model);
         this.e_AddPeriod.dispatch(model);
@@ -20394,6 +20453,7 @@ exports.TlistView = TlistView;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+const ste_simple_events_1 = __webpack_require__(/*! ste-simple-events */ "../node_modules/ste-simple-events/dist/index.js");
 var MenuItemType;
 (function (MenuItemType) {
     MenuItemType[MenuItemType["default"] = 0] = "default";
@@ -20402,6 +20462,7 @@ var MenuItemType;
 class ContextMenu {
     constructor(menu, options) {
         this.contextTarget = null;
+        this.e_Select = new ste_simple_events_1.SimpleEventDispatcher();
         let num = ContextMenu.count++;
         this.menu = menu;
         if (options == undefined)
@@ -20410,6 +20471,9 @@ class ContextMenu {
             this.options = options;
         window.addEventListener('resize', () => this.onresize());
         this.reload();
+    }
+    get evSelect() {
+        return this.e_Select.asEvent();
     }
     onresize() {
         if (this.options.close_on_resize) {
@@ -20475,7 +20539,10 @@ class ContextMenu {
                 else {
                     if (item.events !== null) {
                         for (var [key, value] of item.events) {
-                            li.addEventListener(key, value);
+                            //li.addEventListener(key, value)
+                            li.addEventListener('click', (ev) => {
+                                this.e_Select.dispatch(item.id);
+                            });
                         }
                     }
                     if (item.sub !== null) {

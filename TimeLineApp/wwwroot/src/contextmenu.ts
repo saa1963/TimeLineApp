@@ -20,7 +20,10 @@ export class ContextMenu {
     this.reload()
   }
 
-  
+  private e_Select = new SimpleEventDispatcher<string>();
+  public get evSelect(): ISimpleEvent<string> {
+    return this.e_Select.asEvent();
+  }
 
   private onresize() {
     if (this.options.close_on_resize) {
@@ -97,7 +100,10 @@ export class ContextMenu {
         } else {
           if (item.events !== null) {
             for (var [key, value] of item.events) {
-              li.addEventListener(key, value)
+              //li.addEventListener(key, value)
+              li.addEventListener('click', (ev) => {
+                this.e_Select.dispatch(item.id)
+              })
             }
           }
 

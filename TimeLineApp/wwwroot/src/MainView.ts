@@ -12,6 +12,7 @@ import { TlistView } from "./TlistView";
 import { ApiClient } from "./ApiClient";
 import { BoxView } from "./BoxView";
 import { EditStringView } from "./EditStringView";
+import { MyContextMenu } from "./MyContextMenu";
 
 export class MainView {
   // private свойства
@@ -29,33 +30,40 @@ export class MainView {
   public Presenter: MainPresenter;
 
   constructor() {
-    let menuitems: MenuItem[] = []
-    let m = new Map<string, () => void>().set('click', this.OpenNewTLDialog)
-    menuitems.push(new MenuItem('new', 'Новая', '<i class="far fa-file"></i>', m))
-    m = new Map<string, () => void>().set('click', () => this.OpenLoadTLDialog())
-    menuitems.push(new MenuItem('load', 'Загрузить', '<i class="far fa-folder-open"></i>', m))
-    m = new Map<string, () => void>().set('click', this.SaveCurrentTL)
-    menuitems.push(new MenuItem('save', 'Сохранить', '<i class="far fa-save"></i>', m, false))
-    menuitems.push(new MenuItemDivider())
-    let sub: MenuItem[] = []
-    m = new Map<string, () => void>().set('click', () => { this.Presenter.Period = EnumPeriod.day })
-    sub.push(this.PeriodDay = new MenuItem('switch_to_day', 'День', null, m))
-    m = new Map<string, () => void>().set('click', () => { this.Presenter.Period = EnumPeriod.month })
-    sub.push(this.PeriodMonth = new MenuItem('switch_to_month', 'Месяц', null, m))
-    m = new Map<string, () => void>().set('click', () => { this.Presenter.Period = EnumPeriod.year })
-    sub.push(this.PeriodYear = new MenuItem('switch_to_year', 'Год', null, m))
-    m = new Map<string, () => void>().set('click', () => { this.Presenter.Period = EnumPeriod.decade })
-    sub.push(this.PeriodDecade = new MenuItem('switch_to_decade', 'Десятилетие', null, m))
-    m = new Map<string, () => void>().set('click', () => { this.Presenter.Period = EnumPeriod.century })
-    sub.push(this.PeriodCentury = new MenuItem('switch_to_century', 'Век', null, m))
-    menuitems.push(new MenuItemSub('period', 'Периодичность', sub))
+    //let menuitems: MenuItem[] = []
+    //let m = new Map<string, () => void>().set('click', this.OpenNewTLDialog)
+    //menuitems.push(new MenuItem('new', 'Новая', '<i class="far fa-file"></i>', m))
+    //m = new Map<string, () => void>().set('click', () => this.OpenLoadTLDialog())
+    //menuitems.push(new MenuItem('load', 'Загрузить', '<i class="far fa-folder-open"></i>', m))
+    //m = new Map<string, () => void>().set('click', this.SaveCurrentTL)
+    //menuitems.push(new MenuItem('save', 'Сохранить', '<i class="far fa-save"></i>', m, false))
+    //menuitems.push(new MenuItemDivider())
+    //let sub: MenuItem[] = []
+    //m = new Map<string, () => void>().set('click', () => { this.Presenter.Period = EnumPeriod.day })
+    //sub.push(this.PeriodDay = new MenuItem('switch_to_day', 'День', null, m))
+    //m = new Map<string, () => void>().set('click', () => { this.Presenter.Period = EnumPeriod.month })
+    //sub.push(this.PeriodMonth = new MenuItem('switch_to_month', 'Месяц', null, m))
+    //m = new Map<string, () => void>().set('click', () => { this.Presenter.Period = EnumPeriod.year })
+    //sub.push(this.PeriodYear = new MenuItem('switch_to_year', 'Год', null, m))
+    //m = new Map<string, () => void>().set('click', () => { this.Presenter.Period = EnumPeriod.decade })
+    //sub.push(this.PeriodDecade = new MenuItem('switch_to_decade', 'Десятилетие', null, m))
+    //m = new Map<string, () => void>().set('click', () => { this.Presenter.Period = EnumPeriod.century })
+    //sub.push(this.PeriodCentury = new MenuItem('switch_to_century', 'Век', null, m))
+    //menuitems.push(new MenuItemSub('period', 'Периодичность', sub))
 
-    this.ChangeIconMenuPeriod(EnumPeriod.day)
-    this.menuCtx = new ContextMenu(menuitems)
+    
+    //this.menuCtx = new ContextMenu(menuitems)
+    this.menuCtx = MyContextMenu.Create()
+    this.menuCtx.evSelect.subscribe((s) => {
+      if (s === 'new') {
+        this.OpenNewTLDialog()
+      }
+    })
+    MyContextMenu.ChangeIconMenuPeriod(EnumPeriod.day)
 
     this.Presenter = new MainPresenter(this)
     this.Presenter.evChangePeriod.subscribe((period) => {
-      this.ChangeIconMenuPeriod(period)
+      MyContextMenu.ChangeIconMenuPeriod(period)
     })
   }
 
