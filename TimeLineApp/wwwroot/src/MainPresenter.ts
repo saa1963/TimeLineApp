@@ -9,16 +9,6 @@ export class MainPresenter {
   private model: MainModel
   private view: MainView
 
-  // ****************** События ***********************************
-
-  private e_ChangePeriod = new SimpleEventDispatcher<EnumPeriod>();
-  public get evChangePeriod(): ISimpleEvent<EnumPeriod> {
-    return this.e_ChangePeriod.asEvent();
-  }
-
-  // ******************* ! События ********************************
-
-
   // ******************* Свойства *********************************
 
   // свойство Period
@@ -29,15 +19,15 @@ export class MainPresenter {
   public set Period(value: EnumPeriod) {
     if (this.m_Period !== value) {
       this.m_Period = value
-      this.e_ChangePeriod.dispatch(value);	
     }
   }
   // ! свойство Period
 
   // ****************** ! Свойства ********************************
 
-  constructor(view: MainView) {
-    this.model = new MainModel()
+  constructor(view: MainView, model: MainModel) {
+    this.model = model
     this.view = view
+    //this.model.
   }
 }

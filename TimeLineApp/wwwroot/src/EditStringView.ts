@@ -33,7 +33,7 @@ export class EditStringView {
       }
       this.btnCancelNewName.onclick = async () => {
         this.tbModal.modal('hide')
-        reject()
+        resolve(null)
       }
     })
   }

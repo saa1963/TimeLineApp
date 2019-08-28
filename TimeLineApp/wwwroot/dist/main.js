@@ -18897,7 +18897,7 @@ class EditStringView {
                 });
                 this.btnCancelNewName.onclick = () => __awaiter(this, void 0, void 0, function* () {
                     this.tbModal.modal('hide');
-                    reject();
+                    resolve(null);
                 });
             });
         });
@@ -19273,63 +19273,40 @@ const EditStringView_1 = __webpack_require__(/*! ./EditStringView */ "./src/Edit
 const MyContextMenu_1 = __webpack_require__(/*! ./MyContextMenu */ "./src/MyContextMenu.ts");
 class MainView {
     constructor() {
-        //let menuitems: MenuItem[] = []
-        //let m = new Map<string, () => void>().set('click', this.OpenNewTLDialog)
-        //menuitems.push(new MenuItem('new', 'Новая', '<i class="far fa-file"></i>', m))
-        //m = new Map<string, () => void>().set('click', () => this.OpenLoadTLDialog())
-        //menuitems.push(new MenuItem('load', 'Загрузить', '<i class="far fa-folder-open"></i>', m))
-        //m = new Map<string, () => void>().set('click', this.SaveCurrentTL)
-        //menuitems.push(new MenuItem('save', 'Сохранить', '<i class="far fa-save"></i>', m, false))
-        //menuitems.push(new MenuItemDivider())
-        //let sub: MenuItem[] = []
-        //m = new Map<string, () => void>().set('click', () => { this.Presenter.Period = EnumPeriod.day })
-        //sub.push(this.PeriodDay = new MenuItem('switch_to_day', 'День', null, m))
-        //m = new Map<string, () => void>().set('click', () => { this.Presenter.Period = EnumPeriod.month })
-        //sub.push(this.PeriodMonth = new MenuItem('switch_to_month', 'Месяц', null, m))
-        //m = new Map<string, () => void>().set('click', () => { this.Presenter.Period = EnumPeriod.year })
-        //sub.push(this.PeriodYear = new MenuItem('switch_to_year', 'Год', null, m))
-        //m = new Map<string, () => void>().set('click', () => { this.Presenter.Period = EnumPeriod.decade })
-        //sub.push(this.PeriodDecade = new MenuItem('switch_to_decade', 'Десятилетие', null, m))
-        //m = new Map<string, () => void>().set('click', () => { this.Presenter.Period = EnumPeriod.century })
-        //sub.push(this.PeriodCentury = new MenuItem('switch_to_century', 'Век', null, m))
-        //menuitems.push(new MenuItemSub('period', 'Периодичность', sub))
-        //this.menuCtx = new ContextMenu(menuitems)
         this.menuCtx = MyContextMenu_1.MyContextMenu.Create();
         this.menuCtx.evSelect.subscribe((s) => {
-            if (s === 'new') {
-                this.OpenNewTLDialog();
+            switch (s) {
+                case 'new':
+                    this.OpenNewTLDialog();
+                    break;
+                case 'load':
+                    this.OpenLoadTLDialog();
+                    break;
+                case 'save':
+                    this.SaveCurrentTL();
+                    break;
+                case 'switch_to_day':
+                    MyContextMenu_1.MyContextMenu.ChangeIconMenuPeriod(TLEvent_1.EnumPeriod.day);
+                    break;
+                case 'switch_to_month':
+                    MyContextMenu_1.MyContextMenu.ChangeIconMenuPeriod(TLEvent_1.EnumPeriod.month);
+                    break;
+                case 'switch_to_year':
+                    MyContextMenu_1.MyContextMenu.ChangeIconMenuPeriod(TLEvent_1.EnumPeriod.year);
+                    break;
+                case 'switch_to_decade':
+                    MyContextMenu_1.MyContextMenu.ChangeIconMenuPeriod(TLEvent_1.EnumPeriod.decade);
+                    break;
+                case 'switch_to_century':
+                    MyContextMenu_1.MyContextMenu.ChangeIconMenuPeriod(TLEvent_1.EnumPeriod.century);
+                    break;
             }
         });
         MyContextMenu_1.MyContextMenu.ChangeIconMenuPeriod(TLEvent_1.EnumPeriod.day);
         this.Presenter = new MainPresenter_1.MainPresenter(this);
-        this.Presenter.evChangePeriod.subscribe((period) => {
-            MyContextMenu_1.MyContextMenu.ChangeIconMenuPeriod(period);
-        });
-    }
-    ChangeIconMenuPeriod(period) {
-        const fa_angle_down = '<i class="far fa-check-square"></i>';
-        this.PeriodDay.icon = '';
-        this.PeriodMonth.icon = '';
-        this.PeriodYear.icon = '';
-        this.PeriodDecade.icon = '';
-        this.PeriodCentury.icon = '';
-        switch (period) {
-            case TLEvent_1.EnumPeriod.day:
-                this.PeriodDay.icon = fa_angle_down;
-                break;
-            case TLEvent_1.EnumPeriod.month:
-                this.PeriodMonth.icon = fa_angle_down;
-                break;
-            case TLEvent_1.EnumPeriod.year:
-                this.PeriodYear.icon = fa_angle_down;
-                break;
-            case TLEvent_1.EnumPeriod.decade:
-                this.PeriodDecade.icon = fa_angle_down;
-                break;
-            case TLEvent_1.EnumPeriod.century:
-                this.PeriodCentury.icon = fa_angle_down;
-                break;
-        }
+        //this.Presenter.evChangePeriod.subscribe((period) => {
+        //  MyContextMenu.ChangeIconMenuPeriod(period)
+        //})
     }
     // отрисовка Линий Времени 
     Draw() {
@@ -19338,7 +19315,9 @@ class MainView {
         let view = new EditStringView_1.EditStringView('');
         view.Show()
             .then((value) => __awaiter(this, void 0, void 0, function* () {
-            yield new BoxView_1.BoxView(value).Show();
+            if (value) {
+                yield new BoxView_1.BoxView(value).Show();
+            }
         }));
     }
     OpenLoadTLDialog() {
@@ -19349,7 +19328,8 @@ class MainView {
                 view.ShowDialog()
                     .then((value) => __awaiter(this, void 0, void 0, function* () {
                     yield new BoxView_1.BoxView(value.Name).Show();
-                }));
+                }))
+                    .catch(() => { });
             }
             catch (err) {
                 yield new BoxView_1.BoxView(err).Show();
@@ -19430,7 +19410,7 @@ class MyContextMenu {
         let menuitems = [];
         menuitems.push(new contextmenu_1.MenuItem('new', 'Новая', '<i class="far fa-file"></i>'));
         menuitems.push(new contextmenu_1.MenuItem('load', 'Загрузить', '<i class="far fa-folder-open"></i>'));
-        menuitems.push(new contextmenu_1.MenuItem('save', 'Сохранить', '<i class="far fa-save"></i>', null, false));
+        menuitems.push(new contextmenu_1.MenuItem('save', 'Сохранить', '<i class="far fa-save"></i>', false));
         menuitems.push(new contextmenu_1.MenuItemDivider());
         let sub = [];
         sub.push(MyContextMenu.PeriodDay = new contextmenu_1.MenuItem('switch_to_day', 'День', null));
@@ -20537,14 +20517,9 @@ class ContextMenu {
                     li.setAttribute('disabled', '');
                 }
                 else {
-                    if (item.events !== null) {
-                        for (var [key, value] of item.events) {
-                            //li.addEventListener(key, value)
-                            li.addEventListener('click', (ev) => {
-                                this.e_Select.dispatch(item.id);
-                            });
-                        }
-                    }
+                    li.addEventListener('click', (ev) => {
+                        this.e_Select.dispatch(item.id);
+                    });
                     if (item.sub !== null) {
                         li.appendChild(this.renderLevel(item.sub));
                     }
@@ -20651,18 +20626,16 @@ class ContextUtil {
 class MyHTMLLIElement extends HTMLLIElement {
 }
 class MenuItem {
-    constructor(id, text, icon, events, enabled, sub, type) {
+    constructor(id, text, icon, enabled, sub, type) {
         this.id = null;
         this.text = null;
         this.icon = '';
-        this.events = null;
         this.enabled = true;
         this.sub = null;
         this.type = MenuItemType.default;
         this.id = id;
         this.text = text || null;
         this.icon = icon || '';
-        this.events = events || null;
         this.enabled = enabled || true;
         this.sub = sub || null;
         this.type = type || MenuItemType.default;
@@ -20671,13 +20644,13 @@ class MenuItem {
 exports.MenuItem = MenuItem;
 class MenuItemDivider extends MenuItem {
     constructor() {
-        super(null, null, null, null, true, null, MenuItemType.divider);
+        super(null, null, null, true, null, MenuItemType.divider);
     }
 }
 exports.MenuItemDivider = MenuItemDivider;
 class MenuItemSub extends MenuItem {
     constructor(id, text, sub) {
-        super(id, text, null, null, true, sub);
+        super(id, text, null, true, sub);
     }
 }
 exports.MenuItemSub = MenuItemSub;

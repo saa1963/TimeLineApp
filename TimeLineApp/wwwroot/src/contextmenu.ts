@@ -98,14 +98,9 @@ export class ContextMenu {
         if (!item.enabled) {
           li.setAttribute('disabled', '')
         } else {
-          if (item.events !== null) {
-            for (var [key, value] of item.events) {
-              //li.addEventListener(key, value)
-              li.addEventListener('click', (ev) => {
-                this.e_Select.dispatch(item.id)
-              })
-            }
-          }
+          li.addEventListener('click', (ev) => {
+            this.e_Select.dispatch(item.id)
+          })
 
           if (item.sub !== null) {
             li.appendChild(this.renderLevel(item.sub))
@@ -239,15 +234,13 @@ export class MenuItem {
   id: string = null
   text: string = null
   icon: string = ''
-  events: Map<string, () => void> = null
   enabled: Boolean = true
   sub: MenuItem[] = null
   type: MenuItemType = MenuItemType.default
-  public constructor(id: string, text?: string, icon?: string, events?: Map<string, () => void>, enabled?: boolean, sub?: MenuItem[], type?: MenuItemType) {
+  public constructor(id: string, text?: string, icon?: string, enabled?: boolean, sub?: MenuItem[], type?: MenuItemType) {
     this.id = id
     this.text = text || null
     this.icon = icon || ''
-    this.events = events || null
     this.enabled = enabled || true
     this.sub = sub || null
     this.type = type || MenuItemType.default
@@ -256,13 +249,13 @@ export class MenuItem {
 
 export class MenuItemDivider extends MenuItem {
   public constructor() {
-    super(null, null, null, null, true, null, MenuItemType.divider)
+    super(null, null, null, true, null, MenuItemType.divider)
   }
 }
 
 export class MenuItemSub extends MenuItem {
   public constructor(id: string, text: string, sub: MenuItem[]) {
-    super(id, text, null, null, true, sub)
+    super(id, text, null, true, sub)
   }
 }
 

@@ -1,13 +1,12 @@
 ﻿import { ContextMenu, MenuItem, MenuItemSub, MenuItemDivider } from "./contextmenu";
 import { EnumPeriod } from "./TLEvent";
-import { SimpleEventDispatcher, ISimpleEvent } from "ste-simple-events";
 
 export class MyContextMenu {
   public static Create(): ContextMenu {
     let menuitems: MenuItem[] = []
     menuitems.push(new MenuItem('new', 'Новая', '<i class="far fa-file"></i>'))
     menuitems.push(new MenuItem('load', 'Загрузить', '<i class="far fa-folder-open"></i>'))
-    menuitems.push(new MenuItem('save', 'Сохранить', '<i class="far fa-save"></i>', null, false))
+    menuitems.push(new MenuItem('save', 'Сохранить', '<i class="far fa-save"></i>', false))
     menuitems.push(new MenuItemDivider())
     let sub: MenuItem[] = []
     sub.push(MyContextMenu.PeriodDay = new MenuItem('switch_to_day', 'День', null))
