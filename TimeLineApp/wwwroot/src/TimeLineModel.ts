@@ -7,7 +7,7 @@ export class TimeLineModel {
   private periods: TLPeriod[] = [];
   public Name: string = 'Новая'
 
-  static CreateTimeLineModel(data: any): TimeLineModel {
+  static CreateTimeLineModel(data?: any): TimeLineModel {
     let rt = new TimeLineModel();
     if (data) {
       rt.Name = data.Name;

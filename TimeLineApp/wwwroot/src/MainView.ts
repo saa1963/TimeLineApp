@@ -24,71 +24,48 @@ export class MainView {
   public Presenter: MainPresenter;
 
   constructor(model: MainModel) {
+    this.Presenter = new MainPresenter(this, model)
     this.menuCtx = MyContextMenu.Create()
     this.menuCtx.evSelect.subscribe((s) => {
       switch (s) {
         case 'new':
-          this.OpenNewTLDialog()
+          this.Presenter.OpenNewTLDialog()
           break;
         case 'load':
-          this.OpenLoadTLDialog()
+          this.Presenter.OpenLoadTLDialog()
           break;
         case 'save':
-          this.SaveCurrentTL()
+          this.Presenter.SaveCurrentTL()
           break;
         case 'switch_to_day':
-          MyContextMenu.ChangeIconMenuPeriod(EnumPeriod.day)
+          this.Presenter.Period = EnumPeriod.day
           break;
         case 'switch_to_month':
-          MyContextMenu.ChangeIconMenuPeriod(EnumPeriod.month)
+          this.Presenter.Period = EnumPeriod.month
           break;
         case 'switch_to_year':
-          MyContextMenu.ChangeIconMenuPeriod(EnumPeriod.year)
+          this.Presenter.Period = EnumPeriod.year
           break;
         case 'switch_to_decade':
-          MyContextMenu.ChangeIconMenuPeriod(EnumPeriod.decade)
+          this.Presenter.Period = EnumPeriod.decade
           break;
         case 'switch_to_century':
-          MyContextMenu.ChangeIconMenuPeriod(EnumPeriod.century)
+          this.Presenter.Period = EnumPeriod.century
           break;
       }
     })
-    MyContextMenu.ChangeIconMenuPeriod(EnumPeriod.day)
+    this.Presenter.Period = EnumPeriod.day
+    this.Draw()
+  }
 
-    this.Presenter = new MainPresenter(this, model)
+  public ViewChangePeriod(period: EnumPeriod) {
+    MyContextMenu.ChangeIconMenuPeriod(period)
+    this.Draw()
   }
 
   // отрисовка Линий Времени 
   public Draw() {
     
-  }
-
-  private OpenNewTLDialog() {
-    let view = new EditStringView('')
-    view.Show()
-      .then(async (value) => {
-        if (value) {
-          await new BoxView(value).Show()
-        }
-      })
-  }
-
-  private async OpenLoadTLDialog() {
-    try {
-      let value = await ApiClient.getInstance().GetUsersList()
-      let view = new TlistView(value)
-      view.ShowDialog()
-        .then(async (value) => {
-          await new BoxView(value.Name).Show()
-        })
-        .catch(() => { })
-    } catch (err) {
-      await new BoxView(err).Show()
-    }
-  }
-
-  private SaveCurrentTL() {
-
   }
 
   public OnResizeWindow(width: number, height: number) {
