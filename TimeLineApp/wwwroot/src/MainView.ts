@@ -18,63 +18,24 @@ import { MainModel } from "./MainModel";
 export class MainView {
   // private свойства
   private ctx: CanvasRenderingContext2D
-  private menuCtx: ContextMenu
-
   // pubic свойства
-  public Presenter: MainPresenter;
+  private Presenter: MainPresenter;
 
   constructor(model: MainModel) {
     this.Presenter = new MainPresenter(this, model)
-    this.menuCtx = MyContextMenu.Create()
-    this.menuCtx.evSelect.subscribe((s) => {
-      switch (s) {
-        case 'new':
-          this.Presenter.OpenNewTLDialog()
-          break;
-        case 'load':
-          this.Presenter.OpenLoadTLDialog()
-          break;
-        case 'save':
-          this.Presenter.SaveCurrentTL()
-          break;
-        case 'switch_to_day':
-          this.Presenter.Period = EnumPeriod.day
-          break;
-        case 'switch_to_month':
-          this.Presenter.Period = EnumPeriod.month
-          break;
-        case 'switch_to_year':
-          this.Presenter.Period = EnumPeriod.year
-          break;
-        case 'switch_to_decade':
-          this.Presenter.Period = EnumPeriod.decade
-          break;
-        case 'switch_to_century':
-          this.Presenter.Period = EnumPeriod.century
-          break;
-      }
-    })
-    this.Presenter.Period = EnumPeriod.day
-    this.Draw()
-  }
-
-  public ViewChangePeriod(period: EnumPeriod) {
-    MyContextMenu.ChangeIconMenuPeriod(period)
-    this.Draw()
   }
 
   // отрисовка Линий Времени 
   public Draw() {
-    
+    for (let i = 0; i < this.Presenter.Count; i++) {
+      this.Presenter.Item(i)
+    }
   }
+
+  private DrawTimeLine(tl: TimeLineModel)
 
   public OnResizeWindow(width: number, height: number) {
     this.Draw()
-  }
-
-  public OnContextMenu(e: MouseEvent) {
-    this.menuCtx.reload()
-    this.menuCtx.display(e)
   }
 
   public async OnLogin() {
@@ -114,7 +75,7 @@ export class MainView {
 
   public handleEvent(event: Event) {
     if (event.type === 'contextmenu') {
-      this.OnContextMenu(<MouseEvent>event)
+      this.Presenter.OnContextMenu(<MouseEvent>event)
       event.preventDefault()
     }
   }

@@ -18144,345 +18144,6 @@ exports.Subscription = Subscription;
 
 /***/ }),
 
-/***/ "../node_modules/ste-events/dist/events.js":
-/*!*************************************************!*\
-  !*** ../node_modules/ste-events/dist/events.js ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var ste_core_1 = __webpack_require__(/*! ste-core */ "../node_modules/ste-core/dist/index.js");
-/**
- * Dispatcher implementation for events. Can be used to subscribe, unsubscribe
- * or dispatch events. Use the ToEvent() method to expose the event.
- */
-var EventDispatcher = /** @class */ (function (_super) {
-    __extends(EventDispatcher, _super);
-    /**
-     * Creates a new EventDispatcher instance.
-     */
-    function EventDispatcher() {
-        return _super.call(this) || this;
-    }
-    /**
-     * Dispatches the event.
-     * @param sender The sender.
-     * @param args The arguments object.
-     */
-    EventDispatcher.prototype.dispatch = function (sender, args) {
-        this._dispatch(false, this, arguments);
-    };
-    /**
-     * Dispatches the events thread.
-     * @param sender The sender.
-     * @param args The arguments object.
-     */
-    EventDispatcher.prototype.dispatchAsync = function (sender, args) {
-        this._dispatch(true, this, arguments);
-    };
-    /**
-     * Creates an event from the dispatcher. Will return the dispatcher
-     * in a wrapper. This will prevent exposure of any dispatcher methods.
-     */
-    EventDispatcher.prototype.asEvent = function () {
-        return _super.prototype.asEvent.call(this);
-    };
-    return EventDispatcher;
-}(ste_core_1.DispatcherBase));
-exports.EventDispatcher = EventDispatcher;
-/**
- * Storage class for multiple events that are accessible by name.
- * Events dispatchers are automatically created.
- */
-var EventList = /** @class */ (function (_super) {
-    __extends(EventList, _super);
-    /**
-     * Creates a new EventList instance.
-     */
-    function EventList() {
-        return _super.call(this) || this;
-    }
-    /**
-     * Creates a new dispatcher instance.
-     */
-    EventList.prototype.createDispatcher = function () {
-        return new EventDispatcher();
-    };
-    return EventList;
-}(ste_core_1.EventListBase));
-exports.EventList = EventList;
-/**
- * Extends objects with event handling capabilities.
- */
-var EventHandlingBase = /** @class */ (function () {
-    function EventHandlingBase() {
-        this._events = new EventList();
-    }
-    Object.defineProperty(EventHandlingBase.prototype, "events", {
-        /**
-         * Gets the list with all the event dispatchers.
-         */
-        get: function () {
-            return this._events;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    /**
-     * Subscribes to the event with the specified name.
-     * @param name The name of the event.
-     * @param fn The event handler.
-     */
-    EventHandlingBase.prototype.subscribe = function (name, fn) {
-        this._events.get(name).subscribe(fn);
-    };
-    /**
-     * Subscribes to the event with the specified name.
-     * @param name The name of the event.
-     * @param fn The event handler.
-     */
-    EventHandlingBase.prototype.sub = function (name, fn) {
-        this.subscribe(name, fn);
-    };
-    /**
-     * Unsubscribes from the event with the specified name.
-     * @param name The name of the event.
-     * @param fn The event handler.
-     */
-    EventHandlingBase.prototype.unsubscribe = function (name, fn) {
-        this._events.get(name).unsubscribe(fn);
-    };
-    /**
-     * Unsubscribes from the event with the specified name.
-     * @param name The name of the event.
-     * @param fn The event handler.
-     */
-    EventHandlingBase.prototype.unsub = function (name, fn) {
-        this.unsubscribe(name, fn);
-    };
-    /**
-     * Subscribes to once the event with the specified name.
-     * @param name The name of the event.
-     * @param fn The event handler.
-     */
-    EventHandlingBase.prototype.one = function (name, fn) {
-        this._events.get(name).one(fn);
-    };
-    /**
-     * Subscribes to once the event with the specified name.
-     * @param name The name of the event.
-     * @param fn The event handler.
-     */
-    EventHandlingBase.prototype.has = function (name, fn) {
-        return this._events.get(name).has(fn);
-    };
-    return EventHandlingBase;
-}());
-exports.EventHandlingBase = EventHandlingBase;
-
-
-/***/ }),
-
-/***/ "../node_modules/ste-events/dist/index.js":
-/*!************************************************!*\
-  !*** ../node_modules/ste-events/dist/index.js ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var events_1 = __webpack_require__(/*! ./events */ "../node_modules/ste-events/dist/events.js");
-exports.EventDispatcher = events_1.EventDispatcher;
-exports.EventHandlingBase = events_1.EventHandlingBase;
-exports.EventList = events_1.EventList;
-
-
-/***/ }),
-
-/***/ "../node_modules/ste-signals/dist/index.js":
-/*!*************************************************!*\
-  !*** ../node_modules/ste-signals/dist/index.js ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var signals_1 = __webpack_require__(/*! ./signals */ "../node_modules/ste-signals/dist/signals.js");
-exports.SignalDispatcher = signals_1.SignalDispatcher;
-exports.SignalHandlingBase = signals_1.SignalHandlingBase;
-exports.SignalList = signals_1.SignalList;
-
-
-/***/ }),
-
-/***/ "../node_modules/ste-signals/dist/signals.js":
-/*!***************************************************!*\
-  !*** ../node_modules/ste-signals/dist/signals.js ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var ste_core_1 = __webpack_require__(/*! ste-core */ "../node_modules/ste-core/dist/index.js");
-/**
- * The dispatcher handles the storage of subsciptions and facilitates
- * subscription, unsubscription and dispatching of a signal event.
- */
-var SignalDispatcher = /** @class */ (function (_super) {
-    __extends(SignalDispatcher, _super);
-    /**
-     * Creates a new SignalDispatcher instance.
-     */
-    function SignalDispatcher() {
-        return _super.call(this) || this;
-    }
-    /**
-     * Dispatches the signal.
-     */
-    SignalDispatcher.prototype.dispatch = function () {
-        this._dispatch(false, this, arguments);
-    };
-    /**
-     * Dispatches the signal threaded.
-     */
-    SignalDispatcher.prototype.dispatchAsync = function () {
-        this._dispatch(true, this, arguments);
-    };
-    /**
-     * Creates an event from the dispatcher. Will return the dispatcher
-     * in a wrapper. This will prevent exposure of any dispatcher methods.
-     */
-    SignalDispatcher.prototype.asEvent = function () {
-        return _super.prototype.asEvent.call(this);
-    };
-    return SignalDispatcher;
-}(ste_core_1.DispatcherBase));
-exports.SignalDispatcher = SignalDispatcher;
-/**
- * Storage class for multiple signal events that are accessible by name.
- * Events dispatchers are automatically created.
- */
-var SignalList = /** @class */ (function (_super) {
-    __extends(SignalList, _super);
-    /**
-     * Creates a new SignalList instance.
-     */
-    function SignalList() {
-        return _super.call(this) || this;
-    }
-    /**
-     * Creates a new dispatcher instance.
-     */
-    SignalList.prototype.createDispatcher = function () {
-        return new SignalDispatcher();
-    };
-    return SignalList;
-}(ste_core_1.EventListBase));
-exports.SignalList = SignalList;
-/**
- * Extends objects with signal event handling capabilities.
- */
-var SignalHandlingBase = /** @class */ (function () {
-    function SignalHandlingBase() {
-        this._events = new SignalList();
-    }
-    Object.defineProperty(SignalHandlingBase.prototype, "events", {
-        get: function () {
-            return this._events;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    /**
-     * Subscribes once to the event with the specified name.
-     * @param name The name of the event.
-     * @param fn The event handler.
-     */
-    SignalHandlingBase.prototype.one = function (name, fn) {
-        this._events.get(name).one(fn);
-    };
-    /**
-     * Checks it the event has a subscription for the specified handler.
-     * @param name The name of the event.
-     * @param fn The event handler.
-     */
-    SignalHandlingBase.prototype.has = function (name, fn) {
-        return this._events.get(name).has(fn);
-    };
-    /**
-     * Subscribes to the event with the specified name.
-     * @param name The name of the event.
-     * @param fn The event handler.
-     */
-    SignalHandlingBase.prototype.subscribe = function (name, fn) {
-        this._events.get(name).subscribe(fn);
-    };
-    /**
-     * Subscribes to the event with the specified name.
-     * @param name The name of the event.
-     * @param fn The event handler.
-     */
-    SignalHandlingBase.prototype.sub = function (name, fn) {
-        this.subscribe(name, fn);
-    };
-    /**
-     * Unsubscribes from the event with the specified name.
-     * @param name The name of the event.
-     * @param fn The event handler.
-     */
-    SignalHandlingBase.prototype.unsubscribe = function (name, fn) {
-        this._events.get(name).unsubscribe(fn);
-    };
-    /**
-     * Unsubscribes from the event with the specified name.
-     * @param name The name of the event.
-     * @param fn The event handler.
-     */
-    SignalHandlingBase.prototype.unsub = function (name, fn) {
-        this.unsubscribe(name, fn);
-    };
-    return SignalHandlingBase;
-}());
-exports.SignalHandlingBase = SignalHandlingBase;
-
-
-/***/ }),
-
 /***/ "../node_modules/ste-simple-events/dist/index.js":
 /*!*******************************************************!*\
   !*** ../node_modules/ste-simple-events/dist/index.js ***!
@@ -18647,45 +18308,6 @@ var SimpleEventHandlingBase = /** @class */ (function () {
     return SimpleEventHandlingBase;
 }());
 exports.SimpleEventHandlingBase = SimpleEventHandlingBase;
-
-
-/***/ }),
-
-/***/ "../node_modules/strongly-typed-events/dist/index.js":
-/*!***********************************************************!*\
-  !*** ../node_modules/strongly-typed-events/dist/index.js ***!
-  \***********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Strongly Typed Events for TypeScript
- * https://github.com/KeesCBakker/StronlyTypedEvents/
- * http://keestalkstech.com
- *
- * Copyright Kees C. Bakker / KeesTalksTech
- * Released under the MIT license
- */
-Object.defineProperty(exports, "__esModule", { value: true });
-var ste_core_1 = __webpack_require__(/*! ste-core */ "../node_modules/ste-core/dist/index.js");
-exports.DispatcherBase = ste_core_1.DispatcherBase;
-exports.DispatcherWrapper = ste_core_1.DispatcherWrapper;
-exports.EventListBase = ste_core_1.EventListBase;
-exports.Subscription = ste_core_1.Subscription;
-var ste_events_1 = __webpack_require__(/*! ste-events */ "../node_modules/ste-events/dist/index.js");
-exports.EventDispatcher = ste_events_1.EventDispatcher;
-exports.EventHandlingBase = ste_events_1.EventHandlingBase;
-exports.EventList = ste_events_1.EventList;
-var ste_simple_events_1 = __webpack_require__(/*! ste-simple-events */ "../node_modules/ste-simple-events/dist/index.js");
-exports.SimpleEventDispatcher = ste_simple_events_1.SimpleEventDispatcher;
-exports.SimpleEventHandlingBase = ste_simple_events_1.SimpleEventHandlingBase;
-exports.SimpleEventList = ste_simple_events_1.SimpleEventList;
-var ste_signals_1 = __webpack_require__(/*! ste-signals */ "../node_modules/ste-signals/dist/index.js");
-exports.SignalDispatcher = ste_signals_1.SignalDispatcher;
-exports.SignalHandlingBase = ste_signals_1.SignalHandlingBase;
-exports.SignalList = ste_signals_1.SignalList;
 
 
 /***/ }),
@@ -19156,6 +18778,13 @@ class MainModel {
         this.e_AddTimeLine = new ste_simple_events_1.SimpleEventDispatcher();
         this.e_RemoveTimeLine = new ste_simple_events_1.SimpleEventDispatcher();
     }
+    static getInstance() {
+        if (!MainModel.instance) {
+            MainModel.instance = new MainModel();
+            // ... any one time initialization goes here ...
+        }
+        return MainModel.instance;
+    }
     Add(model) {
         let rt = this.models.push(model);
         this.e_AddTimeLine.dispatch(model);
@@ -19205,25 +18834,30 @@ exports.MainModel = MainModel;
 
 "use strict";
 
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+const TimeLineModel_1 = __webpack_require__(/*! ./TimeLineModel */ "./src/TimeLineModel.ts");
 const TLEvent_1 = __webpack_require__(/*! ./TLEvent */ "./src/TLEvent.ts");
-const MainModel_1 = __webpack_require__(/*! ./MainModel */ "./src/MainModel.ts");
-const strongly_typed_events_1 = __webpack_require__(/*! strongly-typed-events */ "../node_modules/strongly-typed-events/dist/index.js");
+const ApiClient_1 = __webpack_require__(/*! ./ApiClient */ "./src/ApiClient.ts");
+const TlistView_1 = __webpack_require__(/*! ./TlistView */ "./src/TlistView.ts");
+const BoxView_1 = __webpack_require__(/*! ./BoxView */ "./src/BoxView.ts");
+const EditStringView_1 = __webpack_require__(/*! ./EditStringView */ "./src/EditStringView.ts");
 class MainPresenter {
-    // ! свойство Period
-    // ****************** ! Свойства ********************************
-    constructor(view) {
-        // ****************** События ***********************************
-        this.e_ChangePeriod = new strongly_typed_events_1.SimpleEventDispatcher();
-        // ******************* ! События ********************************
+    constructor(view, model) {
         // ******************* Свойства *********************************
         // свойство Period
         this.m_Period = TLEvent_1.EnumPeriod.day;
-        this.model = new MainModel_1.MainModel();
+        this.model = model;
         this.view = view;
-    }
-    get evChangePeriod() {
-        return this.e_ChangePeriod.asEvent();
+        this.model.evAddTimeLine.subscribe((tl) => {
+        });
     }
     get Period() {
         return this.m_Period;
@@ -19231,8 +18865,40 @@ class MainPresenter {
     set Period(value) {
         if (this.m_Period !== value) {
             this.m_Period = value;
-            this.e_ChangePeriod.dispatch(value);
+            this.view.ViewChangePeriod(value);
         }
+    }
+    // ! свойство Period
+    // ****************** ! Свойства ********************************
+    OpenNewTLDialog() {
+        let view = new EditStringView_1.EditStringView('');
+        view.Show()
+            .then((value) => __awaiter(this, void 0, void 0, function* () {
+            if (value) {
+                //await new BoxView(value).Show()
+                this.model.Add(TimeLineModel_1.TimeLineModel.CreateTimeLineModel());
+            }
+        }));
+    }
+    OpenLoadTLDialog() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let value = yield ApiClient_1.ApiClient.getInstance().GetUsersList();
+                let view = new TlistView_1.TlistView(value);
+                view.ShowDialog()
+                    .then((value) => __awaiter(this, void 0, void 0, function* () {
+                    yield new BoxView_1.BoxView(value.Name).Show();
+                }))
+                    .catch(() => { });
+            }
+            catch (err) {
+                yield new BoxView_1.BoxView(err).Show();
+            }
+        });
+    }
+    SaveCurrentTL() {
+        return __awaiter(this, void 0, void 0, function* () {
+        });
     }
 }
 exports.MainPresenter = MainPresenter;
@@ -19266,77 +18932,50 @@ const LoginModel_1 = __webpack_require__(/*! ./LoginModel */ "./src/LoginModel.t
 const RegisterModel_1 = __webpack_require__(/*! ./RegisterModel */ "./src/RegisterModel.ts");
 const RegisterView_1 = __webpack_require__(/*! ./RegisterView */ "./src/RegisterView.ts");
 const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
-const TlistView_1 = __webpack_require__(/*! ./TlistView */ "./src/TlistView.ts");
 const ApiClient_1 = __webpack_require__(/*! ./ApiClient */ "./src/ApiClient.ts");
 const BoxView_1 = __webpack_require__(/*! ./BoxView */ "./src/BoxView.ts");
-const EditStringView_1 = __webpack_require__(/*! ./EditStringView */ "./src/EditStringView.ts");
 const MyContextMenu_1 = __webpack_require__(/*! ./MyContextMenu */ "./src/MyContextMenu.ts");
 class MainView {
-    constructor() {
+    constructor(model) {
+        this.Presenter = new MainPresenter_1.MainPresenter(this, model);
         this.menuCtx = MyContextMenu_1.MyContextMenu.Create();
         this.menuCtx.evSelect.subscribe((s) => {
             switch (s) {
                 case 'new':
-                    this.OpenNewTLDialog();
+                    this.Presenter.OpenNewTLDialog();
                     break;
                 case 'load':
-                    this.OpenLoadTLDialog();
+                    this.Presenter.OpenLoadTLDialog();
                     break;
                 case 'save':
-                    this.SaveCurrentTL();
+                    this.Presenter.SaveCurrentTL();
                     break;
                 case 'switch_to_day':
-                    MyContextMenu_1.MyContextMenu.ChangeIconMenuPeriod(TLEvent_1.EnumPeriod.day);
+                    this.Presenter.Period = TLEvent_1.EnumPeriod.day;
                     break;
                 case 'switch_to_month':
-                    MyContextMenu_1.MyContextMenu.ChangeIconMenuPeriod(TLEvent_1.EnumPeriod.month);
+                    this.Presenter.Period = TLEvent_1.EnumPeriod.month;
                     break;
                 case 'switch_to_year':
-                    MyContextMenu_1.MyContextMenu.ChangeIconMenuPeriod(TLEvent_1.EnumPeriod.year);
+                    this.Presenter.Period = TLEvent_1.EnumPeriod.year;
                     break;
                 case 'switch_to_decade':
-                    MyContextMenu_1.MyContextMenu.ChangeIconMenuPeriod(TLEvent_1.EnumPeriod.decade);
+                    this.Presenter.Period = TLEvent_1.EnumPeriod.decade;
                     break;
                 case 'switch_to_century':
-                    MyContextMenu_1.MyContextMenu.ChangeIconMenuPeriod(TLEvent_1.EnumPeriod.century);
+                    this.Presenter.Period = TLEvent_1.EnumPeriod.century;
                     break;
             }
         });
-        MyContextMenu_1.MyContextMenu.ChangeIconMenuPeriod(TLEvent_1.EnumPeriod.day);
-        this.Presenter = new MainPresenter_1.MainPresenter(this);
-        //this.Presenter.evChangePeriod.subscribe((period) => {
-        //  MyContextMenu.ChangeIconMenuPeriod(period)
-        //})
+        this.Presenter.Period = TLEvent_1.EnumPeriod.day;
+        this.Draw();
+    }
+    ViewChangePeriod(period) {
+        MyContextMenu_1.MyContextMenu.ChangeIconMenuPeriod(period);
+        this.Draw();
     }
     // отрисовка Линий Времени 
     Draw() {
-    }
-    OpenNewTLDialog() {
-        let view = new EditStringView_1.EditStringView('');
-        view.Show()
-            .then((value) => __awaiter(this, void 0, void 0, function* () {
-            if (value) {
-                yield new BoxView_1.BoxView(value).Show();
-            }
-        }));
-    }
-    OpenLoadTLDialog() {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                let value = yield ApiClient_1.ApiClient.getInstance().GetUsersList();
-                let view = new TlistView_1.TlistView(value);
-                view.ShowDialog()
-                    .then((value) => __awaiter(this, void 0, void 0, function* () {
-                    yield new BoxView_1.BoxView(value.Name).Show();
-                }))
-                    .catch(() => { });
-            }
-            catch (err) {
-                yield new BoxView_1.BoxView(err).Show();
-            }
-        });
-    }
-    SaveCurrentTL() {
     }
     OnResizeWindow(width, height) {
         this.Draw();
@@ -21071,8 +20710,9 @@ function romanize(num) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const MainView_1 = __webpack_require__(/*! ./MainView */ "./src/MainView.ts");
 __webpack_require__(/*! bootstrap */ "../node_modules/bootstrap/dist/js/bootstrap.js");
+const MainModel_1 = __webpack_require__(/*! ./MainModel */ "./src/MainModel.ts");
 (function main() {
-    let mainView = new MainView_1.MainView();
+    let mainView = new MainView_1.MainView(MainModel_1.MainModel.getInstance());
     (window.onresize = () => {
         mainView.OnResizeWindow(window.innerWidth, window.innerHeight);
     })();

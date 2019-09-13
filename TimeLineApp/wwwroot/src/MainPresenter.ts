@@ -8,10 +8,13 @@ import { ApiClient } from "./ApiClient";
 import { TlistView } from "./TlistView";
 import { BoxView } from "./BoxView";
 import { EditStringView } from "./EditStringView";
+import { ContextMenu } from "./contextmenu";
+import { MyContextMenu } from "./MyContextMenu";
 
 export class MainPresenter {
   private model: MainModel
   private view: MainView
+  private menuCtx: ContextMenu
 
   // ******************* Свойства *********************************
 
@@ -23,7 +26,7 @@ export class MainPresenter {
   public set Period(value: EnumPeriod) {
     if (this.m_Period !== value) {
       this.m_Period = value
-      this.view.ViewChangePeriod(value)
+      this.ViewChangePeriod(value)
     }
   }
   // ! свойство Period
@@ -59,11 +62,59 @@ export class MainPresenter {
 
   }
 
+  public OnContextMenu(e: MouseEvent) {
+    this.menuCtx.reload()
+    this.menuCtx.display(e)
+  }
+
+  public get Count(): number {
+    return this.model.Count
+  }
+
+  public Item(i: number): TimeLineModel {
+    return this.model.Item(i)
+  }
+
   constructor(view: MainView, model: MainModel) {
     this.model = model
     this.view = view
+    this.menuCtx = MyContextMenu.Create()
+    this.menuCtx.evSelect.subscribe((s) => {
+      switch (s) {
+        case 'new':
+          this.OpenNewTLDialog()
+          break;
+        case 'load':
+          this.OpenLoadTLDialog()
+          break;
+        case 'save':
+          this.SaveCurrentTL()
+          break;
+        case 'switch_to_day':
+          this.Period = EnumPeriod.day
+          break;
+        case 'switch_to_month':
+          this.Period = EnumPeriod.month
+          break;
+        case 'switch_to_year':
+          this.Period = EnumPeriod.year
+          break;
+        case 'switch_to_decade':
+          this.Period = EnumPeriod.decade
+          break;
+        case 'switch_to_century':
+          this.Period = EnumPeriod.century
+          break;
+      }
+    })
+    this.Period = EnumPeriod.day
     this.model.evAddTimeLine.subscribe((tl) => {
 
     })
+  }
+
+  private ViewChangePeriod(period: EnumPeriod) {
+    MyContextMenu.ChangeIconMenuPeriod(period)
+    this.view.Draw()
   }
 }
