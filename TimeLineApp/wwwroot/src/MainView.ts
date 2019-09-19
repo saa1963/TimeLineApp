@@ -14,6 +14,7 @@ import { BoxView } from "./BoxView";
 import { EditStringView } from "./EditStringView";
 import { MyContextMenu } from "./MyContextMenu";
 import { MainModel } from "./MainModel";
+import { TimeLineModel } from "./TimeLineModel";
 
 export class MainView {
   // private свойства
@@ -32,7 +33,9 @@ export class MainView {
     }
   }
 
-  private DrawTimeLine(tl: TimeLineModel)
+  private DrawTimeLine(tl: TimeLineModel) {
+
+  }
 
   public OnResizeWindow(width: number, height: number) {
     this.Draw()
