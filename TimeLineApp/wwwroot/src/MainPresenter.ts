@@ -10,6 +10,11 @@ import { BoxView } from "./BoxView";
 import { EditStringView } from "./EditStringView";
 import { ContextMenu } from "./contextmenu";
 import { MyContextMenu } from "./MyContextMenu";
+import { Globals } from "./Globals";
+import { LoginModel } from "./LoginModel";
+import { LoginView } from "./LoginView";
+import { RegisterModel } from "./RegisterModel";
+import { RegisterView } from "./RegisterView";
 
 export class MainPresenter {
   private model: MainModel
@@ -115,6 +120,43 @@ export class MainPresenter {
 
   private ViewChangePeriod(period: EnumPeriod) {
     MyContextMenu.ChangeIconMenuPeriod(period)
-    this.view.Draw()
+    this.Draw()
+  }
+
+  public Draw() {
+    this.view.ClearContent()
+    for (let i = 0; i < this.Count; i++) {
+      this.DrawTL(this.Item(i))
+    }
+  }
+
+  private DrawTL(model: TimeLineModel) {
+    
+  }
+
+  public async OnLogin(): Promise<string> {
+    if (!Globals.IsAuthentificated) {
+      let loginModel = new LoginModel(Globals.getCookie('timelineuser') || '')
+      let loginView = new LoginView(loginModel)
+      if (await loginView.ShowDialog()) {
+        Globals.IsAuthentificated = true
+        return loginModel.Login
+      } else {
+        return null
+      }
+    } else {
+      if (await ApiClient.getInstance().DoLogout()) {
+        Globals.IsAuthentificated = false
+        return null
+      }
+    }
+  }
+
+  public async OnRegister() {
+    let regModel = new RegisterModel('', '')
+    let regView = new RegisterView(regModel)
+    if (await regView.ShowDialog()) {
+      await new BoxView(`Пользователь ${regModel.Login} успешно зарегистрирован`).Show()
+    }
   }
 }

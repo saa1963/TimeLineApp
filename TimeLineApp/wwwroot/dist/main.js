@@ -18849,6 +18849,12 @@ const ApiClient_1 = __webpack_require__(/*! ./ApiClient */ "./src/ApiClient.ts")
 const TlistView_1 = __webpack_require__(/*! ./TlistView */ "./src/TlistView.ts");
 const BoxView_1 = __webpack_require__(/*! ./BoxView */ "./src/BoxView.ts");
 const EditStringView_1 = __webpack_require__(/*! ./EditStringView */ "./src/EditStringView.ts");
+const MyContextMenu_1 = __webpack_require__(/*! ./MyContextMenu */ "./src/MyContextMenu.ts");
+const Globals_1 = __webpack_require__(/*! ./Globals */ "./src/Globals.ts");
+const LoginModel_1 = __webpack_require__(/*! ./LoginModel */ "./src/LoginModel.ts");
+const LoginView_1 = __webpack_require__(/*! ./LoginView */ "./src/LoginView.ts");
+const RegisterModel_1 = __webpack_require__(/*! ./RegisterModel */ "./src/RegisterModel.ts");
+const RegisterView_1 = __webpack_require__(/*! ./RegisterView */ "./src/RegisterView.ts");
 class MainPresenter {
     constructor(view, model) {
         // ******************* Свойства *********************************
@@ -18856,6 +18862,36 @@ class MainPresenter {
         this.m_Period = TLEvent_1.EnumPeriod.day;
         this.model = model;
         this.view = view;
+        this.menuCtx = MyContextMenu_1.MyContextMenu.Create();
+        this.menuCtx.evSelect.subscribe((s) => {
+            switch (s) {
+                case 'new':
+                    this.OpenNewTLDialog();
+                    break;
+                case 'load':
+                    this.OpenLoadTLDialog();
+                    break;
+                case 'save':
+                    this.SaveCurrentTL();
+                    break;
+                case 'switch_to_day':
+                    this.Period = TLEvent_1.EnumPeriod.day;
+                    break;
+                case 'switch_to_month':
+                    this.Period = TLEvent_1.EnumPeriod.month;
+                    break;
+                case 'switch_to_year':
+                    this.Period = TLEvent_1.EnumPeriod.year;
+                    break;
+                case 'switch_to_decade':
+                    this.Period = TLEvent_1.EnumPeriod.decade;
+                    break;
+                case 'switch_to_century':
+                    this.Period = TLEvent_1.EnumPeriod.century;
+                    break;
+            }
+        });
+        this.Period = TLEvent_1.EnumPeriod.day;
         this.model.evAddTimeLine.subscribe((tl) => {
         });
     }
@@ -18865,7 +18901,7 @@ class MainPresenter {
     set Period(value) {
         if (this.m_Period !== value) {
             this.m_Period = value;
-            this.view.ViewChangePeriod(value);
+            this.ViewChangePeriod(value);
         }
     }
     // ! свойство Period
@@ -18900,6 +18936,58 @@ class MainPresenter {
         return __awaiter(this, void 0, void 0, function* () {
         });
     }
+    OnContextMenu(e) {
+        this.menuCtx.reload();
+        this.menuCtx.display(e);
+    }
+    get Count() {
+        return this.model.Count;
+    }
+    Item(i) {
+        return this.model.Item(i);
+    }
+    ViewChangePeriod(period) {
+        MyContextMenu_1.MyContextMenu.ChangeIconMenuPeriod(period);
+        this.Draw();
+    }
+    Draw() {
+        this.view.ClearContent();
+        for (let i = 0; i < this.Count; i++) {
+            this.DrawTL(this.Item(i));
+        }
+    }
+    DrawTL(model) {
+    }
+    OnLogin() {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!Globals_1.Globals.IsAuthentificated) {
+                let loginModel = new LoginModel_1.LoginModel(Globals_1.Globals.getCookie('timelineuser') || '');
+                let loginView = new LoginView_1.LoginView(loginModel);
+                if (yield loginView.ShowDialog()) {
+                    Globals_1.Globals.IsAuthentificated = true;
+                    return loginModel.Login;
+                }
+                else {
+                    return null;
+                }
+            }
+            else {
+                if (yield ApiClient_1.ApiClient.getInstance().DoLogout()) {
+                    Globals_1.Globals.IsAuthentificated = false;
+                    return null;
+                }
+            }
+        });
+    }
+    OnRegister() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let regModel = new RegisterModel_1.RegisterModel('', '');
+            let regView = new RegisterView_1.RegisterView(regModel);
+            if (yield regView.ShowDialog()) {
+                yield new BoxView_1.BoxView(`Пользователь ${regModel.Login} успешно зарегистрирован`).Show();
+            }
+        });
+    }
 }
 exports.MainPresenter = MainPresenter;
 
@@ -18925,104 +19013,45 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const MainPresenter_1 = __webpack_require__(/*! ./MainPresenter */ "./src/MainPresenter.ts");
-const TLEvent_1 = __webpack_require__(/*! ./TLEvent */ "./src/TLEvent.ts");
-const LoginView_1 = __webpack_require__(/*! ./LoginView */ "./src/LoginView.ts");
-const Globals_1 = __webpack_require__(/*! ./Globals */ "./src/Globals.ts");
-const LoginModel_1 = __webpack_require__(/*! ./LoginModel */ "./src/LoginModel.ts");
-const RegisterModel_1 = __webpack_require__(/*! ./RegisterModel */ "./src/RegisterModel.ts");
-const RegisterView_1 = __webpack_require__(/*! ./RegisterView */ "./src/RegisterView.ts");
 const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
-const ApiClient_1 = __webpack_require__(/*! ./ApiClient */ "./src/ApiClient.ts");
-const BoxView_1 = __webpack_require__(/*! ./BoxView */ "./src/BoxView.ts");
-const MyContextMenu_1 = __webpack_require__(/*! ./MyContextMenu */ "./src/MyContextMenu.ts");
 class MainView {
     constructor(model) {
         this.Presenter = new MainPresenter_1.MainPresenter(this, model);
-        this.menuCtx = MyContextMenu_1.MyContextMenu.Create();
-        this.menuCtx.evSelect.subscribe((s) => {
-            switch (s) {
-                case 'new':
-                    this.Presenter.OpenNewTLDialog();
-                    break;
-                case 'load':
-                    this.Presenter.OpenLoadTLDialog();
-                    break;
-                case 'save':
-                    this.Presenter.SaveCurrentTL();
-                    break;
-                case 'switch_to_day':
-                    this.Presenter.Period = TLEvent_1.EnumPeriod.day;
-                    break;
-                case 'switch_to_month':
-                    this.Presenter.Period = TLEvent_1.EnumPeriod.month;
-                    break;
-                case 'switch_to_year':
-                    this.Presenter.Period = TLEvent_1.EnumPeriod.year;
-                    break;
-                case 'switch_to_decade':
-                    this.Presenter.Period = TLEvent_1.EnumPeriod.decade;
-                    break;
-                case 'switch_to_century':
-                    this.Presenter.Period = TLEvent_1.EnumPeriod.century;
-                    break;
-            }
-        });
-        this.Presenter.Period = TLEvent_1.EnumPeriod.day;
-        this.Draw();
-    }
-    ViewChangePeriod(period) {
-        MyContextMenu_1.MyContextMenu.ChangeIconMenuPeriod(period);
-        this.Draw();
-    }
-    // отрисовка Линий Времени 
-    Draw() {
     }
     OnResizeWindow(width, height) {
-        this.Draw();
-    }
-    OnContextMenu(e) {
-        this.menuCtx.reload();
-        this.menuCtx.display(e);
+        this.Presenter.Draw();
     }
     OnLogin() {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!Globals_1.Globals.IsAuthentificated) {
-                let loginModel = new LoginModel_1.LoginModel(Globals_1.Globals.getCookie('timelineuser') || '');
-                let loginView = new LoginView_1.LoginView(loginModel);
-                if (yield loginView.ShowDialog()) {
-                    Globals_1.Globals.IsAuthentificated = true;
-                    this.SetUserLabel(loginModel.Login);
-                }
+            let login = yield this.Presenter.OnLogin();
+            if (login) {
+                this.SetUserLabel(login);
             }
             else {
-                if (yield ApiClient_1.ApiClient.getInstance().DoLogout()) {
-                    Globals_1.Globals.IsAuthentificated = false;
-                    MainView.ClearUserLabel();
-                }
+                this.ClearUserLabel();
             }
         });
+    }
+    ClearContent() {
+        $('#tls').empty();
     }
     SetUserLabel(user) {
         $('#lblUser').text(user);
         $('#lblUser').css('display', 'unset');
         $('#btnLogin').text('Выход');
     }
-    static ClearUserLabel() {
+    ClearUserLabel() {
         $('#lblUser').css('display', 'none');
         $('#btnLogin').text('Вход');
     }
     OnRegister() {
         return __awaiter(this, void 0, void 0, function* () {
-            let regModel = new RegisterModel_1.RegisterModel('', '');
-            let regView = new RegisterView_1.RegisterView(regModel);
-            if (yield regView.ShowDialog()) {
-                yield new BoxView_1.BoxView(`Пользователь ${regModel.Login} успешно зарегистрирован`).Show();
-            }
+            yield this.Presenter.OnRegister();
         });
     }
     handleEvent(event) {
         if (event.type === 'contextmenu') {
-            this.OnContextMenu(event);
+            this.Presenter.OnContextMenu(event);
             event.preventDefault();
         }
     }
