@@ -43,6 +43,14 @@ export class MainView {
     await this.Presenter.OnRegister()
   }
 
+  public OnNewTL() {
+    this.Presenter.OpenNewTLDialog()
+  }
+
+  public OnOpenTL() {
+    this.Presenter.OpenLoadTLDialog()
+  }
+
   public handleEvent(event: Event) {
     if (event.type === 'contextmenu') {
       this.Presenter.OnContextMenu(<MouseEvent>event)

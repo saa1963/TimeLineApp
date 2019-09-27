@@ -19049,6 +19049,12 @@ class MainView {
             yield this.Presenter.OnRegister();
         });
     }
+    OnNewTL() {
+        this.Presenter.OpenNewTLDialog();
+    }
+    OnOpenTL() {
+        this.Presenter.OpenLoadTLDialog();
+    }
     handleEvent(event) {
         if (event.type === 'contextmenu') {
             this.Presenter.OnContextMenu(event);
@@ -20751,6 +20757,12 @@ const MainModel_1 = __webpack_require__(/*! ./MainModel */ "./src/MainModel.ts")
     };
     document.getElementById('btnReg').onclick = () => {
         mainView.OnRegister();
+    };
+    document.getElementById('newTimeline').onclick = () => {
+        mainView.OnNewTL();
+    };
+    document.getElementById('load').onclick = () => {
+        mainView.OnOpenTL();
     };
 })();
 

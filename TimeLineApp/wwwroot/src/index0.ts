@@ -14,4 +14,10 @@ import { MainModel } from "./MainModel";
   document.getElementById('btnReg').onclick = () => {
     mainView.OnRegister()
   }
+  document.getElementById('newTimeline').onclick = () => {
+    mainView.OnNewTL()
+  }
+  document.getElementById('load').onclick = () => {
+    mainView.OnOpenTL()
+  }
 })()
