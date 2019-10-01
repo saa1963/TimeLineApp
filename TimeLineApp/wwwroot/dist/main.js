@@ -18773,7 +18773,10 @@ exports.LoginView = LoginView;
 Object.defineProperty(exports, "__esModule", { value: true });
 const ste_simple_events_1 = __webpack_require__(/*! ste-simple-events */ "../node_modules/ste-simple-events/dist/index.js");
 class MainModel {
+    //private mainLine: number[] = new Array(30)
     constructor() {
+        //let dt = new Date()
+        //let cur = DateUtils.DaysFromAD(dt.getFullYear(), dt.getMonth(), dt.getDate())
         this.models = [];
         this.e_AddTimeLine = new ste_simple_events_1.SimpleEventDispatcher();
         this.e_RemoveTimeLine = new ste_simple_events_1.SimpleEventDispatcher();
@@ -18855,8 +18858,10 @@ const LoginModel_1 = __webpack_require__(/*! ./LoginModel */ "./src/LoginModel.t
 const LoginView_1 = __webpack_require__(/*! ./LoginView */ "./src/LoginView.ts");
 const RegisterModel_1 = __webpack_require__(/*! ./RegisterModel */ "./src/RegisterModel.ts");
 const RegisterView_1 = __webpack_require__(/*! ./RegisterView */ "./src/RegisterView.ts");
+const dateutils_1 = __webpack_require__(/*! ./dateutils */ "./src/dateutils.ts");
 class MainPresenter {
     constructor(view, model) {
+        this.mainLine = new Array(30);
         // ******************* Свойства *********************************
         // свойство Period
         this.m_Period = TLEvent_1.EnumPeriod.day;
@@ -18894,6 +18899,11 @@ class MainPresenter {
         this.Period = TLEvent_1.EnumPeriod.day;
         this.model.evAddTimeLine.subscribe((tl) => {
         });
+        let dt = new Date();
+        let cur = dateutils_1.DateUtils.DaysFromAD(dt.getFullYear(), dt.getMonth(), dt.getDate());
+        for (let i = 0; i < this.mainLine.length; ++i) {
+            this.mainLine[i] = cur - Math.floor(this.mainLine.length / 2) + i;
+        }
     }
     get Period() {
         return this.m_Period;
@@ -18952,9 +18962,33 @@ class MainPresenter {
     }
     Draw() {
         this.view.ClearContent();
+        this.view.DrawDates(this.GetDrawDates());
         for (let i = 0; i < this.Count; i++) {
             this.DrawTL(this.Item(i));
         }
+    }
+    GetDrawDates() {
+        let dates = [];
+        for (let i = 0; i < this.mainLine.length; ++i) {
+            switch (this.Period) {
+                case TLEvent_1.EnumPeriod.day:
+                    dates.push(dateutils_1.DateUtils.formatDate(this.mainLine[i]));
+                    break;
+                case TLEvent_1.EnumPeriod.month:
+                    dates.push(dateutils_1.DateUtils.formatMonth(this.mainLine[i]));
+                    break;
+                case TLEvent_1.EnumPeriod.year:
+                    dates.push(dateutils_1.DateUtils.formatYear(this.mainLine[i]));
+                    break;
+                case TLEvent_1.EnumPeriod.decade:
+                    dates.push(dateutils_1.DateUtils.formatDecade(this.mainLine[i]));
+                    break;
+                case TLEvent_1.EnumPeriod.century:
+                    dates.push(dateutils_1.DateUtils.formatCentury(this.mainLine[i]));
+                    break;
+            }
+        }
+        return dates;
     }
     DrawTL(model) {
     }
@@ -19048,6 +19082,12 @@ class MainView {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.Presenter.OnRegister();
         });
+    }
+    DrawDates(dates) {
+        let tr = $('#tls').append('<table></table>').append('<tr class="date"></tr>');
+        for (let i = 0; i < dates.length; ++i) {
+            tr.append(`<td>${dates[i]}</td>`);
+        }
     }
     OnNewTL() {
         this.Presenter.OpenNewTLDialog();

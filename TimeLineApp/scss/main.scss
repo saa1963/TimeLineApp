@@ -57,4 +57,26 @@ canvas {
     }
 }
 
+table {
+    background-color: cornflowerblue
+}
+
+.date {
+    background-color: bisque
+}
+
+.date td {
+    padding: 2px
+}
+
+.hidden_cell {
+    background-color: cornflowerblue
+}
+
+.tl_head {
+    background-color: brown;
+    color: aliceblue;
+    padding: 2px
+}
+
 /* To remove the scrollbars */

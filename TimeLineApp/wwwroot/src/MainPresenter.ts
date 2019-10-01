@@ -15,11 +15,13 @@ import { LoginModel } from "./LoginModel";
 import { LoginView } from "./LoginView";
 import { RegisterModel } from "./RegisterModel";
 import { RegisterView } from "./RegisterView";
+import { DateUtils } from "./dateutils";
 
 export class MainPresenter {
   private model: MainModel
   private view: MainView
   private menuCtx: ContextMenu
+  private mainLine: number[] = new Array(30)
 
   // ******************* Свойства *********************************
 
@@ -116,6 +118,11 @@ export class MainPresenter {
     this.model.evAddTimeLine.subscribe((tl) => {
 
     })
+    let dt = new Date()
+    let cur = DateUtils.DaysFromAD(dt.getFullYear(), dt.getMonth(), dt.getDate())
+    for (let i = 0; i < this.mainLine.length; ++i) {
+      this.mainLine[i] = cur - Math.floor(this.mainLine.length / 2) + i
+    }
   }
 
   private ViewChangePeriod(period: EnumPeriod) {
@@ -125,9 +132,34 @@ export class MainPresenter {
 
   public Draw() {
     this.view.ClearContent()
+    this.view.DrawDates(this.GetDrawDates())
     for (let i = 0; i < this.Count; i++) {
       this.DrawTL(this.Item(i))
     }
+  }
+
+  private GetDrawDates(): string[] {
+    let dates: string[] = []
+    for (let i = 0; i < this.mainLine.length; ++i) {
+      switch (this.Period) {
+        case EnumPeriod.day:
+          dates.push(DateUtils.formatDate(this.mainLine[i]))
+          break
+        case EnumPeriod.month:
+          dates.push(DateUtils.formatMonth(this.mainLine[i]))
+          break
+        case EnumPeriod.year:
+          dates.push(DateUtils.formatYear(this.mainLine[i]))
+          break
+        case EnumPeriod.decade:
+          dates.push(DateUtils.formatDecade(this.mainLine[i]))
+          break
+        case EnumPeriod.century:
+          dates.push(DateUtils.formatCentury(this.mainLine[i]))
+          break
+      }
+    }
+    return dates
   }
 
   private DrawTL(model: TimeLineModel) {

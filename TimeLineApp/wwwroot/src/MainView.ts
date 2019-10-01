@@ -43,6 +43,13 @@ export class MainView {
     await this.Presenter.OnRegister()
   }
 
+  public DrawDates(dates: string[]) {
+    let tr = $('#tls').append('<table></table>').append('<tr class="date"></tr>')
+    for (let i = 0; i < dates.length; ++i) {
+      tr.append(`<td>${dates[i]}</td>`)
+    }
+  }
+
   public OnNewTL() {
     this.Presenter.OpenNewTLDialog()
   }
