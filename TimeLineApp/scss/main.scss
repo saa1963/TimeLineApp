@@ -58,25 +58,33 @@ canvas {
 }
 
 table {
-    background-color: cornflowerblue
+    background-color: cornflowerblue;
+    border-collapse: separate;
 }
 
 .date {
-    background-color: bisque
-}
+    background-color: bisque;
 
-.date td {
-    padding: 2px
+    td {
+        padding: 2px;
+        white-space: nowrap;
+        width: 85px;
+        text-align: center;
+    }
 }
 
 .hidden_cell {
-    background-color: cornflowerblue
+    background-color: cornflowerblue;
 }
 
 .tl_head {
     background-color: brown;
     color: aliceblue;
-    padding: 2px
+    padding: 2px;
+}
+
+.table_container {
+    overflow: scroll;
 }
 
 /* To remove the scrollbars */

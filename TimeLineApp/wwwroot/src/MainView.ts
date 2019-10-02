@@ -11,7 +11,7 @@ export class MainView {
     this.Presenter = new MainPresenter(this, model)
   }
 
-  public OnResizeWindow(width: number, height: number) {
+  public OnResizeWindow() {
     this.Presenter.Draw()
   }
 
@@ -44,10 +44,15 @@ export class MainView {
   }
 
   public DrawDates(dates: string[]) {
-    let tr = $('#tls').append('<table></table>').append('<tr class="date"></tr>')
+    let aw = document.documentElement.clientWidth
+    $('#tls').append(`<table cellspacing="2"><tr class="date"></tr></table>`)
     for (let i = 0; i < dates.length; ++i) {
-      tr.append(`<td>${dates[i]}</td>`)
+      $('.date').append(`<td>${dates[i]}</td>`)
     }
+  }
+
+  public DrawHeader(s: string) {
+    $('table').append(`tr><td class="tl_head" colspan="${this.Presenter.MainLineCount}">${s}</td></tr>`)
   }
 
   public OnNewTL() {

@@ -7,8 +7,11 @@ export class TimeLineModel {
   private periods: TLPeriod[] = [];
   public Name: string = 'Новая'
 
-  static CreateTimeLineModel(data?: any): TimeLineModel {
+  static CreateTimeLineModel(name?: string, data?: any): TimeLineModel {
     let rt = new TimeLineModel();
+    if (name) {
+      rt.Name = name
+    }
     if (data) {
       rt.Name = data.Name;
       data.Periods.forEach(o => {

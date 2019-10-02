@@ -18861,7 +18861,6 @@ const RegisterView_1 = __webpack_require__(/*! ./RegisterView */ "./src/Register
 const dateutils_1 = __webpack_require__(/*! ./dateutils */ "./src/dateutils.ts");
 class MainPresenter {
     constructor(view, model) {
-        this.mainLine = new Array(30);
         // ******************* Свойства *********************************
         // свойство Period
         this.m_Period = TLEvent_1.EnumPeriod.day;
@@ -18898,12 +18897,8 @@ class MainPresenter {
         });
         this.Period = TLEvent_1.EnumPeriod.day;
         this.model.evAddTimeLine.subscribe((tl) => {
+            this.DrawTL(tl);
         });
-        let dt = new Date();
-        let cur = dateutils_1.DateUtils.DaysFromAD(dt.getFullYear(), dt.getMonth(), dt.getDate());
-        for (let i = 0; i < this.mainLine.length; ++i) {
-            this.mainLine[i] = cur - Math.floor(this.mainLine.length / 2) + i;
-        }
     }
     get Period() {
         return this.m_Period;
@@ -18915,6 +18910,9 @@ class MainPresenter {
         }
     }
     // ! свойство Period
+    get MainLineCount() {
+        return this.mainLine.length;
+    }
     // ****************** ! Свойства ********************************
     OpenNewTLDialog() {
         let view = new EditStringView_1.EditStringView('');
@@ -18933,7 +18931,7 @@ class MainPresenter {
                 let view = new TlistView_1.TlistView(value);
                 view.ShowDialog()
                     .then((value) => __awaiter(this, void 0, void 0, function* () {
-                    yield new BoxView_1.BoxView(value.Name).Show();
+                    this.model.Add(value);
                 }))
                     .catch(() => { });
             }
@@ -18956,11 +18954,38 @@ class MainPresenter {
     Item(i) {
         return this.model.Item(i);
     }
+    InitMainLine() {
+        let kvo = Math.floor((document.documentElement.clientWidth - 2) / 87);
+        this.mainLine = new Array(kvo);
+        let dt = new Date();
+        let cur;
+        switch (this.Period) {
+            case TLEvent_1.EnumPeriod.day:
+                cur = dateutils_1.DateUtils.DaysFromAD(dt.getFullYear(), dt.getMonth() + 1, dt.getDate());
+                break;
+            case TLEvent_1.EnumPeriod.month:
+                cur = dateutils_1.DateUtils.getMonthFromYMD({ year: dt.getFullYear(), month: dt.getMonth() + 1, day: dt.getDate() });
+                break;
+            case TLEvent_1.EnumPeriod.year:
+                cur = dt.getFullYear();
+                break;
+            case TLEvent_1.EnumPeriod.decade:
+                cur = dateutils_1.DateUtils.getDecadeFromDate(dt);
+                break;
+            case TLEvent_1.EnumPeriod.century:
+                cur = dateutils_1.DateUtils.getCenturyFromDate(dt);
+                break;
+        }
+        for (let i = 0; i < this.mainLine.length; ++i) {
+            this.mainLine[i] = cur - Math.floor(this.mainLine.length / 2) + i;
+        }
+    }
     ViewChangePeriod(period) {
         MyContextMenu_1.MyContextMenu.ChangeIconMenuPeriod(period);
         this.Draw();
     }
     Draw() {
+        this.InitMainLine();
         this.view.ClearContent();
         this.view.DrawDates(this.GetDrawDates());
         for (let i = 0; i < this.Count; i++) {
@@ -18991,6 +19016,7 @@ class MainPresenter {
         return dates;
     }
     DrawTL(model) {
+        this.view.DrawHeader(model.Name);
     }
     OnLogin() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -19052,7 +19078,7 @@ class MainView {
     constructor(model) {
         this.Presenter = new MainPresenter_1.MainPresenter(this, model);
     }
-    OnResizeWindow(width, height) {
+    OnResizeWindow() {
         this.Presenter.Draw();
     }
     OnLogin() {
@@ -19084,10 +19110,14 @@ class MainView {
         });
     }
     DrawDates(dates) {
-        let tr = $('#tls').append('<table></table>').append('<tr class="date"></tr>');
+        let aw = document.documentElement.clientWidth;
+        $('#tls').append(`<table cellspacing="2"><tr class="date"></tr></table>`);
         for (let i = 0; i < dates.length; ++i) {
-            tr.append(`<td>${dates[i]}</td>`);
+            $('.date').append(`<td>${dates[i]}</td>`);
         }
+    }
+    DrawHeader(s) {
+        $('table').append(`tr><td class="tl_head" colspan="${this.Presenter.MainLineCount}">${s}</td></tr>`);
     }
     OnNewTL() {
         this.Presenter.OpenNewTLDialog();
@@ -20789,7 +20819,7 @@ const MainModel_1 = __webpack_require__(/*! ./MainModel */ "./src/MainModel.ts")
 (function main() {
     let mainView = new MainView_1.MainView(MainModel_1.MainModel.getInstance());
     (window.onresize = () => {
-        mainView.OnResizeWindow(window.innerWidth, window.innerHeight);
+        mainView.OnResizeWindow();
     })();
     document.addEventListener('contextmenu', mainView);
     document.getElementById('btnLogin').onclick = () => {

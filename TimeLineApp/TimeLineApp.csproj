@@ -69,10 +69,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\dist\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="wwwroot\fonts\fa-brands-400.eot" />
     <None Include="wwwroot\fonts\fa-brands-400.svg" />
     <None Include="wwwroot\fonts\fa-brands-400.ttf" />

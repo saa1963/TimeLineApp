@@ -21,7 +21,7 @@ export class MainPresenter {
   private model: MainModel
   private view: MainView
   private menuCtx: ContextMenu
-  private mainLine: number[] = new Array(30)
+  private mainLine: number[]
 
   // ******************* Свойства *********************************
 
@@ -37,6 +37,10 @@ export class MainPresenter {
     }
   }
   // ! свойство Period
+
+  public get MainLineCount(): number {
+    return this.mainLine.length
+  }
 
   // ****************** ! Свойства ********************************
 
@@ -57,7 +61,7 @@ export class MainPresenter {
       let view = new TlistView(value)
       view.ShowDialog()
         .then(async (value) => {
-          await new BoxView(value.Name).Show()
+          this.model.Add(value)
         })
         .catch(() => { })
     } catch (err) {
@@ -116,10 +120,32 @@ export class MainPresenter {
     })
     this.Period = EnumPeriod.day
     this.model.evAddTimeLine.subscribe((tl) => {
-
+      this.DrawTL(tl)
     })
+  }
+
+  private InitMainLine() {
+    let kvo = Math.floor((document.documentElement.clientWidth - 2) / 87)
+    this.mainLine = new Array(kvo)
     let dt = new Date()
-    let cur = DateUtils.DaysFromAD(dt.getFullYear(), dt.getMonth(), dt.getDate())
+    let cur: number
+    switch (this.Period) {
+      case EnumPeriod.day:
+        cur = DateUtils.DaysFromAD(dt.getFullYear(), dt.getMonth() + 1, dt.getDate())
+        break;
+      case EnumPeriod.month:
+        cur = DateUtils.getMonthFromYMD({ year:dt.getFullYear(), month:dt.getMonth() + 1, day:dt.getDate() })
+        break;
+      case EnumPeriod.year:
+        cur = dt.getFullYear()
+        break;
+      case EnumPeriod.decade:
+        cur = DateUtils.getDecadeFromDate(dt)
+        break;
+      case EnumPeriod.century:
+        cur = DateUtils.getCenturyFromDate(dt)
+        break;
+    }
     for (let i = 0; i < this.mainLine.length; ++i) {
       this.mainLine[i] = cur - Math.floor(this.mainLine.length / 2) + i
     }
@@ -131,6 +157,7 @@ export class MainPresenter {
   }
 
   public Draw() {
+    this.InitMainLine()
     this.view.ClearContent()
     this.view.DrawDates(this.GetDrawDates())
     for (let i = 0; i < this.Count; i++) {
@@ -163,7 +190,7 @@ export class MainPresenter {
   }
 
   private DrawTL(model: TimeLineModel) {
-    
+    this.view.DrawHeader(model.Name)
   }
 
   public async OnLogin(): Promise<string> {

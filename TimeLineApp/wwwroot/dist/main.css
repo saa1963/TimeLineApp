@@ -11311,13 +11311,16 @@ canvas {
       transition: .5s ease-in-out; }
 
 table {
-  background-color: cornflowerblue; }
+  background-color: cornflowerblue;
+  border-collapse: separate; }
 
 .date {
   background-color: bisque; }
-
-.date td {
-  padding: 2px; }
+  .date td {
+    padding: 2px;
+    white-space: nowrap;
+    width: 85px;
+    text-align: center; }
 
 .hidden_cell {
   background-color: cornflowerblue; }
@@ -11326,6 +11329,9 @@ table {
   background-color: brown;
   color: aliceblue;
   padding: 2px; }
+
+.table_container {
+  overflow: scroll; }
 
 /* To remove the scrollbars */
 
