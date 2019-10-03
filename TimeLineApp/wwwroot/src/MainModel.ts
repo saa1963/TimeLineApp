@@ -58,5 +58,6 @@ export class MainModel {
     if (!this.models) return false
     if (this.models.length === 0) return false
     if (i < 0 || i >= this.models.length) return false
+    return true
   }
 }

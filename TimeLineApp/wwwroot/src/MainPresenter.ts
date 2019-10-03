@@ -1,21 +1,19 @@
-﻿import {TimeLinePresenter} from "./TimeLinePresenter"
-import { TimeLineModel } from "./TimeLineModel";
-import { EnumPeriod } from "./TLEvent";
-import { MainView } from "./MainView";
-import { MainModel } from "./MainModel";
-import { ISimpleEvent, SimpleEventDispatcher } from "strongly-typed-events"
-import { ApiClient } from "./ApiClient";
-import { TlistView } from "./TlistView";
+﻿import { ApiClient } from "./ApiClient";
 import { BoxView } from "./BoxView";
-import { EditStringView } from "./EditStringView";
 import { ContextMenu } from "./contextmenu";
-import { MyContextMenu } from "./MyContextMenu";
+import { DateUtils, YearMonthDay } from "./dateutils";
+import { EditStringView } from "./EditStringView";
 import { Globals } from "./Globals";
 import { LoginModel } from "./LoginModel";
 import { LoginView } from "./LoginView";
+import { MainModel } from "./MainModel";
+import { MainView } from "./MainView";
+import { MyContextMenu } from "./MyContextMenu";
 import { RegisterModel } from "./RegisterModel";
 import { RegisterView } from "./RegisterView";
-import { DateUtils, YearMonthDay } from "./dateutils";
+import { TimeLineModel } from "./TimeLineModel";
+import { EnumPeriod } from "./TLEvent";
+import { TlistView } from "./TlistView";
 
 export class MainPresenter {
   private model: MainModel

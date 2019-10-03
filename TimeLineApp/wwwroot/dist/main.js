@@ -18821,6 +18821,7 @@ class MainModel {
             return false;
         if (i < 0 || i >= this.models.length)
             return false;
+        return true;
     }
 }
 exports.MainModel = MainModel;
@@ -18846,19 +18847,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const TimeLineModel_1 = __webpack_require__(/*! ./TimeLineModel */ "./src/TimeLineModel.ts");
-const TLEvent_1 = __webpack_require__(/*! ./TLEvent */ "./src/TLEvent.ts");
 const ApiClient_1 = __webpack_require__(/*! ./ApiClient */ "./src/ApiClient.ts");
-const TlistView_1 = __webpack_require__(/*! ./TlistView */ "./src/TlistView.ts");
 const BoxView_1 = __webpack_require__(/*! ./BoxView */ "./src/BoxView.ts");
+const dateutils_1 = __webpack_require__(/*! ./dateutils */ "./src/dateutils.ts");
 const EditStringView_1 = __webpack_require__(/*! ./EditStringView */ "./src/EditStringView.ts");
-const MyContextMenu_1 = __webpack_require__(/*! ./MyContextMenu */ "./src/MyContextMenu.ts");
 const Globals_1 = __webpack_require__(/*! ./Globals */ "./src/Globals.ts");
 const LoginModel_1 = __webpack_require__(/*! ./LoginModel */ "./src/LoginModel.ts");
 const LoginView_1 = __webpack_require__(/*! ./LoginView */ "./src/LoginView.ts");
+const MyContextMenu_1 = __webpack_require__(/*! ./MyContextMenu */ "./src/MyContextMenu.ts");
 const RegisterModel_1 = __webpack_require__(/*! ./RegisterModel */ "./src/RegisterModel.ts");
 const RegisterView_1 = __webpack_require__(/*! ./RegisterView */ "./src/RegisterView.ts");
-const dateutils_1 = __webpack_require__(/*! ./dateutils */ "./src/dateutils.ts");
+const TimeLineModel_1 = __webpack_require__(/*! ./TimeLineModel */ "./src/TimeLineModel.ts");
+const TLEvent_1 = __webpack_require__(/*! ./TLEvent */ "./src/TLEvent.ts");
+const TlistView_1 = __webpack_require__(/*! ./TlistView */ "./src/TlistView.ts");
 class MainPresenter {
     constructor(view, model) {
         // ******************* Свойства *********************************
