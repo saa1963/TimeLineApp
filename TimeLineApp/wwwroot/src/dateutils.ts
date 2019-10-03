@@ -99,6 +99,10 @@ export class DateUtils {
     }
   }
 
+  static getDayFromYMD(dt: YearMonthDay): number {
+    return this.DaysFromAD(dt.year, dt.month, dt.day)
+  }
+
   /**
    * День от Рождества Христова + -
    * @param year может быть с минусом
@@ -332,11 +336,30 @@ export class DateUtils {
   static getYearFromDate(dt: Date): number {
     return dt.getFullYear()
   }
+  static getYearFromYMD(dt: YearMonthDay): number {
+    return dt.year
+  }
   static getDecadeFromDate(dt: Date): number {
     return Math.floor(dt.getFullYear() / 10) + 1
   }
+  static getDecadeFromYMD(dt: YearMonthDay): number {
+    let delta = dt.year / Math.abs(dt.year)
+    let ab = Math.floor(Math.abs(dt.year) / 10)
+    if (delta > 0)
+      return ab + 1
+    else
+      return -ab - 1
+  }
   static getCenturyFromDate(dt: Date): number {
     return Math.floor(dt.getFullYear() / 100) + 1
+  }
+  static getCenturyFromYMD(dt: YearMonthDay): number {
+    let delta = dt.year / Math.abs(dt.year)
+    let ab = Math.floor(Math.abs(dt.year) / 100)
+    if (delta)
+      return ab + 1
+    else
+      return -ab - 1
   }
   static getDecade(century: number, decade: number): number {
     return (century - 1) * 10 + decade + 1
@@ -355,7 +378,10 @@ export class DateUtils {
     return romanize(century) + ' ' + (decade - 1) * 10 + 'е'
   }
   static formatCentury(num: number): string {
-    return romanize(num)
+    if (num > 0)
+      return `${romanize(num)} н.э.`
+    else
+      return `${romanize(num)} до н.э.`
   }
   static getDecadeComponent(decade: number): number {
     let century = Math.floor((decade - 1) / 10) + 1

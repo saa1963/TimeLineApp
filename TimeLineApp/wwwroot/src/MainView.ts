@@ -4,23 +4,45 @@ import { MainModel } from "./MainModel";
 
 export class MainView {
   // private свойства
-  private ctx: CanvasRenderingContext2D
   private Presenter: MainPresenter;
 
   constructor(model: MainModel) {
     this.Presenter = new MainPresenter(this, model)
-  }
 
-  public OnResizeWindow() {
-    this.Presenter.Draw()
-  }
-
-  public async OnLogin() {
-    let login = await this.Presenter.OnLogin()
-    if (login) {
-      this.SetUserLabel(login)
-    } else {
-      this.ClearUserLabel()
+    document.getElementById('btnLogin').onclick = async () => {
+      let login = await this.Presenter.OnLogin()
+      if (login) {
+        this.SetUserLabel(login)
+      } else {
+        this.ClearUserLabel()
+      }
+    }
+    document.getElementById('btnReg').onclick = async () => {
+      await this.Presenter.OnRegister()
+    }
+    document.getElementById('newTimeline').onclick = () => {
+      this.Presenter.OpenNewTLDialog()
+    }
+    document.getElementById('load').onclick = () => {
+      this.Presenter.OpenLoadTLDialog()
+    }
+    document.getElementById('prev_period').onclick = () => {
+      this.Presenter.OnPrev_Period()
+    }
+    document.getElementById('next_period').onclick = () => {
+      this.Presenter.OnNext_Period()
+    }
+    document.getElementById('prev_page').onclick = () => {
+      this.Presenter.OnPrev_Page()
+    }
+    document.getElementById('next_page').onclick = () => {
+      this.Presenter.OnNext_Page()
+    }
+    document.addEventListener('contextmenu', (ev) => {
+      this.Presenter.OnContextMenu(ev)
+    })
+    window.onresize = () => {
+      this.Presenter.Draw()
     }
   }
 
@@ -39,12 +61,7 @@ export class MainView {
     $('#btnLogin').text('Вход')
   }
 
-  public async OnRegister() {
-    await this.Presenter.OnRegister()
-  }
-
   public DrawDates(dates: string[]) {
-    let aw = document.documentElement.clientWidth
     $('#tls').append(`<table cellspacing="2"><tr class="date"></tr></table>`)
     for (let i = 0; i < dates.length; ++i) {
       $('.date').append(`<td>${dates[i]}</td>`)
@@ -53,20 +70,5 @@ export class MainView {
 
   public DrawHeader(s: string) {
     $('table').append(`tr><td class="tl_head" colspan="${this.Presenter.MainLineCount}">${s}</td></tr>`)
-  }
-
-  public OnNewTL() {
-    this.Presenter.OpenNewTLDialog()
-  }
-
-  public OnOpenTL() {
-    this.Presenter.OpenLoadTLDialog()
-  }
-
-  public handleEvent(event: Event) {
-    if (event.type === 'contextmenu') {
-      this.Presenter.OnContextMenu(<MouseEvent>event)
-      event.preventDefault()
-    }
   }
 }

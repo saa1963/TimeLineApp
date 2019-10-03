@@ -15,7 +15,7 @@ import { LoginModel } from "./LoginModel";
 import { LoginView } from "./LoginView";
 import { RegisterModel } from "./RegisterModel";
 import { RegisterView } from "./RegisterView";
-import { DateUtils } from "./dateutils";
+import { DateUtils, YearMonthDay } from "./dateutils";
 
 export class MainPresenter {
   private model: MainModel
@@ -32,8 +32,9 @@ export class MainPresenter {
   }
   public set Period(value: EnumPeriod) {
     if (this.m_Period !== value) {
+      let old_period = this.m_Period
       this.m_Period = value
-      this.ViewChangePeriod(value)
+      this.ViewChangePeriod(old_period, value)
     }
   }
   // ! свойство Period
@@ -50,7 +51,7 @@ export class MainPresenter {
       .then(async (value) => {
         if (value) {
           //await new BoxView(value).Show()
-          this.model.Add(TimeLineModel.CreateTimeLineModel())
+          this.model.Add(TimeLineModel.CreateTimeLineModel(value))
         }
       })
   }
@@ -118,15 +119,18 @@ export class MainPresenter {
           break;
       }
     })
-    this.Period = EnumPeriod.day
+    this.m_Period = EnumPeriod.decade
     this.model.evAddTimeLine.subscribe((tl) => {
       this.DrawTL(tl)
     })
-  }
-
-  private InitMainLine() {
     let kvo = Math.floor((document.documentElement.clientWidth - 2) / 87)
     this.mainLine = new Array(kvo)
+    this.InitMainLine(this.GetFirstInit())
+    this.Draw()
+  }
+
+  private GetFirstInit() {
+    let init
     let dt = new Date()
     let cur: number
     switch (this.Period) {
@@ -146,18 +150,103 @@ export class MainPresenter {
         cur = DateUtils.getCenturyFromDate(dt)
         break;
     }
+    return cur - this.mainLine.length + 1
+  }
+
+  private InitMainLine(init: number) {
     for (let i = 0; i < this.mainLine.length; ++i) {
-      this.mainLine[i] = cur - Math.floor(this.mainLine.length / 2) + i
+      if (init + i !== 0)
+        this.mainLine[i] = init + i
+      else {
+        this.mainLine[i] = 1
+        init++
+      }
     }
   }
 
-  private ViewChangePeriod(period: EnumPeriod) {
+  private ViewChangePeriod(old_period: EnumPeriod, period: EnumPeriod) {
+    let init: number
+    let ymd: YearMonthDay
+    let day: number
     MyContextMenu.ChangeIconMenuPeriod(period)
+
+    switch (old_period) {
+      case EnumPeriod.day:
+        day = this.mainLine[0]
+        break;
+      case EnumPeriod.month:
+        day = DateUtils.FirstDayOfMonth(this.mainLine[0])
+        break;
+      case EnumPeriod.year:
+        day = DateUtils.FirstDayOfYear(this.mainLine[0])
+        break;
+      case EnumPeriod.decade:
+        day = DateUtils.FirstDayOfDecade(this.mainLine[0])
+        break;
+      case EnumPeriod.century:
+        day = DateUtils.FirstDayOfCentury(this.mainLine[0])
+        break;
+    }
+    ymd = DateUtils.YMDFromAD(day)
+
+    switch (period) {
+      case EnumPeriod.day:
+        init = day
+        break;
+      case EnumPeriod.month:
+        init = DateUtils.getMonthFromYMD(ymd)
+        break;
+      case EnumPeriod.year:
+        init = DateUtils.getYearFromYMD(ymd)
+        break;
+      case EnumPeriod.decade:
+        init = DateUtils.getDecadeFromYMD(ymd)
+        break;
+      case EnumPeriod.century:
+        init = DateUtils.getCenturyFromYMD(ymd)
+        break;
+    }
+    this.InitMainLine(init)
+    this.Draw()
+  }
+
+  public OnPrev_Period() {
+    let i = this.mainLine[0] - 1
+    if (i !== 0)
+      this.InitMainLine(i)
+    else
+      this.InitMainLine(-1)
+    this.Draw()
+  }
+
+  public OnPrev_Page() {
+    let i = this.mainLine[0] - this.mainLine.length
+    if (i !== 0)
+      this.InitMainLine(i)
+    else
+      this.InitMainLine(-1)
+    this.Draw()
+  }
+
+  public OnNext_Period() {
+    let i = this.mainLine[0] + 1
+    if (i !== 0)
+      this.InitMainLine(i)
+    else
+      this.InitMainLine(1)
+    this.Draw()
+  }
+
+  public OnNext_Page() {
+    let i = this.mainLine[0] + this.mainLine.length
+    if (i !== 0)
+      this.InitMainLine(i)
+    else
+      this.InitMainLine(1)
     this.Draw()
   }
 
   public Draw() {
-    this.InitMainLine()
     this.view.ClearContent()
     this.view.DrawDates(this.GetDrawDates())
     for (let i = 0; i < this.Count; i++) {

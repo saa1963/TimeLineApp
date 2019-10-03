@@ -18895,18 +18895,23 @@ class MainPresenter {
                     break;
             }
         });
-        this.Period = TLEvent_1.EnumPeriod.day;
+        this.m_Period = TLEvent_1.EnumPeriod.decade;
         this.model.evAddTimeLine.subscribe((tl) => {
             this.DrawTL(tl);
         });
+        let kvo = Math.floor((document.documentElement.clientWidth - 2) / 87);
+        this.mainLine = new Array(kvo);
+        this.InitMainLine(this.GetFirstInit());
+        this.Draw();
     }
     get Period() {
         return this.m_Period;
     }
     set Period(value) {
         if (this.m_Period !== value) {
+            let old_period = this.m_Period;
             this.m_Period = value;
-            this.ViewChangePeriod(value);
+            this.ViewChangePeriod(old_period, value);
         }
     }
     // ! свойство Period
@@ -18920,7 +18925,7 @@ class MainPresenter {
             .then((value) => __awaiter(this, void 0, void 0, function* () {
             if (value) {
                 //await new BoxView(value).Show()
-                this.model.Add(TimeLineModel_1.TimeLineModel.CreateTimeLineModel());
+                this.model.Add(TimeLineModel_1.TimeLineModel.CreateTimeLineModel(value));
             }
         }));
     }
@@ -18954,9 +18959,8 @@ class MainPresenter {
     Item(i) {
         return this.model.Item(i);
     }
-    InitMainLine() {
-        let kvo = Math.floor((document.documentElement.clientWidth - 2) / 87);
-        this.mainLine = new Array(kvo);
+    GetFirstInit() {
+        let init;
         let dt = new Date();
         let cur;
         switch (this.Period) {
@@ -18976,16 +18980,94 @@ class MainPresenter {
                 cur = dateutils_1.DateUtils.getCenturyFromDate(dt);
                 break;
         }
+        return cur - this.mainLine.length + 1;
+    }
+    InitMainLine(init) {
         for (let i = 0; i < this.mainLine.length; ++i) {
-            this.mainLine[i] = cur - Math.floor(this.mainLine.length / 2) + i;
+            if (init + i !== 0)
+                this.mainLine[i] = init + i;
+            else {
+                this.mainLine[i] = 1;
+                init++;
+            }
         }
     }
-    ViewChangePeriod(period) {
+    ViewChangePeriod(old_period, period) {
+        let init;
+        let ymd;
+        let day;
         MyContextMenu_1.MyContextMenu.ChangeIconMenuPeriod(period);
+        switch (old_period) {
+            case TLEvent_1.EnumPeriod.day:
+                day = this.mainLine[0];
+                break;
+            case TLEvent_1.EnumPeriod.month:
+                day = dateutils_1.DateUtils.FirstDayOfMonth(this.mainLine[0]);
+                break;
+            case TLEvent_1.EnumPeriod.year:
+                day = dateutils_1.DateUtils.FirstDayOfYear(this.mainLine[0]);
+                break;
+            case TLEvent_1.EnumPeriod.decade:
+                day = dateutils_1.DateUtils.FirstDayOfDecade(this.mainLine[0]);
+                break;
+            case TLEvent_1.EnumPeriod.century:
+                day = dateutils_1.DateUtils.FirstDayOfCentury(this.mainLine[0]);
+                break;
+        }
+        ymd = dateutils_1.DateUtils.YMDFromAD(day);
+        switch (period) {
+            case TLEvent_1.EnumPeriod.day:
+                init = day;
+                break;
+            case TLEvent_1.EnumPeriod.month:
+                init = dateutils_1.DateUtils.getMonthFromYMD(ymd);
+                break;
+            case TLEvent_1.EnumPeriod.year:
+                init = dateutils_1.DateUtils.getYearFromYMD(ymd);
+                break;
+            case TLEvent_1.EnumPeriod.decade:
+                init = dateutils_1.DateUtils.getDecadeFromYMD(ymd);
+                break;
+            case TLEvent_1.EnumPeriod.century:
+                init = dateutils_1.DateUtils.getCenturyFromYMD(ymd);
+                break;
+        }
+        this.InitMainLine(init);
+        this.Draw();
+    }
+    OnPrev_Period() {
+        let i = this.mainLine[0] - 1;
+        if (i !== 0)
+            this.InitMainLine(i);
+        else
+            this.InitMainLine(-1);
+        this.Draw();
+    }
+    OnPrev_Page() {
+        let i = this.mainLine[0] - this.mainLine.length;
+        if (i !== 0)
+            this.InitMainLine(i);
+        else
+            this.InitMainLine(-1);
+        this.Draw();
+    }
+    OnNext_Period() {
+        let i = this.mainLine[0] + 1;
+        if (i !== 0)
+            this.InitMainLine(i);
+        else
+            this.InitMainLine(1);
+        this.Draw();
+    }
+    OnNext_Page() {
+        let i = this.mainLine[0] + this.mainLine.length;
+        if (i !== 0)
+            this.InitMainLine(i);
+        else
+            this.InitMainLine(1);
         this.Draw();
     }
     Draw() {
-        this.InitMainLine();
         this.view.ClearContent();
         this.view.DrawDates(this.GetDrawDates());
         for (let i = 0; i < this.Count; i++) {
@@ -19077,12 +19159,7 @@ const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.
 class MainView {
     constructor(model) {
         this.Presenter = new MainPresenter_1.MainPresenter(this, model);
-    }
-    OnResizeWindow() {
-        this.Presenter.Draw();
-    }
-    OnLogin() {
-        return __awaiter(this, void 0, void 0, function* () {
+        document.getElementById('btnLogin').onclick = () => __awaiter(this, void 0, void 0, function* () {
             let login = yield this.Presenter.OnLogin();
             if (login) {
                 this.SetUserLabel(login);
@@ -19091,6 +19168,33 @@ class MainView {
                 this.ClearUserLabel();
             }
         });
+        document.getElementById('btnReg').onclick = () => __awaiter(this, void 0, void 0, function* () {
+            yield this.Presenter.OnRegister();
+        });
+        document.getElementById('newTimeline').onclick = () => {
+            this.Presenter.OpenNewTLDialog();
+        };
+        document.getElementById('load').onclick = () => {
+            this.Presenter.OpenLoadTLDialog();
+        };
+        document.getElementById('prev_period').onclick = () => {
+            this.Presenter.OnPrev_Period();
+        };
+        document.getElementById('next_period').onclick = () => {
+            this.Presenter.OnNext_Period();
+        };
+        document.getElementById('prev_page').onclick = () => {
+            this.Presenter.OnPrev_Page();
+        };
+        document.getElementById('next_page').onclick = () => {
+            this.Presenter.OnNext_Page();
+        };
+        document.addEventListener('contextmenu', (ev) => {
+            this.Presenter.OnContextMenu(ev);
+        });
+        window.onresize = () => {
+            this.Presenter.Draw();
+        };
     }
     ClearContent() {
         $('#tls').empty();
@@ -19104,13 +19208,7 @@ class MainView {
         $('#lblUser').css('display', 'none');
         $('#btnLogin').text('Вход');
     }
-    OnRegister() {
-        return __awaiter(this, void 0, void 0, function* () {
-            yield this.Presenter.OnRegister();
-        });
-    }
     DrawDates(dates) {
-        let aw = document.documentElement.clientWidth;
         $('#tls').append(`<table cellspacing="2"><tr class="date"></tr></table>`);
         for (let i = 0; i < dates.length; ++i) {
             $('.date').append(`<td>${dates[i]}</td>`);
@@ -19118,18 +19216,6 @@ class MainView {
     }
     DrawHeader(s) {
         $('table').append(`tr><td class="tl_head" colspan="${this.Presenter.MainLineCount}">${s}</td></tr>`);
-    }
-    OnNewTL() {
-        this.Presenter.OpenNewTLDialog();
-    }
-    OnOpenTL() {
-        this.Presenter.OpenLoadTLDialog();
-    }
-    handleEvent(event) {
-        if (event.type === 'contextmenu') {
-            this.Presenter.OnContextMenu(event);
-            event.preventDefault();
-        }
     }
 }
 exports.MainView = MainView;
@@ -19979,8 +20065,11 @@ class TimeLineModel {
         this.e_AddPeriod = new ste_simple_events_1.SimpleEventDispatcher();
         this.e_RemovePeriod = new ste_simple_events_1.SimpleEventDispatcher();
     }
-    static CreateTimeLineModel(data) {
+    static CreateTimeLineModel(name, data) {
         let rt = new TimeLineModel();
+        if (name) {
+            rt.Name = name;
+        }
         if (data) {
             rt.Name = data.Name;
             data.Periods.forEach(o => {
@@ -20499,6 +20588,9 @@ class DateUtils {
             return { year: yr, month: 12 - mth, day: leapData.dth_reverse[mth] - ds + 1 };
         }
     }
+    static getDayFromYMD(dt) {
+        return this.DaysFromAD(dt.year, dt.month, dt.day);
+    }
     /**
      * День от Рождества Христова + -
      * @param year может быть с минусом
@@ -20740,11 +20832,30 @@ class DateUtils {
     static getYearFromDate(dt) {
         return dt.getFullYear();
     }
+    static getYearFromYMD(dt) {
+        return dt.year;
+    }
     static getDecadeFromDate(dt) {
         return Math.floor(dt.getFullYear() / 10) + 1;
     }
+    static getDecadeFromYMD(dt) {
+        let delta = dt.year / Math.abs(dt.year);
+        let ab = Math.floor(Math.abs(dt.year) / 10);
+        if (delta > 0)
+            return ab + 1;
+        else
+            return -ab - 1;
+    }
     static getCenturyFromDate(dt) {
         return Math.floor(dt.getFullYear() / 100) + 1;
+    }
+    static getCenturyFromYMD(dt) {
+        let delta = dt.year / Math.abs(dt.year);
+        let ab = Math.floor(Math.abs(dt.year) / 100);
+        if (delta)
+            return ab + 1;
+        else
+            return -ab - 1;
     }
     static getDecade(century, decade) {
         return (century - 1) * 10 + decade + 1;
@@ -20763,7 +20874,10 @@ class DateUtils {
         return romanize(century) + ' ' + (decade - 1) * 10 + 'е';
     }
     static formatCentury(num) {
-        return romanize(num);
+        if (num > 0)
+            return `${romanize(num)} н.э.`;
+        else
+            return `${romanize(num)} до н.э.`;
     }
     static getDecadeComponent(decade) {
         let century = Math.floor((decade - 1) / 10) + 1;
@@ -20818,22 +20932,6 @@ __webpack_require__(/*! bootstrap */ "../node_modules/bootstrap/dist/js/bootstra
 const MainModel_1 = __webpack_require__(/*! ./MainModel */ "./src/MainModel.ts");
 (function main() {
     let mainView = new MainView_1.MainView(MainModel_1.MainModel.getInstance());
-    (window.onresize = () => {
-        mainView.OnResizeWindow();
-    })();
-    document.addEventListener('contextmenu', mainView);
-    document.getElementById('btnLogin').onclick = () => {
-        mainView.OnLogin();
-    };
-    document.getElementById('btnReg').onclick = () => {
-        mainView.OnRegister();
-    };
-    document.getElementById('newTimeline').onclick = () => {
-        mainView.OnNewTL();
-    };
-    document.getElementById('load').onclick = () => {
-        mainView.OnOpenTL();
-    };
 })();
 
 
