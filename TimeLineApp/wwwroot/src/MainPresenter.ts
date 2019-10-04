@@ -278,6 +278,9 @@ export class MainPresenter {
 
   private DrawTL(model: TimeLineModel) {
     this.view.DrawHeader(model.Name)
+    for (let i = 0; i < model.Count; ++i) {
+      model.Item(i)
+    }
   }
 
   public async OnLogin(): Promise<string> {

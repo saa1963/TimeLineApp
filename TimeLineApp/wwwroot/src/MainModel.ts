@@ -6,12 +6,8 @@ import { EnumPeriod } from "./TLEvent";
 export class MainModel {
   private static instance: MainModel;
   private models: TimeLineModel[] = []
-  //private mainLine: number[] = new Array(30)
-
+  
   private constructor() {
-    //let dt = new Date()
-    //let cur = DateUtils.DaysFromAD(dt.getFullYear(), dt.getMonth(), dt.getDate())
-
   }
 
   public static getInstance() {

@@ -18773,10 +18773,7 @@ exports.LoginView = LoginView;
 Object.defineProperty(exports, "__esModule", { value: true });
 const ste_simple_events_1 = __webpack_require__(/*! ste-simple-events */ "../node_modules/ste-simple-events/dist/index.js");
 class MainModel {
-    //private mainLine: number[] = new Array(30)
     constructor() {
-        //let dt = new Date()
-        //let cur = DateUtils.DaysFromAD(dt.getFullYear(), dt.getMonth(), dt.getDate())
         this.models = [];
         this.e_AddTimeLine = new ste_simple_events_1.SimpleEventDispatcher();
         this.e_RemoveTimeLine = new ste_simple_events_1.SimpleEventDispatcher();
@@ -20115,6 +20112,7 @@ class TimeLineModel {
             return false;
         if (i < 0 || i >= this.periods.length)
             return false;
+        return true;
     }
 }
 exports.TimeLineModel = TimeLineModel;
@@ -20169,7 +20167,7 @@ class TlistPresenter {
                         fname: this.m_Value
                     }
                 });
-                return TimeLineModel_1.TimeLineModel.CreateTimeLineModel(JSON.parse(tl));
+                return TimeLineModel_1.TimeLineModel.CreateTimeLineModel(tl.Name, JSON.parse(tl));
             }
             catch (err) {
                 this.view.SetError(Globals_1.Globals.ResponseErrorText(err));

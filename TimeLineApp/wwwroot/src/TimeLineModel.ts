@@ -3,7 +3,6 @@ import { TLPeriodEvent } from './TLPeriodEvent';
 import { TLEvent } from './TLEvent';
 import { SimpleEventDispatcher, ISimpleEvent } from 'ste-simple-events';
 export class TimeLineModel {
-  private it: number
   private periods: TLPeriod[] = [];
   public Name: string = 'Новая'
 
@@ -60,5 +59,6 @@ export class TimeLineModel {
     if (!this.periods) return false
     if (this.periods.length === 0) return false
     if (i < 0 || i >= this.periods.length) return false
+    return true
   }
 }
