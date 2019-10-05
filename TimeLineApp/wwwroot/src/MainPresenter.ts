@@ -14,6 +14,7 @@ import { RegisterView } from "./RegisterView";
 import { TimeLineModel } from "./TimeLineModel";
 import { EnumPeriod } from "./TLEvent";
 import { TlistView } from "./TlistView";
+import { TLPeriod } from "./TLPeriod";
 
 export class MainPresenter {
   private model: MainModel
@@ -278,9 +279,9 @@ export class MainPresenter {
 
   private DrawTL(model: TimeLineModel) {
     this.view.DrawHeader(model.Name)
-    for (let i = 0; i < model.Count; ++i) {
-      model.Item(i)
-    }
+    let items = model.Items.filter((value, index, array) => {
+      value.IsIntersectIntervals(this.mainLine[0], this.mainLine[this.mainLine.length - 1])
+    })
   }
 
   public async OnLogin(): Promise<string> {

@@ -40,6 +40,10 @@ export class TimeLineModel {
     return this.periods.length
   }
 
+  public get Items(): TLPeriod[] {
+    return this.periods
+  }
+
   public Item(i: number): TLPeriod {
     if (!this.validIndex(i)) throw "Неверный индекс"
     return this.periods[i]
