@@ -52,7 +52,7 @@ export class DateUtils {
       if (init === 0) {
         init += delta
       }
-      yield DateUtils.getMonthFromNumber(init)
+      yield DateUtils.getYMDFromMonth(init)
     }
   }
   /**
@@ -305,7 +305,7 @@ export class DateUtils {
   static getMonthFromDate(dt: Date): number {
     return (dt.getFullYear() - 1) * 12 + dt.getMonth() + 1
   }
-  static getMonthFromYMD(dt: YearMonthDay) {
+  static getMonthFromYMD(dt: YearMonthDay): number {
     let delta = dt.year / Math.abs(dt.year)
     if (delta === 1) {
       return (dt.year - 1) * 12 + dt.month
@@ -320,7 +320,7 @@ export class DateUtils {
     rt = (year - delta) * 12 + (month * delta)
     return rt
   }
-  static getMonthFromNumber(num: number): YearMonthDay {
+  static getYMDFromMonth(num: number): YearMonthDay {
     let year: number
     let month: number
     let rt: YearMonthDay
@@ -338,6 +338,9 @@ export class DateUtils {
   }
   static getYearFromYMD(dt: YearMonthDay): number {
     return dt.year
+  }
+  static getYMDFromYear(num: number): YearMonthDay {
+    return {year:num, month:1, day:1}
   }
   static getDecadeFromDate(dt: Date): number {
     return Math.floor(dt.getFullYear() / 10) + 1

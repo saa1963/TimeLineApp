@@ -12,7 +12,7 @@ import { MyContextMenu } from "./MyContextMenu";
 import { RegisterModel } from "./RegisterModel";
 import { RegisterView } from "./RegisterView";
 import { TimeLineModel } from "./TimeLineModel";
-import { EnumPeriod } from "./TLEvent";
+import { EnumPeriod, TLEvent, TLEventDay, TLEventMonth } from "./TLEvent";
 import { TlistView } from "./TlistView";
 import { TLPeriod } from "./TLPeriod";
 
@@ -20,7 +20,7 @@ export class MainPresenter {
   private model: MainModel
   private view: MainView
   private menuCtx: ContextMenu
-  private mainLine: number[]
+  private mainLine: TLEvent[]
 
   // ******************* Свойства *********************************
 
@@ -163,6 +163,28 @@ export class MainPresenter {
     }
   }
 
+  private CreateEvent(i: number): TLEvent {
+    let cur: TLEvent
+    switch (this.Period) {
+      case EnumPeriod.day:
+        cur = TLEventDay.CreateTLEventDay1("", i)
+        break;
+      case EnumPeriod.month:
+        cur = TLEventMonth.CreateTLEventMonth1("", i)
+        break;
+      case EnumPeriod.year:
+        cur = TLEventDay.CreateTLEventDay1("", i)
+        break;
+      case EnumPeriod.decade:
+        cur = TLEventDay.CreateTLEventDay1("", i)
+        break;
+      case EnumPeriod.century:
+        cur = TLEventDay.CreateTLEventDay1("", i)
+        break;
+    }
+    return cur
+  }
+
   private ViewChangePeriod(old_period: EnumPeriod, period: EnumPeriod) {
     let init: number
     let ymd: YearMonthDay
@@ -279,8 +301,10 @@ export class MainPresenter {
 
   private DrawTL(model: TimeLineModel) {
     this.view.DrawHeader(model.Name)
+    let begin_day: number, end_day: number
+
     let items = model.Items.filter((value, index, array) => {
-      value.IsIntersectIntervals(this.mainLine[0], this.mainLine[this.mainLine.length - 1])
+      return value.IsIntersectIntervals(this.mainLine[0], this.mainLine[this.mainLine.length - 1])
     })
   }
 
