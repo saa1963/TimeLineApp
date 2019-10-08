@@ -19217,6 +19217,36 @@ class MainPresenter {
             }
         });
     }
+    OnScale(idx) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let value = this.mainLine[idx].ValueEvent;
+            let init;
+            switch (this.Period) {
+                case TLEvent_1.EnumPeriod.day:
+                    this.Period = TLEvent_1.EnumPeriod.century;
+                    init = dateutils_1.DateUtils.getCenturyFromYMD(dateutils_1.DateUtils.YMDFromAD(value));
+                    break;
+                case TLEvent_1.EnumPeriod.month:
+                    this.Period = TLEvent_1.EnumPeriod.day;
+                    init = dateutils_1.DateUtils.getDayFromYMD(dateutils_1.DateUtils.YMDFromAD(dateutils_1.DateUtils.FirstDayOfMonth(value)));
+                    break;
+                case TLEvent_1.EnumPeriod.year:
+                    this.Period = TLEvent_1.EnumPeriod.month;
+                    init = dateutils_1.DateUtils.getMonthFromYMD(dateutils_1.DateUtils.YMDFromAD(dateutils_1.DateUtils.FirstDayOfYear(value)));
+                    break;
+                case TLEvent_1.EnumPeriod.decade:
+                    this.Period = TLEvent_1.EnumPeriod.year;
+                    init = dateutils_1.DateUtils.YMDFromAD(dateutils_1.DateUtils.FirstDayOfDecade(value)).year;
+                    break;
+                case TLEvent_1.EnumPeriod.century:
+                    this.Period = TLEvent_1.EnumPeriod.decade;
+                    init = dateutils_1.DateUtils.getDecadeFromYMD(dateutils_1.DateUtils.YMDFromAD(dateutils_1.DateUtils.FirstDayOfCentury(value)));
+                    break;
+            }
+            this.InitMainLine(init);
+            this.Draw();
+        });
+    }
 }
 exports.MainPresenter = MainPresenter;
 
@@ -19298,7 +19328,10 @@ class MainView {
     DrawDates(dates) {
         $('#tls').append(`<table cellspacing="2"><tr class="date"></tr></table>`);
         for (let i = 0; i < dates.length; ++i) {
-            $('.date').append(`<td>${dates[i]}</td>`);
+            $('.date').append(`<td class="date_cell" id="i${i}">${dates[i]}</td>`);
+            $(`#i${i}`).on('click', (ev) => {
+                this.Presenter.OnScale(i);
+            });
         }
     }
     DrawHeader(s) {

@@ -312,4 +312,33 @@ export class MainPresenter {
       await new BoxView(`Пользователь ${regModel.Login} успешно зарегистрирован`).Show()
     }
   }
+
+  public async OnScale(idx: number) {
+    let value = this.mainLine[idx].ValueEvent
+    let init: number
+    switch (this.Period) {
+      case EnumPeriod.day:
+        this.Period = EnumPeriod.century
+        init = DateUtils.getCenturyFromYMD(DateUtils.YMDFromAD(value))
+        break
+      case EnumPeriod.month:
+        this.Period = EnumPeriod.day
+        init = DateUtils.getDayFromYMD(DateUtils.YMDFromAD(DateUtils.FirstDayOfMonth(value)))
+        break
+      case EnumPeriod.year:
+        this.Period = EnumPeriod.month
+        init = DateUtils.getMonthFromYMD(DateUtils.YMDFromAD(DateUtils.FirstDayOfYear(value)))
+        break
+      case EnumPeriod.decade:
+        this.Period = EnumPeriod.year
+        init = DateUtils.YMDFromAD(DateUtils.FirstDayOfDecade(value)).year
+        break
+      case EnumPeriod.century:
+        this.Period = EnumPeriod.decade
+        init = DateUtils.getDecadeFromYMD(DateUtils.YMDFromAD(DateUtils.FirstDayOfCentury(value)))
+        break
+    }
+    this.InitMainLine(init)
+    this.Draw()
+  }
 }
