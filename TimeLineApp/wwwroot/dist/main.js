@@ -18471,6 +18471,90 @@ exports.BoxView = BoxView;
 
 /***/ }),
 
+/***/ "./src/EP/EventPeriod.ts":
+/*!*******************************!*\
+  !*** ./src/EP/EventPeriod.ts ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const TLEvent_1 = __webpack_require__(/*! ../TLEvent */ "./src/TLEvent.ts");
+const dateutils_1 = __webpack_require__(/*! ../dateutils */ "./src/dateutils.ts");
+var NS_EventPeriod;
+(function (NS_EventPeriod) {
+    class Event {
+        constructor(value) {
+            this.ValueEvent = value;
+        }
+        static CreateEvent(value, type) {
+            switch (type) {
+                case TLEvent_1.EnumPeriod.day:
+                    return new Day(value);
+                case TLEvent_1.EnumPeriod.month:
+                    return new Month(value);
+                case TLEvent_1.EnumPeriod.month:
+                    return new Year(value);
+                case TLEvent_1.EnumPeriod.month:
+                    return new Decade(value);
+                case TLEvent_1.EnumPeriod.month:
+                    return new Century(value);
+            }
+        }
+    }
+    NS_EventPeriod.Event = Event;
+    class Period {
+    }
+    NS_EventPeriod.Period = Period;
+    class Day extends Event {
+        constructor(value) {
+            super(value);
+            this.TypeEvent = TLEvent_1.EnumPeriod.day;
+        }
+    }
+    NS_EventPeriod.Day = Day;
+    class Month extends Event {
+        constructor(value) {
+            super(value);
+            this.TypeEvent = TLEvent_1.EnumPeriod.month;
+        }
+    }
+    NS_EventPeriod.Month = Month;
+    class Year extends Event {
+        constructor(value) {
+            super(value);
+            this.TypeEvent = TLEvent_1.EnumPeriod.year;
+        }
+    }
+    NS_EventPeriod.Year = Year;
+    class Decade extends Event {
+        constructor(value) {
+            super(value);
+            this.TypeEvent = TLEvent_1.EnumPeriod.decade;
+        }
+    }
+    NS_EventPeriod.Decade = Decade;
+    class Century extends Event {
+        constructor(value) {
+            super(value);
+            this.TypeEvent = TLEvent_1.EnumPeriod.century;
+        }
+        GetDaysPeriod() {
+            let p = new Period();
+            p.TypePeriod = TLEvent_1.EnumPeriod.day;
+            p.Begin = new Day(dateutils_1.DateUtils.FirstDayOfCentury(this.ValueEvent));
+            p.End = new Day(dateutils_1.DateUtils.LastDayOfCentury(this.ValueEvent));
+            return p;
+        }
+    }
+    NS_EventPeriod.Century = Century;
+})(NS_EventPeriod = exports.NS_EventPeriod || (exports.NS_EventPeriod = {}));
+
+
+/***/ }),
+
 /***/ "./src/EditStringView.ts":
 /*!*******************************!*\
   !*** ./src/EditStringView.ts ***!
@@ -18857,6 +18941,7 @@ const RegisterView_1 = __webpack_require__(/*! ./RegisterView */ "./src/Register
 const TimeLineModel_1 = __webpack_require__(/*! ./TimeLineModel */ "./src/TimeLineModel.ts");
 const TLEvent_1 = __webpack_require__(/*! ./TLEvent */ "./src/TLEvent.ts");
 const TlistView_1 = __webpack_require__(/*! ./TlistView */ "./src/TlistView.ts");
+const EventPeriod_1 = __webpack_require__(/*! ./EP/EventPeriod */ "./src/EP/EventPeriod.ts");
 class MainPresenter {
     constructor(view, model) {
         // ******************* Свойства *********************************
@@ -18983,58 +19068,58 @@ class MainPresenter {
     InitMainLine(init) {
         for (let i = 0; i < this.mainLine.length; ++i) {
             if (init + i !== 0)
-                this.mainLine[i] = init + i;
+                this.mainLine[i] = EventPeriod_1.NS_EventPeriod.Event.CreateEvent(init + i, this.Period);
             else {
-                this.mainLine[i] = 1;
+                this.mainLine[i] = EventPeriod_1.NS_EventPeriod.Event.CreateEvent(1, this.Period);
                 init++;
             }
         }
     }
     ViewChangePeriod(old_period, period) {
-        let init;
-        let ymd;
-        let day;
-        MyContextMenu_1.MyContextMenu.ChangeIconMenuPeriod(period);
-        switch (old_period) {
-            case TLEvent_1.EnumPeriod.day:
-                day = this.mainLine[0];
-                break;
-            case TLEvent_1.EnumPeriod.month:
-                day = dateutils_1.DateUtils.FirstDayOfMonth(this.mainLine[0]);
-                break;
-            case TLEvent_1.EnumPeriod.year:
-                day = dateutils_1.DateUtils.FirstDayOfYear(this.mainLine[0]);
-                break;
-            case TLEvent_1.EnumPeriod.decade:
-                day = dateutils_1.DateUtils.FirstDayOfDecade(this.mainLine[0]);
-                break;
-            case TLEvent_1.EnumPeriod.century:
-                day = dateutils_1.DateUtils.FirstDayOfCentury(this.mainLine[0]);
-                break;
-        }
-        ymd = dateutils_1.DateUtils.YMDFromAD(day);
-        switch (period) {
-            case TLEvent_1.EnumPeriod.day:
-                init = day;
-                break;
-            case TLEvent_1.EnumPeriod.month:
-                init = dateutils_1.DateUtils.getMonthFromYMD(ymd);
-                break;
-            case TLEvent_1.EnumPeriod.year:
-                init = dateutils_1.DateUtils.getYearFromYMD(ymd);
-                break;
-            case TLEvent_1.EnumPeriod.decade:
-                init = dateutils_1.DateUtils.getDecadeFromYMD(ymd);
-                break;
-            case TLEvent_1.EnumPeriod.century:
-                init = dateutils_1.DateUtils.getCenturyFromYMD(ymd);
-                break;
-        }
-        this.InitMainLine(init);
-        this.Draw();
+        //let init: number
+        //let ymd: YearMonthDay
+        //let day: number
+        //MyContextMenu.ChangeIconMenuPeriod(period)
+        //switch (old_period) {
+        //  case EnumPeriod.day:
+        //    day = this.mainLine[0]
+        //    break;
+        //  case EnumPeriod.month:
+        //    day = DateUtils.FirstDayOfMonth(this.mainLine[0])
+        //    break;
+        //  case EnumPeriod.year:
+        //    day = DateUtils.FirstDayOfYear(this.mainLine[0])
+        //    break;
+        //  case EnumPeriod.decade:
+        //    day = DateUtils.FirstDayOfDecade(this.mainLine[0])
+        //    break;
+        //  case EnumPeriod.century:
+        //    day = DateUtils.FirstDayOfCentury(this.mainLine[0])
+        //    break;
+        //}
+        //ymd = DateUtils.YMDFromAD(day)
+        //switch (period) {
+        //  case EnumPeriod.day:
+        //    init = day
+        //    break;
+        //  case EnumPeriod.month:
+        //    init = DateUtils.getMonthFromYMD(ymd)
+        //    break;
+        //  case EnumPeriod.year:
+        //    init = DateUtils.getYearFromYMD(ymd)
+        //    break;
+        //  case EnumPeriod.decade:
+        //    init = DateUtils.getDecadeFromYMD(ymd)
+        //    break;
+        //  case EnumPeriod.century:
+        //    init = DateUtils.getCenturyFromYMD(ymd)
+        //    break;
+        //}
+        //this.InitMainLine(init)
+        //this.Draw()
     }
     OnPrev_Period() {
-        let i = this.mainLine[0] - 1;
+        let i = this.mainLine[0].ValueEvent - 1;
         if (i !== 0)
             this.InitMainLine(i);
         else
@@ -19042,7 +19127,7 @@ class MainPresenter {
         this.Draw();
     }
     OnPrev_Page() {
-        let i = this.mainLine[0] - this.mainLine.length;
+        let i = this.mainLine[0].ValueEvent - this.mainLine.length;
         if (i !== 0)
             this.InitMainLine(i);
         else
@@ -19050,7 +19135,7 @@ class MainPresenter {
         this.Draw();
     }
     OnNext_Period() {
-        let i = this.mainLine[0] + 1;
+        let i = this.mainLine[0].ValueEvent + 1;
         if (i !== 0)
             this.InitMainLine(i);
         else
@@ -19058,7 +19143,7 @@ class MainPresenter {
         this.Draw();
     }
     OnNext_Page() {
-        let i = this.mainLine[0] + this.mainLine.length;
+        let i = this.mainLine[0].ValueEvent + this.mainLine.length;
         if (i !== 0)
             this.InitMainLine(i);
         else
@@ -19077,19 +19162,19 @@ class MainPresenter {
         for (let i = 0; i < this.mainLine.length; ++i) {
             switch (this.Period) {
                 case TLEvent_1.EnumPeriod.day:
-                    dates.push(dateutils_1.DateUtils.formatDate(this.mainLine[i]));
+                    dates.push(dateutils_1.DateUtils.formatDate(this.mainLine[i].ValueEvent));
                     break;
                 case TLEvent_1.EnumPeriod.month:
-                    dates.push(dateutils_1.DateUtils.formatMonth(this.mainLine[i]));
+                    dates.push(dateutils_1.DateUtils.formatMonth(this.mainLine[i].ValueEvent));
                     break;
                 case TLEvent_1.EnumPeriod.year:
-                    dates.push(dateutils_1.DateUtils.formatYear(this.mainLine[i]));
+                    dates.push(dateutils_1.DateUtils.formatYear(this.mainLine[i].ValueEvent));
                     break;
                 case TLEvent_1.EnumPeriod.decade:
-                    dates.push(dateutils_1.DateUtils.formatDecade(this.mainLine[i]));
+                    dates.push(dateutils_1.DateUtils.formatDecade(this.mainLine[i].ValueEvent));
                     break;
                 case TLEvent_1.EnumPeriod.century:
-                    dates.push(dateutils_1.DateUtils.formatCentury(this.mainLine[i]));
+                    dates.push(dateutils_1.DateUtils.formatCentury(this.mainLine[i].ValueEvent));
                     break;
             }
         }
@@ -19097,6 +19182,10 @@ class MainPresenter {
     }
     DrawTL(model) {
         this.view.DrawHeader(model.Name);
+        let begin_day, end_day;
+        //let items = model.Items.filter((value, index, array) => {
+        //  return value.IsIntersectIntervals(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent)
+        //})
     }
     OnLogin() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -19704,16 +19793,6 @@ class TLEvent {
 }
 exports.TLEvent = TLEvent;
 class TLEventDay extends TLEvent {
-    //constructor(name: string, day: number) {
-    //  super(name);
-    //  this.Day = day
-    //  let o = DateUtils.YMDFromAD(day)
-    //  this.Month = ((Math.abs(o.year) - 1) * 12 + o.month) * (o.year / Math.abs(o.year));
-    //  this.Year = o.year;
-    //  this.Decade = this.DecadeFromYear(o.year)
-    //  this.Century = this.CenturyFromDecade(this.Decade);
-    //  this.Type = EnumPeriod.day
-    //}
     static CreateTLEventDay(name, day, month, year, decade, century) {
         let rt = new TLEventDay(name);
         rt.Day = day;
@@ -19724,27 +19803,17 @@ class TLEventDay extends TLEvent {
         rt.Type = EnumPeriod.day;
         return rt;
     }
+    static CreateTLEventDay1(name, day) {
+        let ymd = dateutils_1.DateUtils.YMDFromAD(day);
+        let month = dateutils_1.DateUtils.getMonthFromYMD(ymd);
+        let year = dateutils_1.DateUtils.getYearFromYMD(ymd);
+        let decade = dateutils_1.DateUtils.getDecadeFromYMD(ymd);
+        let century = dateutils_1.DateUtils.getCenturyFromYMD(ymd);
+        return TLEventDay.CreateTLEventDay(name, day, month, year, decade, century);
+    }
 }
 exports.TLEventDay = TLEventDay;
 class TLEventMonth extends TLEvent {
-    //constructor(name: string, par1: number, par2?: number) {
-    //  super(name)
-    //  if (par2 !== undefined) {
-    //    let year = par1
-    //    let month = par2
-    //    this.Month = ((Math.abs(year) - 1) * 12 + month) * (year / Math.abs(year))
-    //    this.Year = year
-    //    this.Decade = this.DecadeFromYear(year)
-    //    this.Century = this.CenturyFromDecade(this.Decade)
-    //  } else {
-    //    let month = par1
-    //    this.Month = month
-    //    this.Year = this.YearFromMonth(month)
-    //    this.Decade = this.DecadeFromYear(this.Year)
-    //    this.Century = this.CenturyFromDecade(this.Decade);
-    //  }
-    //  this.Type = EnumPeriod.month
-    //}
     static CreateTLEventMonth(name, month, year, decade, century) {
         let rt = new TLEventDay(name);
         rt.Day = null;
@@ -19755,16 +19824,16 @@ class TLEventMonth extends TLEvent {
         rt.Type = EnumPeriod.month;
         return rt;
     }
+    static CreateTLEventMonth1(name, month) {
+        let ymd = dateutils_1.DateUtils.getYMDFromMonth(month);
+        let year = dateutils_1.DateUtils.getYearFromYMD(ymd);
+        let decade = dateutils_1.DateUtils.getDecadeFromYMD(ymd);
+        let century = dateutils_1.DateUtils.getCenturyFromYMD(ymd);
+        return TLEventMonth.CreateTLEventMonth(name, month, year, decade, century);
+    }
 }
 exports.TLEventMonth = TLEventMonth;
 class TLEventYear extends TLEvent {
-    //constructor(name: string, year: number) {
-    //  super(name)
-    //  this.Year = year
-    //  this.Decade = this.DecadeFromYear(year)
-    //  this.Century = this.CenturyFromDecade(this.Decade);
-    //  this.Type = EnumPeriod.year
-    //}
     static CreateTLEventYear(name, year, decade, century) {
         let rt = new TLEventDay(name);
         rt.Day = null;
@@ -19774,6 +19843,12 @@ class TLEventYear extends TLEvent {
         rt.Century = century;
         rt.Type = EnumPeriod.year;
         return rt;
+    }
+    static CreateTLEventYear1(name, year) {
+        let ymd = dateutils_1.DateUtils.getYMDFromYear(year);
+        let decade = dateutils_1.DateUtils.getDecadeFromYMD(ymd);
+        let century = dateutils_1.DateUtils.getCenturyFromYMD(ymd);
+        return TLEventYear.CreateTLEventYear(name, year, decade, century);
     }
 }
 exports.TLEventYear = TLEventYear;
@@ -20093,6 +20168,9 @@ class TimeLineModel {
     }
     get Count() {
         return this.periods.length;
+    }
+    get Items() {
+        return this.periods;
     }
     Item(i) {
         if (!this.validIndex(i))
@@ -20814,7 +20892,7 @@ class DateUtils {
         rt = (year - delta) * 12 + (month * delta);
         return rt;
     }
-    static getMonthFromNumber(num) {
+    static getYMDFromMonth(num) {
         let year;
         let month;
         let rt;
@@ -20833,6 +20911,9 @@ class DateUtils {
     }
     static getYearFromYMD(dt) {
         return dt.year;
+    }
+    static getYMDFromYear(num) {
+        return { year: num, month: 1, day: 1 };
     }
     static getDecadeFromDate(dt) {
         return Math.floor(dt.getFullYear() / 10) + 1;
@@ -20893,7 +20974,7 @@ DateUtils.makeMonthNumber = function* (_initYear, _initMonth, reverse = false) {
         if (init === 0) {
             init += delta;
         }
-        yield DateUtils.getMonthFromNumber(init);
+        yield DateUtils.getYMDFromMonth(init);
     }
 };
 exports.DateUtils = DateUtils;

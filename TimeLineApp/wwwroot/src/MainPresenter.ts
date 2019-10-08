@@ -15,12 +15,13 @@ import { TimeLineModel } from "./TimeLineModel";
 import { EnumPeriod, TLEvent, TLEventDay, TLEventMonth } from "./TLEvent";
 import { TlistView } from "./TlistView";
 import { TLPeriod } from "./TLPeriod";
+import { NS_EventPeriod } from "./EP/EventPeriod"
 
 export class MainPresenter {
   private model: MainModel
   private view: MainView
   private menuCtx: ContextMenu
-  private mainLine: TLEvent[]
+  private mainLine: NS_EventPeriod.Event[]
 
   // ******************* Свойства *********************************
 
@@ -155,84 +156,62 @@ export class MainPresenter {
   private InitMainLine(init: number) {
     for (let i = 0; i < this.mainLine.length; ++i) {
       if (init + i !== 0)
-        this.mainLine[i] = init + i
+        this.mainLine[i] = NS_EventPeriod.Event.CreateEvent(init + i, this.Period)
       else {
-        this.mainLine[i] = 1
+        this.mainLine[i] = NS_EventPeriod.Event.CreateEvent(1, this.Period)
         init++
       }
     }
   }
 
-  private CreateEvent(i: number): TLEvent {
-    let cur: TLEvent
-    switch (this.Period) {
-      case EnumPeriod.day:
-        cur = TLEventDay.CreateTLEventDay1("", i)
-        break;
-      case EnumPeriod.month:
-        cur = TLEventMonth.CreateTLEventMonth1("", i)
-        break;
-      case EnumPeriod.year:
-        cur = TLEventDay.CreateTLEventDay1("", i)
-        break;
-      case EnumPeriod.decade:
-        cur = TLEventDay.CreateTLEventDay1("", i)
-        break;
-      case EnumPeriod.century:
-        cur = TLEventDay.CreateTLEventDay1("", i)
-        break;
-    }
-    return cur
-  }
-
   private ViewChangePeriod(old_period: EnumPeriod, period: EnumPeriod) {
-    let init: number
-    let ymd: YearMonthDay
-    let day: number
-    MyContextMenu.ChangeIconMenuPeriod(period)
+    //let init: number
+    //let ymd: YearMonthDay
+    //let day: number
+    //MyContextMenu.ChangeIconMenuPeriod(period)
 
-    switch (old_period) {
-      case EnumPeriod.day:
-        day = this.mainLine[0]
-        break;
-      case EnumPeriod.month:
-        day = DateUtils.FirstDayOfMonth(this.mainLine[0])
-        break;
-      case EnumPeriod.year:
-        day = DateUtils.FirstDayOfYear(this.mainLine[0])
-        break;
-      case EnumPeriod.decade:
-        day = DateUtils.FirstDayOfDecade(this.mainLine[0])
-        break;
-      case EnumPeriod.century:
-        day = DateUtils.FirstDayOfCentury(this.mainLine[0])
-        break;
-    }
-    ymd = DateUtils.YMDFromAD(day)
+    //switch (old_period) {
+    //  case EnumPeriod.day:
+    //    day = this.mainLine[0]
+    //    break;
+    //  case EnumPeriod.month:
+    //    day = DateUtils.FirstDayOfMonth(this.mainLine[0])
+    //    break;
+    //  case EnumPeriod.year:
+    //    day = DateUtils.FirstDayOfYear(this.mainLine[0])
+    //    break;
+    //  case EnumPeriod.decade:
+    //    day = DateUtils.FirstDayOfDecade(this.mainLine[0])
+    //    break;
+    //  case EnumPeriod.century:
+    //    day = DateUtils.FirstDayOfCentury(this.mainLine[0])
+    //    break;
+    //}
+    //ymd = DateUtils.YMDFromAD(day)
 
-    switch (period) {
-      case EnumPeriod.day:
-        init = day
-        break;
-      case EnumPeriod.month:
-        init = DateUtils.getMonthFromYMD(ymd)
-        break;
-      case EnumPeriod.year:
-        init = DateUtils.getYearFromYMD(ymd)
-        break;
-      case EnumPeriod.decade:
-        init = DateUtils.getDecadeFromYMD(ymd)
-        break;
-      case EnumPeriod.century:
-        init = DateUtils.getCenturyFromYMD(ymd)
-        break;
-    }
-    this.InitMainLine(init)
-    this.Draw()
+    //switch (period) {
+    //  case EnumPeriod.day:
+    //    init = day
+    //    break;
+    //  case EnumPeriod.month:
+    //    init = DateUtils.getMonthFromYMD(ymd)
+    //    break;
+    //  case EnumPeriod.year:
+    //    init = DateUtils.getYearFromYMD(ymd)
+    //    break;
+    //  case EnumPeriod.decade:
+    //    init = DateUtils.getDecadeFromYMD(ymd)
+    //    break;
+    //  case EnumPeriod.century:
+    //    init = DateUtils.getCenturyFromYMD(ymd)
+    //    break;
+    //}
+    //this.InitMainLine(init)
+    //this.Draw()
   }
 
   public OnPrev_Period() {
-    let i = this.mainLine[0] - 1
+    let i = this.mainLine[0].ValueEvent - 1
     if (i !== 0)
       this.InitMainLine(i)
     else
@@ -241,7 +220,7 @@ export class MainPresenter {
   }
 
   public OnPrev_Page() {
-    let i = this.mainLine[0] - this.mainLine.length
+    let i = this.mainLine[0].ValueEvent - this.mainLine.length
     if (i !== 0)
       this.InitMainLine(i)
     else
@@ -250,7 +229,7 @@ export class MainPresenter {
   }
 
   public OnNext_Period() {
-    let i = this.mainLine[0] + 1
+    let i = this.mainLine[0].ValueEvent + 1
     if (i !== 0)
       this.InitMainLine(i)
     else
@@ -259,7 +238,7 @@ export class MainPresenter {
   }
 
   public OnNext_Page() {
-    let i = this.mainLine[0] + this.mainLine.length
+    let i = this.mainLine[0].ValueEvent + this.mainLine.length
     if (i !== 0)
       this.InitMainLine(i)
     else
@@ -280,19 +259,19 @@ export class MainPresenter {
     for (let i = 0; i < this.mainLine.length; ++i) {
       switch (this.Period) {
         case EnumPeriod.day:
-          dates.push(DateUtils.formatDate(this.mainLine[i]))
+          dates.push(DateUtils.formatDate(this.mainLine[i].ValueEvent))
           break
         case EnumPeriod.month:
-          dates.push(DateUtils.formatMonth(this.mainLine[i]))
+          dates.push(DateUtils.formatMonth(this.mainLine[i].ValueEvent))
           break
         case EnumPeriod.year:
-          dates.push(DateUtils.formatYear(this.mainLine[i]))
+          dates.push(DateUtils.formatYear(this.mainLine[i].ValueEvent))
           break
         case EnumPeriod.decade:
-          dates.push(DateUtils.formatDecade(this.mainLine[i]))
+          dates.push(DateUtils.formatDecade(this.mainLine[i].ValueEvent))
           break
         case EnumPeriod.century:
-          dates.push(DateUtils.formatCentury(this.mainLine[i]))
+          dates.push(DateUtils.formatCentury(this.mainLine[i].ValueEvent))
           break
       }
     }
@@ -303,9 +282,9 @@ export class MainPresenter {
     this.view.DrawHeader(model.Name)
     let begin_day: number, end_day: number
 
-    let items = model.Items.filter((value, index, array) => {
-      return value.IsIntersectIntervals(this.mainLine[0], this.mainLine[this.mainLine.length - 1])
-    })
+    //let items = model.Items.filter((value, index, array) => {
+    //  return value.IsIntersectIntervals(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent)
+    //})
   }
 
   public async OnLogin(): Promise<string> {

@@ -209,10 +209,9 @@ export class TLEventYear extends TLEvent {
 
   public static CreateTLEventYear1(name: string, year: number): TLEventYear {
     let ymd = DateUtils.getYMDFromYear(year)
-    let year: number = DateUtils.getYearFromYMD(ymd)
     let decade: number = DateUtils.getDecadeFromYMD(ymd)
     let century: number = DateUtils.getCenturyFromYMD(ymd)
-    return TLEventMonth.CreateTLEventMonth(name, month, year, decade, century)
+    return TLEventYear.CreateTLEventYear(name, year, decade, century)
   }
 }
 
