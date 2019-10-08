@@ -11321,6 +11321,9 @@ table {
     white-space: nowrap;
     width: 85px;
     text-align: center; }
+    .date td:hover {
+      font-weight: bold;
+      cursor: pointer; }
 
 .hidden_cell {
   background-color: cornflowerblue; }

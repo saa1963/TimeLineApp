@@ -64,12 +64,15 @@ table {
 
 .date {
     background-color: bisque;
-
     td {
         padding: 2px;
         white-space: nowrap;
         width: 85px;
         text-align: center;
+        &:hover {
+            font-weight: bold;
+            cursor: pointer;
+        }
     }
 }
 

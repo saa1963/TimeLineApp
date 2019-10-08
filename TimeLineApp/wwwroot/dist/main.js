@@ -18495,11 +18495,11 @@ var NS_EventPeriod;
                     return new Day(value);
                 case TLEvent_1.EnumPeriod.month:
                     return new Month(value);
-                case TLEvent_1.EnumPeriod.month:
+                case TLEvent_1.EnumPeriod.year:
                     return new Year(value);
-                case TLEvent_1.EnumPeriod.month:
+                case TLEvent_1.EnumPeriod.decade:
                     return new Decade(value);
-                case TLEvent_1.EnumPeriod.month:
+                case TLEvent_1.EnumPeriod.century:
                     return new Century(value);
             }
         }

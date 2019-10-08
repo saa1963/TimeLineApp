@@ -23,11 +23,11 @@ export namespace NS_EventPeriod {
           return new Day(value)
         case EnumPeriod.month:
           return new Month(value)
-        case EnumPeriod.month:
+        case EnumPeriod.year:
           return new Year(value)
-        case EnumPeriod.month:
+        case EnumPeriod.decade:
           return new Decade(value)
-        case EnumPeriod.month:
+        case EnumPeriod.century:
           return new Century(value)
       }
     }

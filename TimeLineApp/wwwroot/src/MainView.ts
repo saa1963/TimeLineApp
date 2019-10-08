@@ -64,7 +64,7 @@ export class MainView {
   public DrawDates(dates: string[]) {
     $('#tls').append(`<table cellspacing="2"><tr class="date"></tr></table>`)
     for (let i = 0; i < dates.length; ++i) {
-      $('.date').append(`<td>${dates[i]}</td>`)
+      $('.date').append(`<td id="i${i}">${dates[i]}</td>`)
     }
   }
 
