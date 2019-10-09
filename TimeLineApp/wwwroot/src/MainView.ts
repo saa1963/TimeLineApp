@@ -62,6 +62,13 @@ export class MainView {
   }
 
   public DrawDates(dates: string[]) {
+    let tls = document.getElementById('tls')
+    let table = document.createElement('table')
+    table.setAttribute('cellspacing', '2')
+    let row = document.createElement('tr').setAttribute('class', 'date')
+
+    tls.appendChild(table)
+
     $('#tls').append(`<table cellspacing="2"><tr class="date"></tr></table>`)
     for (let i = 0; i < dates.length; ++i) {
       $('.date').append(`<td class="date_cell" id="i${i}">${dates[i]}</td>`)
@@ -72,6 +79,6 @@ export class MainView {
   }
 
   public DrawHeader(s: string) {
-    $('table').append(`tr><td class="tl_head" colspan="${this.Presenter.MainLineCount}">${s}</td></tr>`)
+    $('table').append(`<tr><td class="tl_head" colspan="${this.Presenter.MainLineCount - 2}">${s}</td></tr>`)
   }
 }

@@ -11319,7 +11319,7 @@ table {
   .date td {
     padding: 2px;
     white-space: nowrap;
-    width: 85px;
+    width: 120px;
     text-align: center; }
     .date td:hover {
       font-weight: bold;

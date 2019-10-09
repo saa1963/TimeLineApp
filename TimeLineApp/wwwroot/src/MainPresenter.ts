@@ -123,7 +123,7 @@ export class MainPresenter {
     this.model.evAddTimeLine.subscribe((tl) => {
       this.DrawTL(tl)
     })
-    let kvo = Math.floor((document.documentElement.clientWidth - 2) / 87)
+    let kvo = Math.floor((document.documentElement.clientWidth - 2) / 120)
     this.mainLine = new Array(kvo)
     this.InitMainLine(this.GetFirstInit())
     this.Draw()

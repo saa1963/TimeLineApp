@@ -18982,7 +18982,7 @@ class MainPresenter {
         this.model.evAddTimeLine.subscribe((tl) => {
             this.DrawTL(tl);
         });
-        let kvo = Math.floor((document.documentElement.clientWidth - 2) / 87);
+        let kvo = Math.floor((document.documentElement.clientWidth - 2) / 120);
         this.mainLine = new Array(kvo);
         this.InitMainLine(this.GetFirstInit());
         this.Draw();
@@ -20903,9 +20903,14 @@ class DateUtils {
     }
     static formatDate(period) {
         let o = DateUtils.YMDFromAD(period);
-        return stringutils_1.stringUtils.pad(o.day.toString(), 2) + '.'
-            + stringutils_1.stringUtils.pad(o.month.toString(), 2) + '.'
-            + o.year.toString();
+        if (period > 0)
+            return stringutils_1.stringUtils.pad(o.day.toString(), 2) + '.'
+                + stringutils_1.stringUtils.pad(o.month.toString(), 2) + '.'
+                + o.year.toString();
+        else
+            return stringutils_1.stringUtils.pad(o.day.toString(), 2) + '.'
+                + stringutils_1.stringUtils.pad(o.month.toString(), 2) + '.'
+                + Math.abs(o.year).toString() + " до нэ";
     }
     static getMonthFromDate(dt) {
         return (dt.getFullYear() - 1) * 12 + dt.getMonth() + 1;
@@ -20976,15 +20981,24 @@ class DateUtils {
     static formatMonth(period) {
         let year = Math.floor((period - 1) / 12) + 1;
         let month = period - (year - 1) * 12;
-        return this.mth[month - 1] + ' ' + stringutils_1.stringUtils.pad(year, 4);
+        if (period > 0)
+            return this.mth[month - 1] + ' ' + Math.abs(year);
+        else
+            return this.mth[month - 1] + ' ' + Math.abs(year) + ' до нэ';
     }
     static formatYear(period) {
-        return period.toString();
+        if (period > 0)
+            return period.toString();
+        else
+            return Math.abs(period) + ' до нэ';
     }
     static formatDecade(period) {
-        let century = Math.floor((period - 1) / 10) + 1;
-        let decade = period - (century - 1) * 10;
-        return romanize(century) + ' ' + (decade - 1) * 10 + 'е';
+        let century = Math.floor((Math.abs(period) - 1) / 10) + 1;
+        let decade = Math.abs(period) - (century - 1) * 10;
+        if (period > 0)
+            return romanize(century) + ' ' + (decade - 1) * 10 + 'е';
+        else
+            return romanize(century) + ' до нэ ' + (decade - 1) * 10 + 'е';
     }
     static formatCentury(num) {
         if (num > 0)

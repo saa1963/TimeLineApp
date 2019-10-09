@@ -298,9 +298,14 @@ export class DateUtils {
   }
   static formatDate(period: number): string {
     let o = DateUtils.YMDFromAD(period)
-    return stringUtils.pad(o.day.toString(), 2) + '.'
-      + stringUtils.pad(o.month.toString(), 2) + '.'
-      + o.year.toString()
+    if (period > 0)
+      return stringUtils.pad(o.day.toString(), 2) + '.'
+        + stringUtils.pad(o.month.toString(), 2) + '.'
+        + o.year.toString()
+    else
+      return stringUtils.pad(o.day.toString(), 2) + '.'
+        + stringUtils.pad(o.month.toString(), 2) + '.'
+        + Math.abs(o.year).toString() + " до нэ"
   }
   static getMonthFromDate(dt: Date): number {
     return (dt.getFullYear() - 1) * 12 + dt.getMonth() + 1
@@ -370,15 +375,24 @@ export class DateUtils {
   static formatMonth(period: number): string {
     let year = Math.floor((period - 1) / 12) + 1
     let month = period - (year - 1) * 12
-    return this.mth[month - 1] + ' ' + stringUtils.pad(year, 4)
+    if (period > 0)
+      return this.mth[month - 1] + ' ' + Math.abs(year)
+    else
+      return this.mth[month - 1] + ' ' + Math.abs(year) + ' до нэ'
   }
   static formatYear(period: number): string {
-    return period.toString()
+    if (period > 0)
+      return period.toString()
+    else
+      return Math.abs(period) + ' до нэ'
   }
   static formatDecade(period: number): string {
-    let century = Math.floor((period - 1) / 10) + 1
-    let decade = period - (century - 1) * 10
-    return romanize(century) + ' ' + (decade - 1) * 10 + 'е'
+    let century = Math.floor((Math.abs(period) - 1) / 10) + 1
+    let decade = Math.abs(period) - (century - 1) * 10
+    if (period > 0)
+      return romanize(century) + ' ' + (decade - 1) * 10 + 'е'
+    else
+      return romanize(century) + ' до нэ ' + (decade - 1) * 10 + 'е'
   }
   static formatCentury(num: number): string {
     if (num > 0)
