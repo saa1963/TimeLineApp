@@ -19272,11 +19272,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const MainPresenter_1 = __webpack_require__(/*! ./MainPresenter */ "./src/MainPresenter.ts");
-const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
 class MainView {
     constructor(model) {
+        // элементы страницы
+        this.aLogin = document.getElementById('btnLogin');
+        this.aReg = document.getElementById('btnReg');
+        this.btnNewTL = document.getElementById('newTimeline');
+        this.lblUser = document.getElementById('lblUser');
+        this.tls = document.getElementById('tls');
         this.Presenter = new MainPresenter_1.MainPresenter(this, model);
-        document.getElementById('btnLogin').onclick = () => __awaiter(this, void 0, void 0, function* () {
+        this.aLogin.onclick = () => __awaiter(this, void 0, void 0, function* () {
             let login = yield this.Presenter.OnLogin();
             if (login) {
                 this.SetUserLabel(login);
@@ -19285,10 +19290,10 @@ class MainView {
                 this.ClearUserLabel();
             }
         });
-        document.getElementById('btnReg').onclick = () => __awaiter(this, void 0, void 0, function* () {
+        this.aReg.onclick = () => __awaiter(this, void 0, void 0, function* () {
             yield this.Presenter.OnRegister();
         });
-        document.getElementById('newTimeline').onclick = () => {
+        this.btnNewTL.onclick = () => {
             this.Presenter.OpenNewTLDialog();
         };
         document.getElementById('load').onclick = () => {
@@ -19314,28 +19319,48 @@ class MainView {
         };
     }
     ClearContent() {
-        $('#tls').empty();
-    }
-    SetUserLabel(user) {
-        $('#lblUser').text(user);
-        $('#lblUser').css('display', 'unset');
-        $('#btnLogin').text('Выход');
-    }
-    ClearUserLabel() {
-        $('#lblUser').css('display', 'none');
-        $('#btnLogin').text('Вход');
-    }
-    DrawDates(dates) {
-        $('#tls').append(`<table cellspacing="2"><tr class="date"></tr></table>`);
-        for (let i = 0; i < dates.length; ++i) {
-            $('.date').append(`<td class="date_cell" id="i${i}">${dates[i]}</td>`);
-            $(`#i${i}`).on('click', (ev) => {
-                this.Presenter.OnScale(i);
-            });
+        if (this.mainTable) {
+            this.tls.removeChild(this.mainTable);
         }
     }
+    SetUserLabel(user) {
+        this.lblUser.textContent = user;
+        this.lblUser.style.display = 'unset';
+        this.aLogin.textContent = 'Выход';
+    }
+    ClearUserLabel() {
+        this.lblUser.style.display = 'none';
+        this.aLogin.textContent = 'Вход';
+    }
+    DrawDates(dates) {
+        this.mainTable = document.createElement('table');
+        this.mainTable.setAttribute('cellspacing', '2');
+        let row = document.createElement('tr');
+        row.setAttribute('class', 'date');
+        for (let i = 0; i < dates.length; ++i) {
+            let td = document.createElement('td');
+            td.setAttribute('class', 'date_cell');
+            td.setAttribute('id', `i${i}`);
+            td.onclick = (ev) => {
+                this.Presenter.OnScale(i);
+            };
+            let dt = document.createTextNode(dates[i]);
+            td.append(dt);
+            row.append(td);
+        }
+        this.mainTable.append(row);
+        this.tls.append(this.mainTable);
+    }
     DrawHeader(s) {
-        $('table').append(`tr><td class="tl_head" colspan="${this.Presenter.MainLineCount}">${s}</td></tr>`);
+        let table = document.getElementsByTagName('table')[0];
+        let row = document.createElement('tr');
+        let td = document.createElement('td');
+        td.classList.add('tl_head');
+        td.colSpan = this.Presenter.MainLineCount;
+        let txt = document.createTextNode(s);
+        td.append(txt);
+        row.append(td);
+        table.append(row);
     }
 }
 exports.MainView = MainView;
