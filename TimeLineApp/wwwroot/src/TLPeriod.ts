@@ -120,6 +120,35 @@ export class TLPeriod {
     protected ContainsMonth(month: number): boolean {
         return this.IsIntersectIntervals(DateUtils.FirstDayOfMonth(month), DateUtils.LastDayOfMonth(month));
     }
+
+  public IsIntersectIntervalsForPeriod(l1: number, r1: number, period: EnumPeriod): boolean {
+    let l2: number, r2: number
+    switch (period) {
+      case EnumPeriod.day:
+        l2 = this.Begin.Day
+        r2 = this.End.Day
+        break;
+      case EnumPeriod.month:
+        l2 = this.Begin.Month
+        r2 = this.End.Month
+        break;
+      case EnumPeriod.year:
+        l2 = this.Begin.Year
+        r2 = this.End.Year
+        break;
+      case EnumPeriod.decade:
+        l2 = this.Begin.Decade
+        r2 = this.End.Decade
+        break;
+      case EnumPeriod.century:
+        l2 = this.Begin.Century
+        r2 = this.End.Century
+        break;
+    }
+    let rt: boolean = TLPeriod.isIntersectIntervals(l1, r1, l2, r2)
+    return rt
+  }
+
     /**
      * Есть ли пересечение 2-х целочисленных интервалов
      * @param l1 левая граница интервал 1

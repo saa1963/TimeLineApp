@@ -17,6 +17,8 @@ import { TlistView } from "./TlistView";
 import { TLPeriod } from "./TLPeriod";
 import { NS_EventPeriod } from "./EP/EventPeriod"
 
+export interface ExTLPeriod { il: number, ir: number, item: TLPeriod }
+
 export class MainPresenter {
   private model: MainModel
   private view: MainView
@@ -280,11 +282,34 @@ export class MainPresenter {
 
   private DrawTL(model: TimeLineModel) {
     this.view.DrawHeader(model.Name)
-    let begin_day: number, end_day: number
-
-    //let items = model.Items.filter((value, index, array) => {
-    //  return value.IsIntersectIntervals(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent)
-    //})
+    // выбрать периоды попадающие в общий диапазон
+    let items = model.Items.filter((value, index, array) => {
+      return value.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period)
+    })
+    let exItems: ExTLPeriod[] = []
+    for (let p of items) {
+      let il: number, ir: number
+      let попал: boolean
+      for (let i = 0; i < this.mainLine.length; i++) {
+        попал = p.IsIntersectIntervalsForPeriod(this.mainLine[i].ValueEvent, this.mainLine[i].ValueEvent, this.Period)
+        if (!il) {
+          if (попал) {
+            il = i
+          }
+        }
+        if (il) {
+          if (!попал) {
+            ir = i - 1
+            break
+          }
+        }
+      }
+      if (il && !ir) {
+        ir = this.mainLine.length - 1
+      }
+      exItems.push({il: il, ir: ir, item: p})
+    }
+    console.log(exItems)
   }
 
   public async OnLogin(): Promise<string> {

@@ -19182,10 +19182,34 @@ class MainPresenter {
     }
     DrawTL(model) {
         this.view.DrawHeader(model.Name);
-        let begin_day, end_day;
-        //let items = model.Items.filter((value, index, array) => {
-        //  return value.IsIntersectIntervals(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent)
-        //})
+        // выбрать периоды попадающие в общий диапазон
+        let items = model.Items.filter((value, index, array) => {
+            return value.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period);
+        });
+        let exItems = [];
+        for (let p of items) {
+            let il, ir;
+            let попал;
+            for (let i = 0; i < this.mainLine.length; i++) {
+                попал = p.IsIntersectIntervalsForPeriod(this.mainLine[i].ValueEvent, this.mainLine[i].ValueEvent, this.Period);
+                if (!il) {
+                    if (попал) {
+                        il = i;
+                    }
+                }
+                if (il) {
+                    if (!попал) {
+                        ir = i - 1;
+                        break;
+                    }
+                }
+            }
+            if (il && !ir) {
+                ir = this.mainLine.length - 1;
+            }
+            exItems.push({ il: il, ir: ir, item: p });
+        }
+        console.log(exItems);
     }
     OnLogin() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -19334,13 +19358,13 @@ class MainView {
     }
     DrawDates(dates) {
         this.mainTable = document.createElement('table');
-        this.mainTable.setAttribute('cellspacing', '2');
+        this.mainTable.cellSpacing = '2';
         let row = document.createElement('tr');
-        row.setAttribute('class', 'date');
+        row.classList.add('date');
         for (let i = 0; i < dates.length; ++i) {
             let td = document.createElement('td');
-            td.setAttribute('class', 'date_cell');
-            td.setAttribute('id', `i${i}`);
+            td.classList.add('date_cell');
+            td.id = 'i' + i;
             td.onclick = (ev) => {
                 this.Presenter.OnScale(i);
             };
@@ -20071,6 +20095,33 @@ class TLPeriod {
      */
     ContainsMonth(month) {
         return this.IsIntersectIntervals(dateutils_1.DateUtils.FirstDayOfMonth(month), dateutils_1.DateUtils.LastDayOfMonth(month));
+    }
+    IsIntersectIntervalsForPeriod(l1, r1, period) {
+        let l2, r2;
+        switch (period) {
+            case TLEvent_1.EnumPeriod.day:
+                l2 = this.Begin.Day;
+                r2 = this.End.Day;
+                break;
+            case TLEvent_1.EnumPeriod.month:
+                l2 = this.Begin.Month;
+                r2 = this.End.Month;
+                break;
+            case TLEvent_1.EnumPeriod.year:
+                l2 = this.Begin.Year;
+                r2 = this.End.Year;
+                break;
+            case TLEvent_1.EnumPeriod.decade:
+                l2 = this.Begin.Decade;
+                r2 = this.End.Decade;
+                break;
+            case TLEvent_1.EnumPeriod.century:
+                l2 = this.Begin.Century;
+                r2 = this.End.Century;
+                break;
+        }
+        let rt = TLPeriod.isIntersectIntervals(l1, r1, l2, r2);
+        return rt;
     }
     /**
      * Есть ли пересечение 2-х целочисленных интервалов
