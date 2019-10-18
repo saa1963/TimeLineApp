@@ -1,4 +1,4 @@
-﻿import { MainPresenter } from "./MainPresenter";
+﻿import { MainPresenter, IExTLPeriod } from "./MainPresenter";
 import * as $ from 'jquery'
 import { MainModel } from "./MainModel";
 
@@ -100,6 +100,36 @@ export class MainView {
     let txt = document.createTextNode(s)
     td.append(txt)
     row.append(td)
+    table.append(row)
+  }
+
+  public DrawEventsRow(items: IExTLPeriod[]) {
+    let table = document.getElementsByTagName('table')[0]
+    let row = document.createElement('tr')
+    let i = 0, last = -1
+    while (i < items.length) {
+      if (items[i].il - last != 1) {
+        let td = <HTMLTableDataCellElement>document.createElement('td')
+        td.classList.add('hidden_cell')
+        td.colSpan = items[i].il - last - 1
+        last = items[i].il - 1
+        row.append(td)
+      }
+      let td = <HTMLTableDataCellElement>document.createElement('td')
+      td.colSpan = items[i].ir - items[i].il + 1
+      td.classList.add('period_cell')
+      last = items[i].ir
+      let txt = document.createTextNode(items[i].item.Name)
+      td.append(txt)
+      row.append(td)
+      i++
+    }
+    //let td = <HTMLTableDataCellElement>document.createElement('td')
+    //td.classList.add('tl_head')
+    //td.colSpan = this.Presenter.MainLineCount
+    //let txt = document.createTextNode(s)
+    //td.append(txt)
+    //row.append(td)
     table.append(row)
   }
 }

@@ -17,7 +17,7 @@ import { TlistView } from "./TlistView";
 import { TLPeriod } from "./TLPeriod";
 import { NS_EventPeriod } from "./EP/EventPeriod"
 
-export interface ExTLPeriod { il: number, ir: number, item: TLPeriod }
+export interface IExTLPeriod { il: number, ir: number, item: TLPeriod }
 
 export class MainPresenter {
   private model: MainModel
@@ -286,30 +286,63 @@ export class MainPresenter {
     let items = model.Items.filter((value, index, array) => {
       return value.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period)
     })
-    let exItems: ExTLPeriod[] = []
+    // вычисляем индексы
+    let exItems: IExTLPeriod[] = []
     for (let p of items) {
-      let il: number, ir: number
+      let il: number = null, ir: number = null
       let попал: boolean
       for (let i = 0; i < this.mainLine.length; i++) {
         попал = p.IsIntersectIntervalsForPeriod(this.mainLine[i].ValueEvent, this.mainLine[i].ValueEvent, this.Period)
-        if (!il) {
+        if (il === null) {
           if (попал) {
             il = i
           }
         }
-        if (il) {
+        if (il !== null) {
           if (!попал) {
             ir = i - 1
             break
           }
         }
       }
-      if (il && !ir) {
+      if (il !== null && ir === null) {
         ir = this.mainLine.length - 1
       }
       exItems.push({il: il, ir: ir, item: p})
     }
-    console.log(exItems)
+    // упакуем
+    let полки: IExTLPeriod[][] = []
+    let НомерПолки = -1 // индекс полки
+    let НашлосьМесто: boolean
+    let свободнаяфишка: IExTLPeriod
+    let НомераУложенныхФишекНаПоследнююПолку: number[]
+    let i = 0
+    while (exItems.length > 0) {
+      полки.push([])
+      НомерПолки++
+      while (i < exItems.length) {
+        свободнаяфишка = exItems[i]
+        НашлосьМесто = true
+        for (let уложеннаяфишка of полки[НомерПолки]) {
+          if (уложеннаяфишка.item.IsIntersectIntervalsForPeriod(свободнаяфишка.il, свободнаяфишка.ir, this.Period)) {
+            НашлосьМесто = false
+            break
+          }
+        }
+        if (НашлосьМесто) {
+          полки[НомерПолки].push(свободнаяфишка)
+          НомераУложенныхФишекНаПоследнююПолку.push(i)
+        }
+        i++
+      }
+      for (let j = 0; j < НомераУложенныхФишекНаПоследнююПолку.length; j++) {
+        exItems.splice(j)
+      }
+    }
+
+    for (let exitem of полки) {
+      this.view.DrawEventsRow(exitem)
+    }
   }
 
   public async OnLogin(): Promise<string> {

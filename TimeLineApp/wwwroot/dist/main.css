@@ -11328,6 +11328,9 @@ table {
 .hidden_cell {
   background-color: cornflowerblue; }
 
+.period_cell {
+  background-color: darkgoldenrod; }
+
 .tl_head {
   background-color: brown;
   color: aliceblue;

@@ -19186,30 +19186,62 @@ class MainPresenter {
         let items = model.Items.filter((value, index, array) => {
             return value.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period);
         });
+        // вычисляем индексы
         let exItems = [];
         for (let p of items) {
-            let il, ir;
+            let il = null, ir = null;
             let попал;
             for (let i = 0; i < this.mainLine.length; i++) {
                 попал = p.IsIntersectIntervalsForPeriod(this.mainLine[i].ValueEvent, this.mainLine[i].ValueEvent, this.Period);
-                if (!il) {
+                if (il === null) {
                     if (попал) {
                         il = i;
                     }
                 }
-                if (il) {
+                if (il !== null) {
                     if (!попал) {
                         ir = i - 1;
                         break;
                     }
                 }
             }
-            if (il && !ir) {
+            if (il !== null && ir === null) {
                 ir = this.mainLine.length - 1;
             }
             exItems.push({ il: il, ir: ir, item: p });
         }
-        console.log(exItems);
+        // упакуем
+        let полки = [];
+        let НомерПолки = -1; // индекс полки
+        let НашлосьМесто;
+        let свободнаяфишка;
+        let НомераУложенныхФишекНаПоследнююПолку;
+        let i = 0;
+        while (exItems.length > 0) {
+            полки.push([]);
+            НомерПолки++;
+            while (i < exItems.length) {
+                свободнаяфишка = exItems[i];
+                НашлосьМесто = true;
+                for (let уложеннаяфишка of полки[НомерПолки]) {
+                    if (уложеннаяфишка.item.IsIntersectIntervalsForPeriod(свободнаяфишка.il, свободнаяфишка.ir, this.Period)) {
+                        НашлосьМесто = false;
+                        break;
+                    }
+                }
+                if (НашлосьМесто) {
+                    полки[НомерПолки].push(свободнаяфишка);
+                    НомераУложенныхФишекНаПоследнююПолку.push(i);
+                }
+                i++;
+            }
+            for (let j = 0; j < НомераУложенныхФишекНаПоследнююПолку.length; j++) {
+                exItems.splice(j);
+            }
+        }
+        for (let exitem of полки) {
+            this.view.DrawEventsRow(exitem);
+        }
     }
     OnLogin() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -19384,6 +19416,35 @@ class MainView {
         let txt = document.createTextNode(s);
         td.append(txt);
         row.append(td);
+        table.append(row);
+    }
+    DrawEventsRow(items) {
+        let table = document.getElementsByTagName('table')[0];
+        let row = document.createElement('tr');
+        let i = 0, last = -1;
+        while (i < items.length) {
+            if (items[i].il - last != 1) {
+                let td = document.createElement('td');
+                td.classList.add('hidden_cell');
+                td.colSpan = items[i].il - last - 1;
+                last = items[i].il - 1;
+                row.append(td);
+            }
+            let td = document.createElement('td');
+            td.colSpan = items[i].ir - items[i].il + 1;
+            td.classList.add('period_cell');
+            last = items[i].ir;
+            let txt = document.createTextNode(items[i].item.Name);
+            td.append(txt);
+            row.append(td);
+            i++;
+        }
+        //let td = <HTMLTableDataCellElement>document.createElement('td')
+        //td.classList.add('tl_head')
+        //td.colSpan = this.Presenter.MainLineCount
+        //let txt = document.createTextNode(s)
+        //td.append(txt)
+        //row.append(td)
         table.append(row);
     }
 }
