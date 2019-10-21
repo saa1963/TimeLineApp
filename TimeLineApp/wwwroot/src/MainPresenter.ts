@@ -316,15 +316,16 @@ export class MainPresenter {
     let НашлосьМесто: boolean
     let свободнаяфишка: IExTLPeriod
     let НомераУложенныхФишекНаПоследнююПолку: number[]
-    let i = 0
     while (exItems.length > 0) {
+      let i = 0
       полки.push([])
       НомерПолки++
+      НомераУложенныхФишекНаПоследнююПолку = []
       while (i < exItems.length) {
         свободнаяфишка = exItems[i]
         НашлосьМесто = true
         for (let уложеннаяфишка of полки[НомерПолки]) {
-          if (уложеннаяфишка.item.IsIntersectIntervalsForPeriod(свободнаяфишка.il, свободнаяфишка.ir, this.Period)) {
+          if (TLPeriod.isIntersectIntervals(уложеннаяфишка.il, уложеннаяфишка.ir, свободнаяфишка.il, свободнаяфишка.ir)) {
             НашлосьМесто = false
             break
           }
@@ -335,9 +336,16 @@ export class MainPresenter {
         }
         i++
       }
-      for (let j = 0; j < НомераУложенныхФишекНаПоследнююПолку.length; j++) {
-        exItems.splice(j)
-      }
+      let exItemsTemp: IExTLPeriod[] = []
+      exItems.forEach((value, index, array) => {
+        if (!НомераУложенныхФишекНаПоследнююПолку.includes(index)) {
+          exItemsTemp.push(value)
+        }
+      })
+      exItems = exItemsTemp
+      //for (let j = 0; j < НомераУложенныхФишекНаПоследнююПолку.length; j++) {
+      //  exItems.splice(НомераУложенныхФишекНаПоследнююПолку[j], 1)
+      //}
     }
 
     for (let exitem of полки) {

@@ -18941,6 +18941,7 @@ const RegisterView_1 = __webpack_require__(/*! ./RegisterView */ "./src/Register
 const TimeLineModel_1 = __webpack_require__(/*! ./TimeLineModel */ "./src/TimeLineModel.ts");
 const TLEvent_1 = __webpack_require__(/*! ./TLEvent */ "./src/TLEvent.ts");
 const TlistView_1 = __webpack_require__(/*! ./TlistView */ "./src/TlistView.ts");
+const TLPeriod_1 = __webpack_require__(/*! ./TLPeriod */ "./src/TLPeriod.ts");
 const EventPeriod_1 = __webpack_require__(/*! ./EP/EventPeriod */ "./src/EP/EventPeriod.ts");
 class MainPresenter {
     constructor(view, model) {
@@ -19216,15 +19217,16 @@ class MainPresenter {
         let НашлосьМесто;
         let свободнаяфишка;
         let НомераУложенныхФишекНаПоследнююПолку;
-        let i = 0;
         while (exItems.length > 0) {
+            let i = 0;
             полки.push([]);
             НомерПолки++;
+            НомераУложенныхФишекНаПоследнююПолку = [];
             while (i < exItems.length) {
                 свободнаяфишка = exItems[i];
                 НашлосьМесто = true;
                 for (let уложеннаяфишка of полки[НомерПолки]) {
-                    if (уложеннаяфишка.item.IsIntersectIntervalsForPeriod(свободнаяфишка.il, свободнаяфишка.ir, this.Period)) {
+                    if (TLPeriod_1.TLPeriod.isIntersectIntervals(уложеннаяфишка.il, уложеннаяфишка.ir, свободнаяфишка.il, свободнаяфишка.ir)) {
                         НашлосьМесто = false;
                         break;
                     }
@@ -19235,9 +19237,16 @@ class MainPresenter {
                 }
                 i++;
             }
-            for (let j = 0; j < НомераУложенныхФишекНаПоследнююПолку.length; j++) {
-                exItems.splice(j);
-            }
+            let exItemsTemp = [];
+            exItems.forEach((value, index, array) => {
+                if (!НомераУложенныхФишекНаПоследнююПолку.includes(index)) {
+                    exItemsTemp.push(value);
+                }
+            });
+            exItems = exItemsTemp;
+            //for (let j = 0; j < НомераУложенныхФишекНаПоследнююПолку.length; j++) {
+            //  exItems.splice(НомераУложенныхФишекНаПоследнююПолку[j], 1)
+            //}
         }
         for (let exitem of полки) {
             this.view.DrawEventsRow(exitem);
