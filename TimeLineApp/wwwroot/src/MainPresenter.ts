@@ -123,7 +123,7 @@ export class MainPresenter {
     })
     this.m_Period = EnumPeriod.decade
     this.model.evAddTimeLine.subscribe((tl) => {
-      this.DrawTL(tl)
+      this.DrawTL(this.Count - 1, tl)
     })
     let kvo = Math.floor((document.documentElement.clientWidth - 2) / 120)
     this.mainLine = new Array(kvo)
@@ -252,7 +252,7 @@ export class MainPresenter {
     this.view.ClearContent()
     this.view.DrawDates(this.GetDrawDates())
     for (let i = 0; i < this.Count; i++) {
-      this.DrawTL(this.Item(i))
+      this.DrawTL(i, this.Item(i))
     }
   }
 
@@ -280,8 +280,8 @@ export class MainPresenter {
     return dates
   }
 
-  private DrawTL(model: TimeLineModel) {
-    this.view.DrawHeader(model.Name)
+  private DrawTL(tl_index: number, model: TimeLineModel) {
+    this.view.DrawHeader(tl_index, model.Name)
     // выбрать периоды попадающие в общий диапазон
     let items = model.Items.filter((value, index, array) => {
       return value.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period)
@@ -336,16 +336,9 @@ export class MainPresenter {
         }
         i++
       }
-      let exItemsTemp: IExTLPeriod[] = []
-      exItems.forEach((value, index, array) => {
-        if (!НомераУложенныхФишекНаПоследнююПолку.includes(index)) {
-          exItemsTemp.push(value)
-        }
+      exItems = exItems.filter((value, index, array) => {
+        return !НомераУложенныхФишекНаПоследнююПолку.includes(index)
       })
-      exItems = exItemsTemp
-      //for (let j = 0; j < НомераУложенныхФишекНаПоследнююПолку.length; j++) {
-      //  exItems.splice(НомераУложенныхФишекНаПоследнююПолку[j], 1)
-      //}
     }
 
     for (let exitem of полки) {

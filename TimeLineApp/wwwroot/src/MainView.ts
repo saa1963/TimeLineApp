@@ -1,6 +1,7 @@
 ﻿import { MainPresenter, IExTLPeriod } from "./MainPresenter";
 import * as $ from 'jquery'
 import { MainModel } from "./MainModel";
+import { BoxView } from "./BoxView";
 
 export class MainView {
   // private свойства
@@ -91,14 +92,22 @@ export class MainView {
     this.tls.append(this.mainTable)
   }
 
-  public DrawHeader(s: string) {
+  public async DrawHeader(idx: number, s: string) {
     let table = document.getElementsByTagName('table')[0]
     let row = document.createElement('tr')
     let td = <HTMLTableDataCellElement>document.createElement('td')
     td.classList.add('tl_head')
-    td.colSpan = this.Presenter.MainLineCount
+    td.colSpan = this.Presenter.MainLineCount - 1
     let txt = document.createTextNode(s)
     td.append(txt)
+    row.append(td)
+    td = <HTMLTableDataCellElement>document.createElement('td')
+    let btn = <HTMLButtonElement>document.createElement('button')
+    btn.textContent = "+"
+    btn.onclick = async (ev) => {
+      await new BoxView(idx.toString()).Show()
+    }
+    td.append(btn)
     row.append(td)
     table.append(row)
   }
@@ -124,12 +133,6 @@ export class MainView {
       row.append(td)
       i++
     }
-    //let td = <HTMLTableDataCellElement>document.createElement('td')
-    //td.classList.add('tl_head')
-    //td.colSpan = this.Presenter.MainLineCount
-    //let txt = document.createTextNode(s)
-    //td.append(txt)
-    //row.append(td)
     table.append(row)
   }
 }

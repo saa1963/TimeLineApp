@@ -18981,7 +18981,7 @@ class MainPresenter {
         });
         this.m_Period = TLEvent_1.EnumPeriod.decade;
         this.model.evAddTimeLine.subscribe((tl) => {
-            this.DrawTL(tl);
+            this.DrawTL(this.Count - 1, tl);
         });
         let kvo = Math.floor((document.documentElement.clientWidth - 2) / 120);
         this.mainLine = new Array(kvo);
@@ -19155,7 +19155,7 @@ class MainPresenter {
         this.view.ClearContent();
         this.view.DrawDates(this.GetDrawDates());
         for (let i = 0; i < this.Count; i++) {
-            this.DrawTL(this.Item(i));
+            this.DrawTL(i, this.Item(i));
         }
     }
     GetDrawDates() {
@@ -19181,8 +19181,8 @@ class MainPresenter {
         }
         return dates;
     }
-    DrawTL(model) {
-        this.view.DrawHeader(model.Name);
+    DrawTL(tl_index, model) {
+        this.view.DrawHeader(tl_index, model.Name);
         // выбрать периоды попадающие в общий диапазон
         let items = model.Items.filter((value, index, array) => {
             return value.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period);
@@ -19237,16 +19237,9 @@ class MainPresenter {
                 }
                 i++;
             }
-            let exItemsTemp = [];
-            exItems.forEach((value, index, array) => {
-                if (!НомераУложенныхФишекНаПоследнююПолку.includes(index)) {
-                    exItemsTemp.push(value);
-                }
+            exItems = exItems.filter((value, index, array) => {
+                return !НомераУложенныхФишекНаПоследнююПолку.includes(index);
             });
-            exItems = exItemsTemp;
-            //for (let j = 0; j < НомераУложенныхФишекНаПоследнююПолку.length; j++) {
-            //  exItems.splice(НомераУложенныхФишекНаПоследнююПолку[j], 1)
-            //}
         }
         for (let exitem of полки) {
             this.view.DrawEventsRow(exitem);
@@ -19337,6 +19330,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const MainPresenter_1 = __webpack_require__(/*! ./MainPresenter */ "./src/MainPresenter.ts");
+const BoxView_1 = __webpack_require__(/*! ./BoxView */ "./src/BoxView.ts");
 class MainView {
     constructor(model) {
         // элементы страницы
@@ -19416,16 +19410,26 @@ class MainView {
         this.mainTable.append(row);
         this.tls.append(this.mainTable);
     }
-    DrawHeader(s) {
-        let table = document.getElementsByTagName('table')[0];
-        let row = document.createElement('tr');
-        let td = document.createElement('td');
-        td.classList.add('tl_head');
-        td.colSpan = this.Presenter.MainLineCount;
-        let txt = document.createTextNode(s);
-        td.append(txt);
-        row.append(td);
-        table.append(row);
+    DrawHeader(idx, s) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let table = document.getElementsByTagName('table')[0];
+            let row = document.createElement('tr');
+            let td = document.createElement('td');
+            td.classList.add('tl_head');
+            td.colSpan = this.Presenter.MainLineCount - 1;
+            let txt = document.createTextNode(s);
+            td.append(txt);
+            row.append(td);
+            td = document.createElement('td');
+            let btn = document.createElement('button');
+            btn.textContent = "+";
+            btn.onclick = (ev) => __awaiter(this, void 0, void 0, function* () {
+                yield new BoxView_1.BoxView(idx.toString()).Show();
+            });
+            td.append(btn);
+            row.append(td);
+            table.append(row);
+        });
     }
     DrawEventsRow(items) {
         let table = document.getElementsByTagName('table')[0];

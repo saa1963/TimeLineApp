@@ -39,7 +39,7 @@
         },
         "Month": 23637,
         "Year": 1970,
-        "Decade": 198,
+        "Decade": 197,
         "Century": 20
       },
       "End": {
@@ -51,7 +51,7 @@
         },
         "Month": 23637,
         "Year": 1970,
-        "Decade": 198,
+        "Decade": 197,
         "Century": 20
       }
     },
@@ -66,7 +66,7 @@
         },
         "Month": 23754,
         "Year": 1980,
-        "Decade": 199,
+        "Decade": 198,
         "Century": 20
       },
       "End": {
@@ -78,7 +78,7 @@
         },
         "Month": 23754,
         "Year": 1980,
-        "Decade": 199,
+        "Decade": 198,
         "Century": 20
       }
     },

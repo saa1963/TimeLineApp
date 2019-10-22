@@ -69,33 +69,6 @@
             </div>
         </div>
     </div>
-    <!-- Модальное окно для редактирования настроек ЛВ -->
-    <div id="tmOptionsModal" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Настройки</h5>
-                    <button type="button" class="close closeoptionmodal" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <label for="typePeriod">Периодичность</label>
-                    <select id="typePeriod">
-                        <option value="1">День</option>
-                        <option value="2">Месяц</option>
-                        <option value="3">Год</option>
-                        <option value="4">Десятилетие</option>
-                        <option value="5">Столетие</option>
-                    </select>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary closeoptionmodal">Закрыть</button>
-                    <button id="btnOptionsOk" type="button" class="btn btn-primary">Сохранить</button>
-                </div>
-            </div>
-        </div>
-    </div>
     <!-- Модальное окно для регистрации пользователя -->
     <div id="tmRegisterModal" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -208,6 +181,60 @@
                 </div>
                 <div class="modal-footer">
                     <button id="btnBoxOk" type="button" class="btn btn-primary">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Модальное окно для добавления периода -->
+    <div id="tmAddPeriod" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Добавить период</h5>
+                    <button type="button" class="close closeloginmodal" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="addperiod_Name">Наименование</label>
+                        <input class="form-control" id="addperiod_Name" type="text" value="" placeholder="Введите наименование" required pattern="\w+">
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            Начало периода
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="addperiod_Begin_Type">Тип</label>
+                                <select id="addperiod_Begin_Type">
+                                    <option>День</option>
+                                    <option>Месяц</option>
+                                    <option>Год</option>
+                                    <option>Десятилетие</option>
+                                    <option>Век</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">First and last name</span>
+                                </div>
+                                <input type="text" aria-label="First name" class="form-control">
+                                <input type="text" aria-label="Last name" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="logPassword">Дата</label>
+                                <input class="form-control" id="logPassword" type="password" value="" placeholder="Введите пароль" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="addperiod_server_error" class="alert alert-danger" role="alert" style="display:none">
+                    Ошибка добавления.
+                </div>
+                <div class="modal-footer">
+                    <button id="btnCancelLoginUser" type="button" class="btn btn-secondary closeloginmodal">Закрыть</button>
+                    <button id="btnLoginUser" type="button" class="btn btn-primary">Вход</button>
                 </div>
             </div>
         </div>
