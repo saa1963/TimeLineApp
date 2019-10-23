@@ -19452,12 +19452,6 @@ class MainView {
             row.append(td);
             i++;
         }
-        //let td = <HTMLTableDataCellElement>document.createElement('td')
-        //td.classList.add('tl_head')
-        //td.colSpan = this.Presenter.MainLineCount
-        //let txt = document.createTextNode(s)
-        //td.append(txt)
-        //row.append(td)
         table.append(row);
     }
 }

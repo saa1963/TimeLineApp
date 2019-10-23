@@ -15,8 +15,8 @@ namespace TimeLineApp.services
 {
     public class FileTLStorage : ITLStorage
     {
-        IHostingEnvironment env;
-        public FileTLStorage(IHostingEnvironment hostingEnvironment)
+        IWebHostEnvironment env;
+        public FileTLStorage(IWebHostEnvironment hostingEnvironment)
         {
             env = hostingEnvironment;
         }

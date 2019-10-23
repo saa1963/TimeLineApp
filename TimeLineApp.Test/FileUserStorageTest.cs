@@ -4,17 +4,17 @@ using System.Text;
 using TimeLineApp.services;
 using Xunit;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
 using System.Text.RegularExpressions;
+using Microsoft.Extensions.Hosting;
 
 namespace TimeLineApp.Test
 {
     public class FileUserStorageTest
     {
-        IHostingEnvironment env = new MyInv();
-        IHostingEnvironment env1 = new MyInv1();
+        IWebHostEnvironment env = new MyInv();
+        IWebHostEnvironment env1 = new MyInv1();
         string login = "zakryvashkrf";
         string email = "zakryvashkrf@mail.ru";
         string password = "1";
@@ -54,39 +54,23 @@ namespace TimeLineApp.Test
         }
     }
 
-    class MyInv : IHostingEnvironment
+    class MyInv : IWebHostEnvironment
     {
-
-        string IHostingEnvironment.EnvironmentName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        string IHostingEnvironment.ApplicationName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        string IHostingEnvironment.WebRootPath { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        IFileProvider IHostingEnvironment.WebRootFileProvider { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        string IHostingEnvironment.ContentRootPath
-        {
-            get
-            {
-                return Utils.filesFolder();
-            }
-            set => throw new NotImplementedException();
-        }
-        IFileProvider IHostingEnvironment.ContentRootFileProvider { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IFileProvider WebRootFileProvider { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string WebRootPath { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string ApplicationName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IFileProvider ContentRootFileProvider { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string EnvironmentName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        string IHostEnvironment.ContentRootPath { get => Utils.filesFolder(); set => throw new NotImplementedException(); }
     }
 
-    class MyInv1 : IHostingEnvironment
+    class MyInv1 : IWebHostEnvironment
     {
-
-        string IHostingEnvironment.EnvironmentName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        string IHostingEnvironment.ApplicationName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        string IHostingEnvironment.WebRootPath { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        IFileProvider IHostingEnvironment.WebRootFileProvider { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        string IHostingEnvironment.ContentRootPath
-        {
-            get
-            {
-                return Utils.usersFolder();
-            }
-            set => throw new NotImplementedException();
-        }
-        IFileProvider IHostingEnvironment.ContentRootFileProvider { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IFileProvider WebRootFileProvider { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string WebRootPath { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string ApplicationName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IFileProvider ContentRootFileProvider { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string ContentRootPath { get => Utils.usersFolder(); set => throw new NotImplementedException(); }
+        public string EnvironmentName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

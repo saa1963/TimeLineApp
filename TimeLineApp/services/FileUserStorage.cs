@@ -11,7 +11,7 @@ namespace TimeLineApp.services
     public class FileUserStorage : IUserStorage
     {
         private readonly string path;
-        public FileUserStorage(IHostingEnvironment hostingEnvironment)
+        public FileUserStorage(IWebHostEnvironment hostingEnvironment)
         {
              path = Path.Combine(hostingEnvironment.ContentRootPath, "data", "users.dat");
         }
