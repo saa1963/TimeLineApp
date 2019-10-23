@@ -32,7 +32,8 @@ namespace TimeLineApp
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie();
 
-            services.AddControllers();
+            services.AddControllersWithViews();
+            //services.AddControllers();
             //services.AddMvc(options => options.EnableEndpointRouting = false)
             //    .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
             //    .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
@@ -58,8 +59,25 @@ namespace TimeLineApp
             app.UseHttpsRedirection();
             app.UseAuthentication();
 
-            app.UseEndpoints(endpoints => {
-                endpoints.MapControllers();
+            //app.UseEndpoints(endpoints => {
+            //    endpoints.MapControllers();
+            //});
+
+            app.UseEndpoints(endpoints =>
+            {
+                //endpoints.MapControllerRoute(
+                //    name: "areaRoute",
+                //    pattern: "{area:exists}/{controller}/{action}",
+                //    defaults: new { action = "Index" });
+
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller}/{action}/{id?}",
+                    defaults: new { controller = "Default", action = "Index" });
+
+                //endpoints.MapControllerRoute(
+                //    name: "api",
+                //    pattern: "{controller}/{id?}");
             });
 
             //app.UseMvc();

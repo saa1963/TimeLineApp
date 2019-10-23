@@ -1,0 +1,230 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Timeline</title>
+    <link rel="stylesheet" href="dist/main.css">
+</head>
+<body>
+    <!-- Главное меню -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="navbar-brand">
+            <button class="nbutton" id="prev_page" href="#">&lt;&lt;</button>
+            <button class="nbutton" id="prev_period">&lt;</button>
+            <button class="nbutton" id="next_period" href="#">&gt;</button>
+            <button class="nbutton" id="next_page" href="#">&gt;&gt;</button>
+        </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        Линии времени
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <button id="newTimeline" class="dropdown-item">Новая</button>
+                        <button id="load" class="dropdown-item">Загрузить</button>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+            </ul>
+            <div class="nav my-2 my-lg-0">
+                <a class="nav-link mr-sm-2" id="btnReg" href="#">Регистрация</a>
+                <a class="nav-link my-2 my-sm-0" id="btnLogin" href="#">Вход</a>
+                <label class="nav-link my-2 my-sm-0" id="lblUser" style="display:none"></label>
+            </div>
+        </div>
+    </nav>
+    <!-- Холст -->
+    <!--
+    <canvas id="canvas"></canvas>
+
+    -->
+    <div id="tls">
+
+    </div>
+    @RenderPage("NewTLView.cshtml")
+    <!-- Модальное окно для регистрации пользователя -->
+    <div id="tmRegisterModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Регистрация</h5>
+                    <button type="button" class="close closeregistermodal" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="regLogin">Имя пользователя</label>
+                        <input class="form-control" id="regLogin" type="text" value="" placeholder="Введите имя пользователя" required pattern="\w+">
+                    </div>
+                    <div class="form-group">
+                        <label for="regEmail">E-Mail</label>
+                        <input class="form-control" id="regEmail" type="email" value="" placeholder="Введите E-Mail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regPassword1">Пароль</label>
+                        <input class="form-control" id="regPassword1" type="password" value="" placeholder="Введите пароль" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regPassword2">Повторный пароль</label>
+                        <input class="form-control" id="regPassword2" type="password" value="" placeholder="Введите повторный пароль" required>
+                    </div>
+                </div>
+                <div id="passw_not_matches" class="alert alert-danger" role="alert" style="display:none">
+                    Пароли не совпадают.
+                </div>
+                <div id="reg_server_error" class="alert alert-danger" role="alert" style="display:none">
+                    Ошибка регистрации на сервере.
+                </div>
+                <div class="modal-footer">
+                    <button id="btnCancelRegisterUser" type="button" class="btn btn-secondary closeregistermodal">Закрыть</button>
+                    <button id="btnRegisterUser" type="button" class="btn btn-primary">Регистрировать</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Модальное окно для входа пользователя -->
+    <div id="tmLoginModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Вход</h5>
+                    <button type="button" class="close closeloginmodal" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="logLogin">Имя пользователя</label>
+                        <input class="form-control" id="logLogin" type="text" value="" placeholder="Введите имя пользователя" required pattern="\w+">
+                    </div>
+                    <div class="form-group">
+                        <label for="logPassword">Пароль</label>
+                        <input class="form-control" id="logPassword" type="password" value="" placeholder="Введите пароль" required>
+                    </div>
+                </div>
+                <div id="log_server_error" class="alert alert-danger" role="alert" style="display:none">
+                    Ошибка входа.
+                </div>
+                <div class="modal-footer">
+                    <button id="btnCancelLoginUser" type="button" class="btn btn-secondary closeloginmodal">Закрыть</button>
+                    <button id="btnLoginUser" type="button" class="btn btn-primary">Вход</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Модальное окно для выбора загрузки -->
+    <div id="tmLoadModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Загрузить</h5>
+                    <button type="button" class="close closeloadmodal" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="files_list">Список</label>
+                        <select class="custom-select" id="files_list" aria-label="Example select with button addon">
+                            <option selected>Choose...</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                    <div id="load_error" class="alert alert-danger" role="alert" style="display:none">
+                        Ошибка входа.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnCancelLoadTL" type="button" class="btn btn-secondary closeloadmodal">Закрыть</button>
+                    <button id="btnLoadTL" type="button" class="btn btn-primary">Загрузить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Модальное окно для MessageBox -->
+    <div id="tmBoxModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="box_message" class="alert" role="alert">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnBoxOk" type="button" class="btn btn-primary">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Модальное окно для добавления периода -->
+    <div id="tmAddPeriod" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Добавить период</h5>
+                    <button type="button" class="close closeloginmodal" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="addperiod_Name">Наименование</label>
+                        <input class="form-control" id="addperiod_Name" type="text" value="" placeholder="Введите наименование" required pattern="\w+">
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            Начало периода
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="addperiod_Begin_Type">Тип</label>
+                                <select id="addperiod_Begin_Type">
+                                    <option>День</option>
+                                    <option>Месяц</option>
+                                    <option>Год</option>
+                                    <option>Десятилетие</option>
+                                    <option>Век</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">First and last name</span>
+                                </div>
+                                <input type="text" aria-label="First name" class="form-control">
+                                <input type="text" aria-label="Last name" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="logPassword">Дата</label>
+                                <input class="form-control" id="logPassword" type="password" value="" placeholder="Введите пароль" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="addperiod_server_error" class="alert alert-danger" role="alert" style="display:none">
+                    Ошибка добавления.
+                </div>
+                <div class="modal-footer">
+                    <button id="btnCancelLoginUser" type="button" class="btn btn-secondary closeloginmodal">Закрыть</button>
+                    <button id="btnLoginUser" type="button" class="btn btn-primary">Вход</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="dist/main.js"></script>
+</body>
+</html>

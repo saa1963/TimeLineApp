@@ -1,0 +1,23 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<!-- Модальное окно для ввода наименование ЛВ -->
+<div id="tmNameModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Имя линии времени</h5>
+                <button type="button" class="close closenamemodal" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input id="tmName" type="text" value="" placeholder="Введите наименование" required>
+            </div>
+            <div class="modal-footer">
+                <button id="btnCancelNewName" type="button" class="btn btn-secondary closenamemodal">Закрыть</button>
+                <button id="btnNewName" type="button" class="btn btn-primary">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>
