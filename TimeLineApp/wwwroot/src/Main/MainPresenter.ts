@@ -1,21 +1,21 @@
-﻿import { ApiClient } from "./ApiClient";
-import { BoxView } from "./BoxView";
-import { ContextMenu } from "./contextmenu";
-import { DateUtils, YearMonthDay } from "./dateutils";
-import { EditStringView } from "./EditStringView";
-import { Globals } from "./Globals";
-import { LoginModel } from "./LoginModel";
-import { LoginView } from "./LoginView";
+﻿import { ApiClient } from "../ApiClient";
+import { BoxView } from "../BoxView";
+import { ContextMenu } from "../contextmenu";
+import { DateUtils, YearMonthDay } from "../dateutils";
+import { EditStringView } from "../EditStringView";
+import { Globals } from "../Globals";
+import { LoginModel } from "../Login/LoginModel";
+import { LoginView } from "../Login/LoginView";
 import { MainModel } from "./MainModel";
 import { MainView } from "./MainView";
-import { MyContextMenu } from "./MyContextMenu";
-import { RegisterModel } from "./RegisterModel";
-import { RegisterView } from "./RegisterView";
-import { TimeLineModel } from "./TimeLineModel";
-import { EnumPeriod, TLEvent, TLEventDay, TLEventMonth } from "./TLEvent";
-import { TlistView } from "./TlistView";
-import { TLPeriod } from "./TLPeriod";
-import { NS_EventPeriod } from "./EP/EventPeriod"
+import { MyContextMenu } from "../MyContextMenu";
+import { RegisterModel } from "../Register/RegisterModel";
+import { RegisterView } from "../Register//RegisterView";
+import { TimeLineModel } from "../TimeLineModel";
+import { EnumPeriod } from "../TLEvent";
+import { TlistView } from "../Tlist/TlistView";
+import { TLPeriod } from "../TLPeriod";
+import { NS_EventPeriod } from "../EP/EventPeriod"
 
 export interface IExTLPeriod { il: number, ir: number, item: TLPeriod }
 
@@ -362,6 +362,10 @@ export class MainPresenter {
         return null
       }
     }
+  }
+
+  public async OnAddPeriod(idx: number) {
+
   }
 
   public async OnRegister() {

@@ -1,7 +1,7 @@
 ﻿import { TlistModel } from "./TlistModel";
-import { ITlistView } from "./ITlistView";
-import { TimeLineModel } from "./TimeLineModel";
-import { Globals } from "./Globals";
+import { ITlistView } from "../ITlistView";
+import { TimeLineModel } from "../TimeLineModel";
+import { Globals } from "../Globals";
 import * as $ from 'jquery'
 
 export class TlistPresenter {

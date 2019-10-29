@@ -1,7 +1,7 @@
 ﻿import { MainPresenter, IExTLPeriod } from "./MainPresenter";
 import * as $ from 'jquery'
 import { MainModel } from "./MainModel";
-import { BoxView } from "./BoxView";
+import { BoxView } from "../BoxView";
 
 export class MainView {
   // private свойства

@@ -1,0 +1,44 @@
+﻿<!-- Модальное окно для регистрации пользователя -->
+<div id="tmRegisterModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Регистрация</h5>
+                <button type="button" class="close closeregistermodal" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="regLogin">Имя пользователя</label>
+                    <input class="form-control" id="regLogin" type="text" value="" placeholder="Введите имя пользователя" required pattern="\w+">
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">E-Mail</label>
+                    <input class="form-control" id="regEmail" type="email" value="" placeholder="Введите E-Mail" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword1">Пароль</label>
+                    <input class="form-control" id="regPassword1" type="password" value="" placeholder="Введите пароль" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword2">Повторный пароль</label>
+                    <input class="form-control" id="regPassword2" type="password" value="" placeholder="Введите повторный пароль" required>
+                </div>
+            </div>
+            <div id="passw_not_matches" class="alert alert-danger" role="alert" style="display:none">
+                Пароли не совпадают.
+            </div>
+            <div id="reg_server_error" class="alert alert-danger" role="alert" style="display:none">
+                Ошибка регистрации на сервере.
+            </div>
+            <div class="modal-footer">
+                <button id="btnCancelRegisterUser" type="button" class="btn btn-secondary closeregistermodal">Закрыть</button>
+                <button id="btnRegisterUser" type="button" class="btn btn-primary">Регистрировать</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@

@@ -1,8 +1,8 @@
 ﻿import { LoginModel } from "./LoginModel";
-import { Globals } from "./Globals";
+import { Globals } from "../Globals";
 import * as $ from 'jquery'
 import { ILoginView } from "./ILoginView";
-import { ApiClient } from "./ApiClient";
+import { ApiClient } from "../ApiClient";
 
 export class LoginPresenter {
   private model: LoginModel

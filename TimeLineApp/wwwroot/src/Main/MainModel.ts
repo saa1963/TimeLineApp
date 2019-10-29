@@ -1,7 +1,7 @@
-﻿import { TimeLineModel } from "./TimeLineModel";
+﻿import { TimeLineModel } from "../TimeLineModel";
 import { SimpleEventDispatcher, ISimpleEvent } from "ste-simple-events";
-import { DateUtils } from "./dateutils";
-import { EnumPeriod } from "./TLEvent";
+import { DateUtils } from "../dateutils";
+import { EnumPeriod } from "../TLEvent";
 
 export class MainModel {
   private static instance: MainModel;

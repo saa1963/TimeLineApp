@@ -1,9 +1,9 @@
-﻿import { ITlistView } from "./ITlistView";
+﻿import { ITlistView } from "../ITlistView";
 import * as $ from 'jquery'
 import { TlistPresenter } from "./TlistPresenter";
 import { TlistModel } from "./TlistModel";
-import { Globals } from "./Globals";
-import { TimeLineModel } from "./TimeLineModel";
+import { Globals } from "../Globals";
+import { TimeLineModel } from "../TimeLineModel";
 
 export class TlistView implements ITlistView {
   private Presenter: TlistPresenter

@@ -2,7 +2,7 @@
 import * as $ from 'jquery'
 import { RegisterPresenter } from "./RegisterPresenter";
 import { RegisterModel } from "./RegisterModel";
-import { Globals } from "./Globals";
+import { Globals } from "../Globals";
 
 export class RegisterView implements IRegisterView {
   private Presenter: RegisterPresenter

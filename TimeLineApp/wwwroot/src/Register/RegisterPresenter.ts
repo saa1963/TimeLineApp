@@ -1,8 +1,8 @@
-﻿import { Globals } from "./Globals";
+﻿import { Globals } from "../Globals";
 import * as $ from 'jquery'
 import { RegisterModel } from "./RegisterModel";
 import { IRegisterView } from "./IRegisterView";
-import { ApiClient } from "./ApiClient";
+import { ApiClient } from "../ApiClient";
 
 export class RegisterPresenter {
   private model: RegisterModel

@@ -13,6 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\src\AddPeriodModel.ts" />
+    <Content Remove="wwwroot\src\AddPeriodPresenter.ts" />
+    <Content Remove="wwwroot\src\AddPeriod\AddPeriodView.ts" />
     <Content Remove="wwwroot\src\ApiClient.ts" />
     <Content Remove="wwwroot\src\BoxView.ts" />
     <Content Remove="wwwroot\src\colorutils.ts" />
@@ -105,28 +108,31 @@
   <ItemGroup>
     <TypeScriptCompile Include="tests\DateUtilsTest.ts" />
     <TypeScriptCompile Include="tests\TLPeriodTest.ts" />
+    <TypeScriptCompile Include="wwwroot\src\AddPeriod\AddPeriodModel.ts" />
+    <TypeScriptCompile Include="wwwroot\src\AddPeriod\AddPeriodPresenter.ts" />
+    <TypeScriptCompile Include="wwwroot\src\AddPeriod\AddPeriodView.ts" />
     <TypeScriptCompile Include="wwwroot\src\ApiClient.ts" />
     <TypeScriptCompile Include="wwwroot\src\BoxView.ts" />
     <TypeScriptCompile Include="wwwroot\src\EditStringView.ts" />
     <TypeScriptCompile Include="wwwroot\src\EP\EventPeriod.ts" />
-    <TypeScriptCompile Include="wwwroot\src\ILoginView.ts" />
+    <TypeScriptCompile Include="wwwroot\src\Login\ILoginView.ts" />
     <TypeScriptCompile Include="wwwroot\src\index0.ts" />
-    <TypeScriptCompile Include="wwwroot\src\IRegisterView.ts" />
+    <TypeScriptCompile Include="wwwroot\src\Register\IRegisterView.ts" />
     <TypeScriptCompile Include="wwwroot\src\ITlistView.ts" />
-    <TypeScriptCompile Include="wwwroot\src\LoginModel.ts" />
-    <TypeScriptCompile Include="wwwroot\src\LoginPresenter.ts" />
-    <TypeScriptCompile Include="wwwroot\src\LoginView.ts" />
-    <TypeScriptCompile Include="wwwroot\src\MainModel.ts" />
-    <TypeScriptCompile Include="wwwroot\src\MainPresenter.ts" />
-    <TypeScriptCompile Include="wwwroot\src\MainView.ts" />
+    <TypeScriptCompile Include="wwwroot\src\Login\LoginModel.ts" />
+    <TypeScriptCompile Include="wwwroot\src\Login\LoginPresenter.ts" />
+    <TypeScriptCompile Include="wwwroot\src\Login\LoginView.ts" />
+    <TypeScriptCompile Include="wwwroot\src\Main\MainModel.ts" />
+    <TypeScriptCompile Include="wwwroot\src\Main\MainPresenter.ts" />
+    <TypeScriptCompile Include="wwwroot\src\Main\MainView.ts" />
     <TypeScriptCompile Include="wwwroot\src\MyContextMenu.ts" />
-    <TypeScriptCompile Include="wwwroot\src\RegisterModel.ts" />
-    <TypeScriptCompile Include="wwwroot\src\RegisterPresenter.ts" />
-    <TypeScriptCompile Include="wwwroot\src\RegisterView.ts" />
+    <TypeScriptCompile Include="wwwroot\src\Register\RegisterModel.ts" />
+    <TypeScriptCompile Include="wwwroot\src\Register\RegisterPresenter.ts" />
+    <TypeScriptCompile Include="wwwroot\src\Register\RegisterView.ts" />
     <TypeScriptCompile Include="wwwroot\src\TimeLinePresenter.ts" />
-    <TypeScriptCompile Include="wwwroot\src\TlistModel.ts" />
-    <TypeScriptCompile Include="wwwroot\src\TlistPresenter.ts" />
-    <TypeScriptCompile Include="wwwroot\src\TlistView.ts" />
+    <TypeScriptCompile Include="wwwroot\src\Tlist\TlistModel.ts" />
+    <TypeScriptCompile Include="wwwroot\src\Tlist\TlistPresenter.ts" />
+    <TypeScriptCompile Include="wwwroot\src\Tlist\TlistView.ts" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">

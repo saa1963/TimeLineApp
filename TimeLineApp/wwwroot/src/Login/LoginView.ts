@@ -1,7 +1,7 @@
 ﻿import { LoginPresenter } from "./LoginPresenter";
 import * as $ from 'jquery'
 import { LoginModel } from "./LoginModel";
-import { Globals } from "./Globals";
+import { Globals } from "../Globals";
 import { ILoginView } from "./ILoginView";
 
 export class LoginView implements ILoginView {
