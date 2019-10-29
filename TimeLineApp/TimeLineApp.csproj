@@ -16,6 +16,7 @@
     <Content Remove="wwwroot\src\AddPeriodModel.ts" />
     <Content Remove="wwwroot\src\AddPeriodPresenter.ts" />
     <Content Remove="wwwroot\src\AddPeriod\AddPeriodView.ts" />
+    <Content Remove="wwwroot\src\AddPeriod\IAddPeriodView.ts" />
     <Content Remove="wwwroot\src\ApiClient.ts" />
     <Content Remove="wwwroot\src\BoxView.ts" />
     <Content Remove="wwwroot\src\colorutils.ts" />
@@ -111,6 +112,7 @@
     <TypeScriptCompile Include="wwwroot\src\AddPeriod\AddPeriodModel.ts" />
     <TypeScriptCompile Include="wwwroot\src\AddPeriod\AddPeriodPresenter.ts" />
     <TypeScriptCompile Include="wwwroot\src\AddPeriod\AddPeriodView.ts" />
+    <TypeScriptCompile Include="wwwroot\src\AddPeriod\IAddPeriodView.ts" />
     <TypeScriptCompile Include="wwwroot\src\ApiClient.ts" />
     <TypeScriptCompile Include="wwwroot\src\BoxView.ts" />
     <TypeScriptCompile Include="wwwroot\src\EditStringView.ts" />
