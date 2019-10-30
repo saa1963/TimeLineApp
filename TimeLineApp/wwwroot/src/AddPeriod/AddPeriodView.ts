@@ -3,6 +3,7 @@ import { EnumPeriod } from "../TLEvent"
 import { AddPeriodPresenter } from "./AddPeriodPresenter";
 import { AddPeriodModel } from "./AddPeriodModel";
 import { Globals } from "../Globals";
+import * as $ from 'jquery'
 
 export class AddPeriodView implements IAddPeriodView {
   SetBegin_DecadeDecade(value: number): void {
@@ -142,15 +143,15 @@ export class AddPeriodView implements IAddPeriodView {
   }
   ShowDialog(): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
-      this.dlg[0].modal()
+      $('#tmAddPeriod').modal()
       this.ClearError()
       this.btnOk.onclick = async () => {
         if (!Globals.ValidateElements(this.dlg)) return
-        this.dlg[0].modal('hide')
+        $('#tmAddPeriod').modal('hide')
         resolve(true)
       }
       this.btnCancel.onclick = async () => {
-        this.dlg[0].modal('hide')
+        $('#tmAddPeriod').modal('hide')
         resolve(false)
       }
     }

@@ -1,6 +1,6 @@
-﻿import { MainView } from "./MainView";
+﻿import { MainView } from "./Main/MainView";
 import 'bootstrap'
-import { MainModel } from "./MainModel";
+import { MainModel } from "./Main/MainModel";
 
 (function main() {
   let mainView = new MainView(MainModel.getInstance());

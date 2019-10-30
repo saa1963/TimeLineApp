@@ -74,7 +74,7 @@ export class MainPresenter {
     }
   }
 
-  public async AddPeriod(idx: number) {
+  public async OnAddPeriod(idx: number) {
     let model = new AddPeriodModel()
     let today = new Date()
     model.Name = "Новый период"
@@ -384,10 +384,6 @@ export class MainPresenter {
         return null
       }
     }
-  }
-
-  public async OnAddPeriod(idx: number) {
-
   }
 
   public async OnRegister() {

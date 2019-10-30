@@ -18343,6 +18343,747 @@ module.exports = g;
 
 /***/ }),
 
+/***/ "./src/AddPeriod/AddPeriodModel.ts":
+/*!*****************************************!*\
+  !*** ./src/AddPeriod/AddPeriodModel.ts ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const ste_simple_events_1 = __webpack_require__(/*! ste-simple-events */ "../node_modules/ste-simple-events/dist/index.js");
+class AddPeriodModel {
+    constructor() {
+        this.e_ChangeName = new ste_simple_events_1.SimpleEventDispatcher();
+        this.e_ChangeIsPeriod = new ste_simple_events_1.SimpleEventDispatcher();
+        this.e_ChangeBeginType = new ste_simple_events_1.SimpleEventDispatcher();
+        this.e_ChangeBegin_DayDay = new ste_simple_events_1.SimpleEventDispatcher();
+        this.e_ChangeBegin_DayMonth = new ste_simple_events_1.SimpleEventDispatcher();
+        this.e_ChangeBegin_DayYear = new ste_simple_events_1.SimpleEventDispatcher();
+        this.e_ChangeBegin_MonthMonth = new ste_simple_events_1.SimpleEventDispatcher();
+        this.e_ChangeBegin_MonthYear = new ste_simple_events_1.SimpleEventDispatcher();
+        this.e_ChangeBegin_Year = new ste_simple_events_1.SimpleEventDispatcher();
+        this.e_ChangeBegin_DecadeDecade = new ste_simple_events_1.SimpleEventDispatcher();
+        this.e_ChangeBegin_DecadeCentury = new ste_simple_events_1.SimpleEventDispatcher();
+        this.e_ChangeBegin_Century = new ste_simple_events_1.SimpleEventDispatcher();
+        this.e_ChangeEndType = new ste_simple_events_1.SimpleEventDispatcher();
+        this.e_ChangeEnd_DayDay = new ste_simple_events_1.SimpleEventDispatcher();
+        this.e_ChangeEnd_DayMonth = new ste_simple_events_1.SimpleEventDispatcher();
+        this.e_ChangeEnd_DayYear = new ste_simple_events_1.SimpleEventDispatcher();
+        this.e_ChangeEnd_MonthMonth = new ste_simple_events_1.SimpleEventDispatcher();
+        this.e_ChangeEnd_MonthYear = new ste_simple_events_1.SimpleEventDispatcher();
+        this.e_ChangeEnd_Year = new ste_simple_events_1.SimpleEventDispatcher();
+        this.e_ChangeEnd_DecadeDecade = new ste_simple_events_1.SimpleEventDispatcher();
+        this.e_ChangeEnd_DecadeCentury = new ste_simple_events_1.SimpleEventDispatcher();
+        this.e_ChangeEnd_Century = new ste_simple_events_1.SimpleEventDispatcher();
+    }
+    get Name() { return this.m_Name; }
+    set Name(value) {
+        if (value !== this.m_Name) {
+            this.m_Name = value;
+            this.e_ChangeName.dispatch(value);
+        }
+    }
+    get IsPeriod() { return this.m_IsPeriod; }
+    set IsPeriod(value) {
+        if (value !== this.m_IsPeriod) {
+            this.m_IsPeriod = value;
+            this.e_ChangeIsPeriod.dispatch(value);
+        }
+    }
+    get BeginType() { return this.m_BeginType; }
+    set BeginType(value) {
+        if (value !== this.m_BeginType) {
+            this.m_BeginType = value;
+            this.e_ChangeBeginType.dispatch(value);
+        }
+    }
+    get Begin_DayDay() { return this.m_Begin_DayDay; }
+    set Begin_DayDay(value) {
+        if (value !== this.m_Begin_DayDay) {
+            this.m_Begin_DayDay = value;
+            this.e_ChangeBegin_DayDay.dispatch(value);
+        }
+    }
+    get Begin_DayMonth() { return this.m_Begin_DayMonth; }
+    set Begin_DayMonth(value) {
+        if (value !== this.m_Begin_DayMonth) {
+            this.m_Begin_DayMonth = value;
+            this.e_ChangeBegin_DayMonth.dispatch(value);
+        }
+    }
+    get Begin_DayYear() { return this.m_Begin_DayYear; }
+    set Begin_DayYear(value) {
+        if (value !== this.m_Begin_DayYear) {
+            this.m_Begin_DayYear = value;
+            this.e_ChangeBegin_DayYear.dispatch(value);
+        }
+    }
+    get Begin_MonthMonth() { return this.m_Begin_MonthMonth; }
+    set Begin_MonthMonth(value) {
+        if (value !== this.m_Begin_MonthMonth) {
+            this.m_Begin_MonthMonth = value;
+            this.e_ChangeBegin_MonthMonth.dispatch(value);
+        }
+    }
+    set Begin_MonthYear(value) {
+        if (value !== this.m_Begin_MonthYear) {
+            this.m_Begin_MonthYear = value;
+            this.e_ChangeBegin_MonthYear.dispatch(value);
+        }
+    }
+    set Begin_Year(value) {
+        if (value !== this.m_Begin_Year) {
+            this.m_Begin_Year = value;
+            this.e_ChangeBegin_Year.dispatch(value);
+        }
+    }
+    set Begin_DecadeDecade(value) {
+        if (value !== this.m_Begin_DecadeDecade) {
+            this.m_Begin_DecadeDecade = value;
+            this.e_ChangeBegin_DecadeDecade.dispatch(value);
+        }
+    }
+    set Begin_DecadeCentury(value) {
+        if (value !== this.m_Begin_DecadeCentury) {
+            this.m_Begin_DecadeCentury = value;
+            this.e_ChangeBegin_DecadeCentury.dispatch(value);
+        }
+    }
+    set Begin_Century(value) {
+        if (value !== this.m_Begin_Century) {
+            this.m_Begin_Century = value;
+            this.e_ChangeBegin_Century.dispatch(value);
+        }
+    }
+    get EndType() { return this.m_EndType; }
+    set EndType(value) {
+        if (value !== this.m_EndType) {
+            this.m_EndType = value;
+            this.e_ChangeEndType.dispatch(value);
+        }
+    }
+    get End_DayDay() { return this.m_End_DayDay; }
+    set End_DayDay(value) {
+        if (value !== this.m_End_DayDay) {
+            this.m_End_DayDay = value;
+            this.e_ChangeEnd_DayDay.dispatch(value);
+        }
+    }
+    get End_DayMonth() { return this.m_End_DayMonth; }
+    set End_DayMonth(value) {
+        if (value !== this.m_End_DayMonth) {
+            this.m_End_DayMonth = value;
+            this.e_ChangeEnd_DayMonth.dispatch(value);
+        }
+    }
+    get End_DayYear() { return this.m_End_DayYear; }
+    set End_DayYear(value) {
+        if (value !== this.m_End_DayYear) {
+            this.m_End_DayYear = value;
+            this.e_ChangeEnd_DayYear.dispatch(value);
+        }
+    }
+    get End_MonthMonth() { return this.m_End_MonthMonth; }
+    set End_MonthMonth(value) {
+        if (value !== this.m_End_MonthMonth) {
+            this.m_End_MonthMonth = value;
+            this.e_ChangeEnd_MonthMonth.dispatch(value);
+        }
+    }
+    set End_MonthYear(value) {
+        if (value !== this.m_End_MonthYear) {
+            this.m_End_MonthYear = value;
+            this.e_ChangeEnd_MonthYear.dispatch(value);
+        }
+    }
+    set End_Year(value) {
+        if (value !== this.m_End_Year) {
+            this.m_End_Year = value;
+            this.e_ChangeEnd_Year.dispatch(value);
+        }
+    }
+    set End_DecadeDecade(value) {
+        if (value !== this.m_End_DecadeDecade) {
+            this.m_End_DecadeDecade = value;
+            this.e_ChangeEnd_DecadeDecade.dispatch(value);
+        }
+    }
+    set End_DecadeCentury(value) {
+        if (value !== this.m_End_DecadeCentury) {
+            this.m_End_DecadeCentury = value;
+            this.e_ChangeEnd_DecadeCentury.dispatch(value);
+        }
+    }
+    set End_Century(value) {
+        if (value !== this.m_End_Century) {
+            this.m_End_Century = value;
+            this.e_ChangeEnd_Century.dispatch(value);
+        }
+    }
+    get evChangeName() {
+        return this.e_ChangeName.asEvent();
+    }
+    get evChangeIsPeriod() {
+        return this.e_ChangeIsPeriod.asEvent();
+    }
+    get evChangeBeginType() {
+        return this.e_ChangeBeginType.asEvent();
+    }
+    get evChangeBegin_DayDay() {
+        return this.e_ChangeBegin_DayDay.asEvent();
+    }
+    get evChangeBegin_DayMonth() {
+        return this.e_ChangeBegin_DayMonth.asEvent();
+    }
+    get evChangeBegin_DayYear() {
+        return this.e_ChangeBegin_DayYear.asEvent();
+    }
+    get evChangeBegin_MonthMonth() {
+        return this.e_ChangeBegin_MonthMonth.asEvent();
+    }
+    get evChangeBegin_MonthYear() {
+        return this.e_ChangeBegin_MonthYear.asEvent();
+    }
+    get evChangeBegin_Year() {
+        return this.e_ChangeBegin_Year.asEvent();
+    }
+    get evChangeBegin_DecadeDecade() {
+        return this.e_ChangeBegin_DecadeDecade.asEvent();
+    }
+    get evChangeBegin_DecadeCentury() {
+        return this.e_ChangeBegin_DecadeCentury.asEvent();
+    }
+    get evChangeBegin_Century() {
+        return this.e_ChangeBegin_Century.asEvent();
+    }
+    get evChangeEndType() {
+        return this.e_ChangeEndType.asEvent();
+    }
+    get evChangeEnd_DayDay() {
+        return this.e_ChangeEnd_DayDay.asEvent();
+    }
+    get evChangeEnd_DayMonth() {
+        return this.e_ChangeEnd_DayMonth.asEvent();
+    }
+    get evChangeEnd_DayYear() {
+        return this.e_ChangeEnd_DayYear.asEvent();
+    }
+    get evChangeEnd_MonthMonth() {
+        return this.e_ChangeEnd_MonthMonth.asEvent();
+    }
+    get evChangeEnd_MonthYear() {
+        return this.e_ChangeEnd_MonthYear.asEvent();
+    }
+    get evChangeEnd_Year() {
+        return this.e_ChangeEnd_Year.asEvent();
+    }
+    get evChangeEnd_DecadeDecade() {
+        return this.e_ChangeEnd_DecadeDecade.asEvent();
+    }
+    get evChangeEnd_DecadeCentury() {
+        return this.e_ChangeEnd_DecadeCentury.asEvent();
+    }
+    get evChangeEnd_Century() {
+        return this.e_ChangeEnd_Century.asEvent();
+    }
+}
+exports.AddPeriodModel = AddPeriodModel;
+
+
+/***/ }),
+
+/***/ "./src/AddPeriod/AddPeriodPresenter.ts":
+/*!*********************************************!*\
+  !*** ./src/AddPeriod/AddPeriodPresenter.ts ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+class AddPeriodPresenter {
+    constructor(view, model) {
+        this.model = model;
+        this.view = view;
+        this.model.evChangeName.subscribe((value) => {
+            if (value !== this.m_Name) {
+                this.view.SetName(value);
+            }
+        });
+        this.model.evChangeIsPeriod.subscribe((value) => {
+            if (value !== this.m_IsPeriod) {
+                this.view.SetIsPeriod(value);
+            }
+        });
+        this.model.evChangeBeginType.subscribe((value) => {
+            if (value !== this.m_Begin_Type) {
+                this.view.SetBeginType(value);
+            }
+        });
+        this.model.evChangeBegin_DayDay.subscribe((value) => {
+            if (value !== this.m_Begin_DayDay) {
+                this.view.SetBegin_DayDay(value);
+            }
+        });
+        this.model.evChangeBegin_DayDay.subscribe((value) => {
+            if (value !== this.m_Begin_DayDay) {
+                this.view.SetBegin_DayDay(value);
+            }
+        });
+        this.model.evChangeBegin_DayMonth.subscribe((value) => {
+            if (value !== this.m_Begin_DayMonth) {
+                this.view.SetBegin_DayMonth(value);
+            }
+        });
+        this.model.evChangeBegin_DayYear.subscribe((value) => {
+            if (value !== this.m_Begin_DayYear) {
+                this.view.SetBegin_DayYear(value);
+            }
+        });
+        this.model.evChangeBegin_MonthMonth.subscribe((value) => {
+            if (value !== this.m_Begin_MonthMonth) {
+                this.view.SetBegin_MonthMonth(value);
+            }
+        });
+        this.model.evChangeBegin_MonthYear.subscribe((value) => {
+            if (value !== this.m_Begin_MonthYear) {
+                this.view.SetBegin_MonthYear(value);
+            }
+        });
+        this.model.evChangeBegin_Year.subscribe((value) => {
+            if (value !== this.m_Begin_Year) {
+                this.view.SetBegin_Year(value);
+            }
+        });
+        this.model.evChangeBegin_DecadeDecade.subscribe((value) => {
+            if (value !== this.m_Begin_DecadeDecade) {
+                this.view.SetBegin_DecadeDecade(value);
+            }
+        });
+        this.model.evChangeBegin_DecadeCentury.subscribe((value) => {
+            if (value !== this.m_Begin_DecadeCentury) {
+                this.view.SetBegin_DecadeCentury(value);
+            }
+        });
+        this.model.evChangeBegin_Century.subscribe((value) => {
+            if (value !== this.m_Begin_Century) {
+                this.view.SetBegin_Century(value);
+            }
+        });
+        this.model.evChangeEndType.subscribe((value) => {
+            if (value !== this.m_End_Type) {
+                this.view.SetEndType(value);
+            }
+        });
+        this.model.evChangeEnd_DayDay.subscribe((value) => {
+            if (value !== this.m_End_DayDay) {
+                this.view.SetEnd_DayDay(value);
+            }
+        });
+        this.model.evChangeEnd_DayDay.subscribe((value) => {
+            if (value !== this.m_End_DayDay) {
+                this.view.SetEnd_DayDay(value);
+            }
+        });
+        this.model.evChangeEnd_DayMonth.subscribe((value) => {
+            if (value !== this.m_End_DayMonth) {
+                this.view.SetEnd_DayMonth(value);
+            }
+        });
+        this.model.evChangeEnd_DayYear.subscribe((value) => {
+            if (value !== this.m_End_DayYear) {
+                this.view.SetEnd_DayYear(value);
+            }
+        });
+        this.model.evChangeEnd_MonthMonth.subscribe((value) => {
+            if (value !== this.m_End_MonthMonth) {
+                this.view.SetEnd_MonthMonth(value);
+            }
+        });
+        this.model.evChangeEnd_MonthYear.subscribe((value) => {
+            if (value !== this.m_End_MonthYear) {
+                this.view.SetEnd_MonthYear(value);
+            }
+        });
+        this.model.evChangeEnd_Year.subscribe((value) => {
+            if (value !== this.m_End_Year) {
+                this.view.SetEnd_Year(value);
+            }
+        });
+        this.model.evChangeEnd_DecadeDecade.subscribe((value) => {
+            if (value !== this.m_End_DecadeDecade) {
+                this.view.SetEnd_DecadeDecade(value);
+            }
+        });
+        this.model.evChangeEnd_DecadeCentury.subscribe((value) => {
+            if (value !== this.m_End_DecadeCentury) {
+                this.view.SetEnd_DecadeCentury(value);
+            }
+        });
+        this.model.evChangeEnd_Century.subscribe((value) => {
+            if (value !== this.m_End_Century) {
+                this.view.SetEnd_Century(value);
+            }
+        });
+        this.m_Name = model.Name;
+        this.m_IsPeriod = model.IsPeriod;
+        this.m_Begin_Type = model.BeginType;
+        this.m_Begin_DayDay = model.Begin_DayDay;
+        this.m_Begin_DayMonth = model.Begin_DayMonth;
+        this.m_Begin_DayYear = model.Begin_DayYear;
+        this.m_Begin_MonthMonth = model.Begin_MonthMonth;
+        this.m_Begin_MonthYear = model.Begin_MonthYear;
+        this.m_Begin_Year = model.Begin_Year;
+        this.m_Begin_DecadeDecade = model.Begin_DecadeDecade;
+        this.m_Begin_DecadeCentury = model.Begin_DecadeCentury;
+        this.m_Begin_Century = model.Begin_Century;
+        this.m_End_Type = model.EndType;
+        this.m_End_DayDay = model.End_DayDay;
+        this.m_End_DayMonth = model.End_DayMonth;
+        this.m_End_DayYear = model.End_DayYear;
+        this.m_End_MonthMonth = model.End_MonthMonth;
+        this.m_End_MonthYear = model.End_MonthYear;
+        this.m_End_Year = model.End_Year;
+        this.m_End_DecadeDecade = model.End_DecadeDecade;
+        this.m_End_DecadeCentury = model.End_DecadeCentury;
+        this.m_End_Century = model.End_Century;
+        this.view.SetName(model.Name);
+        this.view.SetBeginType(model.BeginType);
+        this.view.SetIsPeriod(model.IsPeriod);
+        this.view.SetBegin_DayDay(model.Begin_DayDay);
+        this.view.SetBegin_DayMonth(model.Begin_DayMonth);
+        this.view.SetBegin_DayYear(model.Begin_DayYear);
+        this.view.SetBegin_MonthMonth(model.Begin_MonthMonth);
+        this.view.SetBegin_MonthYear(model.Begin_MonthYear);
+        this.view.SetBegin_Year(model.Begin_Year);
+        this.view.SetBegin_DecadeDecade(model.Begin_DecadeDecade);
+        this.view.SetBegin_DecadeCentury(model.Begin_DecadeCentury);
+        this.view.SetBegin_Century(model.Begin_Century);
+        this.view.SetEndType(model.EndType);
+        this.view.SetEnd_DayDay(model.End_DayDay);
+        this.view.SetEnd_DayMonth(model.End_DayMonth);
+        this.view.SetEnd_DayYear(model.End_DayYear);
+        this.view.SetEnd_MonthMonth(model.End_MonthMonth);
+        this.view.SetEnd_MonthYear(model.End_MonthYear);
+        this.view.SetEnd_Year(model.End_Year);
+        this.view.SetEnd_DecadeDecade(model.End_DecadeDecade);
+        this.view.SetEnd_DecadeCentury(model.End_DecadeCentury);
+        this.view.SetEnd_Century(model.End_Century);
+    }
+    // обработчики вызовов из View
+    OnChangeNameInView() {
+        this.m_Name = this.view.GetName();
+        this.model.Name = this.m_Name;
+    }
+    OnChangeIsPeriodInView() {
+        this.m_IsPeriod = this.view.GetIsPeriod();
+        this.model.IsPeriod = this.m_IsPeriod;
+    }
+    OnChangeBegin_TypeInView() {
+        this.m_Begin_Type = this.view.GetBeginType();
+        this.model.BeginType = this.m_Begin_Type;
+    }
+    OnChangeBegin_DayDayInView() {
+        this.m_Begin_DayDay = this.view.GetBegin_DayDay();
+        this.model.Begin_DayDay = this.m_Begin_DayDay;
+    }
+    OnChangeBegin_DayMonthInView() {
+        this.m_Begin_DayMonth = this.view.GetBegin_DayMonth();
+        this.model.Begin_DayMonth = this.m_Begin_DayMonth;
+    }
+    OnChangeBegin_DayYearInView() {
+        this.m_Begin_DayYear = this.view.GetBegin_DayYear();
+        this.model.Begin_DayYear = this.m_Begin_DayYear;
+    }
+    OnChangeBegin_MonthMonthInView() {
+        this.m_Begin_MonthMonth = this.view.GetBegin_MonthMonth();
+        this.model.Begin_MonthMonth = this.m_Begin_MonthMonth;
+    }
+    OnChangeBegin_MonthYearInView() {
+        this.m_Begin_MonthYear = this.view.GetBegin_MonthYear();
+        this.model.Begin_MonthYear = this.m_Begin_MonthYear;
+    }
+    OnChangeBegin_YearInView() {
+        this.m_Begin_Year = this.view.GetBegin_Year();
+        this.model.Begin_Year = this.m_Begin_Year;
+    }
+    OnChangeBegin_DecadeDecadeInView() {
+        this.m_Begin_DecadeDecade = this.view.GetBegin_DecadeDecade();
+        this.model.Begin_DecadeDecade = this.m_Begin_DecadeDecade;
+    }
+    OnChangeBegin_DecadeCenturyInView() {
+        this.m_Begin_DecadeCentury = this.view.GetBegin_DecadeCentury();
+        this.model.Begin_DecadeCentury = this.m_Begin_DecadeCentury;
+    }
+    OnChangeBegin_CenturyInView() {
+        this.m_Begin_Century = this.view.GetBegin_Century();
+        this.model.Begin_Century = this.m_Begin_Century;
+    }
+    OnChangeEnd_TypeInView() {
+        this.m_End_Type = this.view.GetEndType();
+        this.model.EndType = this.m_End_Type;
+    }
+    OnChangeEnd_DayDayInView() {
+        this.m_End_DayDay = this.view.GetEnd_DayDay();
+        this.model.End_DayDay = this.m_End_DayDay;
+    }
+    OnChangeEnd_DayMonthInView() {
+        this.m_End_DayMonth = this.view.GetEnd_DayMonth();
+        this.model.End_DayMonth = this.m_End_DayMonth;
+    }
+    OnChangeEnd_DayYearInView() {
+        this.m_End_DayYear = this.view.GetEnd_DayYear();
+        this.model.End_DayYear = this.m_End_DayYear;
+    }
+    OnChangeEnd_MonthMonthInView() {
+        this.m_End_MonthMonth = this.view.GetEnd_MonthMonth();
+        this.model.End_MonthMonth = this.m_End_MonthMonth;
+    }
+    OnChangeEnd_MonthYearInView() {
+        this.m_End_MonthYear = this.view.GetEnd_MonthYear();
+        this.model.End_MonthYear = this.m_End_MonthYear;
+    }
+    OnChangeEnd_YearInView() {
+        this.m_End_Year = this.view.GetEnd_Year();
+        this.model.End_Year = this.m_End_Year;
+    }
+    OnChangeEnd_DecadeDecadeInView() {
+        this.m_End_DecadeDecade = this.view.GetEnd_DecadeDecade();
+        this.model.End_DecadeDecade = this.m_End_DecadeDecade;
+    }
+    OnChangeEnd_DecadeCenturyInView() {
+        this.m_End_DecadeCentury = this.view.GetEnd_DecadeCentury();
+        this.model.End_DecadeCentury = this.m_End_DecadeCentury;
+    }
+    OnChangeEnd_CenturyInView() {
+        this.m_End_Century = this.view.GetEnd_Century();
+        this.model.End_Century = this.m_End_Century;
+    }
+}
+exports.AddPeriodPresenter = AddPeriodPresenter;
+
+
+/***/ }),
+
+/***/ "./src/AddPeriod/AddPeriodView.ts":
+/*!****************************************!*\
+  !*** ./src/AddPeriod/AddPeriodView.ts ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const AddPeriodPresenter_1 = __webpack_require__(/*! ./AddPeriodPresenter */ "./src/AddPeriod/AddPeriodPresenter.ts");
+const Globals_1 = __webpack_require__(/*! ../Globals */ "./src/Globals.ts");
+const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
+class AddPeriodView {
+    SetBegin_DecadeDecade(value) {
+        this.tbBegin_DecadeDecade.selectedIndex = value;
+    }
+    SetBegin_DecadeCentury(value) {
+        this.tbBegin_DecadeCentury.valueAsNumber = value;
+    }
+    SetBegin_Century(value) {
+        this.tbBegin_Century.valueAsNumber = value;
+    }
+    SetEndType(value) {
+        this.tbEnd_Type.selectedIndex = value - 1;
+    }
+    SetEnd_DayDay(value) {
+        this.tbEnd_DayDay.valueAsNumber = value;
+    }
+    SetEnd_DayMonth(value) {
+        this.tbEnd_DayMonth.selectedIndex = value;
+    }
+    SetEnd_DayYear(value) {
+        this.tbEnd_DayYear.valueAsNumber = value;
+    }
+    SetEnd_MonthMonth(value) {
+        this.tbEnd_MonthMonth.selectedIndex = value;
+    }
+    SetEnd_MonthYear(value) {
+        this.tbEnd_MonthYear.valueAsNumber = value;
+    }
+    SetEnd_Year(value) {
+        this.tbEnd_Year.valueAsNumber = value;
+    }
+    SetEnd_DecadeDecade(value) {
+        this.tbEnd_DecadeDecade.selectedIndex = value;
+    }
+    SetEnd_DecadeCentury(value) {
+        this.tbEnd_DecadeCentury.valueAsNumber = value;
+    }
+    SetEnd_Century(value) {
+        this.tbEnd_Century.valueAsNumber = value;
+    }
+    GetBegin_DecadeDecade() {
+        return this.tbBegin_DecadeDecade.selectedIndex;
+    }
+    GetBegin_DecadeCentury() {
+        return this.tbBegin_DecadeCentury.valueAsNumber;
+    }
+    GetBegin_Century() {
+        return this.tbBegin_Century.valueAsNumber;
+    }
+    GetEndType() {
+        return this.tbEnd_Type.selectedIndex + 1;
+    }
+    GetEnd_DayDay() {
+        return this.tbEnd_DayDay.valueAsNumber;
+    }
+    GetEnd_DayMonth() {
+        return this.tbEnd_DayMonth.selectedIndex;
+    }
+    GetEnd_DayYear() {
+        return this.tbEnd_DayYear.valueAsNumber;
+    }
+    GetEnd_MonthMonth() {
+        return this.tbEnd_MonthMonth.selectedIndex;
+    }
+    GetEnd_MonthYear() {
+        return this.tbEnd_MonthYear.valueAsNumber;
+    }
+    GetEnd_Year() {
+        return this.tbEnd_Year.valueAsNumber;
+    }
+    GetEnd_DecadeDecade() {
+        return this.tbEnd_DecadeDecade.selectedIndex;
+    }
+    GetEnd_DecadeCentury() {
+        return this.tbEnd_DecadeCentury.valueAsNumber;
+    }
+    GetEnd_Century() {
+        return this.tbEnd_Century.valueAsNumber;
+    }
+    constructor(model) {
+        this.tbName = document.getElementById('addperiod_Name');
+        this.tbIsPeriod = document.getElementById('addperiod_IsPeriod');
+        this.tbBegin_Type = document.getElementById('addperiod_Begin_Type');
+        this.tbBegin_DayDay = document.getElementById('addperiod_Begin_DayDay');
+        this.tbBegin_DayMonth = document.getElementById('addperiod_Begin_DayMonth');
+        this.tbBegin_DayYear = document.getElementById('addperiod_Begin_DayYear');
+        this.tbBegin_MonthMonth = document.getElementById('addperiod_Begin_MonthMonth');
+        this.tbBegin_MonthYear = document.getElementById('addperiod_Begin_MonthYear');
+        this.tbBegin_Year = document.getElementById('addperiod_Begin_DayMonth');
+        this.tbBegin_DecadeDecade = document.getElementById('addperiod_Begin_DecadeDecade');
+        this.tbBegin_DecadeCentury = document.getElementById('addperiod_Begin_DecadeCentury');
+        this.tbBegin_Century = document.getElementById('addperiod_Begin_Century');
+        this.tbEnd_Type = document.getElementById('addperiod_End_Type');
+        this.tbEnd_DayDay = document.getElementById('addperiod_End_DayDay');
+        this.tbEnd_DayMonth = document.getElementById('addperiod_End_DayMonth');
+        this.tbEnd_DayYear = document.getElementById('addperiod_End_DayYear');
+        this.tbEnd_MonthMonth = document.getElementById('addperiod_End_MonthMonth');
+        this.tbEnd_MonthYear = document.getElementById('addperiod_End_MonthYear');
+        this.tbEnd_Year = document.getElementById('addperiod_End_DayMonth');
+        this.tbEnd_DecadeDecade = document.getElementById('addperiod_End_DecadeDecade');
+        this.tbEnd_DecadeCentury = document.getElementById('addperiod_End_DecadeCentury');
+        this.tbEnd_Century = document.getElementById('addperiod_End_Century');
+        this.tbError = document.getElementById('addperiod_server_error');
+        this.btnOk = document.getElementById('btnAddPeriod');
+        this.btnCancel = document.getElementById('btnCancelAddPeriod');
+        this.dlg = document.getElementById('tmAddPeriod');
+        this.Presenter = new AddPeriodPresenter_1.AddPeriodPresenter(this, model);
+    }
+    ShowDialog() {
+        return new Promise((resolve, reject) => {
+            $('#tmAddPeriod').modal();
+            this.ClearError();
+            this.btnOk.onclick = () => __awaiter(this, void 0, void 0, function* () {
+                if (!Globals_1.Globals.ValidateElements(this.dlg))
+                    return;
+                $('#tmAddPeriod').modal('hide');
+                resolve(true);
+            });
+            this.btnCancel.onclick = () => __awaiter(this, void 0, void 0, function* () {
+                $('#tmAddPeriod').modal('hide');
+                resolve(false);
+            });
+        });
+    }
+    ClearError() {
+        while (this.tbError.firstChild) {
+            this.tbError.removeChild(this.tbError.firstChild);
+        }
+    }
+    SetName(value) {
+        this.tbName.value = value;
+    }
+    SetIsPeriod(value) {
+        this.tbIsPeriod.checked = value;
+    }
+    SetBeginType(value) {
+        this.tbBegin_Type.selectedIndex = value - 1;
+    }
+    SetBegin_DayDay(value) {
+        this.tbBegin_DayDay.valueAsNumber = value;
+    }
+    SetBegin_DayMonth(value) {
+        this.tbBegin_DayMonth.selectedIndex = value;
+    }
+    SetBegin_DayYear(value) {
+        this.tbBegin_DayYear.valueAsNumber = value;
+    }
+    SetBegin_MonthMonth(value) {
+        this.tbBegin_MonthMonth.selectedIndex = value;
+    }
+    SetBegin_MonthYear(value) {
+        this.tbBegin_MonthYear.valueAsNumber = value;
+    }
+    SetBegin_Year(value) {
+        this.tbBegin_Year.valueAsNumber = value;
+    }
+    SetError(err) {
+        this.ClearError();
+        this.tbError.append(err);
+        this.tbError.style.display = 'unset';
+    }
+    GetName() {
+        return this.tbName.value;
+    }
+    GetIsPeriod() {
+        return this.tbIsPeriod.checked;
+    }
+    GetBeginType() {
+        return this.tbBegin_Type.selectedIndex + 1;
+    }
+    GetBegin_DayDay() {
+        return this.tbBegin_DayDay.valueAsNumber;
+    }
+    GetBegin_DayMonth() {
+        return this.tbBegin_DayMonth.selectedIndex;
+    }
+    GetBegin_DayYear() {
+        return this.tbBegin_DayYear.valueAsNumber;
+    }
+    GetBegin_MonthMonth() {
+        return this.tbBegin_MonthMonth.selectedIndex;
+    }
+    GetBegin_MonthYear() {
+        return this.tbBegin_MonthYear.valueAsNumber;
+    }
+    GetBegin_Year() {
+        return this.tbBegin_Year.valueAsNumber;
+    }
+}
+exports.AddPeriodView = AddPeriodView;
+
+
+/***/ }),
+
 /***/ "./src/ApiClient.ts":
 /*!**************************!*\
   !*** ./src/ApiClient.ts ***!
@@ -18649,10 +19390,10 @@ exports.Globals = Globals;
 
 /***/ }),
 
-/***/ "./src/LoginModel.ts":
-/*!***************************!*\
-  !*** ./src/LoginModel.ts ***!
-  \***************************/
+/***/ "./src/Login/LoginModel.ts":
+/*!*********************************!*\
+  !*** ./src/Login/LoginModel.ts ***!
+  \*********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18697,10 +19438,10 @@ exports.LoginModel = LoginModel;
 
 /***/ }),
 
-/***/ "./src/LoginPresenter.ts":
-/*!*******************************!*\
-  !*** ./src/LoginPresenter.ts ***!
-  \*******************************/
+/***/ "./src/Login/LoginPresenter.ts":
+/*!*************************************!*\
+  !*** ./src/Login/LoginPresenter.ts ***!
+  \*************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18715,7 +19456,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const ApiClient_1 = __webpack_require__(/*! ./ApiClient */ "./src/ApiClient.ts");
+const ApiClient_1 = __webpack_require__(/*! ../ApiClient */ "./src/ApiClient.ts");
 class LoginPresenter {
     constructor(view, model) {
         this.model = model;
@@ -18734,9 +19475,6 @@ class LoginPresenter {
         this.m_Password = model.Password;
         this.view.SetLogin(model.Login);
         this.view.SetPassword(model.Password);
-    }
-    get Login() {
-        return this.m_Login;
     }
     // обработчики вызовов из View
     OnChangeLoginInView() {
@@ -18758,10 +19496,10 @@ exports.LoginPresenter = LoginPresenter;
 
 /***/ }),
 
-/***/ "./src/LoginView.ts":
-/*!**************************!*\
-  !*** ./src/LoginView.ts ***!
-  \**************************/
+/***/ "./src/Login/LoginView.ts":
+/*!********************************!*\
+  !*** ./src/Login/LoginView.ts ***!
+  \********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18776,9 +19514,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const LoginPresenter_1 = __webpack_require__(/*! ./LoginPresenter */ "./src/LoginPresenter.ts");
+const LoginPresenter_1 = __webpack_require__(/*! ./LoginPresenter */ "./src/Login/LoginPresenter.ts");
 const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
-const Globals_1 = __webpack_require__(/*! ./Globals */ "./src/Globals.ts");
+const Globals_1 = __webpack_require__(/*! ../Globals */ "./src/Globals.ts");
 class LoginView {
     constructor(model) {
         this.tbLogin = document.getElementById('logLogin');
@@ -18845,10 +19583,10 @@ exports.LoginView = LoginView;
 
 /***/ }),
 
-/***/ "./src/MainModel.ts":
-/*!**************************!*\
-  !*** ./src/MainModel.ts ***!
-  \**************************/
+/***/ "./src/Main/MainModel.ts":
+/*!*******************************!*\
+  !*** ./src/Main/MainModel.ts ***!
+  \*******************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18910,10 +19648,10 @@ exports.MainModel = MainModel;
 
 /***/ }),
 
-/***/ "./src/MainPresenter.ts":
-/*!******************************!*\
-  !*** ./src/MainPresenter.ts ***!
-  \******************************/
+/***/ "./src/Main/MainPresenter.ts":
+/*!***********************************!*\
+  !*** ./src/Main/MainPresenter.ts ***!
+  \***********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18928,21 +19666,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const ApiClient_1 = __webpack_require__(/*! ./ApiClient */ "./src/ApiClient.ts");
-const BoxView_1 = __webpack_require__(/*! ./BoxView */ "./src/BoxView.ts");
-const dateutils_1 = __webpack_require__(/*! ./dateutils */ "./src/dateutils.ts");
-const EditStringView_1 = __webpack_require__(/*! ./EditStringView */ "./src/EditStringView.ts");
-const Globals_1 = __webpack_require__(/*! ./Globals */ "./src/Globals.ts");
-const LoginModel_1 = __webpack_require__(/*! ./LoginModel */ "./src/LoginModel.ts");
-const LoginView_1 = __webpack_require__(/*! ./LoginView */ "./src/LoginView.ts");
-const MyContextMenu_1 = __webpack_require__(/*! ./MyContextMenu */ "./src/MyContextMenu.ts");
-const RegisterModel_1 = __webpack_require__(/*! ./RegisterModel */ "./src/RegisterModel.ts");
-const RegisterView_1 = __webpack_require__(/*! ./RegisterView */ "./src/RegisterView.ts");
-const TimeLineModel_1 = __webpack_require__(/*! ./TimeLineModel */ "./src/TimeLineModel.ts");
-const TLEvent_1 = __webpack_require__(/*! ./TLEvent */ "./src/TLEvent.ts");
-const TlistView_1 = __webpack_require__(/*! ./TlistView */ "./src/TlistView.ts");
-const TLPeriod_1 = __webpack_require__(/*! ./TLPeriod */ "./src/TLPeriod.ts");
-const EventPeriod_1 = __webpack_require__(/*! ./EP/EventPeriod */ "./src/EP/EventPeriod.ts");
+const ApiClient_1 = __webpack_require__(/*! ../ApiClient */ "./src/ApiClient.ts");
+const BoxView_1 = __webpack_require__(/*! ../BoxView */ "./src/BoxView.ts");
+const dateutils_1 = __webpack_require__(/*! ../dateutils */ "./src/dateutils.ts");
+const EditStringView_1 = __webpack_require__(/*! ../EditStringView */ "./src/EditStringView.ts");
+const Globals_1 = __webpack_require__(/*! ../Globals */ "./src/Globals.ts");
+const LoginModel_1 = __webpack_require__(/*! ../Login/LoginModel */ "./src/Login/LoginModel.ts");
+const LoginView_1 = __webpack_require__(/*! ../Login/LoginView */ "./src/Login/LoginView.ts");
+const MyContextMenu_1 = __webpack_require__(/*! ../MyContextMenu */ "./src/MyContextMenu.ts");
+const RegisterModel_1 = __webpack_require__(/*! ../Register/RegisterModel */ "./src/Register/RegisterModel.ts");
+const RegisterView_1 = __webpack_require__(/*! ../Register//RegisterView */ "./src/Register/RegisterView.ts");
+const TimeLineModel_1 = __webpack_require__(/*! ../TimeLineModel */ "./src/TimeLineModel.ts");
+const TLEvent_1 = __webpack_require__(/*! ../TLEvent */ "./src/TLEvent.ts");
+const TlistView_1 = __webpack_require__(/*! ../Tlist/TlistView */ "./src/Tlist/TlistView.ts");
+const TLPeriod_1 = __webpack_require__(/*! ../TLPeriod */ "./src/TLPeriod.ts");
+const EventPeriod_1 = __webpack_require__(/*! ../EP/EventPeriod */ "./src/EP/EventPeriod.ts");
+const AddPeriodView_1 = __webpack_require__(/*! ../AddPeriod/AddPeriodView */ "./src/AddPeriod/AddPeriodView.ts");
+const AddPeriodModel_1 = __webpack_require__(/*! ../AddPeriod/AddPeriodModel */ "./src/AddPeriod/AddPeriodModel.ts");
 class MainPresenter {
     constructor(view, model) {
         // ******************* Свойства *********************************
@@ -19027,6 +19767,28 @@ class MainPresenter {
             catch (err) {
                 yield new BoxView_1.BoxView(err).Show();
             }
+        });
+    }
+    OnAddPeriod(idx) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let model = new AddPeriodModel_1.AddPeriodModel();
+            let today = new Date();
+            model.Name = "Новый период";
+            model.IsPeriod = true;
+            model.BeginType = TLEvent_1.EnumPeriod.day;
+            model.Begin_DayDay = today.getDate();
+            model.Begin_DayMonth = today.getMonth() + 1;
+            model.Begin_DayYear = today.getFullYear();
+            let view = new AddPeriodView_1.AddPeriodView(model);
+            view.ShowDialog()
+                .then((value) => __awaiter(this, void 0, void 0, function* () {
+                if (value) {
+                    yield new BoxView_1.BoxView("OK").Show();
+                }
+                else {
+                    yield new BoxView_1.BoxView("Fail").Show();
+                }
+            }));
         });
     }
     SaveCurrentTL() {
@@ -19311,10 +20073,10 @@ exports.MainPresenter = MainPresenter;
 
 /***/ }),
 
-/***/ "./src/MainView.ts":
-/*!*************************!*\
-  !*** ./src/MainView.ts ***!
-  \*************************/
+/***/ "./src/Main/MainView.ts":
+/*!******************************!*\
+  !*** ./src/Main/MainView.ts ***!
+  \******************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19329,8 +20091,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const MainPresenter_1 = __webpack_require__(/*! ./MainPresenter */ "./src/MainPresenter.ts");
-const BoxView_1 = __webpack_require__(/*! ./BoxView */ "./src/BoxView.ts");
+const MainPresenter_1 = __webpack_require__(/*! ./MainPresenter */ "./src/Main/MainPresenter.ts");
 class MainView {
     constructor(model) {
         // элементы страницы
@@ -19424,7 +20185,7 @@ class MainView {
             let btn = document.createElement('button');
             btn.textContent = "+";
             btn.onclick = (ev) => __awaiter(this, void 0, void 0, function* () {
-                yield new BoxView_1.BoxView(idx.toString()).Show();
+                yield this.Presenter.OnAddPeriod(idx);
             });
             td.append(btn);
             row.append(td);
@@ -19519,10 +20280,10 @@ exports.MyContextMenu = MyContextMenu;
 
 /***/ }),
 
-/***/ "./src/RegisterModel.ts":
-/*!******************************!*\
-  !*** ./src/RegisterModel.ts ***!
-  \******************************/
+/***/ "./src/Register/RegisterModel.ts":
+/*!***************************************!*\
+  !*** ./src/Register/RegisterModel.ts ***!
+  \***************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19595,10 +20356,10 @@ exports.RegisterModel = RegisterModel;
 
 /***/ }),
 
-/***/ "./src/RegisterPresenter.ts":
-/*!**********************************!*\
-  !*** ./src/RegisterPresenter.ts ***!
-  \**********************************/
+/***/ "./src/Register/RegisterPresenter.ts":
+/*!*******************************************!*\
+  !*** ./src/Register/RegisterPresenter.ts ***!
+  \*******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19613,7 +20374,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const ApiClient_1 = __webpack_require__(/*! ./ApiClient */ "./src/ApiClient.ts");
+const ApiClient_1 = __webpack_require__(/*! ../ApiClient */ "./src/ApiClient.ts");
 class RegisterPresenter {
     constructor(view, model) {
         this.model = model;
@@ -19678,10 +20439,10 @@ exports.RegisterPresenter = RegisterPresenter;
 
 /***/ }),
 
-/***/ "./src/RegisterView.ts":
-/*!*****************************!*\
-  !*** ./src/RegisterView.ts ***!
-  \*****************************/
+/***/ "./src/Register/RegisterView.ts":
+/*!**************************************!*\
+  !*** ./src/Register/RegisterView.ts ***!
+  \**************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19697,8 +20458,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
-const RegisterPresenter_1 = __webpack_require__(/*! ./RegisterPresenter */ "./src/RegisterPresenter.ts");
-const Globals_1 = __webpack_require__(/*! ./Globals */ "./src/Globals.ts");
+const RegisterPresenter_1 = __webpack_require__(/*! ./RegisterPresenter */ "./src/Register/RegisterPresenter.ts");
+const Globals_1 = __webpack_require__(/*! ../Globals */ "./src/Globals.ts");
 class RegisterView {
     constructor(model) {
         this.tbLogin = document.getElementById('regLogin');
@@ -20375,10 +21136,10 @@ exports.TimeLineModel = TimeLineModel;
 
 /***/ }),
 
-/***/ "./src/TlistPresenter.ts":
-/*!*******************************!*\
-  !*** ./src/TlistPresenter.ts ***!
-  \*******************************/
+/***/ "./src/Tlist/TlistPresenter.ts":
+/*!*************************************!*\
+  !*** ./src/Tlist/TlistPresenter.ts ***!
+  \*************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -20393,8 +21154,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const TimeLineModel_1 = __webpack_require__(/*! ./TimeLineModel */ "./src/TimeLineModel.ts");
-const Globals_1 = __webpack_require__(/*! ./Globals */ "./src/Globals.ts");
+const TimeLineModel_1 = __webpack_require__(/*! ../TimeLineModel */ "./src/TimeLineModel.ts");
+const Globals_1 = __webpack_require__(/*! ../Globals */ "./src/Globals.ts");
 const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
 class TlistPresenter {
     constructor(view, model) {
@@ -20436,10 +21197,10 @@ exports.TlistPresenter = TlistPresenter;
 
 /***/ }),
 
-/***/ "./src/TlistView.ts":
-/*!**************************!*\
-  !*** ./src/TlistView.ts ***!
-  \**************************/
+/***/ "./src/Tlist/TlistView.ts":
+/*!********************************!*\
+  !*** ./src/Tlist/TlistView.ts ***!
+  \********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -20455,8 +21216,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
-const TlistPresenter_1 = __webpack_require__(/*! ./TlistPresenter */ "./src/TlistPresenter.ts");
-const Globals_1 = __webpack_require__(/*! ./Globals */ "./src/Globals.ts");
+const TlistPresenter_1 = __webpack_require__(/*! ./TlistPresenter */ "./src/Tlist/TlistPresenter.ts");
+const Globals_1 = __webpack_require__(/*! ../Globals */ "./src/Globals.ts");
 class TlistView {
     constructor(model) {
         this.tbList = document.getElementById('files_list');
@@ -21198,9 +21959,9 @@ function romanize(num) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const MainView_1 = __webpack_require__(/*! ./MainView */ "./src/MainView.ts");
+const MainView_1 = __webpack_require__(/*! ./Main/MainView */ "./src/Main/MainView.ts");
 __webpack_require__(/*! bootstrap */ "../node_modules/bootstrap/dist/js/bootstrap.js");
-const MainModel_1 = __webpack_require__(/*! ./MainModel */ "./src/MainModel.ts");
+const MainModel_1 = __webpack_require__(/*! ./Main/MainModel */ "./src/Main/MainModel.ts");
 (function main() {
     let mainView = new MainView_1.MainView(MainModel_1.MainModel.getInstance());
 })();
