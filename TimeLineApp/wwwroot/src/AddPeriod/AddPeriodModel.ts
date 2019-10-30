@@ -80,6 +80,30 @@ export class AddPeriodModel {
     }
   }
 
+  private m_Begin_DecadeDecade
+  public set Begin_DecadeDecade(value: number) {
+    if (value !== this.m_Begin_DecadeDecade) {
+      this.m_Begin_DecadeDecade = value
+      this.e_ChangeBegin_DecadeDecade.dispatch(value)
+    }
+  }
+
+  private m_Begin_DecadeCentury
+  public set Begin_DecadeCentury(value: number) {
+    if (value !== this.m_Begin_DecadeCentury) {
+      this.m_Begin_DecadeCentury = value
+      this.e_ChangeBegin_DecadeCentury.dispatch(value)
+    }
+  }
+
+  private m_Begin_Century
+  public set Begin_Century(value: number) {
+    if (value !== this.m_Begin_Century) {
+      this.m_Begin_Century = value
+      this.e_ChangeBegin_Century.dispatch(value)
+    }
+  }
+
   private m_EndType: EnumPeriod
   public get EndType(): EnumPeriod { return this.m_EndType; }
   public set IsEndType(value: EnumPeriod) {
@@ -141,6 +165,30 @@ export class AddPeriodModel {
     }
   }
 
+  private m_End_DecadeDecade
+  public set End_DecadeDecade(value: number) {
+    if (value !== this.m_End_DecadeDecade) {
+      this.m_End_DecadeDecade = value
+      this.e_ChangeEnd_DecadeDecade.dispatch(value)
+    }
+  }
+
+  private m_End_DecadeCentury
+  public set End_DecadeCentury(value: number) {
+    if (value !== this.m_End_DecadeCentury) {
+      this.m_End_DecadeCentury = value
+      this.e_ChangeEnd_DecadeCentury.dispatch(value)
+    }
+  }
+
+  private m_End_Century
+  public set End_Century(value: number) {
+    if (value !== this.m_End_Century) {
+      this.m_End_Century = value
+      this.e_ChangeEnd_Century.dispatch(value)
+    }
+  }
+
   private e_ChangeName = new SimpleEventDispatcher<string>();
   public get evChangeName(): ISimpleEvent<string> {
     return this.e_ChangeName.asEvent();
@@ -177,6 +225,18 @@ export class AddPeriodModel {
   public get evChangeBegin_Year(): ISimpleEvent<number> {
     return this.e_ChangeBegin_Year.asEvent();
   }
+  private e_ChangeBegin_DecadeDecade = new SimpleEventDispatcher<number>();
+  public get evChangeBegin_DecadeDecade(): ISimpleEvent<number> {
+    return this.e_ChangeBegin_DecadeDecade.asEvent();
+  }
+  private e_ChangeBegin_DecadeCentury = new SimpleEventDispatcher<number>();
+  public get evChangeBegin_DecadeCentury(): ISimpleEvent<number> {
+    return this.e_ChangeBegin_DecadeCentury.asEvent();
+  }
+  private e_ChangeBegin_Century = new SimpleEventDispatcher<number>();
+  public get evChangeBegin_Century(): ISimpleEvent<number> {
+    return this.e_ChangeBegin_Century.asEvent();
+  }
 
   private e_ChangeEndType = new SimpleEventDispatcher<EnumPeriod>();
   public get evChangeEndType(): ISimpleEvent<EnumPeriod> {
@@ -205,5 +265,17 @@ export class AddPeriodModel {
   private e_ChangeEnd_Year = new SimpleEventDispatcher<number>();
   public get evChangeEnd_Year(): ISimpleEvent<number> {
     return this.e_ChangeEnd_Year.asEvent();
+  }
+  private e_ChangeEnd_DecadeDecade = new SimpleEventDispatcher<number>();
+  public get evChangeEnd_DecadeDecade(): ISimpleEvent<number> {
+    return this.e_ChangeEnd_DecadeDecade.asEvent();
+  }
+  private e_ChangeEnd_DecadeCentury = new SimpleEventDispatcher<number>();
+  public get evChangeEnd_DecadeCentury(): ISimpleEvent<number> {
+    return this.e_ChangeEnd_DecadeCentury.asEvent();
+  }
+  private e_ChangeEnd_Century = new SimpleEventDispatcher<number>();
+  public get evChangeEnd_Century(): ISimpleEvent<number> {
+    return this.e_ChangeEnd_Century.asEvent();
   }
 }

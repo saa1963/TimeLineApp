@@ -28,10 +28,6 @@ export class LoginPresenter {
     this.view.SetPassword(model.Password)
   }
 
-  public get Login(): string {
-    return this.m_Login
-  }
-
   // обработчики вызовов из View
   public OnChangeLoginInView() {
     this.m_Login = this.view.GetLogin()
