@@ -16,6 +16,8 @@ import { EnumPeriod } from "../TLEvent";
 import { TlistView } from "../Tlist/TlistView";
 import { TLPeriod } from "../TLPeriod";
 import { NS_EventPeriod } from "../EP/EventPeriod"
+import { AddPeriodView } from "../AddPeriod/AddPeriodView";
+import { AddPeriodModel } from "../AddPeriod/AddPeriodModel";
 
 export interface IExTLPeriod { il: number, ir: number, item: TLPeriod }
 
@@ -70,6 +72,26 @@ export class MainPresenter {
     } catch (err) {
       await new BoxView(err).Show()
     }
+  }
+
+  public async AddPeriod(idx: number) {
+    let model = new AddPeriodModel()
+    let today = new Date()
+    model.Name = "Новый период"
+    model.IsPeriod = true
+    model.BeginType = EnumPeriod.day
+    model.Begin_DayDay = today.getDate()
+    model.Begin_DayMonth = today.getMonth() + 1
+    model.Begin_DayYear = today.getFullYear()
+    let view = new AddPeriodView(model)
+    view.ShowDialog()
+      .then(async (value) => {
+        if (value) {
+          await new BoxView("OK").Show()
+        } else {
+          await new BoxView("Fail").Show()
+        }
+      })
   }
 
   public async SaveCurrentTL() {

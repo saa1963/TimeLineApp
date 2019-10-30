@@ -1,86 +1,88 @@
 ﻿import { IAddPeriodView } from "./IAddPeriodView";
 import { EnumPeriod } from "../TLEvent"
 import { AddPeriodPresenter } from "./AddPeriodPresenter";
+import { AddPeriodModel } from "./AddPeriodModel";
+import { Globals } from "../Globals";
 
 export class AddPeriodView implements IAddPeriodView {
-    SetBegin_DecadeDecade(value: number): void {
-        throw new Error("Method not implemented.");
-    }
-    SetBegin_DecadeCentury(value: number): void {
-        throw new Error("Method not implemented.");
-    }
-    SetBegin_Century(value: number): void {
-        throw new Error("Method not implemented.");
-    }
-    SetEndType(value: EnumPeriod): void {
-        throw new Error("Method not implemented.");
-    }
-    SetEnd_DayDay(value: number): void {
-        throw new Error("Method not implemented.");
-    }
-    SetEnd_DayMonth(value: number): void {
-        throw new Error("Method not implemented.");
-    }
-    SetEnd_DayYear(value: number): void {
-        throw new Error("Method not implemented.");
-    }
-    SetEnd_MonthMonth(value: number): void {
-        throw new Error("Method not implemented.");
-    }
-    SetEnd_MonthYear(value: number): void {
-        throw new Error("Method not implemented.");
-    }
-    SetEnd_Year(value: number): void {
-        throw new Error("Method not implemented.");
-    }
-    SetEnd_DecadeDecade(value: number): void {
-        throw new Error("Method not implemented.");
-    }
-    SetEnd_DecadeCentury(value: number): void {
-        throw new Error("Method not implemented.");
-    }
-    SetEnd_Century(value: number): void {
-        throw new Error("Method not implemented.");
-    }
-    GetBegin_DecadeDecade(): number {
-        throw new Error("Method not implemented.");
-    }
-    GetBegin_DecadeCentury(): number {
-        throw new Error("Method not implemented.");
-    }
-    GetBegin_Century(): number {
-        throw new Error("Method not implemented.");
-    }
-    GetEndType(): EnumPeriod {
-        throw new Error("Method not implemented.");
-    }
-    GetEnd_DayDay(): number {
-        throw new Error("Method not implemented.");
-    }
-    GetEnd_DayMonth(): number {
-        throw new Error("Method not implemented.");
-    }
-    GetEnd_DayYear(): number {
-        throw new Error("Method not implemented.");
-    }
-    GetEnd_MonthMonth(): number {
-        throw new Error("Method not implemented.");
-    }
-    GetEnd_MonthYear(): number {
-        throw new Error("Method not implemented.");
-    }
-    GetEnd_Year(): number {
-        throw new Error("Method not implemented.");
-    }
-    GetEnd_DecadeDecade(): number {
-        throw new Error("Method not implemented.");
-    }
-    GetEnd_DecadeCentury(): number {
-        throw new Error("Method not implemented.");
-    }
-    GetEnd_Century(): number {
-        throw new Error("Method not implemented.");
-    }
+  SetBegin_DecadeDecade(value: number): void {
+    this.tbBegin_DecadeDecade.selectedIndex = value
+  }
+  SetBegin_DecadeCentury(value: number): void {
+    this.tbBegin_DecadeCentury.valueAsNumber = value
+  }
+  SetBegin_Century(value: number): void {
+    this.tbBegin_Century.valueAsNumber = value
+  }
+  SetEndType(value: EnumPeriod): void {
+    this.tbEnd_Type.selectedIndex = value - 1
+  }
+  SetEnd_DayDay(value: number): void {
+    this.tbEnd_DayDay.valueAsNumber = value
+  }
+  SetEnd_DayMonth(value: number): void {
+    this.tbEnd_DayMonth.selectedIndex = value
+  }
+  SetEnd_DayYear(value: number): void {
+    this.tbEnd_DayYear.valueAsNumber = value
+  }
+  SetEnd_MonthMonth(value: number): void {
+    this.tbEnd_MonthMonth.selectedIndex = value
+  }
+  SetEnd_MonthYear(value: number): void {
+    this.tbEnd_MonthYear.valueAsNumber = value
+  }
+  SetEnd_Year(value: number): void {
+    this.tbEnd_Year.valueAsNumber = value
+  }
+  SetEnd_DecadeDecade(value: number): void {
+    this.tbEnd_DecadeDecade.selectedIndex = value
+  }
+  SetEnd_DecadeCentury(value: number): void {
+    this.tbEnd_DecadeCentury.valueAsNumber = value
+  }
+  SetEnd_Century(value: number): void {
+    this.tbEnd_Century.valueAsNumber = value
+  }
+  GetBegin_DecadeDecade(): number {
+    return this.tbBegin_DecadeDecade.selectedIndex
+  }
+  GetBegin_DecadeCentury(): number {
+    return this.tbBegin_DecadeCentury.valueAsNumber
+  }
+  GetBegin_Century(): number {
+    return this.tbBegin_Century.valueAsNumber
+  }
+  GetEndType(): EnumPeriod {
+    return this.tbEnd_Type.selectedIndex + 1
+  }
+  GetEnd_DayDay(): number {
+    return this.tbEnd_DayDay.valueAsNumber
+  }
+  GetEnd_DayMonth(): number {
+    return this.tbEnd_DayMonth.selectedIndex
+  }
+  GetEnd_DayYear(): number {
+    return this.tbEnd_DayYear.valueAsNumber
+  }
+  GetEnd_MonthMonth(): number {
+    return this.tbEnd_MonthMonth.selectedIndex
+  }
+  GetEnd_MonthYear(): number {
+    return this.tbEnd_MonthYear.valueAsNumber
+  }
+  GetEnd_Year(): number {
+    return this.tbEnd_Year.valueAsNumber
+  }
+  GetEnd_DecadeDecade(): number {
+    return this.tbEnd_DecadeDecade.selectedIndex
+  }
+  GetEnd_DecadeCentury(): number {
+    return this.tbEnd_DecadeCentury.valueAsNumber
+  }
+  GetEnd_Century(): number {
+    return this.tbEnd_Century.valueAsNumber
+  }
   private Presenter: AddPeriodPresenter
   private tbName: HTMLInputElement
   private tbIsPeriod: HTMLInputElement
@@ -104,10 +106,11 @@ export class AddPeriodView implements IAddPeriodView {
   private tbEnd_DecadeDecade: HTMLSelectElement
   private tbEnd_DecadeCentury: HTMLInputElement
   private tbEnd_Century: HTMLInputElement
+  private tbError: HTMLDivElement
   private btnOk: HTMLButtonElement
   private btnCancel: HTMLButtonElement
   private dlg: HTMLElement
-  public constructor() {
+  public constructor(model: AddPeriodModel) {
     this.tbName = <HTMLInputElement>document.getElementById('addperiod_Name')
     this.tbIsPeriod = <HTMLInputElement>document.getElementById('addperiod_IsPeriod')
     this.tbBegin_Type = <HTMLSelectElement>document.getElementById('addperiod_Begin_Type')
@@ -130,69 +133,94 @@ export class AddPeriodView implements IAddPeriodView {
     this.tbEnd_DecadeDecade = <HTMLSelectElement>document.getElementById('addperiod_End_DecadeDecade')
     this.tbEnd_DecadeCentury = <HTMLInputElement>document.getElementById('addperiod_End_DecadeCentury')
     this.tbEnd_Century = <HTMLInputElement>document.getElementById('addperiod_End_Century')
+    this.tbError = <HTMLDivElement>document.getElementById('addperiod_server_error')
     this.btnOk = <HTMLButtonElement>document.getElementById('btnAddPeriod')
     this.btnCancel = <HTMLButtonElement>document.getElementById('btnCancelAddPeriod')
     this.dlg = <HTMLElement>document.getElementById('tmAddPeriod')
+
+    this.Presenter = new AddPeriodPresenter(this, model)
   }
-  ShowDialog(): void {
-    throw new Error("Method not implemented.");
+  ShowDialog(): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      this.dlg[0].modal()
+      this.ClearError()
+      this.btnOk.onclick = async () => {
+        if (!Globals.ValidateElements(this.dlg)) return
+        this.dlg[0].modal('hide')
+        resolve(true)
+      }
+      this.btnCancel.onclick = async () => {
+        this.dlg[0].modal('hide')
+        resolve(false)
+      }
+    }
+    )
   }
+
+  private ClearError() {
+    while (this.tbError.firstChild) {
+      this.tbError.removeChild(this.tbError.firstChild);
+    }
+  }
+
   SetName(value: string): void {
-    throw new Error("Method not implemented.");
+    this.tbName.value = value
   }
   SetIsPeriod(value: boolean): void {
-    throw new Error("Method not implemented.");
+    this.tbIsPeriod.checked = value
   }
   SetBeginType(value: EnumPeriod): void {
-    throw new Error("Method not implemented.");
+    this.tbBegin_Type.selectedIndex = value - 1
   }
   SetBegin_DayDay(value: number): void {
-    throw new Error("Method not implemented.");
+    this.tbBegin_DayDay.valueAsNumber = value
   }
   SetBegin_DayMonth(value: number): void {
-    throw new Error("Method not implemented.");
+    this.tbBegin_DayMonth.selectedIndex = value
   }
   SetBegin_DayYear(value: number): void {
-    throw new Error("Method not implemented.");
+    this.tbBegin_DayYear.valueAsNumber = value
   }
   SetBegin_MonthMonth(value: number): void {
-    throw new Error("Method not implemented.");
+    this.tbBegin_MonthMonth.selectedIndex = value
   }
   SetBegin_MonthYear(value: number): void {
-    throw new Error("Method not implemented.");
+    this.tbBegin_MonthYear.valueAsNumber = value
   }
   SetBegin_Year(value: number): void {
-    throw new Error("Method not implemented.");
+    this.tbBegin_Year.valueAsNumber = value
   }
   SetError(err: string): void {
-    throw new Error("Method not implemented.");
+    this.ClearError()
+    this.tbError.append(err)
+    this.tbError.style.display = 'unset'
   }
   GetName(): string {
-    throw new Error("Method not implemented.");
+    return this.tbName.value
   }
   GetIsPeriod(): boolean {
-    throw new Error("Method not implemented.");
+    return this.tbIsPeriod.checked
   }
   GetBeginType(): EnumPeriod {
-    throw new Error("Method not implemented.");
+    return this.tbBegin_Type.selectedIndex + 1
   }
   GetBegin_DayDay(): number {
-    throw new Error("Method not implemented.");
+    return this.tbBegin_DayDay.valueAsNumber
   }
   GetBegin_DayMonth(): number {
-    throw new Error("Method not implemented.");
+    return this.tbBegin_DayMonth.selectedIndex
   }
   GetBegin_DayYear(): number {
-    throw new Error("Method not implemented.");
+    return this.tbBegin_DayYear.valueAsNumber
   }
   GetBegin_MonthMonth(): number {
-    throw new Error("Method not implemented.");
+    return this.tbBegin_MonthMonth.selectedIndex
   }
   GetBegin_MonthYear(): number {
-    throw new Error("Method not implemented.");
+    return this.tbBegin_MonthYear.valueAsNumber
   }
   GetBegin_Year(): number {
-    throw new Error("Method not implemented.");
+    return this.tbBegin_Year.valueAsNumber
   }
 
 

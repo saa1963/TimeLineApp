@@ -2,6 +2,7 @@
 import * as $ from 'jquery'
 import { MainModel } from "./MainModel";
 import { BoxView } from "../BoxView";
+import { AddPeriodModel } from "../AddPeriod/AddPeriodModel";
 
 export class MainView {
   // private свойства
@@ -105,7 +106,7 @@ export class MainView {
     let btn = <HTMLButtonElement>document.createElement('button')
     btn.textContent = "+"
     btn.onclick = async (ev) => {
-      await new BoxView(idx.toString()).Show()
+      await this.Presenter.OnAddPeriod(idx)
     }
     td.append(btn)
     row.append(td)

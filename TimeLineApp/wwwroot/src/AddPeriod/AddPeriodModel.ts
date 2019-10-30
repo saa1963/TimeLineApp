@@ -21,7 +21,7 @@ export class AddPeriodModel {
   }
   private m_BeginType: EnumPeriod
   public get BeginType(): EnumPeriod { return this.m_BeginType; }
-  public set IsBeginType(value: EnumPeriod) {
+  public set BeginType(value: EnumPeriod) {
     if (value !== this.m_BeginType) {
       this.m_BeginType = value
       this.e_ChangeBeginType.dispatch(value)
@@ -106,7 +106,7 @@ export class AddPeriodModel {
 
   private m_EndType: EnumPeriod
   public get EndType(): EnumPeriod { return this.m_EndType; }
-  public set IsEndType(value: EnumPeriod) {
+  public set EndType(value: EnumPeriod) {
     if (value !== this.m_EndType) {
       this.m_EndType = value
       this.e_ChangeEndType.dispatch(value)
