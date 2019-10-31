@@ -18888,7 +18888,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const AddPeriodPresenter_1 = __webpack_require__(/*! ./AddPeriodPresenter */ "./src/AddPeriod/AddPeriodPresenter.ts");
-const Globals_1 = __webpack_require__(/*! ../Globals */ "./src/Globals.ts");
 const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
 class AddPeriodView {
     SetBegin_DecadeDecade(value) {
@@ -19003,7 +19002,7 @@ class AddPeriodView {
             $('#tmAddPeriod').modal();
             this.ClearError();
             this.btnOk.onclick = () => __awaiter(this, void 0, void 0, function* () {
-                if (!Globals_1.Globals.ValidateElements(this.dlg))
+                if (!this.ValidateElementsAddPeriod(this.dlg))
                     return;
                 $('#tmAddPeriod').modal('hide');
                 resolve(true);
@@ -19013,6 +19012,14 @@ class AddPeriodView {
                 resolve(false);
             });
         });
+    }
+    ValidateElementsAddPeriod(el) {
+        let inputs = $('#' + el.id + ' div.row:not("[hidden]") select, #' + +el.id + ' div.row:not("[hidden]") select');
+        for (let i = 0; i <= inputs.length - 1; i++) {
+            if (!inputs[i].reportValidity())
+                return false;
+        }
+        return true;
     }
     ClearError() {
         while (this.tbError.firstChild) {

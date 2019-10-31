@@ -146,7 +146,7 @@ export class AddPeriodView implements IAddPeriodView {
       $('#tmAddPeriod').modal()
       this.ClearError()
       this.btnOk.onclick = async () => {
-        if (!Globals.ValidateElements(this.dlg)) return
+        if (!this.ValidateElementsAddPeriod(this.dlg)) return
         $('#tmAddPeriod').modal('hide')
         resolve(true)
       }
@@ -156,6 +156,14 @@ export class AddPeriodView implements IAddPeriodView {
       }
     }
     )
+  }
+
+  private ValidateElementsAddPeriod(el: HTMLElement): boolean {
+    let inputs = $<HTMLInputElement>('#' + el.id + ' div.row:not("[hidden]") select, #' + + el.id + ' div.row:not("[hidden]") input')
+    for (let i = 0; i <= inputs.length - 1; i++) {
+      if (!inputs[i].reportValidity()) return false
+    }
+    return true
   }
 
   private ClearError() {

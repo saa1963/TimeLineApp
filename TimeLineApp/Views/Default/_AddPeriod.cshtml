@@ -11,8 +11,8 @@
                 <div class="modal-body">
                     <div class="container">
                         <div class="form-group row">
-                            <input class="form-control col-8" id="addperiod_Name" type="text" value=""
-                                   placeholder="Введите наименование" required pattern="\w+">
+                            <input class="form-control col-8 is-invalid" id="addperiod_Name" type="text" value=""
+                                   placeholder="Введите наименование" required>
                             <label class="col" for="addperiod_IsPeriod">Период?</label>
                             <input class="form-control col-1" id="addperiod_IsPeriod" type="checkbox" value="false">
                         </div>
@@ -112,7 +112,7 @@
                         </div>
                         <div class="card-body">
                             <div class="container">
-                                <div class="row">
+                                <div class="row" hidden>
                                     <div class="col">
                                         <label for="addperiod_End_Type">Тип события</label>
                                         <select id="addperiod_End_Type">
@@ -124,7 +124,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row justify-content-start">
+                                <div class="row justify-content-start" hidden>
                                     <input class="form-control col-3" id="addperiod_End_DayDay" type="number" value=""
                                            placeholder="День" required min="1" max="31">
                                     <select class="form-control col-4" id="addperiod_End_DayMonth" placeholder="Месяц"
