@@ -18428,30 +18428,35 @@ class AddPeriodModel {
             this.e_ChangeBegin_MonthMonth.dispatch(value);
         }
     }
+    get Begin_MonthYear() { return this.m_Begin_MonthYear; }
     set Begin_MonthYear(value) {
         if (value !== this.m_Begin_MonthYear) {
             this.m_Begin_MonthYear = value;
             this.e_ChangeBegin_MonthYear.dispatch(value);
         }
     }
+    get Begin_Year() { return this.m_Begin_Year; }
     set Begin_Year(value) {
         if (value !== this.m_Begin_Year) {
             this.m_Begin_Year = value;
             this.e_ChangeBegin_Year.dispatch(value);
         }
     }
+    get Begin_DecadeDecade() { return this.m_Begin_DecadeDecade; }
     set Begin_DecadeDecade(value) {
         if (value !== this.m_Begin_DecadeDecade) {
             this.m_Begin_DecadeDecade = value;
             this.e_ChangeBegin_DecadeDecade.dispatch(value);
         }
     }
+    get Begin_DecadeCentury() { return this.m_Begin_DecadeCentury; }
     set Begin_DecadeCentury(value) {
         if (value !== this.m_Begin_DecadeCentury) {
             this.m_Begin_DecadeCentury = value;
             this.e_ChangeBegin_DecadeCentury.dispatch(value);
         }
     }
+    get Begin_Century() { return this.m_Begin_Century; }
     set Begin_Century(value) {
         if (value !== this.m_Begin_Century) {
             this.m_Begin_Century = value;
@@ -18493,30 +18498,35 @@ class AddPeriodModel {
             this.e_ChangeEnd_MonthMonth.dispatch(value);
         }
     }
+    get End_MonthYear() { return this.m_End_MonthYear; }
     set End_MonthYear(value) {
         if (value !== this.m_End_MonthYear) {
             this.m_End_MonthYear = value;
             this.e_ChangeEnd_MonthYear.dispatch(value);
         }
     }
+    get End_Year() { return this.m_End_Year; }
     set End_Year(value) {
         if (value !== this.m_End_Year) {
             this.m_End_Year = value;
             this.e_ChangeEnd_Year.dispatch(value);
         }
     }
+    get End_DecadeDecade() { return this.m_End_DecadeDecade; }
     set End_DecadeDecade(value) {
         if (value !== this.m_End_DecadeDecade) {
             this.m_End_DecadeDecade = value;
             this.e_ChangeEnd_DecadeDecade.dispatch(value);
         }
     }
+    get End_DecadeCentury() { return this.m_End_DecadeCentury; }
     set End_DecadeCentury(value) {
         if (value !== this.m_End_DecadeCentury) {
             this.m_End_DecadeCentury = value;
             this.e_ChangeEnd_DecadeCentury.dispatch(value);
         }
     }
+    get End_Century() { return this.m_End_Century; }
     set End_Century(value) {
         if (value !== this.m_End_Century) {
             this.m_End_Century = value;
@@ -18622,11 +18632,6 @@ class AddPeriodPresenter {
         this.model.evChangeBeginType.subscribe((value) => {
             if (value !== this.m_Begin_Type) {
                 this.view.SetBeginType(value);
-            }
-        });
-        this.model.evChangeBegin_DayDay.subscribe((value) => {
-            if (value !== this.m_Begin_DayDay) {
-                this.view.SetBegin_DayDay(value);
             }
         });
         this.model.evChangeBegin_DayDay.subscribe((value) => {
@@ -18890,84 +18895,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const AddPeriodPresenter_1 = __webpack_require__(/*! ./AddPeriodPresenter */ "./src/AddPeriod/AddPeriodPresenter.ts");
 const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
 class AddPeriodView {
-    SetBegin_DecadeDecade(value) {
-        this.tbBegin_DecadeDecade.selectedIndex = value;
-    }
-    SetBegin_DecadeCentury(value) {
-        this.tbBegin_DecadeCentury.valueAsNumber = value;
-    }
-    SetBegin_Century(value) {
-        this.tbBegin_Century.valueAsNumber = value;
-    }
-    SetEndType(value) {
-        this.tbEnd_Type.selectedIndex = value - 1;
-    }
-    SetEnd_DayDay(value) {
-        this.tbEnd_DayDay.valueAsNumber = value;
-    }
-    SetEnd_DayMonth(value) {
-        this.tbEnd_DayMonth.selectedIndex = value;
-    }
-    SetEnd_DayYear(value) {
-        this.tbEnd_DayYear.valueAsNumber = value;
-    }
-    SetEnd_MonthMonth(value) {
-        this.tbEnd_MonthMonth.selectedIndex = value;
-    }
-    SetEnd_MonthYear(value) {
-        this.tbEnd_MonthYear.valueAsNumber = value;
-    }
-    SetEnd_Year(value) {
-        this.tbEnd_Year.valueAsNumber = value;
-    }
-    SetEnd_DecadeDecade(value) {
-        this.tbEnd_DecadeDecade.selectedIndex = value;
-    }
-    SetEnd_DecadeCentury(value) {
-        this.tbEnd_DecadeCentury.valueAsNumber = value;
-    }
-    SetEnd_Century(value) {
-        this.tbEnd_Century.valueAsNumber = value;
-    }
-    GetBegin_DecadeDecade() {
-        return this.tbBegin_DecadeDecade.selectedIndex;
-    }
-    GetBegin_DecadeCentury() {
-        return this.tbBegin_DecadeCentury.valueAsNumber;
-    }
-    GetBegin_Century() {
-        return this.tbBegin_Century.valueAsNumber;
-    }
-    GetEndType() {
-        return this.tbEnd_Type.selectedIndex + 1;
-    }
-    GetEnd_DayDay() {
-        return this.tbEnd_DayDay.valueAsNumber;
-    }
-    GetEnd_DayMonth() {
-        return this.tbEnd_DayMonth.selectedIndex;
-    }
-    GetEnd_DayYear() {
-        return this.tbEnd_DayYear.valueAsNumber;
-    }
-    GetEnd_MonthMonth() {
-        return this.tbEnd_MonthMonth.selectedIndex;
-    }
-    GetEnd_MonthYear() {
-        return this.tbEnd_MonthYear.valueAsNumber;
-    }
-    GetEnd_Year() {
-        return this.tbEnd_Year.valueAsNumber;
-    }
-    GetEnd_DecadeDecade() {
-        return this.tbEnd_DecadeDecade.selectedIndex;
-    }
-    GetEnd_DecadeCentury() {
-        return this.tbEnd_DecadeCentury.valueAsNumber;
-    }
-    GetEnd_Century() {
-        return this.tbEnd_Century.valueAsNumber;
-    }
     constructor(model) {
         this.tbName = document.getElementById('addperiod_Name');
         this.tbIsPeriod = document.getElementById('addperiod_IsPeriod');
@@ -18977,7 +18904,7 @@ class AddPeriodView {
         this.tbBegin_DayYear = document.getElementById('addperiod_Begin_DayYear');
         this.tbBegin_MonthMonth = document.getElementById('addperiod_Begin_MonthMonth');
         this.tbBegin_MonthYear = document.getElementById('addperiod_Begin_MonthYear');
-        this.tbBegin_Year = document.getElementById('addperiod_Begin_DayMonth');
+        this.tbBegin_Year = document.getElementById('addperiod_Begin_Year');
         this.tbBegin_DecadeDecade = document.getElementById('addperiod_Begin_DecadeDecade');
         this.tbBegin_DecadeCentury = document.getElementById('addperiod_Begin_DecadeCentury');
         this.tbBegin_Century = document.getElementById('addperiod_Begin_Century');
@@ -18987,7 +18914,7 @@ class AddPeriodView {
         this.tbEnd_DayYear = document.getElementById('addperiod_End_DayYear');
         this.tbEnd_MonthMonth = document.getElementById('addperiod_End_MonthMonth');
         this.tbEnd_MonthYear = document.getElementById('addperiod_End_MonthYear');
-        this.tbEnd_Year = document.getElementById('addperiod_End_DayMonth');
+        this.tbEnd_Year = document.getElementById('addperiod_End_Year');
         this.tbEnd_DecadeDecade = document.getElementById('addperiod_End_DecadeDecade');
         this.tbEnd_DecadeCentury = document.getElementById('addperiod_End_DecadeCentury');
         this.tbEnd_Century = document.getElementById('addperiod_End_Century');
@@ -19143,6 +19070,45 @@ class AddPeriodView {
     SetBegin_Year(value) {
         this.tbBegin_Year.valueAsNumber = value;
     }
+    SetBegin_DecadeDecade(value) {
+        this.tbBegin_DecadeDecade.selectedIndex = value;
+    }
+    SetBegin_DecadeCentury(value) {
+        this.tbBegin_DecadeCentury.valueAsNumber = value;
+    }
+    SetBegin_Century(value) {
+        this.tbBegin_Century.valueAsNumber = value;
+    }
+    SetEndType(value) {
+        this.tbEnd_Type.selectedIndex = value - 1;
+    }
+    SetEnd_DayDay(value) {
+        this.tbEnd_DayDay.valueAsNumber = value;
+    }
+    SetEnd_DayMonth(value) {
+        this.tbEnd_DayMonth.selectedIndex = value;
+    }
+    SetEnd_DayYear(value) {
+        this.tbEnd_DayYear.valueAsNumber = value;
+    }
+    SetEnd_MonthMonth(value) {
+        this.tbEnd_MonthMonth.selectedIndex = value;
+    }
+    SetEnd_MonthYear(value) {
+        this.tbEnd_MonthYear.valueAsNumber = value;
+    }
+    SetEnd_Year(value) {
+        this.tbEnd_Year.valueAsNumber = value;
+    }
+    SetEnd_DecadeDecade(value) {
+        this.tbEnd_DecadeDecade.selectedIndex = value;
+    }
+    SetEnd_DecadeCentury(value) {
+        this.tbEnd_DecadeCentury.valueAsNumber = value;
+    }
+    SetEnd_Century(value) {
+        this.tbEnd_Century.valueAsNumber = value;
+    }
     SetError(err) {
         this.ClearError();
         this.tbError.append(err);
@@ -19174,6 +19140,45 @@ class AddPeriodView {
     }
     GetBegin_Year() {
         return this.tbBegin_Year.valueAsNumber;
+    }
+    GetBegin_DecadeDecade() {
+        return this.tbBegin_DecadeDecade.selectedIndex;
+    }
+    GetBegin_DecadeCentury() {
+        return this.tbBegin_DecadeCentury.valueAsNumber;
+    }
+    GetBegin_Century() {
+        return this.tbBegin_Century.valueAsNumber;
+    }
+    GetEndType() {
+        return this.tbEnd_Type.selectedIndex + 1;
+    }
+    GetEnd_DayDay() {
+        return this.tbEnd_DayDay.valueAsNumber;
+    }
+    GetEnd_DayMonth() {
+        return this.tbEnd_DayMonth.selectedIndex;
+    }
+    GetEnd_DayYear() {
+        return this.tbEnd_DayYear.valueAsNumber;
+    }
+    GetEnd_MonthMonth() {
+        return this.tbEnd_MonthMonth.selectedIndex;
+    }
+    GetEnd_MonthYear() {
+        return this.tbEnd_MonthYear.valueAsNumber;
+    }
+    GetEnd_Year() {
+        return this.tbEnd_Year.valueAsNumber;
+    }
+    GetEnd_DecadeDecade() {
+        return this.tbEnd_DecadeDecade.selectedIndex;
+    }
+    GetEnd_DecadeCentury() {
+        return this.tbEnd_DecadeCentury.valueAsNumber;
+    }
+    GetEnd_Century() {
+        return this.tbEnd_Century.valueAsNumber;
     }
 }
 exports.AddPeriodView = AddPeriodView;
@@ -19879,7 +19884,7 @@ class MainPresenter {
             model.Begin_MonthMonth = today.getMonth() + 1;
             model.Begin_MonthYear = today.getFullYear();
             model.Begin_Year = today.getFullYear();
-            model.Begin_DecadeDecade = dateutils_1.DateUtils.getDecadeFromDate(today);
+            model.Begin_DecadeDecade = dateutils_1.DateUtils.getDecadeRelativeFromDate(today) + 1;
             model.Begin_DecadeCentury = 21;
             model.Begin_Century = 21;
             model.EndType = TLEvent_1.EnumPeriod.day;
@@ -19889,7 +19894,7 @@ class MainPresenter {
             model.End_MonthMonth = today.getMonth() + 1;
             model.End_MonthYear = today.getFullYear();
             model.End_Year = today.getFullYear();
-            model.End_DecadeDecade = dateutils_1.DateUtils.getDecadeFromDate(today);
+            model.End_DecadeDecade = dateutils_1.DateUtils.getDecadeRelativeFromDate(today) + 1;
             model.End_DecadeCentury = 21;
             model.End_Century = 21;
             let view = new AddPeriodView_1.AddPeriodView(model);
@@ -21979,6 +21984,13 @@ class DateUtils {
             return ab + 1;
         else
             return -ab - 1;
+    }
+    /**
+     * Десятилетие внутри века от 0 - 9
+     * @param dt Дата
+     */
+    static getDecadeRelativeFromDate(dt) {
+        return Number.parseInt(dt.getFullYear().toString().substr(-2, 1));
     }
     static getCenturyFromDate(dt) {
         return Math.floor(dt.getFullYear() / 100) + 1;

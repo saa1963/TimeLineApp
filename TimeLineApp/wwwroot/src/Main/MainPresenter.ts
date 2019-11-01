@@ -86,7 +86,7 @@ export class MainPresenter {
     model.Begin_MonthMonth = today.getMonth() + 1
     model.Begin_MonthYear = today.getFullYear()
     model.Begin_Year = today.getFullYear()
-    model.Begin_DecadeDecade = DateUtils.getDecadeFromDate(today)
+    model.Begin_DecadeDecade = DateUtils.getDecadeRelativeFromDate(today) + 1
     model.Begin_DecadeCentury = 21
     model.Begin_Century = 21
     model.EndType = EnumPeriod.day
@@ -96,14 +96,37 @@ export class MainPresenter {
     model.End_MonthMonth = today.getMonth() + 1
     model.End_MonthYear = today.getFullYear()
     model.End_Year = today.getFullYear()
-    model.End_DecadeDecade = DateUtils.getDecadeFromDate(today)
+    model.End_DecadeDecade = DateUtils.getDecadeRelativeFromDate(today) + 1
     model.End_DecadeCentury = 21
     model.End_Century = 21
     let view = new AddPeriodView(model)
     view.ShowDialog()
       .then(async (value) => {
         if (value) {
-          await new BoxView("OK").Show()
+          this.model.Item(idx).Add(TLPeriod.CreateTLPeriodWithArgs(
+            model.Name,
+            model.IsPeriod,
+            model.BeginType,
+            model.Begin_DayDay,
+            model.Begin_DayMonth,
+            model.Begin_DayYear,
+            model.Begin_MonthMonth,
+            model.Begin_MonthYear,
+            model.Begin_Year,
+            model.Begin_DecadeDecade,
+            model.Begin_DecadeCentury,
+            model.Begin_Century,
+            model.EndType,
+            model.End_DayDay,
+            model.End_DayMonth,
+            model.End_DayYear,
+            model.End_MonthMonth,
+            model.End_MonthYear,
+            model.End_Year,
+            model.End_DecadeDecade,
+            model.End_DecadeCentury,
+            model.End_Century
+          ))
         }
       })
     .catch()

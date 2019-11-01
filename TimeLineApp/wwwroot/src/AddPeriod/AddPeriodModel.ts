@@ -29,7 +29,7 @@ export class AddPeriodModel {
   }
 
   private m_Begin_DayDay: number
-  public get Begin_DayDay(): number { return this.m_Begin_DayDay; }
+  public get Begin_DayDay(): number { return this.m_Begin_DayDay;   }
   public set Begin_DayDay(value: number) {
     if (value !== this.m_Begin_DayDay) {
       this.m_Begin_DayDay = value
@@ -65,6 +65,7 @@ export class AddPeriodModel {
   }
 
   private m_Begin_MonthYear: number
+  public get Begin_MonthYear(): number { return this.m_Begin_MonthYear; }
   public set Begin_MonthYear(value: number) {
     if (value !== this.m_Begin_MonthYear) {
       this.m_Begin_MonthYear = value
@@ -73,6 +74,7 @@ export class AddPeriodModel {
   }
 
   private m_Begin_Year
+  public get Begin_Year(): number { return this.m_Begin_Year; }
   public set Begin_Year(value: number) {
     if (value !== this.m_Begin_Year) {
       this.m_Begin_Year = value
@@ -81,6 +83,7 @@ export class AddPeriodModel {
   }
 
   private m_Begin_DecadeDecade
+  public get Begin_DecadeDecade(): number { return this.m_Begin_DecadeDecade; }
   public set Begin_DecadeDecade(value: number) {
     if (value !== this.m_Begin_DecadeDecade) {
       this.m_Begin_DecadeDecade = value
@@ -89,6 +92,7 @@ export class AddPeriodModel {
   }
 
   private m_Begin_DecadeCentury
+  public get Begin_DecadeCentury(): number { return this.m_Begin_DecadeCentury; }
   public set Begin_DecadeCentury(value: number) {
     if (value !== this.m_Begin_DecadeCentury) {
       this.m_Begin_DecadeCentury = value
@@ -97,6 +101,7 @@ export class AddPeriodModel {
   }
 
   private m_Begin_Century
+  public get Begin_Century(): number { return this.m_Begin_Century; }
   public set Begin_Century(value: number) {
     if (value !== this.m_Begin_Century) {
       this.m_Begin_Century = value
@@ -150,6 +155,7 @@ export class AddPeriodModel {
   }
 
   private m_End_MonthYear: number
+  public get End_MonthYear(): number { return this.m_End_MonthYear; }
   public set End_MonthYear(value: number) {
     if (value !== this.m_End_MonthYear) {
       this.m_End_MonthYear = value
@@ -158,6 +164,7 @@ export class AddPeriodModel {
   }
 
   private m_End_Year
+  public get End_Year(): number { return this.m_End_Year; }
   public set End_Year(value: number) {
     if (value !== this.m_End_Year) {
       this.m_End_Year = value
@@ -166,6 +173,7 @@ export class AddPeriodModel {
   }
 
   private m_End_DecadeDecade
+  public get End_DecadeDecade(): number { return this.m_End_DecadeDecade; }
   public set End_DecadeDecade(value: number) {
     if (value !== this.m_End_DecadeDecade) {
       this.m_End_DecadeDecade = value
@@ -174,6 +182,7 @@ export class AddPeriodModel {
   }
 
   private m_End_DecadeCentury
+  public get End_DecadeCentury(): number { return this.m_End_DecadeCentury; }
   public set End_DecadeCentury(value: number) {
     if (value !== this.m_End_DecadeCentury) {
       this.m_End_DecadeCentury = value
@@ -182,6 +191,7 @@ export class AddPeriodModel {
   }
 
   private m_End_Century
+  public get End_Century(): number { return this.m_End_Century; }
   public set End_Century(value: number) {
     if (value !== this.m_End_Century) {
       this.m_End_Century = value

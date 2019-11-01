@@ -51,11 +51,6 @@ export class AddPeriodPresenter {
         this.view.SetBegin_DayDay(value)
       }
     })
-    this.model.evChangeBegin_DayDay.subscribe((value) => {
-      if (value !== this.m_Begin_DayDay) {
-        this.view.SetBegin_DayDay(value)
-      }
-    })
     this.model.evChangeBegin_DayMonth.subscribe((value) => {
       if (value !== this.m_Begin_DayMonth) {
         this.view.SetBegin_DayMonth(value)

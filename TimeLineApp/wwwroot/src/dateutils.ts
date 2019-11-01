@@ -358,6 +358,13 @@ export class DateUtils {
     else
       return -ab - 1
   }
+  /**
+   * Десятилетие внутри века от 0 - 9
+   * @param dt Дата
+   */
+  static getDecadeRelativeFromDate(dt: Date) {
+    return Number.parseInt(dt.getFullYear().toString().substr(-2, 1))
+  }
   static getCenturyFromDate(dt: Date): number {
     return Math.floor(dt.getFullYear() / 100) + 1
   }
