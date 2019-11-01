@@ -1,23 +1,24 @@
 ﻿<!-- Модальное окно для добавления периода -->
-    <div id="tmAddPeriod" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
+<div id="tmAddPeriod" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form>
                 <div class="modal-header">
                     <h5 class="modal-title">Добавить период</h5>
                     <button type="button" class="close closeaddperiodmodal" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" id="addperiod_form">
                     <div class="container">
                         <div class="form-group row">
-                            <input class="form-control col-8 is-invalid" id="addperiod_Name" type="text" value=""
+                            <input class="form-control col-8" id="addperiod_Name" type="text" value=""
                                    placeholder="Введите наименование" required>
                             <label class="col" for="addperiod_IsPeriod">Период?</label>
                             <input class="form-control col-1" id="addperiod_IsPeriod" type="checkbox" value="false">
                         </div>
                     </div>
-                    <div class="card">
+                    <div class="card" id="addperiod_card1">
                         <div class="card-header">
                             Начало периода
                         </div>
@@ -35,7 +36,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row justify-content-start">
+                                <div class="row justify-content-start" id="addperiod-begin-row-1">
                                     <input class="form-control col-3" id="addperiod_Begin_DayDay" type="number" value=""
                                            placeholder="День" required min="1" max="31">
                                     <select class="form-control col-4" id="addperiod_Begin_DayMonth" placeholder="Месяц"
@@ -57,7 +58,7 @@
                                     <input class="form-control col-3" id="addperiod_Begin_DayYear" type="number"
                                            value="" placeholder="Год" required min="-10000" max="2050">
                                 </div>
-                                <div class="row justify-content-start" hidden>
+                                <div class="row justify-content-start" hidden  id="addperiod-begin-row-2">
                                     <select class="form-control col-4" id="addperiod_Begin_MonthMonth"
                                             placeholder="Месяц" required>
                                         <option>Месяц</option>
@@ -77,11 +78,11 @@
                                     <input class="form-control col-3" id="addperiod_Begin_MonthYear" type="number"
                                            value="" placeholder="Год" required min="-10000" max="2050">
                                 </div>
-                                <div class="row" hidden>
+                                <div class="row" hidden  id="addperiod-begin-row-3">
                                     <input class="form-control col-4" id="addperiod_Begin_Year" type="number" value=""
                                            placeholder="Год" min="-10000" max="2050" required>
                                 </div>
-                                <div class="row justify-content-start" hidden>
+                                <div class="row justify-content-start" hidden  id="addperiod-begin-row-4">
                                     <select class="form-control col-4" id="addperiod_Begin_DecadeDecade"
                                             placeholder="Десятилетие" required>
                                         <option>Десятилетие</option>
@@ -99,20 +100,20 @@
                                     <input class="form-control col-3" id="addperiod_Begin_DecadeCentury" type="number"
                                            value="" placeholder="Год" required min="-10000" max="2050">
                                 </div>
-                                <div class="row" hidden>
+                                <div class="row" hidden  id="addperiod-begin-row-5">
                                     <input class="form-control col-4" id="addperiod_Begin_Century" type="number"
                                            value="" placeholder="Век" min="-100" max="22" required>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="card" hidden>
+                    <div class="card" hidden id="addperiod_card2">
                         <div class="card-header">
                             Конец периода
                         </div>
                         <div class="card-body">
                             <div class="container">
-                                <div class="row" hidden>
+                                <div class="row">
                                     <div class="col">
                                         <label for="addperiod_End_Type">Тип события</label>
                                         <select id="addperiod_End_Type">
@@ -124,7 +125,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row justify-content-start" hidden>
+                                <div class="row justify-content-start"  id="addperiod-end-row-1">
                                     <input class="form-control col-3" id="addperiod_End_DayDay" type="number" value=""
                                            placeholder="День" required min="1" max="31">
                                     <select class="form-control col-4" id="addperiod_End_DayMonth" placeholder="Месяц"
@@ -146,7 +147,7 @@
                                     <input class="form-control col-3" id="addperiod_End_DayYear" type="number" value=""
                                            placeholder="Год" required min="-10000" max="2050">
                                 </div>
-                                <div class="row justify-content-start" hidden>
+                                <div class="row justify-content-start" id="addperiod-end-row-2" hidden>
                                     <select class="form-control col-4" id="addperiod_End_MonthMonth" placeholder="Месяц"
                                             required>
                                         <option>Месяц</option>
@@ -166,11 +167,11 @@
                                     <input class="form-control col-3" id="addperiod_End_MonthYear" type="number"
                                            value="" placeholder="Год" required min="-10000" max="2050">
                                 </div>
-                                <div class="row" hidden>
+                                <div class="row" id="addperiod-end-row-3" hidden>
                                     <input class="form-control col-4" id="addperiod_End_Year" type="number" value=""
                                            placeholder="Год" min="-10000" max="2050" required>
                                 </div>
-                                <div class="row justify-content-start" hidden>
+                                <div class="row justify-content-start" id="addperiod-end-row-4" hidden>
                                     <select class="form-control col-4" id="addperiod_End_DecadeDecade"
                                             placeholder="Десятилетие" required>
                                         <option>Десятилетие</option>
@@ -188,7 +189,7 @@
                                     <input class="form-control col-3" id="addperiod_End_DecadeCentury" type="number"
                                            value="" placeholder="Год" required min="-10000" max="2050">
                                 </div>
-                                <div class="row" hidden>
+                                <div class="row" id="addperiod-end-row-5" hidden>
                                     <input class="form-control col-4" id="addperiod_End_Century" type="number" value=""
                                            placeholder="Век" min="-100" max="22" required>
                                 </div>
@@ -199,15 +200,17 @@
                 <div id="addperiod_server_error" class="alert alert-danger" role="alert" style="display:none">
                 </div>
                 <div class="modal-footer">
+                    <input type="submit" hidden id="addperiod_submit">
                     <button id="btnCancelAddPeriod" type="button"
                             class="btn btn-secondary closeaddperiodmodal">
                         Закрыть
                     </button>
                     <button id="btnAddPeriod" type="button" class="btn btn-primary">Добавить</button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
+</div>
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@

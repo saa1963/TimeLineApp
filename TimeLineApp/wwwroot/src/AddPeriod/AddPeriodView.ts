@@ -108,6 +108,10 @@ export class AddPeriodView implements IAddPeriodView {
   private tbEnd_DecadeCentury: HTMLInputElement
   private tbEnd_Century: HTMLInputElement
   private tbError: HTMLDivElement
+  private tbCard1: HTMLDivElement
+  private tbCard2: HTMLDivElement
+  private form: HTMLFormElement
+  private submit: HTMLInputElement
   private btnOk: HTMLButtonElement
   private btnCancel: HTMLButtonElement
   private dlg: HTMLElement
@@ -135,10 +139,34 @@ export class AddPeriodView implements IAddPeriodView {
     this.tbEnd_DecadeCentury = <HTMLInputElement>document.getElementById('addperiod_End_DecadeCentury')
     this.tbEnd_Century = <HTMLInputElement>document.getElementById('addperiod_End_Century')
     this.tbError = <HTMLDivElement>document.getElementById('addperiod_server_error')
+    this.tbCard1 = <HTMLDivElement>document.getElementById('addperiod_card1')
+    this.tbCard2 = <HTMLDivElement>document.getElementById('addperiod_card2')
+    this.form = <HTMLFormElement>document.getElementById('addperiod_form')
+    this.submit = <HTMLInputElement>document.getElementById('addperiod_submit')
     this.btnOk = <HTMLButtonElement>document.getElementById('btnAddPeriod')
     this.btnCancel = <HTMLButtonElement>document.getElementById('btnCancelAddPeriod')
     this.dlg = <HTMLElement>document.getElementById('tmAddPeriod')
-
+    this.tbIsPeriod.onchange = () => {
+      if (this.tbIsPeriod.checked) {
+        this.tbCard2.removeAttribute('hidden')
+      } else {
+        this.tbCard2.setAttribute('hidden', '')
+      }
+    }
+    this.tbBegin_Type.onchange = () => {
+      this.tbCard1.querySelectorAll('*[id|="addperiod-begin-row"]').forEach((el) => {
+        el.setAttribute('hidden', '')
+      });
+      document.getElementById('addperiod-begin-row-' + (this.tbBegin_Type.selectedIndex + 1))
+        .removeAttribute('hidden')
+    }
+    this.tbEnd_Type.onchange = () => {
+      this.tbCard2.querySelectorAll('*[id|="addperiod-end-row"]').forEach((el) => {
+        el.setAttribute('hidden', '')
+      });
+      document.getElementById('addperiod-end-row-' + (this.tbEnd_Type.selectedIndex + 1))
+        .removeAttribute('hidden')
+    }
     this.Presenter = new AddPeriodPresenter(this, model)
   }
   ShowDialog(): Promise<boolean> {
@@ -146,24 +174,68 @@ export class AddPeriodView implements IAddPeriodView {
       $('#tmAddPeriod').modal()
       this.ClearError()
       this.btnOk.onclick = async () => {
-        if (!this.ValidateElementsAddPeriod(this.dlg)) return
-        $('#tmAddPeriod').modal('hide')
-        resolve(true)
+        if (!this.ValidateElementsAddPeriod()) {
+          this.submit.click()
+        } else {
+          $('#tmAddPeriod').modal('hide')
+          resolve(true)
+        }
       }
       this.btnCancel.onclick = async () => {
         $('#tmAddPeriod').modal('hide')
         resolve(false)
       }
-    }
-    )
+    })
   }
 
-  private ValidateElementsAddPeriod(el: HTMLElement): boolean {
-    let inputs = $<HTMLInputElement>('#' + el.id + ' div.row:not("[hidden]") select, #' + + el.id + ' div.row:not("[hidden]") input')
-    for (let i = 0; i <= inputs.length - 1; i++) {
-      if (!inputs[i].reportValidity()) return false
+  private ValidateElementsAddPeriod(): boolean {
+    let rt = true
+    if (!this.tbName.checkValidity()) { rt = false }
+    switch (this.tbBegin_Type.selectedIndex) {
+      case 0:
+        if (!this.tbBegin_DayDay.checkValidity()) rt = false
+        if (!this.tbBegin_DayMonth.checkValidity()) rt = false
+        if (!this.tbBegin_DayYear.checkValidity()) rt = false
+        break;
+      case 1:
+        if (!this.tbBegin_MonthMonth.checkValidity()) rt = false
+        if (!this.tbBegin_MonthYear.checkValidity()) rt = false
+        break;
+      case 2:
+        if (!this.tbBegin_Year.checkValidity()) rt = false
+        break;
+      case 3:
+        if (!this.tbBegin_DecadeDecade.checkValidity()) rt = false
+        if (!this.tbBegin_DecadeCentury.checkValidity()) rt = false
+        break;
+      case 4:
+        if (!this.tbBegin_Century.checkValidity()) rt = false
+        break;
     }
-    return true
+    if (this.tbIsPeriod.checked === true) {
+      switch (this.tbEnd_Type.selectedIndex) {
+        case 0:
+          if (!this.tbEnd_DayDay.checkValidity()) rt = false
+          if (!this.tbEnd_DayMonth.checkValidity()) rt = false
+          if (!this.tbEnd_DayYear.checkValidity()) rt = false
+          break;
+        case 1:
+          if (!this.tbEnd_MonthMonth.checkValidity()) rt = false
+          if (!this.tbEnd_MonthYear.checkValidity()) rt = false
+          break;
+        case 2:
+          if (!this.tbEnd_Year.checkValidity()) rt = false
+          break;
+        case 3:
+          if (!this.tbEnd_DecadeDecade.checkValidity()) rt = false
+          if (!this.tbEnd_DecadeCentury.checkValidity()) rt = false
+          break;
+        case 4:
+          if (!this.tbEnd_Century.checkValidity()) rt = false
+          break;
+      }
+    }
+    return rt
   }
 
   private ClearError() {

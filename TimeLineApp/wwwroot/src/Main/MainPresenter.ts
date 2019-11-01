@@ -77,21 +77,36 @@ export class MainPresenter {
   public async OnAddPeriod(idx: number) {
     let model = new AddPeriodModel()
     let today = new Date()
-    model.Name = "Новый период"
-    model.IsPeriod = true
+    model.Name = ""
+    model.IsPeriod = false
     model.BeginType = EnumPeriod.day
     model.Begin_DayDay = today.getDate()
     model.Begin_DayMonth = today.getMonth() + 1
     model.Begin_DayYear = today.getFullYear()
+    model.Begin_MonthMonth = today.getMonth() + 1
+    model.Begin_MonthYear = today.getFullYear()
+    model.Begin_Year = today.getFullYear()
+    model.Begin_DecadeDecade = DateUtils.getDecadeFromDate(today)
+    model.Begin_DecadeCentury = 21
+    model.Begin_Century = 21
+    model.EndType = EnumPeriod.day
+    model.End_DayDay = today.getDate()
+    model.End_DayMonth = today.getMonth() + 1
+    model.End_DayYear = today.getFullYear()
+    model.End_MonthMonth = today.getMonth() + 1
+    model.End_MonthYear = today.getFullYear()
+    model.End_Year = today.getFullYear()
+    model.End_DecadeDecade = DateUtils.getDecadeFromDate(today)
+    model.End_DecadeCentury = 21
+    model.End_Century = 21
     let view = new AddPeriodView(model)
     view.ShowDialog()
       .then(async (value) => {
         if (value) {
           await new BoxView("OK").Show()
-        } else {
-          await new BoxView("Fail").Show()
         }
       })
+    .catch()
   }
 
   public async SaveCurrentTL() {

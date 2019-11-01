@@ -18992,9 +18992,35 @@ class AddPeriodView {
         this.tbEnd_DecadeCentury = document.getElementById('addperiod_End_DecadeCentury');
         this.tbEnd_Century = document.getElementById('addperiod_End_Century');
         this.tbError = document.getElementById('addperiod_server_error');
+        this.tbCard1 = document.getElementById('addperiod_card1');
+        this.tbCard2 = document.getElementById('addperiod_card2');
+        this.form = document.getElementById('addperiod_form');
+        this.submit = document.getElementById('addperiod_submit');
         this.btnOk = document.getElementById('btnAddPeriod');
         this.btnCancel = document.getElementById('btnCancelAddPeriod');
         this.dlg = document.getElementById('tmAddPeriod');
+        this.tbIsPeriod.onchange = () => {
+            if (this.tbIsPeriod.checked) {
+                this.tbCard2.removeAttribute('hidden');
+            }
+            else {
+                this.tbCard2.setAttribute('hidden', '');
+            }
+        };
+        this.tbBegin_Type.onchange = () => {
+            this.tbCard1.querySelectorAll('*[id|="addperiod-begin-row"]').forEach((el) => {
+                el.setAttribute('hidden', '');
+            });
+            document.getElementById('addperiod-begin-row-' + (this.tbBegin_Type.selectedIndex + 1))
+                .removeAttribute('hidden');
+        };
+        this.tbEnd_Type.onchange = () => {
+            this.tbCard2.querySelectorAll('*[id|="addperiod-end-row"]').forEach((el) => {
+                el.setAttribute('hidden', '');
+            });
+            document.getElementById('addperiod-end-row-' + (this.tbEnd_Type.selectedIndex + 1))
+                .removeAttribute('hidden');
+        };
         this.Presenter = new AddPeriodPresenter_1.AddPeriodPresenter(this, model);
     }
     ShowDialog() {
@@ -19002,10 +19028,13 @@ class AddPeriodView {
             $('#tmAddPeriod').modal();
             this.ClearError();
             this.btnOk.onclick = () => __awaiter(this, void 0, void 0, function* () {
-                if (!this.ValidateElementsAddPeriod(this.dlg))
-                    return;
-                $('#tmAddPeriod').modal('hide');
-                resolve(true);
+                if (!this.ValidateElementsAddPeriod()) {
+                    this.submit.click();
+                }
+                else {
+                    $('#tmAddPeriod').modal('hide');
+                    resolve(true);
+                }
             });
             this.btnCancel.onclick = () => __awaiter(this, void 0, void 0, function* () {
                 $('#tmAddPeriod').modal('hide');
@@ -19013,13 +19042,74 @@ class AddPeriodView {
             });
         });
     }
-    ValidateElementsAddPeriod(el) {
-        let inputs = $('#' + el.id + ' div.row:not("[hidden]") select, #' + +el.id + ' div.row:not("[hidden]") select');
-        for (let i = 0; i <= inputs.length - 1; i++) {
-            if (!inputs[i].reportValidity())
-                return false;
+    ValidateElementsAddPeriod() {
+        let rt = true;
+        if (!this.tbName.checkValidity()) {
+            rt = false;
         }
-        return true;
+        switch (this.tbBegin_Type.selectedIndex) {
+            case 0:
+                if (!this.tbBegin_DayDay.checkValidity())
+                    rt = false;
+                if (!this.tbBegin_DayMonth.checkValidity())
+                    rt = false;
+                if (!this.tbBegin_DayYear.checkValidity())
+                    rt = false;
+                break;
+            case 1:
+                if (!this.tbBegin_MonthMonth.checkValidity())
+                    rt = false;
+                if (!this.tbBegin_MonthYear.checkValidity())
+                    rt = false;
+                break;
+            case 2:
+                if (!this.tbBegin_Year.checkValidity())
+                    rt = false;
+                break;
+            case 3:
+                if (!this.tbBegin_DecadeDecade.checkValidity())
+                    rt = false;
+                if (!this.tbBegin_DecadeCentury.checkValidity())
+                    rt = false;
+                break;
+            case 4:
+                if (!this.tbBegin_Century.checkValidity())
+                    rt = false;
+                break;
+        }
+        if (this.tbIsPeriod.checked === true) {
+            switch (this.tbEnd_Type.selectedIndex) {
+                case 0:
+                    if (!this.tbEnd_DayDay.checkValidity())
+                        rt = false;
+                    if (!this.tbEnd_DayMonth.checkValidity())
+                        rt = false;
+                    if (!this.tbEnd_DayYear.checkValidity())
+                        rt = false;
+                    break;
+                case 1:
+                    if (!this.tbEnd_MonthMonth.checkValidity())
+                        rt = false;
+                    if (!this.tbEnd_MonthYear.checkValidity())
+                        rt = false;
+                    break;
+                case 2:
+                    if (!this.tbEnd_Year.checkValidity())
+                        rt = false;
+                    break;
+                case 3:
+                    if (!this.tbEnd_DecadeDecade.checkValidity())
+                        rt = false;
+                    if (!this.tbEnd_DecadeCentury.checkValidity())
+                        rt = false;
+                    break;
+                case 4:
+                    if (!this.tbEnd_Century.checkValidity())
+                        rt = false;
+                    break;
+            }
+        }
+        return rt;
     }
     ClearError() {
         while (this.tbError.firstChild) {
@@ -19780,22 +19870,36 @@ class MainPresenter {
         return __awaiter(this, void 0, void 0, function* () {
             let model = new AddPeriodModel_1.AddPeriodModel();
             let today = new Date();
-            model.Name = "Новый период";
-            model.IsPeriod = true;
+            model.Name = "";
+            model.IsPeriod = false;
             model.BeginType = TLEvent_1.EnumPeriod.day;
             model.Begin_DayDay = today.getDate();
             model.Begin_DayMonth = today.getMonth() + 1;
             model.Begin_DayYear = today.getFullYear();
+            model.Begin_MonthMonth = today.getMonth() + 1;
+            model.Begin_MonthYear = today.getFullYear();
+            model.Begin_Year = today.getFullYear();
+            model.Begin_DecadeDecade = dateutils_1.DateUtils.getDecadeFromDate(today);
+            model.Begin_DecadeCentury = 21;
+            model.Begin_Century = 21;
+            model.EndType = TLEvent_1.EnumPeriod.day;
+            model.End_DayDay = today.getDate();
+            model.End_DayMonth = today.getMonth() + 1;
+            model.End_DayYear = today.getFullYear();
+            model.End_MonthMonth = today.getMonth() + 1;
+            model.End_MonthYear = today.getFullYear();
+            model.End_Year = today.getFullYear();
+            model.End_DecadeDecade = dateutils_1.DateUtils.getDecadeFromDate(today);
+            model.End_DecadeCentury = 21;
+            model.End_Century = 21;
             let view = new AddPeriodView_1.AddPeriodView(model);
             view.ShowDialog()
                 .then((value) => __awaiter(this, void 0, void 0, function* () {
                 if (value) {
                     yield new BoxView_1.BoxView("OK").Show();
                 }
-                else {
-                    yield new BoxView_1.BoxView("Fail").Show();
-                }
-            }));
+            }))
+                .catch();
         });
     }
     SaveCurrentTL() {
