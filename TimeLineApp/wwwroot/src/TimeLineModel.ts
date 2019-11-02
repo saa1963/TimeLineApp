@@ -6,6 +6,11 @@ export class TimeLineModel {
   private periods: TLPeriod[] = [];
   public Name: string = 'Новая'
 
+  /**
+   * Из JSON или новая
+   * @param name
+   * @param data
+   */
   static CreateTimeLineModel(name?: string, data?: any): TimeLineModel {
     let rt = new TimeLineModel();
     if (name) {

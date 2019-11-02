@@ -19701,6 +19701,7 @@ class MainModel {
         this.models = [];
         this.e_AddTimeLine = new ste_simple_events_1.SimpleEventDispatcher();
         this.e_RemoveTimeLine = new ste_simple_events_1.SimpleEventDispatcher();
+        this.e_AddPeriod = new ste_simple_events_1.SimpleEventDispatcher();
     }
     static getInstance() {
         if (!MainModel.instance) {
@@ -19711,6 +19712,9 @@ class MainModel {
     }
     Add(model) {
         let rt = this.models.push(model);
+        model.evAddPeriod.subscribe((period) => {
+            this.e_AddPeriod.dispatch([this.models.length - 1, period]);
+        });
         this.e_AddTimeLine.dispatch(model);
         return rt;
     }
@@ -19734,6 +19738,9 @@ class MainModel {
     }
     get evRemoveTimeLine() {
         return this.e_RemoveTimeLine.asEvent();
+    }
+    get evAddPeriod() {
+        return this.e_AddPeriod.asEvent();
     }
     validIndex(i) {
         if (!this.models)
@@ -19825,6 +19832,9 @@ class MainPresenter {
         this.model.evAddTimeLine.subscribe((tl) => {
             this.DrawTL(this.Count - 1, tl);
         });
+        this.model.evAddPeriod.subscribe((t) => {
+            //t.
+        });
         let kvo = Math.floor((document.documentElement.clientWidth - 2) / 120);
         this.mainLine = new Array(kvo);
         this.InitMainLine(this.GetFirstInit());
@@ -19901,7 +19911,7 @@ class MainPresenter {
             view.ShowDialog()
                 .then((value) => __awaiter(this, void 0, void 0, function* () {
                 if (value) {
-                    yield new BoxView_1.BoxView("OK").Show();
+                    this.model.Item(idx).Add(TLPeriod_1.TLPeriod.CreateTLPeriodWithArgs(model.Name, model.IsPeriod, model.BeginType, model.Begin_DayDay, model.Begin_DayMonth, model.Begin_DayYear, model.Begin_MonthMonth, model.Begin_MonthYear, model.Begin_Year, model.Begin_DecadeDecade, model.Begin_DecadeCentury, model.Begin_Century, model.EndType, model.End_DayDay, model.End_DayMonth, model.End_DayYear, model.End_MonthMonth, model.End_MonthYear, model.End_Year, model.End_DecadeDecade, model.End_DecadeCentury, model.End_Century));
                 }
             }))
                 .catch();
@@ -20291,6 +20301,7 @@ class MainView {
         return __awaiter(this, void 0, void 0, function* () {
             let table = document.getElementsByTagName('table')[0];
             let row = document.createElement('tr');
+            row.classList.add('row-header-' + idx);
             let td = document.createElement('td');
             td.classList.add('tl_head');
             td.colSpan = this.Presenter.MainLineCount - 1;
@@ -20943,6 +20954,48 @@ const dateutils_1 = __webpack_require__(/*! ./dateutils */ "./src/dateutils.ts")
 const TLEvent_1 = __webpack_require__(/*! ./TLEvent */ "./src/TLEvent.ts");
 class TLPeriod {
     /**
+     * создает TLPeriod из параметров
+     */
+    static CreateTLPeriodWithArgs(name, isperiod, begin_type, begin_dayday, begin_daymonth, begin_dayyear, begin_monthmonth, begin_monthyear, begin_year, begin_decadedecade, begin_decadecentury, begin_century, end_type, end_dayday, end_daymonth, end_dayyear, end_monthmonth, end_monthyear, end_year, end_decadedecade, end_decadecentury, end_century) {
+        let rt = new TLPeriod();
+        rt.Name = name;
+        let type = begin_type;
+        if (type === TLEvent_1.EnumPeriod.day) {
+            rt.Begin = TLEvent_1.TLEventDay.CreateTLEventDay("Начало", dateutils_1.DateUtils.DaysFromAD(begin_dayyear, begin_daymonth, begin_dayday), dateutils_1.DateUtils.getMonthFromYMD({ year: begin_dayyear, month: begin_daymonth, day: begin_dayday }), begin_year, dateutils_1.DateUtils.getDecadeFromYMD({ year: begin_dayyear, month: begin_daymonth, day: begin_dayday }), dateutils_1.DateUtils.getCenturyFromYMD({ year: begin_dayyear, month: begin_daymonth, day: begin_dayday }));
+        }
+        else if (type === TLEvent_1.EnumPeriod.month) {
+            rt.Begin = TLEvent_1.TLEventMonth.CreateTLEventMonth("Начало", dateutils_1.DateUtils.getMonthFromYMD({ year: begin_monthyear, month: begin_monthmonth, day: 1 }), begin_monthyear, dateutils_1.DateUtils.getDecadeFromYMD({ year: begin_monthyear, month: begin_monthmonth, day: 1 }), dateutils_1.DateUtils.getCenturyFromYMD({ year: begin_monthyear, month: begin_monthmonth, day: 1 }));
+        }
+        else if (type === TLEvent_1.EnumPeriod.year) {
+            rt.Begin = TLEvent_1.TLEventYear.CreateTLEventYear("Начало", begin_year, dateutils_1.DateUtils.getDecadeFromYMD({ year: begin_year, month: 1, day: 1 }), dateutils_1.DateUtils.getCenturyFromYMD({ year: begin_year, month: 1, day: 1 }));
+        }
+        else if (type === TLEvent_1.EnumPeriod.decade) {
+            rt.Begin = TLEvent_1.TLEventDecade.CreateTLEventDecade("Начало", dateutils_1.DateUtils.getDecade(begin_decadecentury, begin_decadedecade), begin_decadecentury);
+        }
+        else if (type === TLEvent_1.EnumPeriod.century) {
+            rt.Begin = TLEvent_1.TLEventCentury.CreateTLEventCentury("Начало", begin_century);
+        }
+        type = end_type;
+        if (type === TLEvent_1.EnumPeriod.day) {
+            rt.End = TLEvent_1.TLEventDay.CreateTLEventDay("Конец", dateutils_1.DateUtils.DaysFromAD(end_dayyear, end_daymonth, end_dayday), dateutils_1.DateUtils.getMonthFromYMD({ year: end_dayyear, month: end_daymonth, day: end_dayday }), end_year, dateutils_1.DateUtils.getDecadeFromYMD({ year: end_dayyear, month: end_daymonth, day: end_dayday }), dateutils_1.DateUtils.getCenturyFromYMD({ year: end_dayyear, month: end_daymonth, day: end_dayday }));
+        }
+        else if (type === TLEvent_1.EnumPeriod.month) {
+            rt.End = TLEvent_1.TLEventMonth.CreateTLEventMonth("Конец", dateutils_1.DateUtils.getMonthFromYMD({ year: end_monthyear, month: end_monthmonth, day: 1 }), end_monthyear, dateutils_1.DateUtils.getDecadeFromYMD({ year: end_monthyear, month: end_monthmonth, day: 1 }), dateutils_1.DateUtils.getCenturyFromYMD({ year: end_monthyear, month: end_monthmonth, day: 1 }));
+        }
+        else if (type === TLEvent_1.EnumPeriod.year) {
+            rt.End = TLEvent_1.TLEventYear.CreateTLEventYear("Конец", end_year, dateutils_1.DateUtils.getDecadeFromYMD({ year: end_year, month: 1, day: 1 }), dateutils_1.DateUtils.getCenturyFromYMD({ year: end_year, month: 1, day: 1 }));
+        }
+        else if (type === TLEvent_1.EnumPeriod.decade) {
+            rt.End = TLEvent_1.TLEventDecade.CreateTLEventDecade("Конец", dateutils_1.DateUtils.getDecade(end_decadecentury, end_decadedecade), end_decadecentury);
+        }
+        else if (type === TLEvent_1.EnumPeriod.century) {
+            rt.End = TLEvent_1.TLEventCentury.CreateTLEventCentury("Конец", end_century);
+        }
+        rt.m_BeginDay = rt.GetBeginDate();
+        rt.m_EndDay = rt.GetEndDate();
+        return rt;
+    }
+    /**
      * создает TLPeriod из объекта десериализированного из JSON
      * @param o
      */
@@ -21192,6 +21245,11 @@ class TimeLineModel {
         this.e_AddPeriod = new ste_simple_events_1.SimpleEventDispatcher();
         this.e_RemovePeriod = new ste_simple_events_1.SimpleEventDispatcher();
     }
+    /**
+     * Из JSON или новая
+     * @param name
+     * @param data
+     */
     static CreateTimeLineModel(name, data) {
         let rt = new TimeLineModel();
         if (name) {

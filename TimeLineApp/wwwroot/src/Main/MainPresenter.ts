@@ -185,6 +185,9 @@ export class MainPresenter {
     this.model.evAddTimeLine.subscribe((tl) => {
       this.DrawTL(this.Count - 1, tl)
     })
+    this.model.evAddPeriod.subscribe((t) => {
+      //t.
+    })
     let kvo = Math.floor((document.documentElement.clientWidth - 2) / 120)
     this.mainLine = new Array(kvo)
     this.InitMainLine(this.GetFirstInit())

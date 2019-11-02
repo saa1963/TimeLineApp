@@ -96,6 +96,7 @@ export class MainView {
   public async DrawHeader(idx: number, s: string) {
     let table = document.getElementsByTagName('table')[0]
     let row = document.createElement('tr')
+    row.classList.add('row-header-' + idx)
     let td = <HTMLTableDataCellElement>document.createElement('td')
     td.classList.add('tl_head')
     td.colSpan = this.Presenter.MainLineCount - 1

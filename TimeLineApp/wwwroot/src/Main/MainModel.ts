@@ -2,6 +2,7 @@
 import { SimpleEventDispatcher, ISimpleEvent } from "ste-simple-events";
 import { DateUtils } from "../dateutils";
 import { EnumPeriod } from "../TLEvent";
+import { TLPeriod } from "../TLPeriod";
 
 export class MainModel {
   private static instance: MainModel;
@@ -20,6 +21,9 @@ export class MainModel {
 
   public Add(model: TimeLineModel): number {
     let rt = this.models.push(model)
+    model.evAddPeriod.subscribe((period) => {
+      this.e_AddPeriod.dispatch([this.models.length - 1, period])
+    })
     this.e_AddTimeLine.dispatch(model)
     return rt
   }
@@ -48,6 +52,11 @@ export class MainModel {
   private e_RemoveTimeLine = new SimpleEventDispatcher<number>();
   public get evRemoveTimeLine(): ISimpleEvent<number> {
     return this.e_RemoveTimeLine.asEvent();
+  }
+
+  private e_AddPeriod = new SimpleEventDispatcher<[number,TLPeriod]>();
+  public get evAddPeriod(): ISimpleEvent<[number,TLPeriod]> {
+    return this.e_AddPeriod.asEvent();
   }
 
   private validIndex(i: number): boolean {
