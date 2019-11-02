@@ -7,6 +7,7 @@ import * as $ from 'jquery'
 
 export class AddPeriodView implements IAddPeriodView {
   private Presenter: AddPeriodPresenter
+  private model: AddPeriodModel
   private tbName: HTMLInputElement
   private tbIsPeriod: HTMLInputElement
   private tbBegin_Type: HTMLSelectElement
@@ -68,7 +69,12 @@ export class AddPeriodView implements IAddPeriodView {
     this.btnOk = <HTMLButtonElement>document.getElementById('btnAddPeriod')
     this.btnCancel = <HTMLButtonElement>document.getElementById('btnCancelAddPeriod')
     this.dlg = <HTMLElement>document.getElementById('tmAddPeriod')
+
+    this.tbName.onchange = () => {
+      this.Presenter.OnChangeNameInView()
+    }
     this.tbIsPeriod.onchange = () => {
+      this.Presenter.OnChangeIsPeriodInView()
       if (this.tbIsPeriod.checked) {
         this.tbCard2.removeAttribute('hidden')
       } else {
@@ -76,23 +82,81 @@ export class AddPeriodView implements IAddPeriodView {
       }
     }
     this.tbBegin_Type.onchange = () => {
+      this.Presenter.OnChangeBegin_TypeInView()
       this.tbCard1.querySelectorAll('*[id|="addperiod-begin-row"]').forEach((el) => {
         el.setAttribute('hidden', '')
       });
       document.getElementById('addperiod-begin-row-' + (this.tbBegin_Type.selectedIndex + 1))
         .removeAttribute('hidden')
     }
+    this.tbBegin_DayDay.onchange = () => {
+      this.Presenter.OnChangeBegin_DayDayInView()
+    }
+    this.tbBegin_DayMonth.onchange = () => {
+      this.Presenter.OnChangeBegin_DayMonthInView()
+    }
+    this.tbBegin_DayYear.onchange = () => {
+      this.Presenter.OnChangeBegin_DayYearInView()
+    }
+    this.tbBegin_MonthMonth.onchange = () => {
+      this.Presenter.OnChangeBegin_MonthMonthInView()
+    }
+    this.tbBegin_MonthYear.onchange = () => {
+      this.Presenter.OnChangeBegin_MonthYearInView()
+    }
+    this.tbBegin_Year.onchange = () => {
+      this.Presenter.OnChangeBegin_YearInView()
+    }
+    this.tbBegin_DecadeDecade.onchange = () => {
+      this.Presenter.OnChangeBegin_DecadeDecadeInView()
+    }
+    this.tbBegin_DecadeCentury.onchange = () => {
+      this.Presenter.OnChangeBegin_DecadeCenturyInView()
+    }
+    this.tbBegin_Century.onchange = () => {
+      this.Presenter.OnChangeBegin_CenturyInView()
+    }
     this.tbEnd_Type.onchange = () => {
+      this.Presenter.OnChangeEnd_TypeInView()
       this.tbCard2.querySelectorAll('*[id|="addperiod-end-row"]').forEach((el) => {
         el.setAttribute('hidden', '')
       });
       document.getElementById('addperiod-end-row-' + (this.tbEnd_Type.selectedIndex + 1))
         .removeAttribute('hidden')
     }
+    this.tbEnd_DayDay.onchange = () => {
+      this.Presenter.OnChangeEnd_DayDayInView()
+    }
+    this.tbEnd_DayMonth.onchange = () => {
+      this.Presenter.OnChangeEnd_DayMonthInView()
+    }
+    this.tbEnd_DayYear.onchange = () => {
+      this.Presenter.OnChangeEnd_DayYearInView()
+    }
+    this.tbEnd_MonthMonth.onchange = () => {
+      this.Presenter.OnChangeEnd_MonthMonthInView()
+    }
+    this.tbEnd_MonthYear.onchange = () => {
+      this.Presenter.OnChangeEnd_MonthYearInView()
+    }
+    this.tbEnd_Year.onchange = () => {
+      this.Presenter.OnChangeEnd_YearInView()
+    }
+    this.tbEnd_DecadeDecade.onchange = () => {
+      this.Presenter.OnChangeEnd_DecadeDecadeInView()
+    }
+    this.tbEnd_DecadeCentury.onchange = () => {
+      this.Presenter.OnChangeEnd_DecadeCenturyInView()
+    }
+    this.tbEnd_Century.onchange = () => {
+      this.Presenter.OnChangeEnd_CenturyInView()
+    }
+    this.model = model
     this.Presenter = new AddPeriodPresenter(this, model)
   }
-  ShowDialog(): Promise<boolean> {
-    return new Promise<boolean>((resolve, reject) => {
+
+  ShowDialog(): Promise<AddPeriodModel> {
+    return new Promise<AddPeriodModel>((resolve, reject) => {
       $('#tmAddPeriod').modal()
       this.ClearError()
       this.btnOk.onclick = async () => {
@@ -100,12 +164,12 @@ export class AddPeriodView implements IAddPeriodView {
           this.submit.click()
         } else {
           $('#tmAddPeriod').modal('hide')
-          resolve(true)
+          resolve(this.model)
         }
       }
       this.btnCancel.onclick = async () => {
         $('#tmAddPeriod').modal('hide')
-        resolve(false)
+        resolve(null)
       }
     })
   }

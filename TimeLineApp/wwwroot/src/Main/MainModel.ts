@@ -1,7 +1,5 @@
 ﻿import { TimeLineModel } from "../TimeLineModel";
 import { SimpleEventDispatcher, ISimpleEvent } from "ste-simple-events";
-import { DateUtils } from "../dateutils";
-import { EnumPeriod } from "../TLEvent";
 import { TLPeriod } from "../TLPeriod";
 
 export class MainModel {
@@ -20,9 +18,10 @@ export class MainModel {
   }
 
   public Add(model: TimeLineModel): number {
+    let idx: number = this.models.length
     let rt = this.models.push(model)
     model.evAddPeriod.subscribe((period) => {
-      this.e_AddPeriod.dispatch([this.models.length - 1, period])
+      this.e_AddPeriod.dispatch([idx, period])
     })
     this.e_AddTimeLine.dispatch(model)
     return rt

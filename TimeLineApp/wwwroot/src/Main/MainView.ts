@@ -1,8 +1,5 @@
 ﻿import { MainPresenter, IExTLPeriod } from "./MainPresenter";
-import * as $ from 'jquery'
 import { MainModel } from "./MainModel";
-import { BoxView } from "../BoxView";
-import { AddPeriodModel } from "../AddPeriod/AddPeriodModel";
 
 export class MainView {
   // private свойства
@@ -96,7 +93,7 @@ export class MainView {
   public async DrawHeader(idx: number, s: string) {
     let table = document.getElementsByTagName('table')[0]
     let row = document.createElement('tr')
-    row.classList.add('row-header-' + idx)
+    row.id = "row-header-" + idx
     let td = <HTMLTableDataCellElement>document.createElement('td')
     td.classList.add('tl_head')
     td.colSpan = this.Presenter.MainLineCount - 1
@@ -114,9 +111,9 @@ export class MainView {
     table.append(row)
   }
 
-  public DrawEventsRow(items: IExTLPeriod[]) {
-    let table = document.getElementsByTagName('table')[0]
+  public DrawEventsRow(idx: number, items: IExTLPeriod[]) {
     let row = document.createElement('tr')
+    row.classList.add('row-data-' + idx)
     let i = 0, last = -1
     while (i < items.length) {
       if (items[i].il - last != 1) {
@@ -135,6 +132,18 @@ export class MainView {
       row.append(td)
       i++
     }
-    table.append(row)
+    let header = document.getElementById('row-header-' + idx)
+    header.after(row)
+  }
+
+  /**
+   * Удалить строки из TL с индексом idx
+   * @param idx
+   */
+  public RemoveDataRows(idx: number) {
+    let rows = this.mainTable.querySelectorAll('tr.row-data-' + idx)
+    for (let el of rows) {
+      this.mainTable.removeChild(el)
+    }
   }
 }

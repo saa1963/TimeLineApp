@@ -1,6 +1,4 @@
-﻿import { Globals } from "../Globals";
-import * as $ from 'jquery'
-import { RegisterModel } from "./RegisterModel";
+﻿import { RegisterModel } from "./RegisterModel";
 import { IRegisterView } from "./IRegisterView";
 import { ApiClient } from "../ApiClient";
 

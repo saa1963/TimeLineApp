@@ -104,28 +104,28 @@ export class MainPresenter {
       .then(async (value) => {
         if (value) {
           this.model.Item(idx).Add(TLPeriod.CreateTLPeriodWithArgs(
-            model.Name,
-            model.IsPeriod,
-            model.BeginType,
-            model.Begin_DayDay,
-            model.Begin_DayMonth,
-            model.Begin_DayYear,
-            model.Begin_MonthMonth,
-            model.Begin_MonthYear,
-            model.Begin_Year,
-            model.Begin_DecadeDecade,
-            model.Begin_DecadeCentury,
-            model.Begin_Century,
-            model.EndType,
-            model.End_DayDay,
-            model.End_DayMonth,
-            model.End_DayYear,
-            model.End_MonthMonth,
-            model.End_MonthYear,
-            model.End_Year,
-            model.End_DecadeDecade,
-            model.End_DecadeCentury,
-            model.End_Century
+            value.Name,
+            value.IsPeriod,
+            value.BeginType,
+            value.Begin_DayDay,
+            value.Begin_DayMonth,
+            value.Begin_DayYear,
+            value.Begin_MonthMonth,
+            value.Begin_MonthYear,
+            value.Begin_Year,
+            value.Begin_DecadeDecade,
+            value.Begin_DecadeCentury,
+            value.Begin_Century,
+            value.EndType,
+            value.End_DayDay,
+            value.End_DayMonth,
+            value.End_DayYear,
+            value.End_MonthMonth,
+            value.End_MonthYear,
+            value.End_Year,
+            value.End_DecadeDecade,
+            value.End_DecadeCentury,
+            value.End_Century
           ))
         }
       })
@@ -183,10 +183,12 @@ export class MainPresenter {
     })
     this.m_Period = EnumPeriod.decade
     this.model.evAddTimeLine.subscribe((tl) => {
+      this.view.DrawHeader(this.Count - 1, tl.Name)
       this.DrawTL(this.Count - 1, tl)
     })
     this.model.evAddPeriod.subscribe((t) => {
-      //t.
+      this.view.RemoveDataRows(t[0])
+      this.DrawTL(t[0], this.model.Item(t[0]))
     })
     let kvo = Math.floor((document.documentElement.clientWidth - 2) / 120)
     this.mainLine = new Array(kvo)
@@ -315,6 +317,7 @@ export class MainPresenter {
     this.view.ClearContent()
     this.view.DrawDates(this.GetDrawDates())
     for (let i = 0; i < this.Count; i++) {
+      this.view.DrawHeader(i, this.Item(i).Name)
       this.DrawTL(i, this.Item(i))
     }
   }
@@ -344,7 +347,6 @@ export class MainPresenter {
   }
 
   private DrawTL(tl_index: number, model: TimeLineModel) {
-    this.view.DrawHeader(tl_index, model.Name)
     // выбрать периоды попадающие в общий диапазон
     let items = model.Items.filter((value, index, array) => {
       return value.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period)
@@ -405,7 +407,7 @@ export class MainPresenter {
     }
 
     for (let exitem of полки) {
-      this.view.DrawEventsRow(exitem)
+      this.view.DrawEventsRow(tl_index, exitem)
     }
   }
 

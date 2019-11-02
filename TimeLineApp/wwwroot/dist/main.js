@@ -18926,7 +18926,11 @@ class AddPeriodView {
         this.btnOk = document.getElementById('btnAddPeriod');
         this.btnCancel = document.getElementById('btnCancelAddPeriod');
         this.dlg = document.getElementById('tmAddPeriod');
+        this.tbName.onchange = () => {
+            this.Presenter.OnChangeNameInView();
+        };
         this.tbIsPeriod.onchange = () => {
+            this.Presenter.OnChangeIsPeriodInView();
             if (this.tbIsPeriod.checked) {
                 this.tbCard2.removeAttribute('hidden');
             }
@@ -18935,19 +18939,76 @@ class AddPeriodView {
             }
         };
         this.tbBegin_Type.onchange = () => {
+            this.Presenter.OnChangeBegin_TypeInView();
             this.tbCard1.querySelectorAll('*[id|="addperiod-begin-row"]').forEach((el) => {
                 el.setAttribute('hidden', '');
             });
             document.getElementById('addperiod-begin-row-' + (this.tbBegin_Type.selectedIndex + 1))
                 .removeAttribute('hidden');
         };
+        this.tbBegin_DayDay.onchange = () => {
+            this.Presenter.OnChangeBegin_DayDayInView();
+        };
+        this.tbBegin_DayMonth.onchange = () => {
+            this.Presenter.OnChangeBegin_DayMonthInView();
+        };
+        this.tbBegin_DayYear.onchange = () => {
+            this.Presenter.OnChangeBegin_DayYearInView();
+        };
+        this.tbBegin_MonthMonth.onchange = () => {
+            this.Presenter.OnChangeBegin_MonthMonthInView();
+        };
+        this.tbBegin_MonthYear.onchange = () => {
+            this.Presenter.OnChangeBegin_MonthYearInView();
+        };
+        this.tbBegin_Year.onchange = () => {
+            this.Presenter.OnChangeBegin_YearInView();
+        };
+        this.tbBegin_DecadeDecade.onchange = () => {
+            this.Presenter.OnChangeBegin_DecadeDecadeInView();
+        };
+        this.tbBegin_DecadeCentury.onchange = () => {
+            this.Presenter.OnChangeBegin_DecadeCenturyInView();
+        };
+        this.tbBegin_Century.onchange = () => {
+            this.Presenter.OnChangeBegin_CenturyInView();
+        };
         this.tbEnd_Type.onchange = () => {
+            this.Presenter.OnChangeEnd_TypeInView();
             this.tbCard2.querySelectorAll('*[id|="addperiod-end-row"]').forEach((el) => {
                 el.setAttribute('hidden', '');
             });
             document.getElementById('addperiod-end-row-' + (this.tbEnd_Type.selectedIndex + 1))
                 .removeAttribute('hidden');
         };
+        this.tbEnd_DayDay.onchange = () => {
+            this.Presenter.OnChangeEnd_DayDayInView();
+        };
+        this.tbEnd_DayMonth.onchange = () => {
+            this.Presenter.OnChangeEnd_DayMonthInView();
+        };
+        this.tbEnd_DayYear.onchange = () => {
+            this.Presenter.OnChangeEnd_DayYearInView();
+        };
+        this.tbEnd_MonthMonth.onchange = () => {
+            this.Presenter.OnChangeEnd_MonthMonthInView();
+        };
+        this.tbEnd_MonthYear.onchange = () => {
+            this.Presenter.OnChangeEnd_MonthYearInView();
+        };
+        this.tbEnd_Year.onchange = () => {
+            this.Presenter.OnChangeEnd_YearInView();
+        };
+        this.tbEnd_DecadeDecade.onchange = () => {
+            this.Presenter.OnChangeEnd_DecadeDecadeInView();
+        };
+        this.tbEnd_DecadeCentury.onchange = () => {
+            this.Presenter.OnChangeEnd_DecadeCenturyInView();
+        };
+        this.tbEnd_Century.onchange = () => {
+            this.Presenter.OnChangeEnd_CenturyInView();
+        };
+        this.model = model;
         this.Presenter = new AddPeriodPresenter_1.AddPeriodPresenter(this, model);
     }
     ShowDialog() {
@@ -18960,12 +19021,12 @@ class AddPeriodView {
                 }
                 else {
                     $('#tmAddPeriod').modal('hide');
-                    resolve(true);
+                    resolve(this.model);
                 }
             });
             this.btnCancel.onclick = () => __awaiter(this, void 0, void 0, function* () {
                 $('#tmAddPeriod').modal('hide');
-                resolve(false);
+                resolve(null);
             });
         });
     }
@@ -19711,9 +19772,10 @@ class MainModel {
         return MainModel.instance;
     }
     Add(model) {
+        let idx = this.models.length;
         let rt = this.models.push(model);
         model.evAddPeriod.subscribe((period) => {
-            this.e_AddPeriod.dispatch([this.models.length - 1, period]);
+            this.e_AddPeriod.dispatch([idx, period]);
         });
         this.e_AddTimeLine.dispatch(model);
         return rt;
@@ -19830,10 +19892,12 @@ class MainPresenter {
         });
         this.m_Period = TLEvent_1.EnumPeriod.decade;
         this.model.evAddTimeLine.subscribe((tl) => {
+            this.view.DrawHeader(this.Count - 1, tl.Name);
             this.DrawTL(this.Count - 1, tl);
         });
         this.model.evAddPeriod.subscribe((t) => {
-            //t.
+            this.view.RemoveDataRows(t[0]);
+            this.DrawTL(t[0], this.model.Item(t[0]));
         });
         let kvo = Math.floor((document.documentElement.clientWidth - 2) / 120);
         this.mainLine = new Array(kvo);
@@ -19911,7 +19975,7 @@ class MainPresenter {
             view.ShowDialog()
                 .then((value) => __awaiter(this, void 0, void 0, function* () {
                 if (value) {
-                    this.model.Item(idx).Add(TLPeriod_1.TLPeriod.CreateTLPeriodWithArgs(model.Name, model.IsPeriod, model.BeginType, model.Begin_DayDay, model.Begin_DayMonth, model.Begin_DayYear, model.Begin_MonthMonth, model.Begin_MonthYear, model.Begin_Year, model.Begin_DecadeDecade, model.Begin_DecadeCentury, model.Begin_Century, model.EndType, model.End_DayDay, model.End_DayMonth, model.End_DayYear, model.End_MonthMonth, model.End_MonthYear, model.End_Year, model.End_DecadeDecade, model.End_DecadeCentury, model.End_Century));
+                    this.model.Item(idx).Add(TLPeriod_1.TLPeriod.CreateTLPeriodWithArgs(value.Name, value.IsPeriod, value.BeginType, value.Begin_DayDay, value.Begin_DayMonth, value.Begin_DayYear, value.Begin_MonthMonth, value.Begin_MonthYear, value.Begin_Year, value.Begin_DecadeDecade, value.Begin_DecadeCentury, value.Begin_Century, value.EndType, value.End_DayDay, value.End_DayMonth, value.End_DayYear, value.End_MonthMonth, value.End_MonthYear, value.End_Year, value.End_DecadeDecade, value.End_DecadeCentury, value.End_Century));
                 }
             }))
                 .catch();
@@ -20043,6 +20107,7 @@ class MainPresenter {
         this.view.ClearContent();
         this.view.DrawDates(this.GetDrawDates());
         for (let i = 0; i < this.Count; i++) {
+            this.view.DrawHeader(i, this.Item(i).Name);
             this.DrawTL(i, this.Item(i));
         }
     }
@@ -20070,7 +20135,6 @@ class MainPresenter {
         return dates;
     }
     DrawTL(tl_index, model) {
-        this.view.DrawHeader(tl_index, model.Name);
         // выбрать периоды попадающие в общий диапазон
         let items = model.Items.filter((value, index, array) => {
             return value.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period);
@@ -20130,7 +20194,7 @@ class MainPresenter {
             });
         }
         for (let exitem of полки) {
-            this.view.DrawEventsRow(exitem);
+            this.view.DrawEventsRow(tl_index, exitem);
         }
     }
     OnLogin() {
@@ -20301,7 +20365,7 @@ class MainView {
         return __awaiter(this, void 0, void 0, function* () {
             let table = document.getElementsByTagName('table')[0];
             let row = document.createElement('tr');
-            row.classList.add('row-header-' + idx);
+            row.id = "row-header-" + idx;
             let td = document.createElement('td');
             td.classList.add('tl_head');
             td.colSpan = this.Presenter.MainLineCount - 1;
@@ -20319,9 +20383,9 @@ class MainView {
             table.append(row);
         });
     }
-    DrawEventsRow(items) {
-        let table = document.getElementsByTagName('table')[0];
+    DrawEventsRow(idx, items) {
         let row = document.createElement('tr');
+        row.classList.add('row-data-' + idx);
         let i = 0, last = -1;
         while (i < items.length) {
             if (items[i].il - last != 1) {
@@ -20340,7 +20404,18 @@ class MainView {
             row.append(td);
             i++;
         }
-        table.append(row);
+        let header = document.getElementById('row-header-' + idx);
+        header.after(row);
+    }
+    /**
+     * Удалить строки из TL с индексом idx
+     * @param idx
+     */
+    RemoveDataRows(idx) {
+        let rows = this.mainTable.querySelectorAll('tr.row-data-' + idx);
+        for (let el of rows) {
+            this.mainTable.removeChild(el);
+        }
     }
 }
 exports.MainView = MainView;
