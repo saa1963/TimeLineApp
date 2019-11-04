@@ -21036,7 +21036,7 @@ class TLPeriod {
         rt.Name = name;
         let type = begin_type;
         if (type === TLEvent_1.EnumPeriod.day) {
-            rt.Begin = TLEvent_1.TLEventDay.CreateTLEventDay("Начало", dateutils_1.DateUtils.DaysFromAD(begin_dayyear, begin_daymonth, begin_dayday), dateutils_1.DateUtils.getMonthFromYMD({ year: begin_dayyear, month: begin_daymonth, day: begin_dayday }), begin_year, dateutils_1.DateUtils.getDecadeFromYMD({ year: begin_dayyear, month: begin_daymonth, day: begin_dayday }), dateutils_1.DateUtils.getCenturyFromYMD({ year: begin_dayyear, month: begin_daymonth, day: begin_dayday }));
+            rt.Begin = TLEvent_1.TLEventDay.CreateTLEventDay("Начало", dateutils_1.DateUtils.DaysFromAD(begin_dayyear, begin_daymonth, begin_dayday), dateutils_1.DateUtils.getMonthFromYMD({ year: begin_dayyear, month: begin_daymonth, day: begin_dayday }), begin_dayyear, dateutils_1.DateUtils.getDecadeFromYMD({ year: begin_dayyear, month: begin_daymonth, day: begin_dayday }), dateutils_1.DateUtils.getCenturyFromYMD({ year: begin_dayyear, month: begin_daymonth, day: begin_dayday }));
         }
         else if (type === TLEvent_1.EnumPeriod.month) {
             rt.Begin = TLEvent_1.TLEventMonth.CreateTLEventMonth("Начало", dateutils_1.DateUtils.getMonthFromYMD({ year: begin_monthyear, month: begin_monthmonth, day: 1 }), begin_monthyear, dateutils_1.DateUtils.getDecadeFromYMD({ year: begin_monthyear, month: begin_monthmonth, day: 1 }), dateutils_1.DateUtils.getCenturyFromYMD({ year: begin_monthyear, month: begin_monthmonth, day: 1 }));
@@ -21050,21 +21050,26 @@ class TLPeriod {
         else if (type === TLEvent_1.EnumPeriod.century) {
             rt.Begin = TLEvent_1.TLEventCentury.CreateTLEventCentury("Начало", begin_century);
         }
-        type = end_type;
-        if (type === TLEvent_1.EnumPeriod.day) {
-            rt.End = TLEvent_1.TLEventDay.CreateTLEventDay("Конец", dateutils_1.DateUtils.DaysFromAD(end_dayyear, end_daymonth, end_dayday), dateutils_1.DateUtils.getMonthFromYMD({ year: end_dayyear, month: end_daymonth, day: end_dayday }), end_year, dateutils_1.DateUtils.getDecadeFromYMD({ year: end_dayyear, month: end_daymonth, day: end_dayday }), dateutils_1.DateUtils.getCenturyFromYMD({ year: end_dayyear, month: end_daymonth, day: end_dayday }));
+        if (isperiod) {
+            type = end_type;
+            if (type === TLEvent_1.EnumPeriod.day) {
+                rt.End = TLEvent_1.TLEventDay.CreateTLEventDay("Конец", dateutils_1.DateUtils.DaysFromAD(end_dayyear, end_daymonth, end_dayday), dateutils_1.DateUtils.getMonthFromYMD({ year: end_dayyear, month: end_daymonth, day: end_dayday }), end_dayyear, dateutils_1.DateUtils.getDecadeFromYMD({ year: end_dayyear, month: end_daymonth, day: end_dayday }), dateutils_1.DateUtils.getCenturyFromYMD({ year: end_dayyear, month: end_daymonth, day: end_dayday }));
+            }
+            else if (type === TLEvent_1.EnumPeriod.month) {
+                rt.End = TLEvent_1.TLEventMonth.CreateTLEventMonth("Конец", dateutils_1.DateUtils.getMonthFromYMD({ year: end_monthyear, month: end_monthmonth, day: 1 }), end_monthyear, dateutils_1.DateUtils.getDecadeFromYMD({ year: end_monthyear, month: end_monthmonth, day: 1 }), dateutils_1.DateUtils.getCenturyFromYMD({ year: end_monthyear, month: end_monthmonth, day: 1 }));
+            }
+            else if (type === TLEvent_1.EnumPeriod.year) {
+                rt.End = TLEvent_1.TLEventYear.CreateTLEventYear("Конец", end_year, dateutils_1.DateUtils.getDecadeFromYMD({ year: end_year, month: 1, day: 1 }), dateutils_1.DateUtils.getCenturyFromYMD({ year: end_year, month: 1, day: 1 }));
+            }
+            else if (type === TLEvent_1.EnumPeriod.decade) {
+                rt.End = TLEvent_1.TLEventDecade.CreateTLEventDecade("Конец", dateutils_1.DateUtils.getDecade(end_decadecentury, end_decadedecade), end_decadecentury);
+            }
+            else if (type === TLEvent_1.EnumPeriod.century) {
+                rt.End = TLEvent_1.TLEventCentury.CreateTLEventCentury("Конец", end_century);
+            }
         }
-        else if (type === TLEvent_1.EnumPeriod.month) {
-            rt.End = TLEvent_1.TLEventMonth.CreateTLEventMonth("Конец", dateutils_1.DateUtils.getMonthFromYMD({ year: end_monthyear, month: end_monthmonth, day: 1 }), end_monthyear, dateutils_1.DateUtils.getDecadeFromYMD({ year: end_monthyear, month: end_monthmonth, day: 1 }), dateutils_1.DateUtils.getCenturyFromYMD({ year: end_monthyear, month: end_monthmonth, day: 1 }));
-        }
-        else if (type === TLEvent_1.EnumPeriod.year) {
-            rt.End = TLEvent_1.TLEventYear.CreateTLEventYear("Конец", end_year, dateutils_1.DateUtils.getDecadeFromYMD({ year: end_year, month: 1, day: 1 }), dateutils_1.DateUtils.getCenturyFromYMD({ year: end_year, month: 1, day: 1 }));
-        }
-        else if (type === TLEvent_1.EnumPeriod.decade) {
-            rt.End = TLEvent_1.TLEventDecade.CreateTLEventDecade("Конец", dateutils_1.DateUtils.getDecade(end_decadecentury, end_decadedecade), end_decadecentury);
-        }
-        else if (type === TLEvent_1.EnumPeriod.century) {
-            rt.End = TLEvent_1.TLEventCentury.CreateTLEventCentury("Конец", end_century);
+        else {
+            rt.End = rt.Begin;
         }
         rt.m_BeginDay = rt.GetBeginDate();
         rt.m_EndDay = rt.GetEndDate();
@@ -21893,7 +21898,6 @@ class DateUtils {
         sliceMonth.forEach(s => {
             days_from_Crismas += s;
         });
-        let kf = year / _year;
         if (_year > 0) {
             return days_from_Crismas + day;
         }

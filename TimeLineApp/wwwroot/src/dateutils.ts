@@ -139,7 +139,6 @@ export class DateUtils {
     sliceMonth.forEach(s => {
       days_from_Crismas += s
     })
-    let kf = year / _year
     if (_year > 0) {
       return days_from_Crismas + day
     } else {
