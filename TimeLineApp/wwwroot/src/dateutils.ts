@@ -211,45 +211,169 @@ export class DateUtils {
    * @param century
    */
   static LeftDecadeOfCentury(century: number): number {
-    if (century > 0) {
-      return (century - 1) * 10 + 1
-    } else {
-      return century * 10
-    }
+    return this.LeftBoundary(century, 10)
   }
   /**
    * Правое (по шкале времени) десятилетие столетия
    * @param century
    */
   static RightDecadeOfCentury(century: number): number {
-    if (century > 0) {
-      return century * 10
-    } else {
-      return (century + 1) * 10 - 1
-    }
+    return this.RightBoundary(century, 10)
   }
 /**
  * Левый (по шкале времени) год столетия
  * @param century
  */
   static LeftYearOfCentury(century: number): number {
-    if (century > 0) {
-      return (century - 1) * 100 + 1
-    } else {
-      return century * 100
-    }
+    return this.LeftBoundary(century, 100)
   }
   /**
    * Правый (по шкале времени) год столетия
    * @param century
    */
   static RightYearOfCentury(century: number): number {
-    if (century > 0) {
-      return century * 100
+    return this.RightBoundary(century, 100)
+  }
+  /**
+   * Правый (по шкале времени) год десятилетия
+   * @param century
+   */
+  static RightYearOfDecade(decade: number): number {
+    return this.RightBoundary(decade, 10)
+  }
+  /**
+ * Левый (по шкале времени) год десятилетия
+ * @param century
+ */
+  static LeftYearOfDecade(decade: number): number {
+    return this.LeftBoundary(decade, 10)
+  }
+  /**
+  * Левый (по шкале времени) месяц года
+  * @param century
+  */
+  static LeftMonthOfYear(year: number): number {
+    return this.RightBoundary(year, 12)
+  }
+  /**
+   * Правый (по шкале времени) месяц года
+   * @param century
+   */
+  static RightMonthOfYear(year: number): number {
+    return this.RightBoundary(year, 12)
+  }
+
+  /**
+   * Правый (по шкале времени) месяц десятилетия
+   * @param century
+   */
+  static RightMonthOfDecade(decade: number): number {
+    return this.RightBoundary(decade, 120)
+  }
+
+  /**
+   * Левый (по шкале времени) месяц десятилетия
+   * @param century
+   */
+  static LeftMonthOfDecade(decade: number): number {
+    return this.LeftBoundary(decade, 120)
+  }
+
+  /**
+   * Правый (по шкале времени) месяц столетия
+   * @param century
+   */
+  static RightMonthOfCentury(century: number): number {
+    return this.RightBoundary(century, 1200)
+  }
+
+  /**
+   * Левый (по шкале времени) месяц столетия
+   * @param century
+   */
+  static LeftMonthOfCentury(century: number): number {
+    return this.LeftBoundary(century, 1200)
+  }
+
+/**
+ * Левый (по шкале времени) день месяца
+ * @param century месяц
+ */
+  static LeftDayOfMonth(month: number): number {
+    return this.FirstDayOfMonth(month)
+  }
+
+  /**
+ * Правый (по шкале времени) день месяца
+ * @param century месяц
+ */
+  static RightDayOfMonth(month: number): number {
+    return this.LastDayOfMonth(month)
+  }
+
+  /**
+ * Левый (по шкале времени) день года
+ * @param century месяц
+ */
+  static LeftDayOfYear(year: number): number {
+    return this.FirstDayOfYear(year)
+  }
+
+  /**
+* Правый (по шкале времени) день года
+* @param century месяц
+*/
+  static RightDayOfYear(year: number): number {
+    return this.LastDayOfYear(year)
+  }
+
+  /**
+ * Левый (по шкале времени) день десятилетия
+ * @param century месяц
+ */
+  static LeftDayOfDecade(decade: number): number {
+    return this.FirstDayOfDecade(decade)
+  }
+
+  /**
+* Правый (по шкале времени) день десятилетия
+* @param century месяц
+*/
+  static RightDayOfDecade(decade: number): number {
+    return this.LastDayOfDecade(decade)
+  }
+
+  /**
+ * Левый (по шкале времени) день столетия
+ * @param century месяц
+ */
+  static LeftDayOfCentury(century: number): number {
+    return this.FirstDayOfCentury(century)
+  }
+
+  /**
+* Правый (по шкале времени) день столетия
+* @param century месяц
+*/
+  static RightDayOfCentury(century: number): number {
+    return this.LastDayOfCentury(century)
+  }
+
+  private static RightBoundary(value: number, count: number) {
+    if (value > 0) {
+      return value * count
     } else {
-      return (century + 1) * 100 - 1
+      return (value + 1) * count - 1
     }
   }
+  private static LeftBoundary(value: number, count: number) {
+    if (value > 0) {
+      return (value - 1) * count + 1
+    } else {
+      return value * 12
+    }
+  }
+
   /**
    * Первый день года
    * @param year может быть отрицательным

@@ -21173,30 +21173,133 @@ class TLPeriod {
     ContainsMonth(month) {
         return this.IsIntersectIntervals(dateutils_1.DateUtils.FirstDayOfMonth(month), dateutils_1.DateUtils.LastDayOfMonth(month));
     }
-    IsIntersectIntervalsForPeriod(l1, r1, period) {
-        let l2, r2;
-        switch (period) {
-            case TLEvent_1.EnumPeriod.day:
-                l2 = this.Begin.Day;
-                r2 = this.End.Day;
+    getRightBoundForPeriod(period) {
+        let l2;
+        // [текущий(имеющаяся точность), внешний(точность сравнения)]
+        switch ([this.End.Type, period]) {
+            case [TLEvent_1.EnumPeriod.day, TLEvent_1.EnumPeriod.day]:
+                l2 = this.End.Day;
                 break;
-            case TLEvent_1.EnumPeriod.month:
-                l2 = this.Begin.Month;
-                r2 = this.End.Month;
+            case [TLEvent_1.EnumPeriod.month, TLEvent_1.EnumPeriod.day]:
+                l2 = dateutils_1.DateUtils.RightDayOfMonth(this.End.Month);
                 break;
-            case TLEvent_1.EnumPeriod.year:
-                l2 = this.Begin.Year;
-                r2 = this.End.Year;
+            case [TLEvent_1.EnumPeriod.year, TLEvent_1.EnumPeriod.day]:
+                l2 = dateutils_1.DateUtils.RightDayOfYear(this.End.Year);
                 break;
-            case TLEvent_1.EnumPeriod.decade:
-                l2 = this.Begin.Decade;
-                r2 = this.End.Decade;
+            case [TLEvent_1.EnumPeriod.decade, TLEvent_1.EnumPeriod.day]:
+                l2 = dateutils_1.DateUtils.RightDayOfDecade(this.End.Decade);
                 break;
-            case TLEvent_1.EnumPeriod.century:
-                l2 = this.Begin.Century;
-                r2 = this.End.Century;
+            case [TLEvent_1.EnumPeriod.century, TLEvent_1.EnumPeriod.day]:
+                l2 = dateutils_1.DateUtils.RightDayOfCentury(this.End.Century);
+                break;
+            case [TLEvent_1.EnumPeriod.day, TLEvent_1.EnumPeriod.month]:
+            case [TLEvent_1.EnumPeriod.month, TLEvent_1.EnumPeriod.month]:
+                l2 = this.End.Month;
+                break;
+            case [TLEvent_1.EnumPeriod.year, TLEvent_1.EnumPeriod.month]:
+                l2 = dateutils_1.DateUtils.RightMonthOfYear(this.End.Month);
+                break;
+            case [TLEvent_1.EnumPeriod.decade, TLEvent_1.EnumPeriod.month]:
+                l2 = dateutils_1.DateUtils.RightMonthOfDecade(this.End.Decade);
+                break;
+            case [TLEvent_1.EnumPeriod.century, TLEvent_1.EnumPeriod.month]:
+                l2 = dateutils_1.DateUtils.RightMonthOfCentury(this.End.Decade);
+                break;
+            case [TLEvent_1.EnumPeriod.day, TLEvent_1.EnumPeriod.year]:
+            case [TLEvent_1.EnumPeriod.month, TLEvent_1.EnumPeriod.year]:
+            case [TLEvent_1.EnumPeriod.year, TLEvent_1.EnumPeriod.year]:
+                l2 = this.End.Year;
+                break;
+            case [TLEvent_1.EnumPeriod.decade, TLEvent_1.EnumPeriod.year]:
+                l2 = dateutils_1.DateUtils.RightYearOfDecade(this.End.Decade);
+                break;
+            case [TLEvent_1.EnumPeriod.century, TLEvent_1.EnumPeriod.year]:
+                l2 = dateutils_1.DateUtils.RightYearOfCentury(this.End.Decade);
+                break;
+            case [TLEvent_1.EnumPeriod.day, TLEvent_1.EnumPeriod.decade]:
+            case [TLEvent_1.EnumPeriod.month, TLEvent_1.EnumPeriod.decade]:
+            case [TLEvent_1.EnumPeriod.year, TLEvent_1.EnumPeriod.decade]:
+            case [TLEvent_1.EnumPeriod.decade, TLEvent_1.EnumPeriod.decade]:
+                l2 = this.End.Decade;
+                break;
+            case [TLEvent_1.EnumPeriod.century, TLEvent_1.EnumPeriod.decade]:
+                l2 = dateutils_1.DateUtils.RightDecadeOfCentury(this.End.Century);
+                break;
+            case [TLEvent_1.EnumPeriod.day, TLEvent_1.EnumPeriod.century]:
+            case [TLEvent_1.EnumPeriod.month, TLEvent_1.EnumPeriod.century]:
+            case [TLEvent_1.EnumPeriod.year, TLEvent_1.EnumPeriod.century]:
+            case [TLEvent_1.EnumPeriod.decade, TLEvent_1.EnumPeriod.century]:
+            case [TLEvent_1.EnumPeriod.century, TLEvent_1.EnumPeriod.century]:
+                l2 = this.End.Century;
                 break;
         }
+        return l2;
+    }
+    getLeftBoundForPeriod(period) {
+        let l2;
+        // [текущий(имеющаяся точность), внешний(точность сравнения)]
+        switch ([this.Begin.Type, period]) {
+            case [TLEvent_1.EnumPeriod.day, TLEvent_1.EnumPeriod.day]:
+                l2 = this.Begin.Day;
+                break;
+            case [TLEvent_1.EnumPeriod.month, TLEvent_1.EnumPeriod.day]:
+                l2 = dateutils_1.DateUtils.LeftDayOfMonth(this.Begin.Month);
+                break;
+            case [TLEvent_1.EnumPeriod.year, TLEvent_1.EnumPeriod.day]:
+                l2 = dateutils_1.DateUtils.LeftDayOfYear(this.Begin.Year);
+                break;
+            case [TLEvent_1.EnumPeriod.decade, TLEvent_1.EnumPeriod.day]:
+                l2 = dateutils_1.DateUtils.LeftDayOfDecade(this.Begin.Decade);
+                break;
+            case [TLEvent_1.EnumPeriod.century, TLEvent_1.EnumPeriod.day]:
+                l2 = dateutils_1.DateUtils.LeftDayOfCentury(this.Begin.Century);
+                break;
+            case [TLEvent_1.EnumPeriod.day, TLEvent_1.EnumPeriod.month]:
+            case [TLEvent_1.EnumPeriod.month, TLEvent_1.EnumPeriod.month]:
+                l2 = this.Begin.Month;
+                break;
+            case [TLEvent_1.EnumPeriod.year, TLEvent_1.EnumPeriod.month]:
+                l2 = dateutils_1.DateUtils.LeftMonthOfYear(this.Begin.Month);
+                break;
+            case [TLEvent_1.EnumPeriod.decade, TLEvent_1.EnumPeriod.month]:
+                l2 = dateutils_1.DateUtils.LeftMonthOfDecade(this.Begin.Decade);
+                break;
+            case [TLEvent_1.EnumPeriod.century, TLEvent_1.EnumPeriod.month]:
+                l2 = dateutils_1.DateUtils.LeftMonthOfCentury(this.Begin.Decade);
+                break;
+            case [TLEvent_1.EnumPeriod.day, TLEvent_1.EnumPeriod.year]:
+            case [TLEvent_1.EnumPeriod.month, TLEvent_1.EnumPeriod.year]:
+            case [TLEvent_1.EnumPeriod.year, TLEvent_1.EnumPeriod.year]:
+                l2 = this.Begin.Year;
+                break;
+            case [TLEvent_1.EnumPeriod.decade, TLEvent_1.EnumPeriod.year]:
+                l2 = dateutils_1.DateUtils.LeftYearOfDecade(this.Begin.Decade);
+                break;
+            case [TLEvent_1.EnumPeriod.century, TLEvent_1.EnumPeriod.year]:
+                l2 = dateutils_1.DateUtils.LeftYearOfCentury(this.Begin.Decade);
+                break;
+            case [TLEvent_1.EnumPeriod.day, TLEvent_1.EnumPeriod.decade]:
+            case [TLEvent_1.EnumPeriod.month, TLEvent_1.EnumPeriod.decade]:
+            case [TLEvent_1.EnumPeriod.year, TLEvent_1.EnumPeriod.decade]:
+            case [TLEvent_1.EnumPeriod.decade, TLEvent_1.EnumPeriod.decade]:
+                l2 = this.Begin.Decade;
+                break;
+            case [TLEvent_1.EnumPeriod.century, TLEvent_1.EnumPeriod.decade]:
+                l2 = dateutils_1.DateUtils.LeftDecadeOfCentury(this.Begin.Century);
+                break;
+            case [TLEvent_1.EnumPeriod.day, TLEvent_1.EnumPeriod.century]:
+            case [TLEvent_1.EnumPeriod.month, TLEvent_1.EnumPeriod.century]:
+            case [TLEvent_1.EnumPeriod.year, TLEvent_1.EnumPeriod.century]:
+            case [TLEvent_1.EnumPeriod.decade, TLEvent_1.EnumPeriod.century]:
+            case [TLEvent_1.EnumPeriod.century, TLEvent_1.EnumPeriod.century]:
+                l2 = this.Begin.Century;
+                break;
+        }
+        return l2;
+    }
+    IsIntersectIntervalsForPeriod(l1, r1, period) {
+        let l2 = this.getLeftBoundForPeriod(period);
+        let r2 = this.getRightBoundForPeriod(period);
         let rt = TLPeriod.isIntersectIntervals(l1, r1, l2, r2);
         return rt;
     }
@@ -21965,6 +22068,162 @@ class DateUtils {
         let f;
         f = this.FirstDayOfYear(year + 1) - 1;
         return f;
+    }
+    /**
+     * Левое (по шкале времени) десятилетие столетия
+     * @param century
+     */
+    static LeftDecadeOfCentury(century) {
+        return this.LeftBoundary(century, 10);
+    }
+    /**
+     * Правое (по шкале времени) десятилетие столетия
+     * @param century
+     */
+    static RightDecadeOfCentury(century) {
+        return this.RightBoundary(century, 10);
+    }
+    /**
+     * Левый (по шкале времени) год столетия
+     * @param century
+     */
+    static LeftYearOfCentury(century) {
+        return this.LeftBoundary(century, 100);
+    }
+    /**
+     * Правый (по шкале времени) год столетия
+     * @param century
+     */
+    static RightYearOfCentury(century) {
+        return this.RightBoundary(century, 100);
+    }
+    /**
+     * Правый (по шкале времени) год десятилетия
+     * @param century
+     */
+    static RightYearOfDecade(decade) {
+        return this.RightBoundary(decade, 10);
+    }
+    /**
+   * Левый (по шкале времени) год десятилетия
+   * @param century
+   */
+    static LeftYearOfDecade(decade) {
+        return this.LeftBoundary(decade, 10);
+    }
+    /**
+    * Левый (по шкале времени) месяц года
+    * @param century
+    */
+    static LeftMonthOfYear(year) {
+        return this.RightBoundary(year, 12);
+    }
+    /**
+     * Правый (по шкале времени) месяц года
+     * @param century
+     */
+    static RightMonthOfYear(year) {
+        return this.RightBoundary(year, 12);
+    }
+    /**
+     * Правый (по шкале времени) месяц десятилетия
+     * @param century
+     */
+    static RightMonthOfDecade(decade) {
+        return this.RightBoundary(decade, 120);
+    }
+    /**
+     * Левый (по шкале времени) месяц десятилетия
+     * @param century
+     */
+    static LeftMonthOfDecade(decade) {
+        return this.LeftBoundary(decade, 120);
+    }
+    /**
+     * Правый (по шкале времени) месяц столетия
+     * @param century
+     */
+    static RightMonthOfCentury(century) {
+        return this.RightBoundary(century, 1200);
+    }
+    /**
+     * Левый (по шкале времени) месяц столетия
+     * @param century
+     */
+    static LeftMonthOfCentury(century) {
+        return this.LeftBoundary(century, 1200);
+    }
+    /**
+     * Левый (по шкале времени) день месяца
+     * @param century месяц
+     */
+    static LeftDayOfMonth(month) {
+        return this.FirstDayOfMonth(month);
+    }
+    /**
+   * Правый (по шкале времени) день месяца
+   * @param century месяц
+   */
+    static RightDayOfMonth(month) {
+        return this.LastDayOfMonth(month);
+    }
+    /**
+   * Левый (по шкале времени) день года
+   * @param century месяц
+   */
+    static LeftDayOfYear(year) {
+        return this.FirstDayOfYear(year);
+    }
+    /**
+  * Правый (по шкале времени) день года
+  * @param century месяц
+  */
+    static RightDayOfYear(year) {
+        return this.LastDayOfYear(year);
+    }
+    /**
+   * Левый (по шкале времени) день десятилетия
+   * @param century месяц
+   */
+    static LeftDayOfDecade(decade) {
+        return this.FirstDayOfDecade(decade);
+    }
+    /**
+  * Правый (по шкале времени) день десятилетия
+  * @param century месяц
+  */
+    static RightDayOfDecade(decade) {
+        return this.LastDayOfDecade(decade);
+    }
+    /**
+   * Левый (по шкале времени) день столетия
+   * @param century месяц
+   */
+    static LeftDayOfCentury(century) {
+        return this.FirstDayOfCentury(century);
+    }
+    /**
+  * Правый (по шкале времени) день столетия
+  * @param century месяц
+  */
+    static RightDayOfCentury(century) {
+        return this.LastDayOfCentury(century);
+    }
+    static RightBoundary(value, count) {
+        if (value > 0) {
+            return value * count;
+        }
+        else {
+            return (value + 1) * count - 1;
+        }
+    }
+    static LeftBoundary(value, count) {
+        if (value > 0) {
+            return (value - 1) * count + 1;
+        }
+        else {
+            return value * 12;
+        }
     }
     /**
      * Первый день года
