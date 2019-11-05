@@ -241,32 +241,137 @@ export class TLPeriod {
      */
     protected ContainsMonth(month: number): boolean {
         return this.IsIntersectIntervals(DateUtils.FirstDayOfMonth(month), DateUtils.LastDayOfMonth(month));
+  }
+
+  private getRightBoundForPeriod(period: EnumPeriod): number {
+    let l2: number
+    // [текущий(имеющаяся точность), внешний(точность сравнения)]
+    switch ([this.End.Type, period]) {
+      case [EnumPeriod.day, EnumPeriod.day]:
+        l2 = this.End.Day
+        break;
+      case [EnumPeriod.month, EnumPeriod.day]:
+        l2 = DateUtils.RightDayOfMonth(this.End.Month)
+        break;
+      case [EnumPeriod.year, EnumPeriod.day]:
+        l2 = DateUtils.RightDayOfYear(this.End.Year)
+        break;
+      case [EnumPeriod.decade, EnumPeriod.day]:
+        l2 = DateUtils.RightDayOfDecade(this.End.Decade)
+        break;
+      case [EnumPeriod.century, EnumPeriod.day]:
+        l2 = DateUtils.RightDayOfCentury(this.End.Century)
+        break;
+      case [EnumPeriod.day, EnumPeriod.month]:
+      case [EnumPeriod.month, EnumPeriod.month]:
+        l2 = this.End.Month
+        break;
+      case [EnumPeriod.year, EnumPeriod.month]:
+        l2 = DateUtils.RightMonthOfYear(this.End.Month)
+        break;
+      case [EnumPeriod.decade, EnumPeriod.month]:
+        l2 = DateUtils.RightMonthOfDecade(this.End.Decade)
+        break;
+      case [EnumPeriod.century, EnumPeriod.month]:
+        l2 = DateUtils.RightMonthOfCentury(this.End.Decade)
+        break;
+      case [EnumPeriod.day, EnumPeriod.year]:
+      case [EnumPeriod.month, EnumPeriod.year]:
+      case [EnumPeriod.year, EnumPeriod.year]:
+        l2 = this.End.Year
+        break;
+      case [EnumPeriod.decade, EnumPeriod.year]:
+        l2 = DateUtils.RightYearOfDecade(this.End.Decade)
+        break;
+      case [EnumPeriod.century, EnumPeriod.year]:
+        l2 = DateUtils.RightYearOfCentury(this.End.Decade)
+        break;
+      case [EnumPeriod.day, EnumPeriod.decade]:
+      case [EnumPeriod.month, EnumPeriod.decade]:
+      case [EnumPeriod.year, EnumPeriod.decade]:
+      case [EnumPeriod.decade, EnumPeriod.decade]:
+        l2 = this.End.Decade
+        break;
+      case [EnumPeriod.century, EnumPeriod.decade]:
+        l2 = DateUtils.RightDecadeOfCentury(this.End.Century)
+        break;
+      case [EnumPeriod.day, EnumPeriod.century]:
+      case [EnumPeriod.month, EnumPeriod.century]:
+      case [EnumPeriod.year, EnumPeriod.century]:
+      case [EnumPeriod.decade, EnumPeriod.century]:
+      case [EnumPeriod.century, EnumPeriod.century]:
+        l2 = this.End.Century
+        break;
     }
+    return l2
+  }
+
+  private getLeftBoundForPeriod(period: EnumPeriod): number {
+    let l2: number
+    // [текущий(имеющаяся точность), внешний(точность сравнения)]
+    switch ([this.Begin.Type, period]) {
+      case [EnumPeriod.day, EnumPeriod.day]:
+        l2 = this.Begin.Day
+        break;
+      case [EnumPeriod.month, EnumPeriod.day]:
+        l2 = DateUtils.LeftDayOfMonth(this.Begin.Month)
+        break;
+      case [EnumPeriod.year, EnumPeriod.day]:
+        l2 = DateUtils.LeftDayOfYear(this.Begin.Year)
+        break;
+      case [EnumPeriod.decade, EnumPeriod.day]:
+        l2 = DateUtils.LeftDayOfDecade(this.Begin.Decade)
+        break;
+      case [EnumPeriod.century, EnumPeriod.day]:
+        l2 = DateUtils.LeftDayOfCentury(this.Begin.Century)
+        break;
+      case [EnumPeriod.day, EnumPeriod.month]:
+      case [EnumPeriod.month, EnumPeriod.month]:
+        l2 = this.Begin.Month
+        break;
+      case [EnumPeriod.year, EnumPeriod.month]:
+        l2 = DateUtils.LeftMonthOfYear(this.Begin.Month)
+        break;
+      case [EnumPeriod.decade, EnumPeriod.month]:
+        l2 = DateUtils.LeftMonthOfDecade(this.Begin.Decade)
+        break;
+      case [EnumPeriod.century, EnumPeriod.month]:
+        l2 = DateUtils.LeftMonthOfCentury(this.Begin.Decade)
+        break;
+      case [EnumPeriod.day, EnumPeriod.year]:
+      case [EnumPeriod.month, EnumPeriod.year]:
+      case [EnumPeriod.year, EnumPeriod.year]:
+        l2 = this.Begin.Year
+        break;
+      case [EnumPeriod.decade, EnumPeriod.year]:
+        l2 = DateUtils.LeftYearOfDecade(this.Begin.Decade)
+        break;
+      case [EnumPeriod.century, EnumPeriod.year]:
+        l2 = DateUtils.LeftYearOfCentury(this.Begin.Decade)
+        break;
+      case [EnumPeriod.day, EnumPeriod.decade]:
+      case [EnumPeriod.month, EnumPeriod.decade]:
+      case [EnumPeriod.year, EnumPeriod.decade]:
+      case [EnumPeriod.decade, EnumPeriod.decade]:
+        l2 = this.Begin.Decade
+        break;
+      case [EnumPeriod.century, EnumPeriod.decade]:
+        l2 = DateUtils.LeftDecadeOfCentury(this.Begin.Century)
+        break;
+      case [EnumPeriod.day, EnumPeriod.century]:
+      case [EnumPeriod.month, EnumPeriod.century]:
+      case [EnumPeriod.year, EnumPeriod.century]:
+      case [EnumPeriod.decade, EnumPeriod.century]:
+      case [EnumPeriod.century, EnumPeriod.century]:
+        l2 = this.Begin.Century
+        break;
+    }
+    return l2
+  }
 
   public IsIntersectIntervalsForPeriod(l1: number, r1: number, period: EnumPeriod): boolean {
-    let l2: number, r2: number
-    switch (period) {
-      case EnumPeriod.day:
-        l2 = this.Begin.Day
-        r2 = this.End.Day
-        break;
-      case EnumPeriod.month:
-        l2 = this.Begin.Month
-        r2 = this.End.Month
-        break;
-      case EnumPeriod.year:
-        l2 = this.Begin.Year
-        r2 = this.End.Year
-        break;
-      case EnumPeriod.decade:
-        l2 = this.Begin.Decade
-        r2 = this.End.Decade
-        break;
-      case EnumPeriod.century:
-        l2 = this.Begin.Century
-        r2 = this.End.Century
-        break;
-    }
+    let l2: number = this.getLeftBoundForPeriod(period)
+    let r2: number = this.getRightBoundForPeriod(period)
     let rt: boolean = TLPeriod.isIntersectIntervals(l1, r1, l2, r2)
     return rt
   }

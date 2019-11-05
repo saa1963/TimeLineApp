@@ -207,6 +207,50 @@ export class DateUtils {
     return f
   }
   /**
+   * Левое (по шкале времени) десятилетие столетия
+   * @param century
+   */
+  static LeftDecadeOfCentury(century: number): number {
+    if (century > 0) {
+      return (century - 1) * 10 + 1
+    } else {
+      return century * 10
+    }
+  }
+  /**
+   * Правое (по шкале времени) десятилетие столетия
+   * @param century
+   */
+  static RightDecadeOfCentury(century: number): number {
+    if (century > 0) {
+      return century * 10
+    } else {
+      return (century + 1) * 10 - 1
+    }
+  }
+/**
+ * Левый (по шкале времени) год столетия
+ * @param century
+ */
+  static LeftYearOfCentury(century: number): number {
+    if (century > 0) {
+      return (century - 1) * 100 + 1
+    } else {
+      return century * 100
+    }
+  }
+  /**
+   * Правый (по шкале времени) год столетия
+   * @param century
+   */
+  static RightYearOfCentury(century: number): number {
+    if (century > 0) {
+      return century * 100
+    } else {
+      return (century + 1) * 100 - 1
+    }
+  }
+  /**
    * Первый день года
    * @param year может быть отрицательным
    */

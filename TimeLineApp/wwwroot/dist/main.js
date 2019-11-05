@@ -19924,7 +19924,6 @@ class MainPresenter {
         view.Show()
             .then((value) => __awaiter(this, void 0, void 0, function* () {
             if (value) {
-                //await new BoxView(value).Show()
                 this.model.Add(TimeLineModel_1.TimeLineModel.CreateTimeLineModel(value));
             }
         }));

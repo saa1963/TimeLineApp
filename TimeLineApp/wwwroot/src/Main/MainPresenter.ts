@@ -54,7 +54,6 @@ export class MainPresenter {
     view.Show()
       .then(async (value) => {
         if (value) {
-          //await new BoxView(value).Show()
           this.model.Add(TimeLineModel.CreateTimeLineModel(value))
         }
       })
