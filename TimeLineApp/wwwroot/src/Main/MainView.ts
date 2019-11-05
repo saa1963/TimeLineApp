@@ -100,13 +100,42 @@ export class MainView {
     let txt = document.createTextNode(s)
     td.append(txt)
     row.append(td)
-    td = <HTMLTableDataCellElement>document.createElement('td')
-    let btn = <HTMLButtonElement>document.createElement('button')
-    btn.textContent = "+"
-    btn.onclick = async (ev) => {
+
+    let btnMenu = <HTMLButtonElement>document.createElement('button')
+    btnMenu.type = 'button'
+    btnMenu.setAttribute('data-toggle', 'dropdown')
+    btnMenu.classList.add('btn')
+    btnMenu.classList.add('btn-secondary')
+    btnMenu.classList.add('btn-block')
+    btnMenu.classList.add('dropdown-toggle')
+    btnMenu.textContent = '>>'
+    
+    let aPlus = <HTMLAnchorElement>document.createElement('a')
+    aPlus.classList.add('dropdown-item')
+    aPlus.textContent = "Добавить"
+    aPlus.href = '#'
+    aPlus.onclick = async (ev) => {
       await this.Presenter.OnAddPeriod(idx)
     }
-    td.append(btn)
+    let aSave = <HTMLAnchorElement>document.createElement('a')
+    aSave.classList.add('dropdown-item')
+    aSave.textContent = "Сохранить"
+    aSave.href = '#'
+    aSave.onclick = async (ev) => {
+      await this.Presenter.OnSave(idx)
+    }
+    let divGroup = <HTMLDivElement>document.createElement('div')
+    divGroup.classList.add('dropdown-menu')
+    divGroup.append(aPlus)
+    divGroup.append(aSave)
+
+    let divDropDown = <HTMLDivElement>document.createElement('div')
+    divDropDown.classList.add('dropdown')
+    divDropDown.append(btnMenu)
+    divDropDown.append(divGroup)
+
+    td = <HTMLTableDataCellElement>document.createElement('td')
+    td.append(divDropDown)
     row.append(td)
     table.append(row)
   }

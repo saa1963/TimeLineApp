@@ -73,6 +73,10 @@ export class MainPresenter {
     }
   }
 
+  public async OnSave(idx: number) {
+    await new BoxView("ОК").Show()
+  }
+
   public async OnAddPeriod(idx: number) {
     let model = new AddPeriodModel()
     let today = new Date()

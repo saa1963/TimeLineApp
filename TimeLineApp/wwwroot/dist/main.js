@@ -19944,6 +19944,11 @@ class MainPresenter {
             }
         });
     }
+    OnSave(idx) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield new BoxView_1.BoxView("ОК").Show();
+        });
+    }
     OnAddPeriod(idx) {
         return __awaiter(this, void 0, void 0, function* () {
             let model = new AddPeriodModel_1.AddPeriodModel();
@@ -20371,13 +20376,38 @@ class MainView {
             let txt = document.createTextNode(s);
             td.append(txt);
             row.append(td);
-            td = document.createElement('td');
-            let btn = document.createElement('button');
-            btn.textContent = "+";
-            btn.onclick = (ev) => __awaiter(this, void 0, void 0, function* () {
+            let btnMenu = document.createElement('button');
+            btnMenu.type = 'button';
+            btnMenu.setAttribute('data-toggle', 'dropdown');
+            btnMenu.classList.add('btn');
+            btnMenu.classList.add('btn-secondary');
+            btnMenu.classList.add('btn-block');
+            btnMenu.classList.add('dropdown-toggle');
+            btnMenu.textContent = '>>';
+            let aPlus = document.createElement('a');
+            aPlus.classList.add('dropdown-item');
+            aPlus.textContent = "Добавить";
+            aPlus.href = '#';
+            aPlus.onclick = (ev) => __awaiter(this, void 0, void 0, function* () {
                 yield this.Presenter.OnAddPeriod(idx);
             });
-            td.append(btn);
+            let aSave = document.createElement('a');
+            aSave.classList.add('dropdown-item');
+            aSave.textContent = "Сохранить";
+            aPlus.href = '#';
+            aSave.onclick = (ev) => __awaiter(this, void 0, void 0, function* () {
+                yield this.Presenter.OnSave(idx);
+            });
+            let divGroup = document.createElement('div');
+            divGroup.classList.add('dropdown-menu');
+            divGroup.append(aPlus);
+            divGroup.append(aSave);
+            let divDropDown = document.createElement('div');
+            divDropDown.classList.add('dropdown');
+            divDropDown.append(btnMenu);
+            divDropDown.append(divGroup);
+            td = document.createElement('td');
+            td.append(divDropDown);
             row.append(td);
             table.append(row);
         });
@@ -21176,60 +21206,60 @@ class TLPeriod {
     getRightBoundForPeriod(period) {
         let l2;
         // [текущий(имеющаяся точность), внешний(точность сравнения)]
-        switch ([this.End.Type, period]) {
-            case [TLEvent_1.EnumPeriod.day, TLEvent_1.EnumPeriod.day]:
+        switch (true) {
+            case this.End.Type == TLEvent_1.EnumPeriod.day && period == TLEvent_1.EnumPeriod.day:
                 l2 = this.End.Day;
                 break;
-            case [TLEvent_1.EnumPeriod.month, TLEvent_1.EnumPeriod.day]:
+            case this.End.Type == TLEvent_1.EnumPeriod.month && period == TLEvent_1.EnumPeriod.day:
                 l2 = dateutils_1.DateUtils.RightDayOfMonth(this.End.Month);
                 break;
-            case [TLEvent_1.EnumPeriod.year, TLEvent_1.EnumPeriod.day]:
+            case this.End.Type == TLEvent_1.EnumPeriod.year && period == TLEvent_1.EnumPeriod.day:
                 l2 = dateutils_1.DateUtils.RightDayOfYear(this.End.Year);
                 break;
-            case [TLEvent_1.EnumPeriod.decade, TLEvent_1.EnumPeriod.day]:
+            case this.End.Type == TLEvent_1.EnumPeriod.decade && period == TLEvent_1.EnumPeriod.day:
                 l2 = dateutils_1.DateUtils.RightDayOfDecade(this.End.Decade);
                 break;
-            case [TLEvent_1.EnumPeriod.century, TLEvent_1.EnumPeriod.day]:
+            case this.End.Type == TLEvent_1.EnumPeriod.century && period == TLEvent_1.EnumPeriod.day:
                 l2 = dateutils_1.DateUtils.RightDayOfCentury(this.End.Century);
                 break;
-            case [TLEvent_1.EnumPeriod.day, TLEvent_1.EnumPeriod.month]:
-            case [TLEvent_1.EnumPeriod.month, TLEvent_1.EnumPeriod.month]:
+            case this.End.Type == TLEvent_1.EnumPeriod.day && period == TLEvent_1.EnumPeriod.month:
+            case this.End.Type == TLEvent_1.EnumPeriod.month && period == TLEvent_1.EnumPeriod.month:
                 l2 = this.End.Month;
                 break;
-            case [TLEvent_1.EnumPeriod.year, TLEvent_1.EnumPeriod.month]:
+            case this.End.Type == TLEvent_1.EnumPeriod.year && period == TLEvent_1.EnumPeriod.month:
                 l2 = dateutils_1.DateUtils.RightMonthOfYear(this.End.Month);
                 break;
-            case [TLEvent_1.EnumPeriod.decade, TLEvent_1.EnumPeriod.month]:
+            case this.End.Type == TLEvent_1.EnumPeriod.decade && period == TLEvent_1.EnumPeriod.month:
                 l2 = dateutils_1.DateUtils.RightMonthOfDecade(this.End.Decade);
                 break;
-            case [TLEvent_1.EnumPeriod.century, TLEvent_1.EnumPeriod.month]:
+            case this.End.Type == TLEvent_1.EnumPeriod.century && period == TLEvent_1.EnumPeriod.month:
                 l2 = dateutils_1.DateUtils.RightMonthOfCentury(this.End.Decade);
                 break;
-            case [TLEvent_1.EnumPeriod.day, TLEvent_1.EnumPeriod.year]:
-            case [TLEvent_1.EnumPeriod.month, TLEvent_1.EnumPeriod.year]:
-            case [TLEvent_1.EnumPeriod.year, TLEvent_1.EnumPeriod.year]:
+            case this.End.Type == TLEvent_1.EnumPeriod.day && period == TLEvent_1.EnumPeriod.year:
+            case this.End.Type == TLEvent_1.EnumPeriod.month && period == TLEvent_1.EnumPeriod.year:
+            case this.End.Type == TLEvent_1.EnumPeriod.year && period == TLEvent_1.EnumPeriod.year:
                 l2 = this.End.Year;
                 break;
-            case [TLEvent_1.EnumPeriod.decade, TLEvent_1.EnumPeriod.year]:
+            case this.End.Type == TLEvent_1.EnumPeriod.decade && period == TLEvent_1.EnumPeriod.year:
                 l2 = dateutils_1.DateUtils.RightYearOfDecade(this.End.Decade);
                 break;
-            case [TLEvent_1.EnumPeriod.century, TLEvent_1.EnumPeriod.year]:
+            case this.End.Type == TLEvent_1.EnumPeriod.century && period == TLEvent_1.EnumPeriod.year:
                 l2 = dateutils_1.DateUtils.RightYearOfCentury(this.End.Decade);
                 break;
-            case [TLEvent_1.EnumPeriod.day, TLEvent_1.EnumPeriod.decade]:
-            case [TLEvent_1.EnumPeriod.month, TLEvent_1.EnumPeriod.decade]:
-            case [TLEvent_1.EnumPeriod.year, TLEvent_1.EnumPeriod.decade]:
-            case [TLEvent_1.EnumPeriod.decade, TLEvent_1.EnumPeriod.decade]:
+            case this.End.Type == TLEvent_1.EnumPeriod.day && period == TLEvent_1.EnumPeriod.decade:
+            case this.End.Type == TLEvent_1.EnumPeriod.month && period == TLEvent_1.EnumPeriod.decade:
+            case this.End.Type == TLEvent_1.EnumPeriod.year && period == TLEvent_1.EnumPeriod.decade:
+            case this.End.Type == TLEvent_1.EnumPeriod.decade && period == TLEvent_1.EnumPeriod.decade:
                 l2 = this.End.Decade;
                 break;
-            case [TLEvent_1.EnumPeriod.century, TLEvent_1.EnumPeriod.decade]:
+            case this.End.Type == TLEvent_1.EnumPeriod.century && period == TLEvent_1.EnumPeriod.decade:
                 l2 = dateutils_1.DateUtils.RightDecadeOfCentury(this.End.Century);
                 break;
-            case [TLEvent_1.EnumPeriod.day, TLEvent_1.EnumPeriod.century]:
-            case [TLEvent_1.EnumPeriod.month, TLEvent_1.EnumPeriod.century]:
-            case [TLEvent_1.EnumPeriod.year, TLEvent_1.EnumPeriod.century]:
-            case [TLEvent_1.EnumPeriod.decade, TLEvent_1.EnumPeriod.century]:
-            case [TLEvent_1.EnumPeriod.century, TLEvent_1.EnumPeriod.century]:
+            case this.End.Type == TLEvent_1.EnumPeriod.day && period == TLEvent_1.EnumPeriod.century:
+            case this.End.Type == TLEvent_1.EnumPeriod.month && period == TLEvent_1.EnumPeriod.century:
+            case this.End.Type == TLEvent_1.EnumPeriod.year && period == TLEvent_1.EnumPeriod.century:
+            case this.End.Type == TLEvent_1.EnumPeriod.decade && period == TLEvent_1.EnumPeriod.century:
+            case this.End.Type == TLEvent_1.EnumPeriod.century && period == TLEvent_1.EnumPeriod.century:
                 l2 = this.End.Century;
                 break;
         }
@@ -21238,60 +21268,60 @@ class TLPeriod {
     getLeftBoundForPeriod(period) {
         let l2;
         // [текущий(имеющаяся точность), внешний(точность сравнения)]
-        switch ([this.Begin.Type, period]) {
-            case [TLEvent_1.EnumPeriod.day, TLEvent_1.EnumPeriod.day]:
+        switch (true) {
+            case this.Begin.Type == TLEvent_1.EnumPeriod.day && period == TLEvent_1.EnumPeriod.day:
                 l2 = this.Begin.Day;
                 break;
-            case [TLEvent_1.EnumPeriod.month, TLEvent_1.EnumPeriod.day]:
+            case this.Begin.Type == TLEvent_1.EnumPeriod.month && period == TLEvent_1.EnumPeriod.day:
                 l2 = dateutils_1.DateUtils.LeftDayOfMonth(this.Begin.Month);
                 break;
-            case [TLEvent_1.EnumPeriod.year, TLEvent_1.EnumPeriod.day]:
+            case this.Begin.Type == TLEvent_1.EnumPeriod.year && period == TLEvent_1.EnumPeriod.day:
                 l2 = dateutils_1.DateUtils.LeftDayOfYear(this.Begin.Year);
                 break;
-            case [TLEvent_1.EnumPeriod.decade, TLEvent_1.EnumPeriod.day]:
+            case this.Begin.Type == TLEvent_1.EnumPeriod.decade && period == TLEvent_1.EnumPeriod.day:
                 l2 = dateutils_1.DateUtils.LeftDayOfDecade(this.Begin.Decade);
                 break;
-            case [TLEvent_1.EnumPeriod.century, TLEvent_1.EnumPeriod.day]:
+            case this.Begin.Type == TLEvent_1.EnumPeriod.century && period == TLEvent_1.EnumPeriod.day:
                 l2 = dateutils_1.DateUtils.LeftDayOfCentury(this.Begin.Century);
                 break;
-            case [TLEvent_1.EnumPeriod.day, TLEvent_1.EnumPeriod.month]:
-            case [TLEvent_1.EnumPeriod.month, TLEvent_1.EnumPeriod.month]:
+            case this.Begin.Type == TLEvent_1.EnumPeriod.day && period == TLEvent_1.EnumPeriod.month:
+            case this.Begin.Type == TLEvent_1.EnumPeriod.month && period == TLEvent_1.EnumPeriod.month:
                 l2 = this.Begin.Month;
                 break;
-            case [TLEvent_1.EnumPeriod.year, TLEvent_1.EnumPeriod.month]:
+            case this.Begin.Type == TLEvent_1.EnumPeriod.year && period == TLEvent_1.EnumPeriod.month:
                 l2 = dateutils_1.DateUtils.LeftMonthOfYear(this.Begin.Month);
                 break;
-            case [TLEvent_1.EnumPeriod.decade, TLEvent_1.EnumPeriod.month]:
+            case this.Begin.Type == TLEvent_1.EnumPeriod.decade && period == TLEvent_1.EnumPeriod.month:
                 l2 = dateutils_1.DateUtils.LeftMonthOfDecade(this.Begin.Decade);
                 break;
-            case [TLEvent_1.EnumPeriod.century, TLEvent_1.EnumPeriod.month]:
+            case this.Begin.Type == TLEvent_1.EnumPeriod.century && period == TLEvent_1.EnumPeriod.month:
                 l2 = dateutils_1.DateUtils.LeftMonthOfCentury(this.Begin.Decade);
                 break;
-            case [TLEvent_1.EnumPeriod.day, TLEvent_1.EnumPeriod.year]:
-            case [TLEvent_1.EnumPeriod.month, TLEvent_1.EnumPeriod.year]:
-            case [TLEvent_1.EnumPeriod.year, TLEvent_1.EnumPeriod.year]:
+            case this.Begin.Type == TLEvent_1.EnumPeriod.day && period == TLEvent_1.EnumPeriod.year:
+            case this.Begin.Type == TLEvent_1.EnumPeriod.month && period == TLEvent_1.EnumPeriod.year:
+            case this.Begin.Type == TLEvent_1.EnumPeriod.year && period == TLEvent_1.EnumPeriod.year:
                 l2 = this.Begin.Year;
                 break;
-            case [TLEvent_1.EnumPeriod.decade, TLEvent_1.EnumPeriod.year]:
+            case this.Begin.Type == TLEvent_1.EnumPeriod.decade && period == TLEvent_1.EnumPeriod.year:
                 l2 = dateutils_1.DateUtils.LeftYearOfDecade(this.Begin.Decade);
                 break;
-            case [TLEvent_1.EnumPeriod.century, TLEvent_1.EnumPeriod.year]:
+            case this.Begin.Type == TLEvent_1.EnumPeriod.century && period == TLEvent_1.EnumPeriod.year:
                 l2 = dateutils_1.DateUtils.LeftYearOfCentury(this.Begin.Decade);
                 break;
-            case [TLEvent_1.EnumPeriod.day, TLEvent_1.EnumPeriod.decade]:
-            case [TLEvent_1.EnumPeriod.month, TLEvent_1.EnumPeriod.decade]:
-            case [TLEvent_1.EnumPeriod.year, TLEvent_1.EnumPeriod.decade]:
-            case [TLEvent_1.EnumPeriod.decade, TLEvent_1.EnumPeriod.decade]:
+            case this.Begin.Type == TLEvent_1.EnumPeriod.day && period == TLEvent_1.EnumPeriod.decade:
+            case this.Begin.Type == TLEvent_1.EnumPeriod.month && period == TLEvent_1.EnumPeriod.decade:
+            case this.Begin.Type == TLEvent_1.EnumPeriod.year && period == TLEvent_1.EnumPeriod.decade:
+            case this.Begin.Type == TLEvent_1.EnumPeriod.decade && period == TLEvent_1.EnumPeriod.decade:
                 l2 = this.Begin.Decade;
                 break;
-            case [TLEvent_1.EnumPeriod.century, TLEvent_1.EnumPeriod.decade]:
+            case this.Begin.Type == TLEvent_1.EnumPeriod.century && period == TLEvent_1.EnumPeriod.decade:
                 l2 = dateutils_1.DateUtils.LeftDecadeOfCentury(this.Begin.Century);
                 break;
-            case [TLEvent_1.EnumPeriod.day, TLEvent_1.EnumPeriod.century]:
-            case [TLEvent_1.EnumPeriod.month, TLEvent_1.EnumPeriod.century]:
-            case [TLEvent_1.EnumPeriod.year, TLEvent_1.EnumPeriod.century]:
-            case [TLEvent_1.EnumPeriod.decade, TLEvent_1.EnumPeriod.century]:
-            case [TLEvent_1.EnumPeriod.century, TLEvent_1.EnumPeriod.century]:
+            case this.Begin.Type == TLEvent_1.EnumPeriod.day && period == TLEvent_1.EnumPeriod.century:
+            case this.Begin.Type == TLEvent_1.EnumPeriod.month && period == TLEvent_1.EnumPeriod.century:
+            case this.Begin.Type == TLEvent_1.EnumPeriod.year && period == TLEvent_1.EnumPeriod.century:
+            case this.Begin.Type == TLEvent_1.EnumPeriod.decade && period == TLEvent_1.EnumPeriod.century:
+            case this.Begin.Type == TLEvent_1.EnumPeriod.century && period == TLEvent_1.EnumPeriod.century:
                 l2 = this.Begin.Century;
                 break;
         }
