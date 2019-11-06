@@ -4,8 +4,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+//using Newtonsoft.Json;
+//using Newtonsoft.Json.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace TimeLineApp.Models
 {
@@ -60,13 +62,11 @@ namespace TimeLineApp.Models
 
         public string ToJSON()
         {
-            JsonSerializer serializer = new JsonSerializer();
-            using (var stream = new MemoryStream())
+            using var stream = new MemoryStream();
             {
-                using (StreamWriter sw = new StreamWriter(stream))
-                using (JsonWriter writer = new JsonTextWriter(sw))
+                using (Utf8JsonWriter writer = new Utf8JsonWriter(stream))
                 {
-                    serializer.Serialize(writer, this);
+                    JsonSerializer.Serialize(writer, this);
                     writer.Flush();
 
                     stream.Position = 0;
@@ -80,9 +80,9 @@ namespace TimeLineApp.Models
 
         public static TimeLine FromJSON(string data)
         {
-            JsonSerializer serializer = new JsonSerializer();
-            JsonTextReader reader = new JsonTextReader(new StringReader(data));
-            return serializer.Deserialize<TimeLine>(reader);
+            //ReadOnlySpan<byte>
+            //Utf8JsonReader reader = new Utf8JsonReader(new StringReader(data));
+            return JsonSerializer.Deserialize<TimeLine>(data);
         }
 
         [JsonIgnore]
@@ -94,11 +94,14 @@ namespace TimeLineApp.Models
     public class Event
     {
         private string m_name;
-        private Date? m_day;
+        private int? m_day;
         private int? m_month;
         private int? m_year;
         private int? m_decade;
         private int m_century;
+        private int m_type;
+
+        public Event() { }
 
         public Event(string name)
         {
@@ -133,11 +136,12 @@ namespace TimeLineApp.Models
         }
 
         public string Name { get => m_name; set => m_name = value; }
-        public Date? Day { get => m_day; set => m_day = value; }
+        public int? Day { get => m_day; set => m_day = value; }
         public int? Month { get => m_month; set => m_month = value; }
         public int? Year { get => m_year; set => m_year = value; }
         public int? Decade { get => m_decade; set => m_decade = value; }
         public int Century { get => m_century; set => m_century = value; }
+        public int Type { get => m_type; set => m_type = value; }
     }
 
     [Serializable]
@@ -231,11 +235,11 @@ namespace TimeLineApp.Models
         /// <param name="day"></param>
         public EventDay(string name, int year, int month, int day):base(name)
         {
-            Day = new Date(year, month, day);
-            Month = ((Math.Abs(year) - 1) * 12 + month) * (year / Math.Abs(year));
-            Year = year;
-            Decade = DecadeFromYear(year);
-            Century = CenturyFromDecade(Decade.Value);
+            //Day = new Date(year, month, day);
+            //Month = ((Math.Abs(year) - 1) * 12 + month) * (year / Math.Abs(year));
+            //Year = year;
+            //Decade = DecadeFromYear(year);
+            //Century = CenturyFromDecade(Decade.Value);
         }
     }
 
@@ -245,6 +249,8 @@ namespace TimeLineApp.Models
         public string Name { get; set; }
         public Event Begin { get; set; }
         public Event End { get; set; }
+
+        public Period() { }
 
         public Period(string name, Event begin, Event end)
         {

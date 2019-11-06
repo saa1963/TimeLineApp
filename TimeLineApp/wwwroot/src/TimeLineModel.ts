@@ -3,8 +3,15 @@ import { TLPeriodEvent } from './TLPeriodEvent';
 import { TLEvent } from './TLEvent';
 import { SimpleEventDispatcher, ISimpleEvent } from 'ste-simple-events';
 export class TimeLineModel {
-  private periods: TLPeriod[] = [];
+  private Periods: TLPeriod[] = [];
   public Name: string = 'Новая'
+
+  public toJSON() {
+    return Object.assign({}, {
+      Name: this.Name,
+      Periods: this.Periods
+    })
+  }
 
   /**
    * Из JSON или новая
@@ -20,38 +27,38 @@ export class TimeLineModel {
       rt.Name = data.Name;
       data.Periods.forEach(o => {
         if (TLEvent.Equal(o.Begin, o.End))
-          rt.periods.push(TLPeriodEvent.CreateTLPeriodEvent(o));
+          rt.Periods.push(TLPeriodEvent.CreateTLPeriodEvent(o));
         else
-          rt.periods.push(TLPeriod.CreateTLPeriod(o));
+          rt.Periods.push(TLPeriod.CreateTLPeriod(o));
       });
     }
     return rt;
   }
 
   public Add(model: TLPeriod): number {
-    let rt = this.periods.push(model)
+    let rt = this.Periods.push(model)
     this.e_AddPeriod.dispatch(model)
     return rt
   }
 
   public Remove(i: number): boolean {
     if (!this.validIndex(i)) throw "Неверный индекс"
-    this.periods.splice(i, 1)
+    this.Periods.splice(i, 1)
     this.e_RemovePeriod.dispatch(i)
     return true
   }
 
   public get Count(): number {
-    return this.periods.length
+    return this.Periods.length
   }
 
   public get Items(): TLPeriod[] {
-    return this.periods
+    return this.Periods
   }
 
   public Item(i: number): TLPeriod {
     if (!this.validIndex(i)) throw "Неверный индекс"
-    return this.periods[i]
+    return this.Periods[i]
   }
 
   private e_AddPeriod = new SimpleEventDispatcher<TLPeriod>();
@@ -65,9 +72,9 @@ export class TimeLineModel {
   }
 
   private validIndex(i: number): boolean {
-    if (!this.periods) return false
-    if (this.periods.length === 0) return false
-    if (i < 0 || i >= this.periods.length) return false
+    if (!this.Periods) return false
+    if (this.Periods.length === 0) return false
+    if (i < 0 || i >= this.Periods.length) return false
     return true
   }
 }

@@ -38,7 +38,8 @@ export class TlistPresenter {
             fname: this.m_Value
           }
         })
-      return TimeLineModel.CreateTimeLineModel(tl.Name, JSON.parse(tl))
+      let tline = JSON.parse(tl)
+      return TimeLineModel.CreateTimeLineModel(tl.Name, tline)
     } catch (err) {
       this.view.SetError(Globals.ResponseErrorText(err))
       return null

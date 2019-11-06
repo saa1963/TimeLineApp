@@ -8,6 +8,14 @@ export class TLPeriod {
     m_BeginDay: number;
   m_EndDay: number;
 
+  public toJSON() {
+    return Object.assign({}, {
+      Name: this.Name,
+      Begin: this.Begin,
+      End: this.End
+    })
+  }
+
   /**
    * создает TLPeriod из параметров
    */
@@ -140,7 +148,7 @@ export class TLPeriod {
     if (type === EnumPeriod.day) {
       rt.Begin = TLEventDay.CreateTLEventDay(
         o.Begin.Name,
-        DateUtils.DaysFromAD(o.Begin.Day.Year, o.Begin.Day.Month, o.Begin.Day.Day),
+        o.Begin.Day,
         o.Begin.Month,
         o.Begin.Year,
         o.Begin.Decade,
@@ -163,7 +171,7 @@ export class TLPeriod {
     if (type === EnumPeriod.day) {
       rt.End = TLEventDay.CreateTLEventDay(
         o.End.Name,
-        DateUtils.DaysFromAD(o.End.Day.Year, o.End.Day.Month, o.End.Day.Day),
+        o.End.Day,
         o.End.Month,
         o.End.Year,
         o.End.Decade,

@@ -45,6 +45,10 @@ class TLDate {
     }
   }
 
+  public toJSON() {
+    return Object.assign({}, {Day: this.Day, Month: this.Month, Year: this.Year})
+  }
+
   private Includes(arr: number[], value: number): boolean {
     for (let i = 0; i < arr.length; i++) {
       if (arr[i] === value) return true
@@ -114,6 +118,19 @@ export abstract class TLEvent {
     this.Decade = null
     this.Century = null
   }
+
+  public toJSON() {
+    return Object.assign({}, {
+      Name: this.Name,
+      Day: this.Day,
+      Month: this.Month,
+      Year: this.Year,
+      Decade: this.Decade,
+      Century: this.Century,
+      Type: this.Type
+    })
+  }
+  
   protected DecadeFromYear(year: number): number {
     return year / 10 + (year / Math.abs(year))
   }

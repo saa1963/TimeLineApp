@@ -20856,6 +20856,9 @@ class TLDate {
             this.Year = temp.year;
         }
     }
+    toJSON() {
+        return Object.assign({}, { Day: this.Day, Month: this.Month, Year: this.Year });
+    }
     Includes(arr, value) {
         for (let i = 0; i < arr.length; i++) {
             if (arr[i] === value)
@@ -20910,6 +20913,17 @@ class TLEvent {
         this.Year = null;
         this.Decade = null;
         this.Century = null;
+    }
+    toJSON() {
+        return Object.assign({}, {
+            Name: this.Name,
+            Day: this.Day,
+            Month: this.Month,
+            Year: this.Year,
+            Decade: this.Decade,
+            Century: this.Century,
+            Type: this.Type
+        });
     }
     DecadeFromYear(year) {
         return year / 10 + (year / Math.abs(year));
@@ -21074,6 +21088,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const dateutils_1 = __webpack_require__(/*! ./dateutils */ "./src/dateutils.ts");
 const TLEvent_1 = __webpack_require__(/*! ./TLEvent */ "./src/TLEvent.ts");
 class TLPeriod {
+    toJSON() {
+        return Object.assign({}, {
+            Name: this.Name,
+            Begin: this.Begin,
+            End: this.End
+        });
+    }
     /**
      * создает TLPeriod из параметров
      */
@@ -21130,7 +21151,7 @@ class TLPeriod {
         rt.Name = o.Name;
         let type = TLEvent_1.TLEvent.GetType(o.Begin);
         if (type === TLEvent_1.EnumPeriod.day) {
-            rt.Begin = TLEvent_1.TLEventDay.CreateTLEventDay(o.Begin.Name, dateutils_1.DateUtils.DaysFromAD(o.Begin.Day.Year, o.Begin.Day.Month, o.Begin.Day.Day), o.Begin.Month, o.Begin.Year, o.Begin.Decade, o.Begin.Century);
+            rt.Begin = TLEvent_1.TLEventDay.CreateTLEventDay(o.Begin.Name, o.Begin.Day, o.Begin.Month, o.Begin.Year, o.Begin.Decade, o.Begin.Century);
         }
         else if (type === TLEvent_1.EnumPeriod.month) {
             rt.Begin = TLEvent_1.TLEventMonth.CreateTLEventMonth(o.Begin.Name, o.Begin.Month, o.Begin.Year, o.Begin.Decade, o.Begin.Century);
@@ -21146,7 +21167,7 @@ class TLPeriod {
         }
         type = TLEvent_1.TLEvent.GetType(o.End);
         if (type === TLEvent_1.EnumPeriod.day) {
-            rt.End = TLEvent_1.TLEventDay.CreateTLEventDay(o.End.Name, dateutils_1.DateUtils.DaysFromAD(o.End.Day.Year, o.End.Day.Month, o.End.Day.Day), o.End.Month, o.End.Year, o.End.Decade, o.End.Century);
+            rt.End = TLEvent_1.TLEventDay.CreateTLEventDay(o.End.Name, o.End.Day, o.End.Month, o.End.Year, o.End.Decade, o.End.Century);
         }
         else if (type === TLEvent_1.EnumPeriod.month) {
             rt.End = TLEvent_1.TLEventMonth.CreateTLEventMonth(o.End.Name, o.End.Month, o.End.Year, o.End.Decade, o.End.Century);
@@ -21469,10 +21490,16 @@ const TLEvent_1 = __webpack_require__(/*! ./TLEvent */ "./src/TLEvent.ts");
 const ste_simple_events_1 = __webpack_require__(/*! ste-simple-events */ "../node_modules/ste-simple-events/dist/index.js");
 class TimeLineModel {
     constructor() {
-        this.periods = [];
+        this.Periods = [];
         this.Name = 'Новая';
         this.e_AddPeriod = new ste_simple_events_1.SimpleEventDispatcher();
         this.e_RemovePeriod = new ste_simple_events_1.SimpleEventDispatcher();
+    }
+    toJSON() {
+        return Object.assign({}, {
+            Name: this.Name,
+            Periods: this.Periods
+        });
     }
     /**
      * Из JSON или новая
@@ -21488,35 +21515,35 @@ class TimeLineModel {
             rt.Name = data.Name;
             data.Periods.forEach(o => {
                 if (TLEvent_1.TLEvent.Equal(o.Begin, o.End))
-                    rt.periods.push(TLPeriodEvent_1.TLPeriodEvent.CreateTLPeriodEvent(o));
+                    rt.Periods.push(TLPeriodEvent_1.TLPeriodEvent.CreateTLPeriodEvent(o));
                 else
-                    rt.periods.push(TLPeriod_1.TLPeriod.CreateTLPeriod(o));
+                    rt.Periods.push(TLPeriod_1.TLPeriod.CreateTLPeriod(o));
             });
         }
         return rt;
     }
     Add(model) {
-        let rt = this.periods.push(model);
+        let rt = this.Periods.push(model);
         this.e_AddPeriod.dispatch(model);
         return rt;
     }
     Remove(i) {
         if (!this.validIndex(i))
             throw "Неверный индекс";
-        this.periods.splice(i, 1);
+        this.Periods.splice(i, 1);
         this.e_RemovePeriod.dispatch(i);
         return true;
     }
     get Count() {
-        return this.periods.length;
+        return this.Periods.length;
     }
     get Items() {
-        return this.periods;
+        return this.Periods;
     }
     Item(i) {
         if (!this.validIndex(i))
             throw "Неверный индекс";
-        return this.periods[i];
+        return this.Periods[i];
     }
     get evAddPeriod() {
         return this.e_AddPeriod.asEvent();
@@ -21525,11 +21552,11 @@ class TimeLineModel {
         return this.e_RemovePeriod.asEvent();
     }
     validIndex(i) {
-        if (!this.periods)
+        if (!this.Periods)
             return false;
-        if (this.periods.length === 0)
+        if (this.Periods.length === 0)
             return false;
-        if (i < 0 || i >= this.periods.length)
+        if (i < 0 || i >= this.Periods.length)
             return false;
         return true;
     }
@@ -21586,7 +21613,8 @@ class TlistPresenter {
                         fname: this.m_Value
                     }
                 });
-                return TimeLineModel_1.TimeLineModel.CreateTimeLineModel(tl.Name, JSON.parse(tl));
+                let tline = JSON.parse(tl);
+                return TimeLineModel_1.TimeLineModel.CreateTimeLineModel(tl.Name, tline);
             }
             catch (err) {
                 this.view.SetError(Globals_1.Globals.ResponseErrorText(err));
