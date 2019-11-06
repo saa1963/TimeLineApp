@@ -74,7 +74,10 @@ export class MainPresenter {
   }
 
   public async OnSave(idx: number) {
-    await new BoxView("ОК").Show()
+    let err = await ApiClient.getInstance().SaveTL(this.model.Item(idx))
+    if (err) {
+      await new BoxView(err).Show()
+    }
   }
 
   public async OnAddPeriod(idx: number) {

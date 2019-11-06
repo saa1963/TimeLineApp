@@ -21,12 +21,12 @@ namespace TimeLineApp.Controllers
 
         [HttpPost]
         [Route("api/storage/save")]
-        public IActionResult Save([FromForm]DblString model)
+        public IActionResult Save(string model)
         {
             try
             {
-                var tl = TimeLine.FromJSON(model.s2);
-                storage.Save(HttpContext, tl);
+                //var tl = TimeLine.FromJSON(model);
+                //storage.Save(HttpContext, tl);
                 return Ok();
             }
             catch(Exception e)

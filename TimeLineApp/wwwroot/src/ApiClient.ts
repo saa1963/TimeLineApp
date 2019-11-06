@@ -1,5 +1,6 @@
 ﻿import * as $ from 'jquery'
 import { Globals } from './Globals';
+import { TimeLineModel } from './TimeLineModel';
 
 export class ApiClient {
   private static instance: ApiClient;
@@ -28,6 +29,18 @@ export class ApiClient {
     } else {
       return 'Не введены логин или пароль.'
     }
+  }
+
+  public async SaveTL(model: TimeLineModel): Promise<string> {
+      let err = await $.ajax(
+        'api/storage/save', {
+          type: 'POST',
+          contentType: "application/json; charset=utf-8",
+          data: {
+            model: JSON.stringify(model)
+          }
+      })
+      return err
   }
 
   public async DoLogout(): Promise<boolean> {
