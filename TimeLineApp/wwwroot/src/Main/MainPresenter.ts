@@ -74,9 +74,11 @@ export class MainPresenter {
   }
 
   public async OnSave(idx: number) {
-    let err = await ApiClient.getInstance().SaveTL(this.model.Item(idx))
-    if (err) {
-      await new BoxView(err).Show()
+    try {
+      await ApiClient.getInstance().SaveTL(this.model.Item(idx))
+      await new BoxView('Данные сохранены').Show()
+    } catch (err) {
+      await new BoxView(Globals.ResponseErrorText(err)).Show()
     }
   }
 

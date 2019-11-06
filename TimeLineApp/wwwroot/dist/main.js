@@ -19297,14 +19297,13 @@ class ApiClient {
     }
     SaveTL(model) {
         return __awaiter(this, void 0, void 0, function* () {
-            let err = yield $.ajax('api/storage/save', {
+            return yield $.ajax('api/storage/save', {
                 type: 'POST',
-                contentType: "application/json; charset=utf-8",
                 data: {
-                    model: JSON.stringify(model)
+                    s1: model.Name,
+                    s2: JSON.stringify(model)
                 }
             });
-            return err;
         });
     }
     DoLogout() {
@@ -19958,9 +19957,12 @@ class MainPresenter {
     }
     OnSave(idx) {
         return __awaiter(this, void 0, void 0, function* () {
-            let err = yield ApiClient_1.ApiClient.getInstance().SaveTL(this.model.Item(idx));
-            if (err) {
-                yield new BoxView_1.BoxView(err).Show();
+            try {
+                yield ApiClient_1.ApiClient.getInstance().SaveTL(this.model.Item(idx));
+                yield new BoxView_1.BoxView('Данные сохранены').Show();
+            }
+            catch (err) {
+                yield new BoxView_1.BoxView(Globals_1.Globals.ResponseErrorText(err)).Show();
             }
         });
     }

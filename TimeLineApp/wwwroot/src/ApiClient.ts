@@ -32,15 +32,14 @@ export class ApiClient {
   }
 
   public async SaveTL(model: TimeLineModel): Promise<string> {
-      let err = await $.ajax(
+      return await $.ajax(
         'api/storage/save', {
           type: 'POST',
-          contentType: "application/json; charset=utf-8",
           data: {
-            model: JSON.stringify(model)
+            s1: model.Name,
+            s2: JSON.stringify(model)
           }
       })
-      return err
   }
 
   public async DoLogout(): Promise<boolean> {
