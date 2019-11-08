@@ -58,7 +58,7 @@ canvas {
 }
 
 table {
-    background-color: cornflowerblue;
+    background-color: rgb(240,240,240);
     border-collapse: separate;
 }
 
@@ -77,16 +77,19 @@ table {
 }
 
 .hidden_cell {
-    background-color: cornflowerblue;
+    background-color: rgba(0, 0, 0, 0.00)
 }
 
 .period_cell {
-    background-color: darkgoldenrod;
+    background-color: lightgray;
+    padding: 2px;
+    border-radius: 5px;
+    font-size: xx-small;
 }
 
 .tl_head {
-    background-color: brown;
-    color: aliceblue;
+    background: rgb(245,188,188);
+    background: linear-gradient(90deg, rgba(245,188,188,1) 0%, rgba(220,220,220,1) 54%, rgba(240,240,240,1) 100%);
     padding: 2px;
 }
 

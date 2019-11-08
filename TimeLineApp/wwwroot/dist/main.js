@@ -19009,6 +19009,8 @@ class AddPeriodView {
             this.Presenter.OnChangeEnd_CenturyInView();
         };
         this.tbCard2.setAttribute('hidden', '');
+        this.tbBegin_Type.selectedIndex = 0;
+        this.tbEnd_Type.selectedIndex = 0;
         this.model = model;
         this.Presenter = new AddPeriodPresenter_1.AddPeriodPresenter(this, model);
     }
@@ -20215,6 +20217,7 @@ class MainPresenter {
                 return !НомераУложенныхФишекНаПоследнююПолку.includes(index);
             });
         }
+        полки.reverse();
         for (let exitem of полки) {
             exitem.sort((a, b) => {
                 return a.il - b.il;
@@ -20448,6 +20451,8 @@ class MainView {
             let td = document.createElement('td');
             td.colSpan = items[i].ir - items[i].il + 1;
             td.classList.add('period_cell');
+            td.oncontextmenu = (ev) => {
+            };
             last = items[i].ir;
             let txt = document.createTextNode(items[i].item.Name);
             td.append(txt);

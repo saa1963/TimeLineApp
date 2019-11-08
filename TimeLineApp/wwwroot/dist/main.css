@@ -11311,7 +11311,7 @@ canvas {
       transition: .5s ease-in-out; }
 
 table {
-  background-color: cornflowerblue;
+  background-color: #f0f0f0;
   border-collapse: separate; }
 
 .date {
@@ -11326,14 +11326,17 @@ table {
       cursor: pointer; }
 
 .hidden_cell {
-  background-color: cornflowerblue; }
+  background-color: rgba(0, 0, 0, 0); }
 
 .period_cell {
-  background-color: darkgoldenrod; }
+  background-color: lightgray;
+  padding: 2px;
+  border-radius: 5px;
+  font-size: xx-small; }
 
 .tl_head {
-  background-color: brown;
-  color: aliceblue;
+  background: #f5bcbc;
+  background: linear-gradient(90deg, #f5bcbc 0%, gainsboro 54%, #f0f0f0 100%);
   padding: 2px; }
 
 .table_container {

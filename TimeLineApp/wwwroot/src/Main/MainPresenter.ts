@@ -414,6 +414,7 @@ export class MainPresenter {
       })
     }
 
+    полки.reverse()
     for (let exitem of полки) {
       exitem.sort((a, b) => {
         return a.il - b.il
