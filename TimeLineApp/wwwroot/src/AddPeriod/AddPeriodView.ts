@@ -151,6 +151,8 @@ export class AddPeriodView implements IAddPeriodView {
     this.tbEnd_Century.onchange = () => {
       this.Presenter.OnChangeEnd_CenturyInView()
     }
+    this.tbCard2.setAttribute('hidden', '')
+
     this.model = model
     this.Presenter = new AddPeriodPresenter(this, model)
   }

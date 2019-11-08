@@ -19008,6 +19008,7 @@ class AddPeriodView {
         this.tbEnd_Century.onchange = () => {
             this.Presenter.OnChangeEnd_CenturyInView();
         };
+        this.tbCard2.setAttribute('hidden', '');
         this.model = model;
         this.Presenter = new AddPeriodPresenter_1.AddPeriodPresenter(this, model);
     }
@@ -20215,6 +20216,9 @@ class MainPresenter {
             });
         }
         for (let exitem of полки) {
+            exitem.sort((a, b) => {
+                return a.il - b.il;
+            });
             this.view.DrawEventsRow(tl_index, exitem);
         }
     }

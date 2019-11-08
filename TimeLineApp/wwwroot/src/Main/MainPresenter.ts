@@ -415,6 +415,9 @@ export class MainPresenter {
     }
 
     for (let exitem of полки) {
+      exitem.sort((a, b) => {
+        return a.il - b.il
+      })
       this.view.DrawEventsRow(tl_index, exitem)
     }
   }

@@ -155,6 +155,9 @@ export class MainView {
       let td = <HTMLTableDataCellElement>document.createElement('td')
       td.colSpan = items[i].ir - items[i].il + 1
       td.classList.add('period_cell')
+      td.oncontextmenu = (ev) => {
+
+      }
       last = items[i].ir
       let txt = document.createTextNode(items[i].item.Name)
       td.append(txt)
