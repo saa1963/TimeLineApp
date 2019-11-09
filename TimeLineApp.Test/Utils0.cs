@@ -6,7 +6,7 @@ using System.Text;
 
 namespace TimeLineApp.Test
 {
-    public class Utils
+    public static class Utils0
     {
         public static string filesFolder()
         {

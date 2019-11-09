@@ -13,10 +13,12 @@ namespace TimeLineApp.Controllers
     public class StorageController : ControllerBase
     {
         private readonly ITLStorage storage;
+        private readonly ITLStorage2 storage2;
 
-        public StorageController(ITLStorage _storage)
+        public StorageController(ITLStorage _storage, ITLStorage2 _storage2)
         {
             storage = _storage;
+            storage2 = _storage2;
         }
 
         [HttpPost]
@@ -25,13 +27,20 @@ namespace TimeLineApp.Controllers
         {
             try
             {
-                var tl = TimeLine.FromJSON(model.s2);
-                storage.Save(HttpContext, tl);
+                //var tl = TimeLine.FromJSON(model.s2);
+                //storage.Save(HttpContext, tl);
+                storage2.Save2(HttpContext, model.s1, model.s2);
                 return Ok();
             }
             catch(Exception e)
             {
-                return StatusCode(500, e.Message);
+                var msg = "";
+                while (e != null)
+                {
+                    msg += e.Message;
+                    e = e.InnerException;
+                }
+                return StatusCode(500, msg);
             }
         }
 
@@ -55,9 +64,7 @@ namespace TimeLineApp.Controllers
         {
             try
             {
-                var tl = storage.Load(HttpContext, fname);
-                var rt = tl.ToJSON();
-                return rt;
+                return storage2.Load2(HttpContext, fname);
             }
             catch (Exception e)
             {

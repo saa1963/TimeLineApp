@@ -17,15 +17,14 @@ export class ApiClient {
 
   public async DoLogin(login: string, password: string): Promise<string> {
     if ((login || '').trim() !== '' && (password || '').trim() !== '') {
-      let err = await $.ajax(
-        'api/register/log', {
-          type: 'POST',
-          data: {
-            Login: login,
-            Password: password
-          }
-        })
-      return err
+      const response = await fetch('api/register/log', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({Login: login, Password: password})
+      })
+      return await response.text()
     } else {
       return 'Не введены логин или пароль.'
     }

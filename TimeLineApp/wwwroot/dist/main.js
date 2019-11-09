@@ -19284,14 +19284,14 @@ class ApiClient {
     DoLogin(login, password) {
         return __awaiter(this, void 0, void 0, function* () {
             if ((login || '').trim() !== '' && (password || '').trim() !== '') {
-                let err = yield $.ajax('api/register/log', {
-                    type: 'POST',
-                    data: {
-                        Login: login,
-                        Password: password
-                    }
+                const response = yield fetch('api/register/log', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ Login: login, Password: password })
                 });
-                return err;
+                return yield response.text();
             }
             else {
                 return 'Не введены логин или пароль.';

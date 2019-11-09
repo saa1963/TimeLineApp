@@ -21,7 +21,7 @@ namespace TimeLineApp.Test
         [Fact]
         public void CommonTest()
         {
-            var fname = Path.Combine(Utils.filesFolder(), "data", "users.dat");
+            var fname = Path.Combine(Utils0.filesFolder(), "data", "users.dat");
             if (File.Exists(fname))
             {
                 File.Delete(fname);
@@ -47,7 +47,7 @@ namespace TimeLineApp.Test
         [Fact]
         public void Common1Test()
         {
-            var fname = Path.Combine(Utils.filesFolder(), "data", "users.dat");
+            var fname = Path.Combine(Utils0.filesFolder(), "data", "users.dat");
             var o = new FileUserStorage(env1);
             Assert.NotNull(o);
             Assert.True(o.Contains("soshin"));
@@ -61,7 +61,7 @@ namespace TimeLineApp.Test
         public string ApplicationName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IFileProvider ContentRootFileProvider { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string EnvironmentName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        string IHostEnvironment.ContentRootPath { get => Utils.filesFolder(); set => throw new NotImplementedException(); }
+        string IHostEnvironment.ContentRootPath { get => Utils0.filesFolder(); set => throw new NotImplementedException(); }
     }
 
     class MyInv1 : IWebHostEnvironment
@@ -70,7 +70,7 @@ namespace TimeLineApp.Test
         public string WebRootPath { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string ApplicationName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IFileProvider ContentRootFileProvider { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string ContentRootPath { get => Utils.usersFolder(); set => throw new NotImplementedException(); }
+        public string ContentRootPath { get => Utils0.usersFolder(); set => throw new NotImplementedException(); }
         public string EnvironmentName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

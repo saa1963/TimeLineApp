@@ -30,14 +30,13 @@ namespace TimeLineApp.services
         public IEnumerable<string> List(HttpContext httpCtx)
         {
             var rt = new List<string>();
-            var userName = getUserName(httpCtx);
+            var userName = new CommonServices().getUserName(httpCtx);
             var path = Path.Combine(env.ContentRootPath, "data"); //, userName + "." + name + ".tl");
             var files = Directory.GetFiles(path, userName + ".*.tl");
             foreach (var f in files)
             {
-                var fname = Path.GetFileName(f);
-                var ar = fname.Split('.');
-                rt.Add(ar[1]);
+                var tl = LoadFile(f);
+                rt.Add(tl.Name);
             }
             return rt;
         }
@@ -47,18 +46,23 @@ namespace TimeLineApp.services
             try
             {
                 var fname = getFileName(httpCtx, name);
-                JsonSerializer serializer = new JsonSerializer();
-                using (var sr = new StreamReader(fname))
-                {
-                    using (var jr = new JsonTextReader(sr))
-                    {
-                        return serializer.Deserialize<TimeLine>(jr);
-                    }
-                }
+                return LoadFile(fname);
             }
             catch (Exception e)
             {
                 throw e;
+            }
+        }
+
+        private TimeLine LoadFile(string name)
+        {
+            JsonSerializer serializer = new JsonSerializer();
+            using (var sr = new StreamReader(name))
+            {
+                using (var jr = new JsonTextReader(sr))
+                {
+                    return serializer.Deserialize<TimeLine>(jr);
+                }
             }
         }
 
@@ -76,27 +80,20 @@ namespace TimeLineApp.services
             }
         }
 
-        private string getUserName(HttpContext httpCtx)
-        {
-            string rt = null;
-            if (httpCtx.User.HasClaim(s => s.Type == ClaimTypes.Name))
-            {
-                var userName = httpCtx.User.Claims.SingleOrDefault(s => s.Type == ClaimTypes.Name).Value;
-                if (userName != null)
-                {
-                    rt =  userName;
-                }
-            }
-            if (rt != null)
-                return rt;
-            else
-                throw new UnauthorizedAccessException("Неавторизованный доступ");
-        }
+        
 
         private string getFileName(HttpContext httpCtx, string name)
         {
-            var userName = getUserName(httpCtx);
-            return Path.Combine(env.ContentRootPath, "data", userName + "." + name + ".tl");
+            var userName = new CommonServices().getUserName(httpCtx);
+            foreach (var ch in Path.GetInvalidFileNameChars())
+            {
+                if (name.Contains(ch))
+                {
+                    name = name.Replace(ch, '_');
+                }
+            }
+            var fname = Path.Combine(env.ContentRootPath, "data", userName + "." + name + ".tl");
+            return fname;
         }
     }
 }

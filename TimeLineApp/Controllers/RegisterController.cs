@@ -35,7 +35,7 @@ namespace TimeLineApp.Controllers
 
         [Route("api/register/log")]
         [HttpPost]
-        public async Task<string> Logon([FromForm]Logon model)
+        public async Task<string> Logon(Logon model)
         {
             if (storage.Logon(model.Login, model.Password))
             {

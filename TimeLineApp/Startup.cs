@@ -31,14 +31,10 @@ namespace TimeLineApp
         {
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie();
-
             services.AddControllersWithViews();
-            //services.AddControllers();
-            //services.AddMvc(options => options.EnableEndpointRouting = false)
-            //    .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
-            //    .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
             services.AddSingleton<IUserStorage, FileUserStorage>();
             services.AddSingleton<ITLStorage, FileTLStorage>();
+            services.AddSingleton<ITLStorage2, LiteDBStorage>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
