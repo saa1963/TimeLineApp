@@ -33,8 +33,7 @@ namespace TimeLineApp
                 .AddCookie();
             services.AddControllersWithViews();
             services.AddSingleton<IUserStorage, FileUserStorage>();
-            services.AddSingleton<ITLStorage, FileTLStorage>();
-            services.AddSingleton<ITLStorage2, LiteDBStorage>();
+            services.AddSingleton<ITLStorage, LiteDBStorage>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

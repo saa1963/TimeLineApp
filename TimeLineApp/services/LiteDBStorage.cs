@@ -13,7 +13,7 @@ using System.Text.Json.Serialization;
 
 namespace TimeLineApp.services
 {
-    public class LiteDBStorage : ITLStorage, ITLStorage2
+    public class LiteDBStorage : ITLStorage
     {
         IWebHostEnvironment env;
         private string dbName;
@@ -58,12 +58,7 @@ namespace TimeLineApp.services
             }
         }
 
-        public TimeLine Load(HttpContext httpCtx, string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        private string LoadFile(string name)
+        private string LoadFromBase(string name)
         {
             try
             {
@@ -79,7 +74,7 @@ namespace TimeLineApp.services
             }
         }
 
-        private bool SaveFile(string header, string body)
+        private bool SaveToBase(string header, string body)
         {
             try
             {
@@ -106,17 +101,12 @@ namespace TimeLineApp.services
             }
         }
 
-        public bool Save(HttpContext httpCtx, TimeLine tl)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Save2(HttpContext httpCtx, string header, string body)
+        public bool Save(HttpContext httpCtx, string header, string body)
         {
             try
             {
                 var user = new CommonServices().getUserName(httpCtx);
-                return SaveFile(user + "@" + header, body);
+                return SaveToBase(user + "@" + header, body);
             }
             catch (Exception e)
             {
@@ -124,12 +114,12 @@ namespace TimeLineApp.services
             }
         }
 
-        public string Load2(HttpContext httpCtx, string name)
+        public string Load(HttpContext httpCtx, string name)
         {
             try
             {
                 var user = new CommonServices().getUserName(httpCtx);
-                return LoadFile(user + "@" + name);
+                return LoadFromBase(user + "@" + name);
             }
             catch (Exception e)
             {
