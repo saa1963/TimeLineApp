@@ -69,7 +69,8 @@ namespace TimeLineApp.services
             {
                 using (var db = new LiteDatabase(dbName))
                 {
-                    return db.GetCollection<DblString>("timelines").FindOne(s => s.s1 == name).s2;
+                    var col = db.GetCollection<TString>("timelines");
+                    return col.FindOne(s => s.Header == name).Body;
                 }
             }
             catch (Exception e)
