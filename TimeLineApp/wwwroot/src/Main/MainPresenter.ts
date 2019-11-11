@@ -18,6 +18,7 @@ import { TLPeriod } from "../TLPeriod";
 import { NS_EventPeriod } from "../EP/EventPeriod"
 import { AddPeriodView } from "../AddPeriod/AddPeriodView";
 import { AddPeriodModel } from "../AddPeriod/AddPeriodModel";
+import { UploadFileView } from "../UploadFileView";
 
 export interface IExTLPeriod { il: number, ir: number, item: TLPeriod }
 
@@ -69,6 +70,21 @@ export class MainPresenter {
         })
         .catch(() => { })
     } catch (err) {
+      await new BoxView(err).Show()
+    }
+  }
+
+  public async UploadFile() {
+    try {
+      let view = new UploadFileView()
+      //let value = await ApiClient.getInstance().GetUsersList()
+      //let view = new TlistView(value)
+      view.ShowDialog()
+        .then(async (value) => {
+          this.model.Add(value)
+        })
+        .catch(() => { })
+    } catch(err) {
       await new BoxView(err).Show()
     }
   }

@@ -10,6 +10,7 @@ export class MainView {
   private aReg = <HTMLAnchorElement>document.getElementById('btnReg')
   private btnNewTL = <HTMLButtonElement>document.getElementById('newTimeline')
   private lblUser = <HTMLLabelElement>document.getElementById('lblUser')
+  private aUploadFile = <HTMLDivElement>document.getElementById('tmUploadFile')
   private tls = document.getElementById('tls')
   private mainTable: HTMLTableElement
 
@@ -32,6 +33,9 @@ export class MainView {
     }
     document.getElementById('load').onclick = () => {
       this.Presenter.OpenLoadTLDialog()
+    }
+    this.aUploadFile.onclick = () => {
+      this.Presenter.UploadFile()
     }
     document.getElementById('prev_period').onclick = () => {
       this.Presenter.OnPrev_Period()

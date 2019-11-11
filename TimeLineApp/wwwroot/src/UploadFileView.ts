@@ -1,5 +1,6 @@
 ﻿import * as $ from 'jquery'
 import { Globals } from './Globals';
+import { TimeLineModel } from './TimeLineModel';
 
 export class UploadFileView {
   private btnUploadFile: HTMLButtonElement
@@ -12,26 +13,31 @@ export class UploadFileView {
     this.btnCancelUploadFile = <HTMLButtonElement>document.getElementById('btnCancelUploadFile')
     this.tbName = <HTMLInputElement>document.getElementById('uploadfile_input')
     this.tbModal = $('#tmUploadFile')
-    this.tbName.onselect = (ev) => {
-
+    this.tbName.onchange = (ev) => {
+      const f = (<HTMLInputElement>ev.target).files[0]
+      const reader = new FileReader()
+      reader.onload = (ev) => {
+        alert(ev.target.result)
+      }
+      reader.readAsText(f);
     }
   }
 
-  public async Show(): Promise<boolean> {
-    return new Promise<boolean>((resolve, reject) => {
+  public async ShowDialog(): Promise<TimeLineModel> {
+    return new Promise<TimeLineModel>((resolve, reject) => {
       this.tbModal.modal()
       this.btnUploadFile.onclick = async () => {
         if (this.tbName.value) {
 
           this.tbModal.modal('hide')
-          resolve(true)
+          resolve(TimeLineModel.CreateTimeLineModel())
         } else {
           return
         }
       }
       this.btnCancelUploadFile.onclick = async () => {
         this.tbModal.modal('hide')
-        resolve(false)
+        resolve(null)
       }
     })
   }
