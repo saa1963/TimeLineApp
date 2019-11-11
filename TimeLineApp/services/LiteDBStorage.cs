@@ -17,28 +17,24 @@ namespace TimeLineApp.services
     {
         IWebHostEnvironment env;
         private string dbName;
+        private string timelines = "timelines";
         public LiteDBStorage(IWebHostEnvironment hostingEnvironment)
         {
             env = hostingEnvironment;
             dbName = Path.Combine(env.ContentRootPath, "data", "db.dat");
+            using (var db = new LiteDatabase(dbName))
+            {
+                if(!db.GetCollectionNames().Contains(timelines))
+                {
+                    var col = db.GetCollection<TString>(timelines);
+                    col.EnsureIndex(s => s.Header);
+                    col.EnsureIndex(s => s.User);
+                }
+            }
         }
         public bool IsExist(HttpContext httpCtx, string name)
         {
-            try
-            {
-                // Open database (or create if not exits)
-                using (var db = new LiteDatabase(dbName))
-                {
-                    var user = new CommonServices().getUserName(httpCtx);
-                    // Find all files references in a "directory"
-                    var files = db.FileStorage.Find(user + "/" + name).SingleOrDefault();
-                    return files != null;
-                }
-            }
-            catch(Exception e)
-            {
-                throw new Exception($"Exception in {this.GetType().FullName} {this.GetType().Name}", e);
-            }
+            throw new NotImplementedException();
         }
 
         public IEnumerable<string> List(HttpContext httpCtx)
@@ -48,8 +44,8 @@ namespace TimeLineApp.services
                 using (var db = new LiteDatabase(dbName))
                 {
                     var user = new CommonServices().getUserName(httpCtx);
-                    var col = db.GetCollection<TString>("timelines");
-                    return col.Find(s => s.Header.StartsWith(user + "@")).Select(s => s.Body).ToList();
+                    var col = db.GetCollection<TString>(timelines);
+                    return col.Find(s => s.User == user.ToLower()).Select(s => s.Header).ToList();
                 }
             }
             catch (Exception e)
@@ -91,7 +87,6 @@ namespace TimeLineApp.services
                     {
                         col.Insert(new TString() { Header = header, Body = body });
                     }
-                    col.EnsureIndex(x => x.Header, true);
                     return true;
                 }
             }

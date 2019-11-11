@@ -44,6 +44,7 @@
     <Content Remove="wwwroot\src\TlistModel.ts" />
     <Content Remove="wwwroot\src\TlistPresenter.ts" />
     <Content Remove="wwwroot\src\TlistView.ts" />
+    <Content Remove="wwwroot\src\UploadFileView.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -124,6 +125,7 @@
     <TypeScriptCompile Include="wwwroot\src\Tlist\TlistModel.ts" />
     <TypeScriptCompile Include="wwwroot\src\Tlist\TlistPresenter.ts" />
     <TypeScriptCompile Include="wwwroot\src\Tlist\TlistView.ts" />
+    <TypeScriptCompile Include="wwwroot\src\UploadFileView.ts" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">

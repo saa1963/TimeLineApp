@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -67,6 +68,30 @@ namespace TimeLineApp.Controllers
             catch (Exception e)
             {
                 return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("api/storage/upload")]
+        public async Task<IActionResult> Index(IFormFile formFile)
+        {
+            //long size = files.Sum(f => f.Length);
+
+            //var filePaths = new List<string>();
+            if (formFile.Length > 0)
+            {
+                // full path to file in temp location
+                var filePath = Path.GetTempFileName();
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await formFile.CopyToAsync(stream);
+                }
+                return Ok();
+            }
+            else
+            {
+                return Problem();
             }
         }
     }
