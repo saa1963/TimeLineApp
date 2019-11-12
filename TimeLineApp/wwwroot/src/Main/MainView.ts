@@ -10,7 +10,7 @@ export class MainView {
   private aReg = <HTMLAnchorElement>document.getElementById('btnReg')
   private btnNewTL = <HTMLButtonElement>document.getElementById('newTimeline')
   private lblUser = <HTMLLabelElement>document.getElementById('lblUser')
-  private aUploadFile = <HTMLDivElement>document.getElementById('tmUploadFile')
+  private btnUploadFile = <HTMLButtonElement>document.getElementById('load_file')
   private tls = document.getElementById('tls')
   private mainTable: HTMLTableElement
 
@@ -34,7 +34,7 @@ export class MainView {
     document.getElementById('load').onclick = () => {
       this.Presenter.OpenLoadTLDialog()
     }
-    this.aUploadFile.onclick = () => {
+    this.btnUploadFile.onclick = () => {
       this.Presenter.UploadFile()
     }
     document.getElementById('prev_period').onclick = () => {
@@ -128,10 +128,18 @@ export class MainView {
     aSave.onclick = async (ev) => {
       await this.Presenter.OnSave(idx)
     }
+    let aSaveToFile = <HTMLAnchorElement>document.createElement('a')
+    aSaveToFile.classList.add('dropdown-item')
+    aSaveToFile.textContent = "Сохранить в файл"
+    aSaveToFile.href = '#'
+    aSaveToFile.onclick = async (ev) => {
+      await this.Presenter.OnSaveToFile(idx)
+    }
     let divGroup = <HTMLDivElement>document.createElement('div')
     divGroup.classList.add('dropdown-menu')
     divGroup.append(aPlus)
     divGroup.append(aSave)
+    divGroup.append(aSaveToFile)
 
     let divDropDown = <HTMLDivElement>document.createElement('div')
     divDropDown.classList.add('dropdown')

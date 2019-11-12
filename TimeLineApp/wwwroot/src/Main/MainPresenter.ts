@@ -98,6 +98,30 @@ export class MainPresenter {
     }
   }
 
+  public async OnSaveToFile(idx: number) {
+    try {
+      this.download(JSON.stringify(this.model.Item(idx)), 'tl.json', 'application/json')
+      await new BoxView('Данные сохранены').Show()
+    } catch (err) {
+      await new BoxView(Globals.ResponseErrorText(err)).Show()
+    }
+  }
+
+  // Function to download data to a file
+  private download(data: string, filename: string, type: string) {
+    let file = new Blob([data], { type: type })
+    let a = document.createElement("a")
+    let url = URL.createObjectURL(file)
+    a.href = url
+    a.download = filename
+    document.body.appendChild(a)
+    a.click()
+    setTimeout(function () {
+      document.body.removeChild(a)
+      window.URL.revokeObjectURL(url)
+    }, 0)
+  }
+
   public async OnAddPeriod(idx: number) {
     let model = new AddPeriodModel()
     let today = new Date()

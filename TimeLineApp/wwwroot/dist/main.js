@@ -19868,6 +19868,7 @@ const TLPeriod_1 = __webpack_require__(/*! ../TLPeriod */ "./src/TLPeriod.ts");
 const EventPeriod_1 = __webpack_require__(/*! ../EP/EventPeriod */ "./src/EP/EventPeriod.ts");
 const AddPeriodView_1 = __webpack_require__(/*! ../AddPeriod/AddPeriodView */ "./src/AddPeriod/AddPeriodView.ts");
 const AddPeriodModel_1 = __webpack_require__(/*! ../AddPeriod/AddPeriodModel */ "./src/AddPeriod/AddPeriodModel.ts");
+const UploadFileView_1 = __webpack_require__(/*! ../UploadFileView */ "./src/UploadFileView.ts");
 class MainPresenter {
     constructor(view, model) {
         // ******************* Свойства *********************************
@@ -19958,6 +19959,23 @@ class MainPresenter {
             }
         });
     }
+    UploadFile() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let view = new UploadFileView_1.UploadFileView();
+                //let value = await ApiClient.getInstance().GetUsersList()
+                //let view = new TlistView(value)
+                view.ShowDialog()
+                    .then((value) => __awaiter(this, void 0, void 0, function* () {
+                    this.model.Add(value);
+                }))
+                    .catch(() => { });
+            }
+            catch (err) {
+                yield new BoxView_1.BoxView(err).Show();
+            }
+        });
+    }
     OnSave(idx) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -19968,6 +19986,32 @@ class MainPresenter {
                 yield new BoxView_1.BoxView(Globals_1.Globals.ResponseErrorText(err)).Show();
             }
         });
+    }
+    OnSaveToFile(idx) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                //await ApiClient.getInstance().SaveTLToFile(this.model.Item(idx))
+                this.download(JSON.stringify(this.model.Item(idx)), 'tl.json', 'application/json');
+                yield new BoxView_1.BoxView('Данные сохранены').Show();
+            }
+            catch (err) {
+                yield new BoxView_1.BoxView(Globals_1.Globals.ResponseErrorText(err)).Show();
+            }
+        });
+    }
+    // Function to download data to a file
+    download(data, filename, type) {
+        let file = new Blob([data], { type: type });
+        let a = document.createElement("a");
+        let url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function () {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }, 0);
     }
     OnAddPeriod(idx) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -20317,6 +20361,7 @@ class MainView {
         this.aReg = document.getElementById('btnReg');
         this.btnNewTL = document.getElementById('newTimeline');
         this.lblUser = document.getElementById('lblUser');
+        this.btnUploadFile = document.getElementById('load_file');
         this.tls = document.getElementById('tls');
         this.Presenter = new MainPresenter_1.MainPresenter(this, model);
         this.aLogin.onclick = () => __awaiter(this, void 0, void 0, function* () {
@@ -20336,6 +20381,9 @@ class MainView {
         };
         document.getElementById('load').onclick = () => {
             this.Presenter.OpenLoadTLDialog();
+        };
+        this.btnUploadFile.onclick = () => {
+            this.Presenter.UploadFile();
         };
         document.getElementById('prev_period').onclick = () => {
             this.Presenter.OnPrev_Period();
@@ -20422,10 +20470,18 @@ class MainView {
             aSave.onclick = (ev) => __awaiter(this, void 0, void 0, function* () {
                 yield this.Presenter.OnSave(idx);
             });
+            let aSaveToFile = document.createElement('a');
+            aSaveToFile.classList.add('dropdown-item');
+            aSaveToFile.textContent = "Сохранить в файл";
+            aSaveToFile.href = '#';
+            aSaveToFile.onclick = (ev) => __awaiter(this, void 0, void 0, function* () {
+                yield this.Presenter.OnSaveToFile(idx);
+            });
             let divGroup = document.createElement('div');
             divGroup.classList.add('dropdown-menu');
             divGroup.append(aPlus);
             divGroup.append(aSave);
+            divGroup.append(aSaveToFile);
             let divDropDown = document.createElement('div');
             divDropDown.classList.add('dropdown');
             divDropDown.append(btnMenu);
@@ -21707,6 +21763,74 @@ class TlistView {
     }
 }
 exports.TlistView = TlistView;
+
+
+/***/ }),
+
+/***/ "./src/UploadFileView.ts":
+/*!*******************************!*\
+  !*** ./src/UploadFileView.ts ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
+const TimeLineModel_1 = __webpack_require__(/*! ./TimeLineModel */ "./src/TimeLineModel.ts");
+class UploadFileView {
+    constructor() {
+        this.btnUploadFile = document.getElementById('btnUploadFile');
+        this.btnCancelUploadFile = document.getElementById('btnCancelUploadFile');
+        this.tbName = document.getElementById('uploadfile_input');
+        this.tbModal = $('#tmUploadFile');
+        this.tbName.onchange = (ev) => {
+            const f = ev.target.files[0];
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                this.value = reader.result;
+            };
+            reader.readAsText(f);
+        };
+    }
+    ShowDialog() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve, reject) => {
+                this.tbModal.modal();
+                this.btnUploadFile.onclick = () => __awaiter(this, void 0, void 0, function* () {
+                    if (this.value) {
+                        this.tbModal.modal('hide');
+                        try {
+                            const tl = TimeLineModel_1.TimeLineModel.CreateTimeLineModel("123", JSON.parse(this.value));
+                            resolve(tl);
+                        }
+                        catch (err) {
+                            alert('Неправильный формат файла');
+                            return;
+                        }
+                    }
+                    else {
+                        return;
+                    }
+                });
+                this.btnCancelUploadFile.onclick = () => __awaiter(this, void 0, void 0, function* () {
+                    this.tbModal.modal('hide');
+                    resolve(null);
+                });
+            });
+        });
+    }
+}
+exports.UploadFileView = UploadFileView;
 
 
 /***/ }),

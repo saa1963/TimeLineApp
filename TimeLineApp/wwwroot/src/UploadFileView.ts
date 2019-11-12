@@ -7,6 +7,7 @@ export class UploadFileView {
   private btnCancelUploadFile: HTMLButtonElement
   private tbName: HTMLInputElement
   private tbModal: JQuery
+  private value: string
 
   public constructor() {
     this.btnUploadFile = <HTMLButtonElement>document.getElementById('btnUploadFile')
@@ -17,7 +18,7 @@ export class UploadFileView {
       const f = (<HTMLInputElement>ev.target).files[0]
       const reader = new FileReader()
       reader.onload = (ev) => {
-        alert(ev.target.result)
+        this.value = reader.result as string
       }
       reader.readAsText(f);
     }
@@ -27,10 +28,16 @@ export class UploadFileView {
     return new Promise<TimeLineModel>((resolve, reject) => {
       this.tbModal.modal()
       this.btnUploadFile.onclick = async () => {
-        if (this.tbName.value) {
-
+        if (this.value) {
           this.tbModal.modal('hide')
-          resolve(TimeLineModel.CreateTimeLineModel())
+          try {
+            const tl = TimeLineModel.CreateTimeLineModel("123", JSON.parse(this.value))
+            resolve(tl)
+          }
+          catch (err) {
+            alert('Неправильный формат файла')
+            return
+          }
         } else {
           return
         }

@@ -26,8 +26,6 @@ namespace TimeLineApp.Controllers
         {
             try
             {
-                //var tl = TimeLine.FromJSON(model.s2);
-                //storage.Save(HttpContext, tl);
                 storage.Save(HttpContext, model.s1, model.s2);
                 return Ok();
             }

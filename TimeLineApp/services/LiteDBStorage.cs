@@ -54,14 +54,14 @@ namespace TimeLineApp.services
             }
         }
 
-        private string LoadFromBase(string name)
+        private string LoadFromBase(string user, string name)
         {
             try
             {
                 using (var db = new LiteDatabase(dbName))
                 {
                     var col = db.GetCollection<TString>("timelines");
-                    return col.FindOne(s => s.Header == name).Body;
+                    return col.FindOne(s => s.Header == name && s.User == user).Body;
                 }
             }
             catch (Exception e)
@@ -70,22 +70,22 @@ namespace TimeLineApp.services
             }
         }
 
-        private bool SaveToBase(string header, string body)
+        private bool SaveToBase(string user, string header, string body)
         {
             try
             {
                 using (var db = new LiteDatabase(dbName))
                 {
                     var col = db.GetCollection<TString>("timelines");
-                    if (col.Exists(s => s.Header == header))
+                    if (col.Exists(s => s.Header == header && s.User == user.ToLower()))
                     {
-                        var doc = col.FindOne(s => s.Header == header);
+                        var doc = col.FindOne(s => s.Header == header && s.User == user.ToLower());
                         doc.Body = body;
                         col.Update(doc);
                     }
                     else
                     {
-                        col.Insert(new TString() { Header = header, Body = body });
+                        col.Insert(new TString() { User = user.ToLower(), Header = header, Body = body, Version = "1" });
                     }
                     return true;
                 }
@@ -101,7 +101,7 @@ namespace TimeLineApp.services
             try
             {
                 var user = new CommonServices().getUserName(httpCtx);
-                return SaveToBase(user + "@" + header, body);
+                return SaveToBase(user, header, body);
             }
             catch (Exception e)
             {
@@ -114,7 +114,7 @@ namespace TimeLineApp.services
             try
             {
                 var user = new CommonServices().getUserName(httpCtx);
-                return LoadFromBase(user + "@" + name);
+                return LoadFromBase(user, name);
             }
             catch (Exception e)
             {
