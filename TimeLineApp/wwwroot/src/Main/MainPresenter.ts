@@ -19,6 +19,7 @@ import { NS_EventPeriod } from "../EP/EventPeriod"
 import { AddPeriodView } from "../AddPeriod/AddPeriodView";
 import { AddPeriodModel } from "../AddPeriod/AddPeriodModel";
 import { UploadFileView } from "../UploadFileView";
+import { PeriodContextMenu } from "../PeriodContextMenu";
 
 export interface IExTLPeriod { il: number, ir: number, item: TLPeriod }
 
@@ -120,6 +121,22 @@ export class MainPresenter {
       document.body.removeChild(a)
       window.URL.revokeObjectURL(url)
     }, 0)
+  }
+
+  public OnPeriodContextMenu(ev: MouseEvent, idx: number, id: number) {
+    let menu = PeriodContextMenu.Create();
+    menu.evSelect.subscribe(async (arg) => {
+      switch (arg) {
+        case 'edit':
+          await new BoxView("Edit").Show()
+          break;
+        case 'del':
+          await new BoxView("Del").Show()
+          break;
+      }
+    })
+    menu.reload()
+    menu.display(ev)
   }
 
   public async OnAddPeriod(idx: number) {

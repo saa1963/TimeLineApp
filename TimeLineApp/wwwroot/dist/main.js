@@ -19869,6 +19869,7 @@ const EventPeriod_1 = __webpack_require__(/*! ../EP/EventPeriod */ "./src/EP/Eve
 const AddPeriodView_1 = __webpack_require__(/*! ../AddPeriod/AddPeriodView */ "./src/AddPeriod/AddPeriodView.ts");
 const AddPeriodModel_1 = __webpack_require__(/*! ../AddPeriod/AddPeriodModel */ "./src/AddPeriod/AddPeriodModel.ts");
 const UploadFileView_1 = __webpack_require__(/*! ../UploadFileView */ "./src/UploadFileView.ts");
+const PeriodContextMenu_1 = __webpack_require__(/*! ../PeriodContextMenu */ "./src/PeriodContextMenu.ts");
 class MainPresenter {
     constructor(view, model) {
         // ******************* Свойства *********************************
@@ -19990,7 +19991,6 @@ class MainPresenter {
     OnSaveToFile(idx) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                //await ApiClient.getInstance().SaveTLToFile(this.model.Item(idx))
                 this.download(JSON.stringify(this.model.Item(idx)), 'tl.json', 'application/json');
                 yield new BoxView_1.BoxView('Данные сохранены').Show();
             }
@@ -20012,6 +20012,21 @@ class MainPresenter {
             document.body.removeChild(a);
             window.URL.revokeObjectURL(url);
         }, 0);
+    }
+    OnPeriodContextMenu(ev, idx, id) {
+        let menu = PeriodContextMenu_1.PeriodContextMenu.Create();
+        menu.evSelect.subscribe((arg) => __awaiter(this, void 0, void 0, function* () {
+            switch (arg) {
+                case 'edit':
+                    yield new BoxView_1.BoxView("Edit").Show();
+                    break;
+                case 'del':
+                    yield new BoxView_1.BoxView("Del").Show();
+                    break;
+            }
+        }));
+        menu.reload();
+        menu.display(ev);
     }
     OnAddPeriod(idx) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -20397,9 +20412,9 @@ class MainView {
         document.getElementById('next_page').onclick = () => {
             this.Presenter.OnNext_Page();
         };
-        document.addEventListener('contextmenu', (ev) => {
-            this.Presenter.OnContextMenu(ev);
-        });
+        //document.addEventListener('contextmenu', (ev) => {
+        //  this.Presenter.OnContextMenu(ev)
+        //})
         window.onresize = () => {
             this.Presenter.Draw();
         };
@@ -20508,6 +20523,8 @@ class MainView {
             td.colSpan = items[i].ir - items[i].il + 1;
             td.classList.add('period_cell');
             td.oncontextmenu = (ev) => {
+                ev.preventDefault();
+                this.Presenter.OnPeriodContextMenu(ev, idx, items[i].item.Id);
             };
             last = items[i].ir;
             let txt = document.createTextNode(items[i].item.Name);
@@ -20589,6 +20606,31 @@ class MyContextMenu {
     }
 }
 exports.MyContextMenu = MyContextMenu;
+
+
+/***/ }),
+
+/***/ "./src/PeriodContextMenu.ts":
+/*!**********************************!*\
+  !*** ./src/PeriodContextMenu.ts ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const contextmenu_1 = __webpack_require__(/*! ./contextmenu */ "./src/contextmenu.ts");
+class PeriodContextMenu {
+    static Create() {
+        let menuitems = [];
+        menuitems.push(new contextmenu_1.MenuItem('edit', 'Изменить'));
+        menuitems.push(new contextmenu_1.MenuItem('del', 'Удалить'));
+        menuitems.push(new contextmenu_1.MenuItemDivider());
+        return new contextmenu_1.ContextMenu(menuitems);
+    }
+}
+exports.PeriodContextMenu = PeriodContextMenu;
 
 
 /***/ }),
@@ -21165,6 +21207,8 @@ class TLPeriod {
      */
     static CreateTLPeriodWithArgs(name, isperiod, begin_type, begin_dayday, begin_daymonth, begin_dayyear, begin_monthmonth, begin_monthyear, begin_year, begin_decadedecade, begin_decadecentury, begin_century, end_type, end_dayday, end_daymonth, end_dayyear, end_monthmonth, end_monthyear, end_year, end_decadedecade, end_decadecentury, end_century) {
         let rt = new TLPeriod();
+        TLPeriod.id++;
+        rt.Id = TLPeriod.id;
         rt.Name = name;
         let type = begin_type;
         if (type === TLEvent_1.EnumPeriod.day) {
@@ -21213,6 +21257,8 @@ class TLPeriod {
      */
     static CreateTLPeriod(o) {
         let rt = new TLPeriod();
+        TLPeriod.id++;
+        rt.Id = TLPeriod.id;
         rt.Name = o.Name;
         let type = TLEvent_1.TLEvent.GetType(o.Begin);
         if (type === TLEvent_1.EnumPeriod.day) {
@@ -21507,6 +21553,7 @@ class TLPeriod {
         return day >= this.m_BeginDay && day <= this.m_EndDay;
     }
 }
+TLPeriod.id = 0;
 exports.TLPeriod = TLPeriod;
 
 

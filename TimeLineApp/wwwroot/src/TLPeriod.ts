@@ -2,6 +2,9 @@
 import { TLEvent, EnumPeriod, TLEventDay, TLEventMonth, TLEventYear, TLEventDecade, TLEventCentury } from './TLEvent';
 
 export class TLPeriod {
+    private static id = 0
+
+    Id: number
     Name: string;
     Begin: TLEvent;
     End: TLEvent;
@@ -44,6 +47,8 @@ export class TLPeriod {
     end_century: number
   ): TLPeriod {
     let rt = new TLPeriod()
+    TLPeriod.id++
+    rt.Id = TLPeriod.id
     rt.Name = name
 
     let type: EnumPeriod = begin_type
@@ -143,6 +148,8 @@ export class TLPeriod {
    */
   static CreateTLPeriod(o: any): TLPeriod {
     let rt = new TLPeriod();
+    TLPeriod.id++
+    rt.Id = TLPeriod.id
     rt.Name = o.Name;
     let type: EnumPeriod = TLEvent.GetType(o.Begin);
     if (type === EnumPeriod.day) {
