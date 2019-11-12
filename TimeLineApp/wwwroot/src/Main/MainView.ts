@@ -49,9 +49,9 @@ export class MainView {
     document.getElementById('next_page').onclick = () => {
       this.Presenter.OnNext_Page()
     }
-    document.addEventListener('contextmenu', (ev) => {
-      this.Presenter.OnContextMenu(ev)
-    })
+    //document.addEventListener('contextmenu', (ev) => {
+    //  this.Presenter.OnContextMenu(ev)
+    //})
     window.onresize = () => {
       this.Presenter.Draw()
     }
@@ -168,7 +168,7 @@ export class MainView {
       td.colSpan = items[i].ir - items[i].il + 1
       td.classList.add('period_cell')
       td.oncontextmenu = (ev) => {
-
+        //this.Presenter.OnPeriodContextMenu(idx, items[i].item)
       }
       last = items[i].ir
       let txt = document.createTextNode(items[i].item.Name)
