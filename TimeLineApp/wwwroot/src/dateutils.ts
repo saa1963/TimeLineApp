@@ -508,13 +508,38 @@ export class DateUtils {
   static getCenturyFromDecade(decade: number) {
     let century: number
     if (decade > 0) {
-      century = Math.floor(decade / 10)
+      century = Math.floor((decade - 1) / 10) + 1
     } else {
-      year = Math.ceil(decade / 12)
-      century = { year: year - 1, month: Math.abs(decade) - Math.abs(year * 12), day: 1 }
+      century = Math.floor(decade / 10)
     }
     return century
-}
+  }
+  /**
+   * Получить десятилетие 1 - 10
+   * @param decade
+   */
+  static getDecadeFromDecade(decade: number) {
+    let rtDecade: number
+    if (decade > 0) {
+      rtDecade = decade - Math.floor((decade - 1) / 10) * 10
+    } else {
+      rtDecade = (Math.floor(decade / 10) + 1) * 10 - decade
+    }
+    return rtDecade
+  }
+  /**
+   * Год из абсолютного месяца
+   * @param month - ... +
+   */
+  static getYearFromMonth(month: number) {
+    let year: number
+    if (month > 0) {
+      year = Math.floor((month - 1) / 12) + 1
+    } else {
+      year = Math.floor(month / 12)
+    }
+    return year
+  }
   static getYearFromDate(dt: Date): number {
     return dt.getFullYear()
   }

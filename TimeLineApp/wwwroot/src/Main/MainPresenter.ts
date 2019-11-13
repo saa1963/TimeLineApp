@@ -158,10 +158,13 @@ export class MainPresenter {
     switch (period.Begin.Type) {
       case EnumPeriod.day:
       case EnumPeriod.month:
+        model.Begin_MonthMonth = DateUtils.getMonthFromMonth(period.Begin.Month)
+        model.Begin_MonthYear = DateUtils.getYearFromMonth(period.Begin.Month)
       case EnumPeriod.year:
+        model.Begin_Year = period.Begin.Year
       case EnumPeriod.decade:
-        model.Begin_DecadeDecade = DateUtils.getDecadeRelativeFromDate(today) + 1
-        model.Begin_DecadeCentury = DateUtils.getcen period.Begin.Decade
+        model.Begin_DecadeDecade = DateUtils.getDecadeFromDecade(period.Begin.Decade)
+        model.Begin_DecadeCentury = DateUtils.getCenturyFromDecade(period.Begin.Decade)
       case EnumPeriod.century:
         model.Begin_Century = period.Begin.Century
         break;

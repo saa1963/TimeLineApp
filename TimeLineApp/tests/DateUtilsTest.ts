@@ -96,4 +96,37 @@ describe('DateUtils', () => {
     });
   })
 
+  describe('getCenturyFromDecade', () => {
+    it('40 -> 4', () => {
+      const result = DateUtils.getCenturyFromDecade(40)
+      expect(result).to.equal(4);
+    });
+    it('-40 -> -4', () => {
+      const result = DateUtils.getCenturyFromDecade(-40)
+      expect(result).to.equal(-4);
+    });
+  })
+
+  describe('getDecadeFromDecade', () => {
+    it('40 -> 10', () => {
+      const result = DateUtils.getDecadeFromDecade(40)
+      expect(result).to.equal(10);
+    });
+    it('-40 -> 10', () => {
+      const result = DateUtils.getDecadeFromDecade(-40)
+      expect(result).to.equal(10);
+    });
+  })
+
+  describe('getYearFromMonth', () => {
+    it('13 -> 2', () => {
+      const result = DateUtils.getYearFromMonth(13)
+      expect(result).to.equal(2);
+    });
+    it('-13 -> -2', () => {
+      const result = DateUtils.getYearFromMonth(-13)
+      expect(result).to.equal(-2);
+    });
+  })
+
 });
