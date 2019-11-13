@@ -23,6 +23,9 @@ export class MainModel {
     model.evAddPeriod.subscribe((period) => {
       this.e_AddPeriod.dispatch([idx, period])
     })
+    model.evRemovePeriod.subscribe(() => {
+      this.e_RemovePeriod.dispatch(idx)
+    })
     this.e_AddTimeLine.dispatch(model)
     return rt
   }
@@ -56,6 +59,11 @@ export class MainModel {
   private e_AddPeriod = new SimpleEventDispatcher<[number,TLPeriod]>();
   public get evAddPeriod(): ISimpleEvent<[number,TLPeriod]> {
     return this.e_AddPeriod.asEvent();
+  }
+
+  private e_RemovePeriod = new SimpleEventDispatcher<number>();
+  public get evRemovePeriod(): ISimpleEvent<number> {
+    return this.e_RemovePeriod.asEvent();
   }
 
   private validIndex(i: number): boolean {

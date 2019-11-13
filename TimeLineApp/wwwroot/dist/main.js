@@ -19777,6 +19777,7 @@ class MainModel {
         this.e_AddTimeLine = new ste_simple_events_1.SimpleEventDispatcher();
         this.e_RemoveTimeLine = new ste_simple_events_1.SimpleEventDispatcher();
         this.e_AddPeriod = new ste_simple_events_1.SimpleEventDispatcher();
+        this.e_RemovePeriod = new ste_simple_events_1.SimpleEventDispatcher();
     }
     static getInstance() {
         if (!MainModel.instance) {
@@ -19790,6 +19791,9 @@ class MainModel {
         let rt = this.models.push(model);
         model.evAddPeriod.subscribe((period) => {
             this.e_AddPeriod.dispatch([idx, period]);
+        });
+        model.evRemovePeriod.subscribe(() => {
+            this.e_RemovePeriod.dispatch(idx);
         });
         this.e_AddTimeLine.dispatch(model);
         return rt;
@@ -19817,6 +19821,9 @@ class MainModel {
     }
     get evAddPeriod() {
         return this.e_AddPeriod.asEvent();
+    }
+    get evRemovePeriod() {
+        return this.e_RemovePeriod.asEvent();
     }
     validIndex(i) {
         if (!this.models)
@@ -19914,6 +19921,10 @@ class MainPresenter {
         this.model.evAddPeriod.subscribe((t) => {
             this.view.RemoveDataRows(t[0]);
             this.DrawTL(t[0], this.model.Item(t[0]));
+        });
+        this.model.evRemovePeriod.subscribe((t) => {
+            this.view.RemoveDataRows(t);
+            this.DrawTL(t, this.model.Item(t));
         });
         let kvo = Math.floor((document.documentElement.clientWidth - 2) / 120);
         this.mainLine = new Array(kvo);
@@ -20014,14 +20025,24 @@ class MainPresenter {
         }, 0);
     }
     OnPeriodContextMenu(ev, idx, id) {
+        let idx0;
+        let period = this.model.Item(idx).Items.find((value, index, array) => {
+            if (value.Id == id) {
+                idx0 = index;
+                return true;
+            }
+            else {
+                return false;
+            }
+        });
         let menu = PeriodContextMenu_1.PeriodContextMenu.Create();
         menu.evSelect.subscribe((arg) => __awaiter(this, void 0, void 0, function* () {
             switch (arg) {
                 case 'edit':
-                    yield new BoxView_1.BoxView("Edit").Show();
+                    yield new BoxView_1.BoxView("Edit" + period.Name).Show();
                     break;
                 case 'del':
-                    yield new BoxView_1.BoxView("Del").Show();
+                    this.model.Item(idx).Remove(idx0);
                     break;
             }
         }));
@@ -20522,10 +20543,7 @@ class MainView {
             let td = document.createElement('td');
             td.colSpan = items[i].ir - items[i].il + 1;
             td.classList.add('period_cell');
-            td.oncontextmenu = (ev) => {
-                ev.preventDefault();
-                this.Presenter.OnPeriodContextMenu(ev, idx, items[i].item.Id);
-            };
+            td.oncontextmenu = this.createcontextmenuhandler(idx, items[i].item.Id);
             last = items[i].ir;
             let txt = document.createTextNode(items[i].item.Name);
             td.append(txt);
@@ -20534,6 +20552,12 @@ class MainView {
         }
         let header = document.getElementById('row-header-' + idx);
         header.after(row);
+    }
+    createcontextmenuhandler(idx, i) {
+        return (ev) => {
+            ev.preventDefault();
+            this.Presenter.OnPeriodContextMenu(ev, idx, i);
+        };
     }
     /**
      * Удалить строки из TL с индексом idx

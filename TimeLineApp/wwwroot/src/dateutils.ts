@@ -505,6 +505,16 @@ export class DateUtils {
     }
     return rt
   }
+  static getCenturyFromDecade(decade: number) {
+    let century: number
+    if (decade > 0) {
+      century = Math.floor(decade / 10)
+    } else {
+      year = Math.ceil(decade / 12)
+      century = { year: year - 1, month: Math.abs(decade) - Math.abs(year * 12), day: 1 }
+    }
+    return century
+}
   static getYearFromDate(dt: Date): number {
     return dt.getFullYear()
   }

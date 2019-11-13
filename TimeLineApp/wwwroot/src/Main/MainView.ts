@@ -167,10 +167,7 @@ export class MainView {
       let td = <HTMLTableDataCellElement>document.createElement('td')
       td.colSpan = items[i].ir - items[i].il + 1
       td.classList.add('period_cell')
-      td.oncontextmenu = (ev) => {
-        ev.preventDefault()
-        this.Presenter.OnPeriodContextMenu(ev, idx, items[i].item.Id)
-      }
+      td.oncontextmenu = this.createcontextmenuhandler(idx, items[i].item.Id)
       last = items[i].ir
       let txt = document.createTextNode(items[i].item.Name)
       td.append(txt)
@@ -179,6 +176,13 @@ export class MainView {
     }
     let header = document.getElementById('row-header-' + idx)
     header.after(row)
+  }
+
+  private createcontextmenuhandler(idx: number, i: number) {
+    return (ev) => {
+      ev.preventDefault()
+      this.Presenter.OnPeriodContextMenu(ev, idx, i)
+    }
   }
 
   /**

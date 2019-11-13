@@ -85,6 +85,10 @@ table {
     padding: 2px;
     border-radius: 5px;
     font-size: xx-small;
+    &:hover {
+        cursor: pointer;
+        background-color: darkgray;
+    }
 }
 
 .tl_head {

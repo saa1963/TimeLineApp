@@ -11333,6 +11333,9 @@ table {
   padding: 2px;
   border-radius: 5px;
   font-size: xx-small; }
+  .period_cell:hover {
+    cursor: pointer;
+    background-color: darkgray; }
 
 .tl_head {
   background: #f5bcbc;

@@ -124,19 +124,68 @@ export class MainPresenter {
   }
 
   public OnPeriodContextMenu(ev: MouseEvent, idx: number, id: number) {
+    let idx0: number
+    let period = this.model.Item(idx).Items.find((value, index, array) => {
+      if (value.Id == id) {
+        idx0 = index
+        return true
+      }
+      else {
+        return false
+      }
+    })
     let menu = PeriodContextMenu.Create();
     menu.evSelect.subscribe(async (arg) => {
       switch (arg) {
         case 'edit':
-          await new BoxView("Edit").Show()
+          await new BoxView("Edit" + period.Name).Show()
           break;
         case 'del':
-          await new BoxView("Del").Show()
+          this.model.Item(idx).Remove(idx0)
           break;
       }
     })
     menu.reload()
     menu.display(ev)
+  }
+
+  private async EditPeriod(period: TLPeriod) {
+    let model = new AddPeriodModel()
+    let today = new Date()
+    model.Name = period.Name
+    model.IsPeriod = (period.m_BeginDay != period.m_EndDay)
+    model.BeginType = period.Begin.Type
+    switch (period.Begin.Type) {
+      case EnumPeriod.day:
+      case EnumPeriod.month:
+      case EnumPeriod.year:
+      case EnumPeriod.decade:
+        model.Begin_DecadeDecade = DateUtils.getDecadeRelativeFromDate(today) + 1
+        model.Begin_DecadeCentury = DateUtils.getcen period.Begin.Decade
+      case EnumPeriod.century:
+        model.Begin_Century = period.Begin.Century
+        break;
+    }
+    model.Begin_DayDay = DateUtils.
+    model.Begin_DayMonth = today.getMonth() + 1
+    model.Begin_DayYear = today.getFullYear()
+    model.Begin_MonthMonth = today.getMonth() + 1
+    model.Begin_MonthYear = today.getFullYear()
+    model.Begin_Year = today.getFullYear()
+    model.Begin_DecadeDecade = DateUtils.getDecadeRelativeFromDate(today) + 1
+    model.Begin_DecadeCentury = 21
+    model.Begin_Century = 21
+    model.EndType = EnumPeriod.day
+    model.End_DayDay = today.getDate()
+    model.End_DayMonth = today.getMonth() + 1
+    model.End_DayYear = today.getFullYear()
+    model.End_MonthMonth = today.getMonth() + 1
+    model.End_MonthYear = today.getFullYear()
+    model.End_Year = today.getFullYear()
+    model.End_DecadeDecade = DateUtils.getDecadeRelativeFromDate(today) + 1
+    model.End_DecadeCentury = 21
+    model.End_Century = 21
+    let view = new AddPeriodView(model)
   }
 
   public async OnAddPeriod(idx: number) {
@@ -254,6 +303,10 @@ export class MainPresenter {
     this.model.evAddPeriod.subscribe((t) => {
       this.view.RemoveDataRows(t[0])
       this.DrawTL(t[0], this.model.Item(t[0]))
+    })
+    this.model.evRemovePeriod.subscribe((t) => {
+      this.view.RemoveDataRows(t)
+      this.DrawTL(t, this.model.Item(t))
     })
     let kvo = Math.floor((document.documentElement.clientWidth - 2) / 120)
     this.mainLine = new Array(kvo)
