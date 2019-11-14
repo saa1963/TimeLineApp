@@ -130,13 +130,13 @@ describe('DateUtils', () => {
   })
 
   describe('getMonthFromMonth', () => {
-    it('13 -> 2', () => {
-      const result = DateUtils.getYearFromMonth(13)
-      expect(result).to.equal(2);
+    it('14 -> 2', () => {
+      const result = DateUtils.getMonthFromMonth(13)
+      expect(result).to.equal(1);
     });
-    it('-13 -> -2', () => {
-      const result = DateUtils.getYearFromMonth(-13)
-      expect(result).to.equal(-2);
+    it('-14 -> 11', () => {
+      const result = DateUtils.getMonthFromMonth(-13)
+      expect(result).to.equal(12);
     });
   })
 

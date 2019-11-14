@@ -138,7 +138,7 @@ export class MainPresenter {
     menu.evSelect.subscribe(async (arg) => {
       switch (arg) {
         case 'edit':
-          await new BoxView("Edit" + period.Name).Show()
+          await this.EditPeriod(idx, period)
           break;
         case 'del':
           this.model.Item(idx).Remove(idx0)
@@ -149,7 +149,7 @@ export class MainPresenter {
     menu.display(ev)
   }
 
-  private async EditPeriod(period: TLPeriod) {
+  private async EditPeriod(idx: number, period: TLPeriod) {
     let model = new AddPeriodModel()
     let today = new Date()
     model.Name = period.Name
@@ -157,6 +157,10 @@ export class MainPresenter {
     model.BeginType = period.Begin.Type
     switch (period.Begin.Type) {
       case EnumPeriod.day:
+        let ymd = DateUtils.YMDFromAD(period.Begin.Day)
+        model.Begin_DayDay = ymd.day
+        model.Begin_DayMonth = ymd.month
+        model.Begin_DayYear = ymd.year
       case EnumPeriod.month:
         model.Begin_MonthMonth = DateUtils.getMonthFromMonth(period.Begin.Month)
         model.Begin_MonthYear = DateUtils.getYearFromMonth(period.Begin.Month)
@@ -169,26 +173,59 @@ export class MainPresenter {
         model.Begin_Century = period.Begin.Century
         break;
     }
-    model.Begin_DayDay = DateUtils.
-    model.Begin_DayMonth = today.getMonth() + 1
-    model.Begin_DayYear = today.getFullYear()
-    model.Begin_MonthMonth = today.getMonth() + 1
-    model.Begin_MonthYear = today.getFullYear()
-    model.Begin_Year = today.getFullYear()
-    model.Begin_DecadeDecade = DateUtils.getDecadeRelativeFromDate(today) + 1
-    model.Begin_DecadeCentury = 21
-    model.Begin_Century = 21
-    model.EndType = EnumPeriod.day
-    model.End_DayDay = today.getDate()
-    model.End_DayMonth = today.getMonth() + 1
-    model.End_DayYear = today.getFullYear()
-    model.End_MonthMonth = today.getMonth() + 1
-    model.End_MonthYear = today.getFullYear()
-    model.End_Year = today.getFullYear()
-    model.End_DecadeDecade = DateUtils.getDecadeRelativeFromDate(today) + 1
-    model.End_DecadeCentury = 21
-    model.End_Century = 21
+    model.EndType = period.End.Type
+    switch (period.End.Type) {
+      case EnumPeriod.day:
+        let ymd = DateUtils.YMDFromAD(period.End.Day)
+        model.End_DayDay = ymd.day
+        model.End_DayMonth = ymd.month
+        model.End_DayYear = ymd.year
+      case EnumPeriod.month:
+        model.End_MonthMonth = DateUtils.getMonthFromMonth(period.End.Month)
+        model.End_MonthYear = DateUtils.getYearFromMonth(period.End.Month)
+      case EnumPeriod.year:
+        model.End_Year = period.End.Year
+      case EnumPeriod.decade:
+        model.End_DecadeDecade = DateUtils.getDecadeFromDecade(period.End.Decade)
+        model.End_DecadeCentury = DateUtils.getCenturyFromDecade(period.End.Decade)
+      case EnumPeriod.century:
+        model.End_Century = period.End.Century
+        break;
+    }
     let view = new AddPeriodView(model)
+    view.ShowDialog()
+      .then(async (value) => {
+        if (value) {
+          let temp_period = TLPeriod.CreateTLPeriodWithArgs(
+            value.Name,
+            value.IsPeriod,
+            value.BeginType,
+            value.Begin_DayDay,
+            value.Begin_DayMonth,
+            value.Begin_DayYear,
+            value.Begin_MonthMonth,
+            value.Begin_MonthYear,
+            value.Begin_Year,
+            value.Begin_DecadeDecade,
+            value.Begin_DecadeCentury,
+            value.Begin_Century,
+            value.EndType,
+            value.End_DayDay,
+            value.End_DayMonth,
+            value.End_DayYear,
+            value.End_MonthMonth,
+            value.End_MonthYear,
+            value.End_Year,
+            value.End_DecadeDecade,
+            value.End_DecadeCentury,
+            value.End_Century
+          )
+          period = temp_period
+          this.view.RemoveDataRows(t)
+          this.DrawTL(t, this.model.Item(t))
+        }
+      })
+      .catch()
   }
 
   public async OnAddPeriod(idx: number) {

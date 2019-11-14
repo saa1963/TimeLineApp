@@ -546,11 +546,12 @@ export class DateUtils {
    */
   static getMonthFromMonth(month: number) {
     let rtMonth: number
-    let лишние_месяцы = 
+    let absmonth = Math.abs(month)
+    let лишние_месяцы = Math.floor((absmonth - 1) / 12) * 12
     if (month > 0) {
-      rtMonth = month - Math.floor((month - 1) / 12) * 12
+      rtMonth = absmonth - лишние_месяцы
     } else {
-      rtMonth = (Math.floor((-month - 1) / 12) + 1) * 12 - month
+      rtMonth = 13 - (absmonth - лишние_месяцы)
     }
     return rtMonth
   }
