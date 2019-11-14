@@ -540,6 +540,20 @@ export class DateUtils {
     }
     return year
   }
+  /**
+   * Месяц 1-12 из абсолютного месяца
+   * @param month - ... +
+   */
+  static getMonthFromMonth(month: number) {
+    let rtMonth: number
+    let лишние_месяцы = 
+    if (month > 0) {
+      rtMonth = month - Math.floor((month - 1) / 12) * 12
+    } else {
+      rtMonth = (Math.floor((-month - 1) / 12) + 1) * 12 - month
+    }
+    return rtMonth
+  }
   static getYearFromDate(dt: Date): number {
     return dt.getFullYear()
   }

@@ -129,4 +129,15 @@ describe('DateUtils', () => {
     });
   })
 
+  describe('getMonthFromMonth', () => {
+    it('13 -> 2', () => {
+      const result = DateUtils.getYearFromMonth(13)
+      expect(result).to.equal(2);
+    });
+    it('-13 -> -2', () => {
+      const result = DateUtils.getYearFromMonth(-13)
+      expect(result).to.equal(-2);
+    });
+  })
+
 });
