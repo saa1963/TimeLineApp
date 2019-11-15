@@ -75,19 +75,11 @@ export class AddPeriodView implements IAddPeriodView {
     }
     this.tbIsPeriod.onchange = () => {
       this.Presenter.OnChangeIsPeriodInView()
-      if (this.tbIsPeriod.checked) {
-        this.tbCard2.removeAttribute('hidden')
-      } else {
-        this.tbCard2.setAttribute('hidden', '')
-      }
+      this.IsPeriodTune()
     }
     this.tbBegin_Type.onchange = () => {
       this.Presenter.OnChangeBegin_TypeInView()
-      this.tbCard1.querySelectorAll('*[id|="addperiod-begin-row"]').forEach((el) => {
-        el.setAttribute('hidden', '')
-      });
-      document.getElementById('addperiod-begin-row-' + (this.tbBegin_Type.selectedIndex + 1))
-        .removeAttribute('hidden')
+      this.BeginTypeTune()
     }
     this.tbBegin_DayDay.onchange = () => {
       this.Presenter.OnChangeBegin_DayDayInView()
@@ -118,11 +110,7 @@ export class AddPeriodView implements IAddPeriodView {
     }
     this.tbEnd_Type.onchange = () => {
       this.Presenter.OnChangeEnd_TypeInView()
-      this.tbCard2.querySelectorAll('*[id|="addperiod-end-row"]').forEach((el) => {
-        el.setAttribute('hidden', '')
-      });
-      document.getElementById('addperiod-end-row-' + (this.tbEnd_Type.selectedIndex + 1))
-        .removeAttribute('hidden')
+      this.EndTypeTune()
     }
     this.tbEnd_DayDay.onchange = () => {
       this.Presenter.OnChangeEnd_DayDayInView()
@@ -239,9 +227,11 @@ export class AddPeriodView implements IAddPeriodView {
   }
   SetIsPeriod(value: boolean): void {
     this.tbIsPeriod.checked = value
+    this.IsPeriodTune()
   }
   SetBeginType(value: EnumPeriod): void {
     this.tbBegin_Type.selectedIndex = value - 1
+    this.BeginTypeTune()
   }
   SetBegin_DayDay(value: number): void {
     this.tbBegin_DayDay.valueAsNumber = value
@@ -272,6 +262,7 @@ export class AddPeriodView implements IAddPeriodView {
   }
   SetEndType(value: EnumPeriod): void {
     this.tbEnd_Type.selectedIndex = value - 1
+    this.EndTypeTune()
   }
   SetEnd_DayDay(value: number): void {
     this.tbEnd_DayDay.valueAsNumber = value
@@ -370,5 +361,26 @@ export class AddPeriodView implements IAddPeriodView {
   }
   GetEnd_Century(): number {
     return this.tbEnd_Century.valueAsNumber
+  }
+  private IsPeriodTune() {
+    if (this.tbIsPeriod.checked) {
+      this.tbCard2.removeAttribute('hidden')
+    } else {
+      this.tbCard2.setAttribute('hidden', '')
+    }
+  }
+  private BeginTypeTune() {
+    this.tbCard1.querySelectorAll('*[id|="addperiod-begin-row"]').forEach((el) => {
+      el.setAttribute('hidden', '')
+    });
+    document.getElementById('addperiod-begin-row-' + (this.tbBegin_Type.selectedIndex + 1))
+      .removeAttribute('hidden')
+  }
+  private EndTypeTune() {
+    this.tbCard2.querySelectorAll('*[id|="addperiod-end-row"]').forEach((el) => {
+      el.setAttribute('hidden', '')
+    });
+    document.getElementById('addperiod-end-row-' + (this.tbEnd_Type.selectedIndex + 1))
+      .removeAttribute('hidden')
   }
 }

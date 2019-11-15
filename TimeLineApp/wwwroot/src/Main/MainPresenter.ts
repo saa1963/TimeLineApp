@@ -151,7 +151,7 @@ export class MainPresenter {
 
   private async EditPeriod(idx: number, period: TLPeriod) {
     let model = new AddPeriodModel()
-    let today = new Date()
+    let view = new AddPeriodView(model)
     model.Name = period.Name
     model.IsPeriod = (period.m_BeginDay != period.m_EndDay)
     model.BeginType = period.Begin.Type
@@ -192,7 +192,6 @@ export class MainPresenter {
         model.End_Century = period.End.Century
         break;
     }
-    let view = new AddPeriodView(model)
     view.ShowDialog()
       .then(async (value) => {
         if (value) {
@@ -221,8 +220,8 @@ export class MainPresenter {
             value.End_Century
           )
           period = temp_period
-          this.view.RemoveDataRows(t)
-          this.DrawTL(t, this.model.Item(t))
+          this.view.RemoveDataRows(idx)
+          this.DrawTL(idx, this.model.Item(idx))
         }
       })
       .catch()

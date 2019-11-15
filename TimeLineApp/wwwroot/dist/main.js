@@ -18931,20 +18931,11 @@ class AddPeriodView {
         };
         this.tbIsPeriod.onchange = () => {
             this.Presenter.OnChangeIsPeriodInView();
-            if (this.tbIsPeriod.checked) {
-                this.tbCard2.removeAttribute('hidden');
-            }
-            else {
-                this.tbCard2.setAttribute('hidden', '');
-            }
+            this.IsPeriodTune();
         };
         this.tbBegin_Type.onchange = () => {
             this.Presenter.OnChangeBegin_TypeInView();
-            this.tbCard1.querySelectorAll('*[id|="addperiod-begin-row"]').forEach((el) => {
-                el.setAttribute('hidden', '');
-            });
-            document.getElementById('addperiod-begin-row-' + (this.tbBegin_Type.selectedIndex + 1))
-                .removeAttribute('hidden');
+            this.BeginTypeTune();
         };
         this.tbBegin_DayDay.onchange = () => {
             this.Presenter.OnChangeBegin_DayDayInView();
@@ -18975,11 +18966,7 @@ class AddPeriodView {
         };
         this.tbEnd_Type.onchange = () => {
             this.Presenter.OnChangeEnd_TypeInView();
-            this.tbCard2.querySelectorAll('*[id|="addperiod-end-row"]').forEach((el) => {
-                el.setAttribute('hidden', '');
-            });
-            document.getElementById('addperiod-end-row-' + (this.tbEnd_Type.selectedIndex + 1))
-                .removeAttribute('hidden');
+            this.EndTypeTune();
         };
         this.tbEnd_DayDay.onchange = () => {
             this.Presenter.OnChangeEnd_DayDayInView();
@@ -19112,9 +19099,11 @@ class AddPeriodView {
     }
     SetIsPeriod(value) {
         this.tbIsPeriod.checked = value;
+        this.IsPeriodTune();
     }
     SetBeginType(value) {
         this.tbBegin_Type.selectedIndex = value - 1;
+        this.BeginTypeTune();
     }
     SetBegin_DayDay(value) {
         this.tbBegin_DayDay.valueAsNumber = value;
@@ -19145,6 +19134,7 @@ class AddPeriodView {
     }
     SetEndType(value) {
         this.tbEnd_Type.selectedIndex = value - 1;
+        this.EndTypeTune();
     }
     SetEnd_DayDay(value) {
         this.tbEnd_DayDay.valueAsNumber = value;
@@ -19243,6 +19233,28 @@ class AddPeriodView {
     }
     GetEnd_Century() {
         return this.tbEnd_Century.valueAsNumber;
+    }
+    IsPeriodTune() {
+        if (this.tbIsPeriod.checked) {
+            this.tbCard2.removeAttribute('hidden');
+        }
+        else {
+            this.tbCard2.setAttribute('hidden', '');
+        }
+    }
+    BeginTypeTune() {
+        this.tbCard1.querySelectorAll('*[id|="addperiod-begin-row"]').forEach((el) => {
+            el.setAttribute('hidden', '');
+        });
+        document.getElementById('addperiod-begin-row-' + (this.tbBegin_Type.selectedIndex + 1))
+            .removeAttribute('hidden');
+    }
+    EndTypeTune() {
+        this.tbCard2.querySelectorAll('*[id|="addperiod-end-row"]').forEach((el) => {
+            el.setAttribute('hidden', '');
+        });
+        document.getElementById('addperiod-end-row-' + (this.tbEnd_Type.selectedIndex + 1))
+            .removeAttribute('hidden');
     }
 }
 exports.AddPeriodView = AddPeriodView;
@@ -20039,7 +20051,7 @@ class MainPresenter {
         menu.evSelect.subscribe((arg) => __awaiter(this, void 0, void 0, function* () {
             switch (arg) {
                 case 'edit':
-                    yield new BoxView_1.BoxView("Edit" + period.Name).Show();
+                    yield this.EditPeriod(idx, period);
                     break;
                 case 'del':
                     this.model.Item(idx).Remove(idx0);
@@ -20048,6 +20060,62 @@ class MainPresenter {
         }));
         menu.reload();
         menu.display(ev);
+    }
+    EditPeriod(idx, period) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let model = new AddPeriodModel_1.AddPeriodModel();
+            let view = new AddPeriodView_1.AddPeriodView(model);
+            model.Name = period.Name;
+            model.IsPeriod = (period.m_BeginDay != period.m_EndDay);
+            model.BeginType = period.Begin.Type;
+            switch (period.Begin.Type) {
+                case TLEvent_1.EnumPeriod.day:
+                    let ymd = dateutils_1.DateUtils.YMDFromAD(period.Begin.Day);
+                    model.Begin_DayDay = ymd.day;
+                    model.Begin_DayMonth = ymd.month;
+                    model.Begin_DayYear = ymd.year;
+                case TLEvent_1.EnumPeriod.month:
+                    model.Begin_MonthMonth = dateutils_1.DateUtils.getMonthFromMonth(period.Begin.Month);
+                    model.Begin_MonthYear = dateutils_1.DateUtils.getYearFromMonth(period.Begin.Month);
+                case TLEvent_1.EnumPeriod.year:
+                    model.Begin_Year = period.Begin.Year;
+                case TLEvent_1.EnumPeriod.decade:
+                    model.Begin_DecadeDecade = dateutils_1.DateUtils.getDecadeFromDecade(period.Begin.Decade);
+                    model.Begin_DecadeCentury = dateutils_1.DateUtils.getCenturyFromDecade(period.Begin.Decade);
+                case TLEvent_1.EnumPeriod.century:
+                    model.Begin_Century = period.Begin.Century;
+                    break;
+            }
+            model.EndType = period.End.Type;
+            switch (period.End.Type) {
+                case TLEvent_1.EnumPeriod.day:
+                    let ymd = dateutils_1.DateUtils.YMDFromAD(period.End.Day);
+                    model.End_DayDay = ymd.day;
+                    model.End_DayMonth = ymd.month;
+                    model.End_DayYear = ymd.year;
+                case TLEvent_1.EnumPeriod.month:
+                    model.End_MonthMonth = dateutils_1.DateUtils.getMonthFromMonth(period.End.Month);
+                    model.End_MonthYear = dateutils_1.DateUtils.getYearFromMonth(period.End.Month);
+                case TLEvent_1.EnumPeriod.year:
+                    model.End_Year = period.End.Year;
+                case TLEvent_1.EnumPeriod.decade:
+                    model.End_DecadeDecade = dateutils_1.DateUtils.getDecadeFromDecade(period.End.Decade);
+                    model.End_DecadeCentury = dateutils_1.DateUtils.getCenturyFromDecade(period.End.Decade);
+                case TLEvent_1.EnumPeriod.century:
+                    model.End_Century = period.End.Century;
+                    break;
+            }
+            view.ShowDialog()
+                .then((value) => __awaiter(this, void 0, void 0, function* () {
+                if (value) {
+                    let temp_period = TLPeriod_1.TLPeriod.CreateTLPeriodWithArgs(value.Name, value.IsPeriod, value.BeginType, value.Begin_DayDay, value.Begin_DayMonth, value.Begin_DayYear, value.Begin_MonthMonth, value.Begin_MonthYear, value.Begin_Year, value.Begin_DecadeDecade, value.Begin_DecadeCentury, value.Begin_Century, value.EndType, value.End_DayDay, value.End_DayMonth, value.End_DayYear, value.End_MonthMonth, value.End_MonthYear, value.End_Year, value.End_DecadeDecade, value.End_DecadeCentury, value.End_Century);
+                    period = temp_period;
+                    this.view.RemoveDataRows(idx);
+                    this.DrawTL(idx, this.model.Item(idx));
+                }
+            }))
+                .catch();
+        });
     }
     OnAddPeriod(idx) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -22638,6 +22706,60 @@ class DateUtils {
             rt = { year: year - 1, month: Math.abs(num) - Math.abs(year * 12), day: 1 };
         }
         return rt;
+    }
+    static getCenturyFromDecade(decade) {
+        let century;
+        if (decade > 0) {
+            century = Math.floor((decade - 1) / 10) + 1;
+        }
+        else {
+            century = Math.floor(decade / 10);
+        }
+        return century;
+    }
+    /**
+     * Получить десятилетие 1 - 10
+     * @param decade
+     */
+    static getDecadeFromDecade(decade) {
+        let rtDecade;
+        if (decade > 0) {
+            rtDecade = decade - Math.floor((decade - 1) / 10) * 10;
+        }
+        else {
+            rtDecade = (Math.floor(decade / 10) + 1) * 10 - decade;
+        }
+        return rtDecade;
+    }
+    /**
+     * Год из абсолютного месяца
+     * @param month - ... +
+     */
+    static getYearFromMonth(month) {
+        let year;
+        if (month > 0) {
+            year = Math.floor((month - 1) / 12) + 1;
+        }
+        else {
+            year = Math.floor(month / 12);
+        }
+        return year;
+    }
+    /**
+     * Месяц 1-12 из абсолютного месяца
+     * @param month - ... +
+     */
+    static getMonthFromMonth(month) {
+        let rtMonth;
+        let absmonth = Math.abs(month);
+        let лишние_месяцы = Math.floor((absmonth - 1) / 12) * 12;
+        if (month > 0) {
+            rtMonth = absmonth - лишние_месяцы;
+        }
+        else {
+            rtMonth = 13 - (absmonth - лишние_месяцы);
+        }
+        return rtMonth;
     }
     static getYearFromDate(dt) {
         return dt.getFullYear();
