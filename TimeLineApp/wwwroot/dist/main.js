@@ -20051,7 +20051,7 @@ class MainPresenter {
         menu.evSelect.subscribe((arg) => __awaiter(this, void 0, void 0, function* () {
             switch (arg) {
                 case 'edit':
-                    yield this.EditPeriod(idx, period);
+                    yield this.EditPeriod(idx, idx0, period);
                     break;
                 case 'del':
                     this.model.Item(idx).Remove(idx0);
@@ -20061,7 +20061,7 @@ class MainPresenter {
         menu.reload();
         menu.display(ev);
     }
-    EditPeriod(idx, period) {
+    EditPeriod(idx, idx0, period) {
         return __awaiter(this, void 0, void 0, function* () {
             let model = new AddPeriodModel_1.AddPeriodModel();
             let view = new AddPeriodView_1.AddPeriodView(model);
@@ -20109,7 +20109,12 @@ class MainPresenter {
                 .then((value) => __awaiter(this, void 0, void 0, function* () {
                 if (value) {
                     let temp_period = TLPeriod_1.TLPeriod.CreateTLPeriodWithArgs(value.Name, value.IsPeriod, value.BeginType, value.Begin_DayDay, value.Begin_DayMonth, value.Begin_DayYear, value.Begin_MonthMonth, value.Begin_MonthYear, value.Begin_Year, value.Begin_DecadeDecade, value.Begin_DecadeCentury, value.Begin_Century, value.EndType, value.End_DayDay, value.End_DayMonth, value.End_DayYear, value.End_MonthMonth, value.End_MonthYear, value.End_Year, value.End_DecadeDecade, value.End_DecadeCentury, value.End_Century);
-                    period = temp_period;
+                    period.Name = temp_period.Name,
+                        period.Begin = temp_period.Begin;
+                    period.End = temp_period.End;
+                    period.m_BeginDay = temp_period.m_BeginDay;
+                    period.m_EndDay = temp_period.m_EndDay;
+                    period.Id = temp_period.Id;
                     this.view.RemoveDataRows(idx);
                     this.DrawTL(idx, this.model.Item(idx));
                 }

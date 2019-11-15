@@ -138,7 +138,7 @@ export class MainPresenter {
     menu.evSelect.subscribe(async (arg) => {
       switch (arg) {
         case 'edit':
-          await this.EditPeriod(idx, period)
+          await this.EditPeriod(idx, idx0, period)
           break;
         case 'del':
           this.model.Item(idx).Remove(idx0)
@@ -149,7 +149,7 @@ export class MainPresenter {
     menu.display(ev)
   }
 
-  private async EditPeriod(idx: number, period: TLPeriod) {
+  private async EditPeriod(idx: number, idx0: number, period: TLPeriod) {
     let model = new AddPeriodModel()
     let view = new AddPeriodView(model)
     model.Name = period.Name
@@ -219,7 +219,12 @@ export class MainPresenter {
             value.End_DecadeCentury,
             value.End_Century
           )
-          period = temp_period
+          period.Name = temp_period.Name,
+          period.Begin = temp_period.Begin
+          period.End = temp_period.End
+          period.m_BeginDay = temp_period.m_BeginDay
+          period.m_EndDay = temp_period.m_EndDay
+          period.Id = temp_period.Id
           this.view.RemoveDataRows(idx)
           this.DrawTL(idx, this.model.Item(idx))
         }
