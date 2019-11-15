@@ -21393,62 +21393,6 @@ class TLPeriod {
         rt.m_EndDay = rt.GetEndDate();
         return rt;
     }
-    /**
-     * Попадает текущее значение ОВ в период this
-     * @param period
-     * Текущая дробность отображения для ЛВ
-     * @param vl
-     * Текущее значение ОВ, которое в данный момент отрисовывается
-     */
-    Contains(period, vl) {
-        let rt = false;
-        switch (period) {
-            case TLEvent_1.EnumPeriod.day:
-                rt = this.ContainsDay(vl);
-                break;
-            case TLEvent_1.EnumPeriod.month:
-                rt = this.ContainsMonth(vl);
-                break;
-            case TLEvent_1.EnumPeriod.year:
-                rt = this.ContainsYear(vl);
-                break;
-            case TLEvent_1.EnumPeriod.decade:
-                rt = this.ContainsDecade(vl);
-                break;
-            case TLEvent_1.EnumPeriod.century:
-                rt = this.ContainsYear(vl);
-                break;
-            default:
-                break;
-        }
-        return rt;
-    }
-    ContainsCentury(century) {
-        return this.IsIntersectIntervals(dateutils_1.DateUtils.FirstDayOfCentury(century), dateutils_1.DateUtils.LastDayOfCentury(century));
-    }
-    /**
-     * Содержит ли this ОВ vl
-     * @param decade
-     */
-    ContainsDecade(decade) {
-        return this.IsIntersectIntervals(dateutils_1.DateUtils.FirstDayOfDecade(decade), dateutils_1.DateUtils.LastDayOfDecade(decade));
-    }
-    /**
-     * Содержит ли this ОВ vl
-     * @param vl
-     */
-    ContainsYear(year) {
-        let first = dateutils_1.DateUtils.FirstDayOfYear(year);
-        let last = dateutils_1.DateUtils.LastDayOfYear(year);
-        return this.IsIntersectIntervals(first, last);
-    }
-    /**
-     * Содержит ли this (текущий период) ОВ vl
-     * @param vl - месяц от РХ
-     */
-    ContainsMonth(month) {
-        return this.IsIntersectIntervals(dateutils_1.DateUtils.FirstDayOfMonth(month), dateutils_1.DateUtils.LastDayOfMonth(month));
-    }
     getRightBoundForPeriod(period) {
         let l2;
         // [текущий(имеющаяся точность), внешний(точность сравнения)]
@@ -21579,14 +21523,6 @@ class TLPeriod {
         let rt = TLPeriod.isIntersectIntervals(l1, r1, l2, r2);
         return rt;
     }
-    /**
-     * Есть ли пересечение 2-х целочисленных интервалов
-     * @param l1 левая граница интервал 1
-     * @param r1 правая граница интервал 1
-     */
-    IsIntersectIntervals(l1, r1) {
-        return TLPeriod.isIntersectIntervals(l1, r1, this.m_BeginDay, this.m_EndDay);
-    }
     static isIntersectIntervals(l1, r1, l2, r2) {
         let l = Math.min(l1, l2);
         let r = Math.max(r1, r2);
@@ -21640,14 +21576,6 @@ class TLPeriod {
                 break;
         }
         return dt;
-    }
-    /**
-     *
-     * @param day отображаемый ОВ день от РХ
-     * @param this объект насчет которого принимается решение включать или нет
-     */
-    ContainsDay(day) {
-        return day >= this.m_BeginDay && day <= this.m_EndDay;
     }
 }
 TLPeriod.id = 0;
