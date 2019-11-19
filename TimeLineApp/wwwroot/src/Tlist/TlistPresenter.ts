@@ -1,8 +1,8 @@
 ﻿import { TlistModel } from "./TlistModel";
 import { ITlistView } from "../ITlistView";
-import { TimeLineModel } from "../TimeLineModel";
 import { Globals } from "../Globals";
 import * as $ from 'jquery'
+import { TLPeriod } from "../TLPeriod";
 
 export class TlistPresenter {
   private model: TlistModel
@@ -26,7 +26,7 @@ export class TlistPresenter {
     this.m_Value = this.view.GetSelectedValue()
   }
 
-  public async DoSelect(): Promise<TimeLineModel> {
+  public async DoSelect(): Promise<TLPeriod> {
     if ((this.m_Value || '').trim() === '') {
       this.view.SetError('Не выбрано значение')
       return null
@@ -39,7 +39,8 @@ export class TlistPresenter {
           }
         })
       let tline = JSON.parse(tl)
-      return TimeLineModel.CreateTimeLineModel(tl.Name, tline)
+      //return TimeLineModel.CreateTimeLineModel(tl.Name, tline)
+      return TLPeriod.CreateTLPeriod(tline)
     } catch (err) {
       this.view.SetError(Globals.ResponseErrorText(err))
       return null

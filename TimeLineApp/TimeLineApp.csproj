@@ -40,7 +40,6 @@
     <Content Remove="wwwroot\src\RegisterPresenter.ts" />
     <Content Remove="wwwroot\src\RegisterView.ts" />
     <Content Remove="wwwroot\src\stringutils.ts" />
-    <Content Remove="wwwroot\src\TimeLinePresenter.ts" />
     <Content Remove="wwwroot\src\TLEvent.ts" />
     <Content Remove="wwwroot\src\TlistModel.ts" />
     <Content Remove="wwwroot\src\TlistPresenter.ts" />
@@ -123,7 +122,6 @@
     <TypeScriptCompile Include="wwwroot\src\Register\RegisterModel.ts" />
     <TypeScriptCompile Include="wwwroot\src\Register\RegisterPresenter.ts" />
     <TypeScriptCompile Include="wwwroot\src\Register\RegisterView.ts" />
-    <TypeScriptCompile Include="wwwroot\src\TimeLinePresenter.ts" />
     <TypeScriptCompile Include="wwwroot\src\Tlist\TlistModel.ts" />
     <TypeScriptCompile Include="wwwroot\src\Tlist\TlistPresenter.ts" />
     <TypeScriptCompile Include="wwwroot\src\Tlist\TlistView.ts" />

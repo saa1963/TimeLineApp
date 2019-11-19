@@ -1,10 +1,9 @@
-﻿import { TimeLineModel } from "../TimeLineModel";
-import { SimpleEventDispatcher, ISimpleEvent } from "ste-simple-events";
+﻿import { SimpleEventDispatcher, ISimpleEvent } from "ste-simple-events";
 import { TLPeriod } from "../TLPeriod";
 
 export class MainModel {
   private static instance: MainModel;
-  private models: TimeLineModel[] = []
+  private models: TLPeriod[] = []
   
   private constructor() {
   }
@@ -17,7 +16,7 @@ export class MainModel {
     return MainModel.instance;
   }
 
-  public Add(model: TimeLineModel): number {
+  public Add(model: TLPeriod): number {
     let idx: number = this.models.length
     let rt = this.models.push(model)
     model.evAddPeriod.subscribe((period) => {
@@ -41,13 +40,13 @@ export class MainModel {
     return this.models.length
   }
 
-  public Item(i: number): TimeLineModel {
+  public Item(i: number): TLPeriod {
     if (!this.validIndex(i)) throw "Неверный индекс"
     return this.models[i]
   }
 
-  private e_AddTimeLine = new SimpleEventDispatcher<TimeLineModel>();
-  public get evAddTimeLine(): ISimpleEvent<TimeLineModel> {
+  private e_AddTimeLine = new SimpleEventDispatcher<TLPeriod>();
+  public get evAddTimeLine(): ISimpleEvent<TLPeriod> {
     return this.e_AddTimeLine.asEvent();
   }
 

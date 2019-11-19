@@ -1,6 +1,6 @@
 ﻿import * as $ from 'jquery'
 import { Globals } from './Globals';
-import { TimeLineModel } from './TimeLineModel';
+import { TLPeriod } from './TLPeriod';
 
 export class ApiClient {
   private static instance: ApiClient;
@@ -30,7 +30,7 @@ export class ApiClient {
     }
   }
 
-  public async SaveTL(model: TimeLineModel): Promise<string> {
+  public async SaveTL(model: TLPeriod): Promise<string> {
       return await $.ajax(
         'api/storage/save', {
           type: 'POST',

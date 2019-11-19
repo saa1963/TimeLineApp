@@ -1,21 +1,24 @@
 ﻿import { DateUtils, YearMonthDay } from './dateutils';
 import { TLEvent, EnumPeriod, TLEventDay, TLEventMonth, TLEventYear, TLEventDecade, TLEventCentury } from './TLEvent';
+import { SimpleEventDispatcher, ISimpleEvent } from 'ste-simple-events';
 
 export class TLPeriod {
     private static id = 0
 
     Id: number
-    Name: string;
+    Name: string = "Новый"
     Begin: TLEvent;
     End: TLEvent;
     m_BeginDay: number;
-  m_EndDay: number;
+    m_EndDay: number;
+    Periods: TLPeriod[] = []
 
   public toJSON() {
     return Object.assign({}, {
       Name: this.Name,
       Begin: this.Begin,
-      End: this.End
+      End: this.End,
+      Periods: this.Periods
     })
   }
 
@@ -199,63 +202,12 @@ export class TLPeriod {
     }
     rt.m_BeginDay = rt.GetBeginDate();
     rt.m_EndDay = rt.GetEndDate();
-    return rt
-  }
-    /**
-     * Попадает текущее значение ОВ в период this
-     * @param period
-     * Текущая дробность отображения для ЛВ
-     * @param vl
-     * Текущее значение ОВ, которое в данный момент отрисовывается
-     */
-    Contains(period: EnumPeriod, vl: number): boolean {
-        let rt = false;
-        switch (period) {
-            case EnumPeriod.day:
-                rt = this.ContainsDay(vl);
-                break;
-            case EnumPeriod.month:
-                rt = this.ContainsMonth(vl);
-                break;
-            case EnumPeriod.year:
-                rt = this.ContainsYear(vl);
-                break;
-            case EnumPeriod.decade:
-                rt = this.ContainsDecade(vl)
-                break;
-            case EnumPeriod.century:
-                rt = this.ContainsYear(vl)
-                break;
-            default:
-                break;
-        }
-        return rt;
-  }
-  protected ContainsCentury(century: number): boolean {
-    return this.IsIntersectIntervals(DateUtils.FirstDayOfCentury(century), DateUtils.LastDayOfCentury(century));
-  }
-  /**
-   * Содержит ли this ОВ vl
-   * @param decade
-   */
-  protected ContainsDecade(decade: number): boolean {
-    return this.IsIntersectIntervals(DateUtils.FirstDayOfDecade(decade), DateUtils.LastDayOfDecade(decade));
-  }
-    /**
-     * Содержит ли this ОВ vl
-     * @param vl
-     */
-  protected ContainsYear(year: number): boolean {
-    let first: number = DateUtils.FirstDayOfYear(year)
-    let last: number = DateUtils.LastDayOfYear(year)
-        return this.IsIntersectIntervals(first, last)
+    if (o.Periods && o.Periods.length > 0) {
+      o.Periods.forEach(o1 => {
+        rt.Periods.push(TLPeriod.CreateTLPeriod(o1));
+      });
     }
-    /**
-     * Содержит ли this (текущий период) ОВ vl
-     * @param vl - месяц от РХ
-     */
-    protected ContainsMonth(month: number): boolean {
-        return this.IsIntersectIntervals(DateUtils.FirstDayOfMonth(month), DateUtils.LastDayOfMonth(month));
+    return rt
   }
 
   private getRightBoundForPeriod(period: EnumPeriod): number {
@@ -456,15 +408,50 @@ export class TLPeriod {
                 break;
         }
         return dt;
-    }
-    /**
-     *
-     * @param day отображаемый ОВ день от РХ
-     * @param this объект насчет которого принимается решение включать или нет
-     */
-    private ContainsDay(day: number): boolean {
-        return day >= this.m_BeginDay && day <= this.m_EndDay;
-    }
+  }
+
+  public Add(model: TLPeriod): number {
+    let rt = this.Periods.push(model)
+    this.e_AddPeriod.dispatch(model)
+    return rt
+  }
+
+  public Remove(i: number): boolean {
+    if (!this.validIndex(i)) throw "Неверный индекс"
+    this.Periods.splice(i, 1)
+    this.e_RemovePeriod.dispatch(i)
+    return true
+  }
+
+  public get Count(): number {
+    return this.Periods.length
+  }
+
+  public get Items(): TLPeriod[] {
+    return this.Periods
+  }
+
+  public Item(i: number): TLPeriod {
+    if (!this.validIndex(i)) throw "Неверный индекс"
+    return this.Periods[i]
+  }
+
+  private validIndex(i: number): boolean {
+    if (!this.Periods) return false
+    if (this.Periods.length === 0) return false
+    if (i < 0 || i >= this.Periods.length) return false
+    return true
+  }
+
+  private e_AddPeriod = new SimpleEventDispatcher<TLPeriod>();
+  public get evAddPeriod(): ISimpleEvent<TLPeriod> {
+    return this.e_AddPeriod.asEvent();
+  }
+
+  private e_RemovePeriod = new SimpleEventDispatcher<number>();
+  public get evRemovePeriod(): ISimpleEvent<number> {
+    return this.e_RemovePeriod.asEvent();
+  }
 }
 
 

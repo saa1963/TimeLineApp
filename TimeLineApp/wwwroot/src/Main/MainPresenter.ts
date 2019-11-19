@@ -11,7 +11,6 @@ import { MainView } from "./MainView";
 import { MyContextMenu } from "../MyContextMenu";
 import { RegisterModel } from "../Register/RegisterModel";
 import { RegisterView } from "../Register//RegisterView";
-import { TimeLineModel } from "../TimeLineModel";
 import { EnumPeriod } from "../TLEvent";
 import { TlistView } from "../Tlist/TlistView";
 import { TLPeriod } from "../TLPeriod";
@@ -52,13 +51,61 @@ export class MainPresenter {
   // ****************** ! Свойства ********************************
 
   public OpenNewTLDialog() {
-    let view = new EditStringView('')
-    view.Show()
+    let model = new AddPeriodModel()
+    let today = new Date()
+    model.Name = ""
+    model.IsPeriod = false
+    model.BeginType = EnumPeriod.day
+    model.Begin_DayDay = today.getDate()
+    model.Begin_DayMonth = today.getMonth() + 1
+    model.Begin_DayYear = today.getFullYear()
+    model.Begin_MonthMonth = today.getMonth() + 1
+    model.Begin_MonthYear = today.getFullYear()
+    model.Begin_Year = today.getFullYear()
+    model.Begin_DecadeDecade = DateUtils.getDecadeRelativeFromDate(today) + 1
+    model.Begin_DecadeCentury = 21
+    model.Begin_Century = 21
+    model.EndType = EnumPeriod.day
+    model.End_DayDay = today.getDate()
+    model.End_DayMonth = today.getMonth() + 1
+    model.End_DayYear = today.getFullYear()
+    model.End_MonthMonth = today.getMonth() + 1
+    model.End_MonthYear = today.getFullYear()
+    model.End_Year = today.getFullYear()
+    model.End_DecadeDecade = DateUtils.getDecadeRelativeFromDate(today) + 1
+    model.End_DecadeCentury = 21
+    model.End_Century = 21
+    let view = new AddPeriodView(model)
+    view.ShowDialog()
       .then(async (value) => {
         if (value) {
-          this.model.Add(TimeLineModel.CreateTimeLineModel(value))
+          this.model.Add(TLPeriod.CreateTLPeriodWithArgs(
+            value.Name,
+            value.IsPeriod,
+            value.BeginType,
+            value.Begin_DayDay,
+            value.Begin_DayMonth,
+            value.Begin_DayYear,
+            value.Begin_MonthMonth,
+            value.Begin_MonthYear,
+            value.Begin_Year,
+            value.Begin_DecadeDecade,
+            value.Begin_DecadeCentury,
+            value.Begin_Century,
+            value.EndType,
+            value.End_DayDay,
+            value.End_DayMonth,
+            value.End_DayYear,
+            value.End_MonthMonth,
+            value.End_MonthYear,
+            value.End_Year,
+            value.End_DecadeDecade,
+            value.End_DecadeCentury,
+            value.End_Century
+          ))
         }
       })
+      .catch()
   }
 
   public async OpenLoadTLDialog() {
@@ -303,7 +350,7 @@ export class MainPresenter {
     return this.model.Count
   }
 
-  public Item(i: number): TimeLineModel {
+  public Item(i: number): TLPeriod {
     return this.model.Item(i)
   }
 
@@ -508,7 +555,7 @@ export class MainPresenter {
     return dates
   }
 
-  private DrawTL(tl_index: number, model: TimeLineModel) {
+  private DrawTL(tl_index: number, model: TLPeriod) {
     // выбрать периоды попадающие в общий диапазон
     let items = model.Items.filter((value, index, array) => {
       return value.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period)

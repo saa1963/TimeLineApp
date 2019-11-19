@@ -1,6 +1,5 @@
 ﻿import * as $ from 'jquery'
-import { Globals } from './Globals';
-import { TimeLineModel } from './TimeLineModel';
+import { TLPeriod } from './TLPeriod';
 
 export class UploadFileView {
   private btnUploadFile: HTMLButtonElement
@@ -24,14 +23,14 @@ export class UploadFileView {
     }
   }
 
-  public async ShowDialog(): Promise<TimeLineModel> {
-    return new Promise<TimeLineModel>((resolve, reject) => {
+  public async ShowDialog(): Promise<TLPeriod> {
+    return new Promise<TLPeriod>((resolve, reject) => {
       this.tbModal.modal()
       this.btnUploadFile.onclick = async () => {
         if (this.value) {
           this.tbModal.modal('hide')
           try {
-            const tl = TimeLineModel.CreateTimeLineModel("123", JSON.parse(this.value))
+            const tl = TLPeriod.CreateTLPeriod(JSON.parse(this.value))
             resolve(tl)
           }
           catch (err) {

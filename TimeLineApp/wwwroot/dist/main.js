@@ -19485,65 +19485,6 @@ var NS_EventPeriod;
 
 /***/ }),
 
-/***/ "./src/EditStringView.ts":
-/*!*******************************!*\
-  !*** ./src/EditStringView.ts ***!
-  \*******************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
-const Globals_1 = __webpack_require__(/*! ./Globals */ "./src/Globals.ts");
-class EditStringView {
-    constructor(s) {
-        this.s = '';
-        this.btnNewName = document.getElementById('btnNewName');
-        this.btnCancelNewName = document.getElementById('btnCancelNewName');
-        this.tbName = document.getElementById('tmName');
-        this.tbModal = $('#tmNameModal');
-        this.s = s;
-        this.tbName.value = s;
-        this.tbName.onchange = () => {
-            this.s = this.tbName.value;
-        };
-    }
-    Show() {
-        return __awaiter(this, void 0, void 0, function* () {
-            return new Promise((resolve, reject) => {
-                this.tbModal.modal();
-                this.btnNewName.onclick = () => __awaiter(this, void 0, void 0, function* () {
-                    if (Globals_1.Globals.ValidateElements(this.tbModal[0])) {
-                        this.tbModal.modal('hide');
-                        resolve(this.s);
-                    }
-                    else {
-                        return;
-                    }
-                });
-                this.btnCancelNewName.onclick = () => __awaiter(this, void 0, void 0, function* () {
-                    this.tbModal.modal('hide');
-                    resolve(null);
-                });
-            });
-        });
-    }
-}
-exports.EditStringView = EditStringView;
-
-
-/***/ }),
-
 /***/ "./src/Globals.ts":
 /*!************************!*\
   !*** ./src/Globals.ts ***!
@@ -19873,14 +19814,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ApiClient_1 = __webpack_require__(/*! ../ApiClient */ "./src/ApiClient.ts");
 const BoxView_1 = __webpack_require__(/*! ../BoxView */ "./src/BoxView.ts");
 const dateutils_1 = __webpack_require__(/*! ../dateutils */ "./src/dateutils.ts");
-const EditStringView_1 = __webpack_require__(/*! ../EditStringView */ "./src/EditStringView.ts");
 const Globals_1 = __webpack_require__(/*! ../Globals */ "./src/Globals.ts");
 const LoginModel_1 = __webpack_require__(/*! ../Login/LoginModel */ "./src/Login/LoginModel.ts");
 const LoginView_1 = __webpack_require__(/*! ../Login/LoginView */ "./src/Login/LoginView.ts");
 const MyContextMenu_1 = __webpack_require__(/*! ../MyContextMenu */ "./src/MyContextMenu.ts");
 const RegisterModel_1 = __webpack_require__(/*! ../Register/RegisterModel */ "./src/Register/RegisterModel.ts");
 const RegisterView_1 = __webpack_require__(/*! ../Register//RegisterView */ "./src/Register/RegisterView.ts");
-const TimeLineModel_1 = __webpack_require__(/*! ../TimeLineModel */ "./src/TimeLineModel.ts");
 const TLEvent_1 = __webpack_require__(/*! ../TLEvent */ "./src/TLEvent.ts");
 const TlistView_1 = __webpack_require__(/*! ../Tlist/TlistView */ "./src/Tlist/TlistView.ts");
 const TLPeriod_1 = __webpack_require__(/*! ../TLPeriod */ "./src/TLPeriod.ts");
@@ -19959,13 +19898,38 @@ class MainPresenter {
     }
     // ****************** ! Свойства ********************************
     OpenNewTLDialog() {
-        let view = new EditStringView_1.EditStringView('');
-        view.Show()
+        let model = new AddPeriodModel_1.AddPeriodModel();
+        let today = new Date();
+        model.Name = "";
+        model.IsPeriod = false;
+        model.BeginType = TLEvent_1.EnumPeriod.day;
+        model.Begin_DayDay = today.getDate();
+        model.Begin_DayMonth = today.getMonth() + 1;
+        model.Begin_DayYear = today.getFullYear();
+        model.Begin_MonthMonth = today.getMonth() + 1;
+        model.Begin_MonthYear = today.getFullYear();
+        model.Begin_Year = today.getFullYear();
+        model.Begin_DecadeDecade = dateutils_1.DateUtils.getDecadeRelativeFromDate(today) + 1;
+        model.Begin_DecadeCentury = 21;
+        model.Begin_Century = 21;
+        model.EndType = TLEvent_1.EnumPeriod.day;
+        model.End_DayDay = today.getDate();
+        model.End_DayMonth = today.getMonth() + 1;
+        model.End_DayYear = today.getFullYear();
+        model.End_MonthMonth = today.getMonth() + 1;
+        model.End_MonthYear = today.getFullYear();
+        model.End_Year = today.getFullYear();
+        model.End_DecadeDecade = dateutils_1.DateUtils.getDecadeRelativeFromDate(today) + 1;
+        model.End_DecadeCentury = 21;
+        model.End_Century = 21;
+        let view = new AddPeriodView_1.AddPeriodView(model);
+        view.ShowDialog()
             .then((value) => __awaiter(this, void 0, void 0, function* () {
             if (value) {
-                this.model.Add(TimeLineModel_1.TimeLineModel.CreateTimeLineModel(value));
+                this.model.Add(TLPeriod_1.TLPeriod.CreateTLPeriodWithArgs(value.Name, value.IsPeriod, value.BeginType, value.Begin_DayDay, value.Begin_DayMonth, value.Begin_DayYear, value.Begin_MonthMonth, value.Begin_MonthYear, value.Begin_Year, value.Begin_DecadeDecade, value.Begin_DecadeCentury, value.Begin_Century, value.EndType, value.End_DayDay, value.End_DayMonth, value.End_DayYear, value.End_MonthMonth, value.End_MonthYear, value.End_Year, value.End_DecadeDecade, value.End_DecadeCentury, value.End_Century));
             }
-        }));
+        }))
+            .catch();
     }
     OpenLoadTLDialog() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -21291,12 +21255,20 @@ exports.TLEventCentury = TLEventCentury;
 Object.defineProperty(exports, "__esModule", { value: true });
 const dateutils_1 = __webpack_require__(/*! ./dateutils */ "./src/dateutils.ts");
 const TLEvent_1 = __webpack_require__(/*! ./TLEvent */ "./src/TLEvent.ts");
+const ste_simple_events_1 = __webpack_require__(/*! ste-simple-events */ "../node_modules/ste-simple-events/dist/index.js");
 class TLPeriod {
+    constructor() {
+        this.Name = "Новый";
+        this.Periods = [];
+        this.e_AddPeriod = new ste_simple_events_1.SimpleEventDispatcher();
+        this.e_RemovePeriod = new ste_simple_events_1.SimpleEventDispatcher();
+    }
     toJSON() {
         return Object.assign({}, {
             Name: this.Name,
             Begin: this.Begin,
-            End: this.End
+            End: this.End,
+            Periods: this.Periods
         });
     }
     /**
@@ -21391,63 +21363,12 @@ class TLPeriod {
         }
         rt.m_BeginDay = rt.GetBeginDate();
         rt.m_EndDay = rt.GetEndDate();
-        return rt;
-    }
-    /**
-     * Попадает текущее значение ОВ в период this
-     * @param period
-     * Текущая дробность отображения для ЛВ
-     * @param vl
-     * Текущее значение ОВ, которое в данный момент отрисовывается
-     */
-    Contains(period, vl) {
-        let rt = false;
-        switch (period) {
-            case TLEvent_1.EnumPeriod.day:
-                rt = this.ContainsDay(vl);
-                break;
-            case TLEvent_1.EnumPeriod.month:
-                rt = this.ContainsMonth(vl);
-                break;
-            case TLEvent_1.EnumPeriod.year:
-                rt = this.ContainsYear(vl);
-                break;
-            case TLEvent_1.EnumPeriod.decade:
-                rt = this.ContainsDecade(vl);
-                break;
-            case TLEvent_1.EnumPeriod.century:
-                rt = this.ContainsYear(vl);
-                break;
-            default:
-                break;
+        if (o.Periods && o.Periods.length > 0) {
+            o.Periods.forEach(o1 => {
+                rt.Periods.push(TLPeriod.CreateTLPeriod(o1));
+            });
         }
         return rt;
-    }
-    ContainsCentury(century) {
-        return this.IsIntersectIntervals(dateutils_1.DateUtils.FirstDayOfCentury(century), dateutils_1.DateUtils.LastDayOfCentury(century));
-    }
-    /**
-     * Содержит ли this ОВ vl
-     * @param decade
-     */
-    ContainsDecade(decade) {
-        return this.IsIntersectIntervals(dateutils_1.DateUtils.FirstDayOfDecade(decade), dateutils_1.DateUtils.LastDayOfDecade(decade));
-    }
-    /**
-     * Содержит ли this ОВ vl
-     * @param vl
-     */
-    ContainsYear(year) {
-        let first = dateutils_1.DateUtils.FirstDayOfYear(year);
-        let last = dateutils_1.DateUtils.LastDayOfYear(year);
-        return this.IsIntersectIntervals(first, last);
-    }
-    /**
-     * Содержит ли this (текущий период) ОВ vl
-     * @param vl - месяц от РХ
-     */
-    ContainsMonth(month) {
-        return this.IsIntersectIntervals(dateutils_1.DateUtils.FirstDayOfMonth(month), dateutils_1.DateUtils.LastDayOfMonth(month));
     }
     getRightBoundForPeriod(period) {
         let l2;
@@ -21641,96 +21562,6 @@ class TLPeriod {
         }
         return dt;
     }
-    /**
-     *
-     * @param day отображаемый ОВ день от РХ
-     * @param this объект насчет которого принимается решение включать или нет
-     */
-    ContainsDay(day) {
-        return day >= this.m_BeginDay && day <= this.m_EndDay;
-    }
-}
-TLPeriod.id = 0;
-exports.TLPeriod = TLPeriod;
-
-
-/***/ }),
-
-/***/ "./src/TLPeriodEvent.ts":
-/*!******************************!*\
-  !*** ./src/TLPeriodEvent.ts ***!
-  \******************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const TLPeriod_1 = __webpack_require__(/*! ./TLPeriod */ "./src/TLPeriod.ts");
-class TLPeriodEvent extends TLPeriod_1.TLPeriod {
-    /**
-     * Создает TLPeriodEvent из объекта десериализованного из JSON
-     * @param o
-     */
-    static CreateTLPeriodEvent(o) {
-        let rt;
-        rt = TLPeriod_1.TLPeriod.CreateTLPeriod(o);
-        return rt;
-    }
-}
-exports.TLPeriodEvent = TLPeriodEvent;
-
-
-/***/ }),
-
-/***/ "./src/TimeLineModel.ts":
-/*!******************************!*\
-  !*** ./src/TimeLineModel.ts ***!
-  \******************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const TLPeriod_1 = __webpack_require__(/*! ./TLPeriod */ "./src/TLPeriod.ts");
-const TLPeriodEvent_1 = __webpack_require__(/*! ./TLPeriodEvent */ "./src/TLPeriodEvent.ts");
-const TLEvent_1 = __webpack_require__(/*! ./TLEvent */ "./src/TLEvent.ts");
-const ste_simple_events_1 = __webpack_require__(/*! ste-simple-events */ "../node_modules/ste-simple-events/dist/index.js");
-class TimeLineModel {
-    constructor() {
-        this.Periods = [];
-        this.Name = 'Новая';
-        this.e_AddPeriod = new ste_simple_events_1.SimpleEventDispatcher();
-        this.e_RemovePeriod = new ste_simple_events_1.SimpleEventDispatcher();
-    }
-    toJSON() {
-        return Object.assign({}, {
-            Name: this.Name,
-            Periods: this.Periods
-        });
-    }
-    /**
-     * Из JSON или новая
-     * @param name
-     * @param data
-     */
-    static CreateTimeLineModel(name, data) {
-        let rt = new TimeLineModel();
-        if (name) {
-            rt.Name = name;
-        }
-        if (data) {
-            rt.Name = data.Name;
-            data.Periods.forEach(o => {
-                if (TLEvent_1.TLEvent.Equal(o.Begin, o.End))
-                    rt.Periods.push(TLPeriodEvent_1.TLPeriodEvent.CreateTLPeriodEvent(o));
-                else
-                    rt.Periods.push(TLPeriod_1.TLPeriod.CreateTLPeriod(o));
-            });
-        }
-        return rt;
-    }
     Add(model) {
         let rt = this.Periods.push(model);
         this.e_AddPeriod.dispatch(model);
@@ -21754,12 +21585,6 @@ class TimeLineModel {
             throw "Неверный индекс";
         return this.Periods[i];
     }
-    get evAddPeriod() {
-        return this.e_AddPeriod.asEvent();
-    }
-    get evRemovePeriod() {
-        return this.e_RemovePeriod.asEvent();
-    }
     validIndex(i) {
         if (!this.Periods)
             return false;
@@ -21769,8 +21594,15 @@ class TimeLineModel {
             return false;
         return true;
     }
+    get evAddPeriod() {
+        return this.e_AddPeriod.asEvent();
+    }
+    get evRemovePeriod() {
+        return this.e_RemovePeriod.asEvent();
+    }
 }
-exports.TimeLineModel = TimeLineModel;
+TLPeriod.id = 0;
+exports.TLPeriod = TLPeriod;
 
 
 /***/ }),
@@ -21793,9 +21625,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const TimeLineModel_1 = __webpack_require__(/*! ../TimeLineModel */ "./src/TimeLineModel.ts");
 const Globals_1 = __webpack_require__(/*! ../Globals */ "./src/Globals.ts");
 const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
+const TLPeriod_1 = __webpack_require__(/*! ../TLPeriod */ "./src/TLPeriod.ts");
 class TlistPresenter {
     constructor(view, model) {
         this.model = model;
@@ -21823,7 +21655,8 @@ class TlistPresenter {
                     }
                 });
                 let tline = JSON.parse(tl);
-                return TimeLineModel_1.TimeLineModel.CreateTimeLineModel(tl.Name, tline);
+                //return TimeLineModel.CreateTimeLineModel(tl.Name, tline)
+                return TLPeriod_1.TLPeriod.CreateTLPeriod(tline);
             }
             catch (err) {
                 this.view.SetError(Globals_1.Globals.ResponseErrorText(err));
@@ -21930,7 +21763,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
-const TimeLineModel_1 = __webpack_require__(/*! ./TimeLineModel */ "./src/TimeLineModel.ts");
+const TLPeriod_1 = __webpack_require__(/*! ./TLPeriod */ "./src/TLPeriod.ts");
 class UploadFileView {
     constructor() {
         this.btnUploadFile = document.getElementById('btnUploadFile');
@@ -21954,7 +21787,7 @@ class UploadFileView {
                     if (this.value) {
                         this.tbModal.modal('hide');
                         try {
-                            const tl = TimeLineModel_1.TimeLineModel.CreateTimeLineModel("123", JSON.parse(this.value));
+                            const tl = TLPeriod_1.TLPeriod.CreateTLPeriod(JSON.parse(this.value));
                             resolve(tl);
                         }
                         catch (err) {

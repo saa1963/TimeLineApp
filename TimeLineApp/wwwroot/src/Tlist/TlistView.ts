@@ -3,7 +3,7 @@ import * as $ from 'jquery'
 import { TlistPresenter } from "./TlistPresenter";
 import { TlistModel } from "./TlistModel";
 import { Globals } from "../Globals";
-import { TimeLineModel } from "../TimeLineModel";
+import { TLPeriod } from "../TLPeriod";
 
 export class TlistView implements ITlistView {
   private Presenter: TlistPresenter
@@ -31,8 +31,8 @@ export class TlistView implements ITlistView {
     }
   }
 
-  public async ShowDialog(): Promise<TimeLineModel> {
-    return new Promise<TimeLineModel>((resolve, reject) => {
+  public async ShowDialog(): Promise<TLPeriod> {
+    return new Promise<TLPeriod>((resolve, reject) => {
       $('#tmLoadModal').modal()
       this.ClearError()
       this.btnOk.onclick = async () => {
