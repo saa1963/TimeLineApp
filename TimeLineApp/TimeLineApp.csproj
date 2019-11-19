@@ -27,7 +27,6 @@
     <Content Remove="wwwroot\src\ILoginView.ts" />
     <Content Remove="wwwroot\src\index0.ts" />
     <Content Remove="wwwroot\src\IRegisterView.ts" />
-    <Content Remove="wwwroot\src\ITimeLineModel.ts" />
     <Content Remove="wwwroot\src\ITlistView.ts" />
     <Content Remove="wwwroot\src\LoginModel.ts" />
     <Content Remove="wwwroot\src\LoginPresenter.ts" />
@@ -41,6 +40,7 @@
     <Content Remove="wwwroot\src\RegisterPresenter.ts" />
     <Content Remove="wwwroot\src\RegisterView.ts" />
     <Content Remove="wwwroot\src\stringutils.ts" />
+    <Content Remove="wwwroot\src\TimeLinePresenter.ts" />
     <Content Remove="wwwroot\src\TLEvent.ts" />
     <Content Remove="wwwroot\src\TlistModel.ts" />
     <Content Remove="wwwroot\src\TlistPresenter.ts" />
@@ -108,7 +108,6 @@
     <TypeScriptCompile Include="wwwroot\src\BoxView.ts" />
     <TypeScriptCompile Include="wwwroot\src\EditStringView.ts" />
     <TypeScriptCompile Include="wwwroot\src\EP\EventPeriod.ts" />
-    <TypeScriptCompile Include="wwwroot\src\ITimeLineModel.ts" />
     <TypeScriptCompile Include="wwwroot\src\Login\ILoginView.ts" />
     <TypeScriptCompile Include="wwwroot\src\index0.ts" />
     <TypeScriptCompile Include="wwwroot\src\PeriodContextMenu.ts" />
@@ -124,6 +123,7 @@
     <TypeScriptCompile Include="wwwroot\src\Register\RegisterModel.ts" />
     <TypeScriptCompile Include="wwwroot\src\Register\RegisterPresenter.ts" />
     <TypeScriptCompile Include="wwwroot\src\Register\RegisterView.ts" />
+    <TypeScriptCompile Include="wwwroot\src\TimeLinePresenter.ts" />
     <TypeScriptCompile Include="wwwroot\src\Tlist\TlistModel.ts" />
     <TypeScriptCompile Include="wwwroot\src\Tlist\TlistPresenter.ts" />
     <TypeScriptCompile Include="wwwroot\src\Tlist\TlistView.ts" />

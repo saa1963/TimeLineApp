@@ -2,9 +2,8 @@
 import { TLPeriodEvent } from './TLPeriodEvent';
 import { TLEvent } from './TLEvent';
 import { SimpleEventDispatcher, ISimpleEvent } from 'ste-simple-events';
-import { ITimeLineModel } from './ITimeLineModel';
-export class TimeLineModel implements ITimeLineModel {
-  public Periods: TLPeriod[] = [];
+export class TimeLineModel {
+  private Periods: TLPeriod[] = [];
   public Name: string = 'Новая'
 
   public toJSON() {

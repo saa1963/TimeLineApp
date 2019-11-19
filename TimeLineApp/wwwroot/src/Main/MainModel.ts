@@ -1,11 +1,10 @@
 ﻿import { TimeLineModel } from "../TimeLineModel";
 import { SimpleEventDispatcher, ISimpleEvent } from "ste-simple-events";
 import { TLPeriod } from "../TLPeriod";
-import { ITimeLineModel } from "../ITimeLineModel";
 
 export class MainModel {
   private static instance: MainModel;
-  private models: ITimeLineModel[] = []
+  private models: TimeLineModel[] = []
   
   private constructor() {
   }
@@ -42,7 +41,7 @@ export class MainModel {
     return this.models.length
   }
 
-  public Item(i: number): ITimeLineModel {
+  public Item(i: number): TimeLineModel {
     if (!this.validIndex(i)) throw "Неверный индекс"
     return this.models[i]
   }
