@@ -2,13 +2,11 @@
 import { BoxView } from "../BoxView";
 import { ContextMenu } from "../contextmenu";
 import { DateUtils, YearMonthDay } from "../dateutils";
-import { EditStringView } from "../EditStringView";
 import { Globals } from "../Globals";
 import { LoginModel } from "../Login/LoginModel";
 import { LoginView } from "../Login/LoginView";
 import { MainModel } from "./MainModel";
 import { MainView } from "./MainView";
-import { MyContextMenu } from "../MyContextMenu";
 import { RegisterModel } from "../Register/RegisterModel";
 import { RegisterView } from "../Register//RegisterView";
 import { EnumPeriod } from "../TLEvent";
@@ -79,7 +77,7 @@ export class MainPresenter {
     view.ShowDialog()
       .then(async (value) => {
         if (value) {
-          this.model.Add(TLPeriod.CreateTLPeriodWithArgs(
+          let period = TLPeriod.CreateTLPeriodWithArgs(
             value.Name,
             value.IsPeriod,
             value.BeginType,
@@ -102,7 +100,9 @@ export class MainPresenter {
             value.End_DecadeDecade,
             value.End_DecadeCentury,
             value.End_Century
-          ))
+          )
+          period.Parent = null
+          this.model.Add(period)
         }
       })
       .catch()
@@ -308,7 +308,8 @@ export class MainPresenter {
     view.ShowDialog()
       .then(async (value) => {
         if (value) {
-          this.model.Item(idx).Add(TLPeriod.CreateTLPeriodWithArgs(
+          let period0 = this.model.Item(idx)
+          let period = TLPeriod.CreateTLPeriodWithArgs(
             value.Name,
             value.IsPeriod,
             value.BeginType,
@@ -331,7 +332,9 @@ export class MainPresenter {
             value.End_DecadeDecade,
             value.End_DecadeCentury,
             value.End_Century
-          ))
+          ) 
+          period.Parent = period0
+          period0.Add(period)
         }
       })
     .catch()
@@ -357,36 +360,8 @@ export class MainPresenter {
   constructor(view: MainView, model: MainModel) {
     this.model = model
     this.view = view
-    this.menuCtx = MyContextMenu.Create()
-    this.menuCtx.evSelect.subscribe((s) => {
-      switch (s) {
-        case 'new':
-          this.OpenNewTLDialog()
-          break;
-        case 'load':
-          this.OpenLoadTLDialog()
-          break;
-        case 'save':
-          this.SaveCurrentTL()
-          break;
-        case 'switch_to_day':
-          this.Period = EnumPeriod.day
-          break;
-        case 'switch_to_month':
-          this.Period = EnumPeriod.month
-          break;
-        case 'switch_to_year':
-          this.Period = EnumPeriod.year
-          break;
-        case 'switch_to_decade':
-          this.Period = EnumPeriod.decade
-          break;
-        case 'switch_to_century':
-          this.Period = EnumPeriod.century
-          break;
-      }
-    })
-    this.m_Period = EnumPeriod.decade
+    //this.m_Period = EnumPeriod.decade
+    this.m_Period = EnumPeriod.day
     this.model.evAddTimeLine.subscribe((tl) => {
       this.view.DrawHeader(this.Count - 1, tl.Name)
       this.DrawTL(this.Count - 1, tl)
@@ -560,6 +535,9 @@ export class MainPresenter {
     let items = model.Items.filter((value, index, array) => {
       return value.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period)
     })
+    if (model.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period)) {
+      items.push(model)
+    }
     // вычисляем индексы
     let exItems: IExTLPeriod[] = []
     for (let p of items) {

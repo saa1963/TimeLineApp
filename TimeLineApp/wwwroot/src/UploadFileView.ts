@@ -31,6 +31,7 @@ export class UploadFileView {
           this.tbModal.modal('hide')
           try {
             const tl = TLPeriod.CreateTLPeriod(JSON.parse(this.value))
+            tl.Parent = null
             resolve(tl)
           }
           catch (err) {

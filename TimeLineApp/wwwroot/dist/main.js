@@ -19817,7 +19817,6 @@ const dateutils_1 = __webpack_require__(/*! ../dateutils */ "./src/dateutils.ts"
 const Globals_1 = __webpack_require__(/*! ../Globals */ "./src/Globals.ts");
 const LoginModel_1 = __webpack_require__(/*! ../Login/LoginModel */ "./src/Login/LoginModel.ts");
 const LoginView_1 = __webpack_require__(/*! ../Login/LoginView */ "./src/Login/LoginView.ts");
-const MyContextMenu_1 = __webpack_require__(/*! ../MyContextMenu */ "./src/MyContextMenu.ts");
 const RegisterModel_1 = __webpack_require__(/*! ../Register/RegisterModel */ "./src/Register/RegisterModel.ts");
 const RegisterView_1 = __webpack_require__(/*! ../Register//RegisterView */ "./src/Register/RegisterView.ts");
 const TLEvent_1 = __webpack_require__(/*! ../TLEvent */ "./src/TLEvent.ts");
@@ -19835,36 +19834,8 @@ class MainPresenter {
         this.m_Period = TLEvent_1.EnumPeriod.day;
         this.model = model;
         this.view = view;
-        this.menuCtx = MyContextMenu_1.MyContextMenu.Create();
-        this.menuCtx.evSelect.subscribe((s) => {
-            switch (s) {
-                case 'new':
-                    this.OpenNewTLDialog();
-                    break;
-                case 'load':
-                    this.OpenLoadTLDialog();
-                    break;
-                case 'save':
-                    this.SaveCurrentTL();
-                    break;
-                case 'switch_to_day':
-                    this.Period = TLEvent_1.EnumPeriod.day;
-                    break;
-                case 'switch_to_month':
-                    this.Period = TLEvent_1.EnumPeriod.month;
-                    break;
-                case 'switch_to_year':
-                    this.Period = TLEvent_1.EnumPeriod.year;
-                    break;
-                case 'switch_to_decade':
-                    this.Period = TLEvent_1.EnumPeriod.decade;
-                    break;
-                case 'switch_to_century':
-                    this.Period = TLEvent_1.EnumPeriod.century;
-                    break;
-            }
-        });
-        this.m_Period = TLEvent_1.EnumPeriod.decade;
+        //this.m_Period = EnumPeriod.decade
+        this.m_Period = TLEvent_1.EnumPeriod.day;
         this.model.evAddTimeLine.subscribe((tl) => {
             this.view.DrawHeader(this.Count - 1, tl.Name);
             this.DrawTL(this.Count - 1, tl);
@@ -19926,7 +19897,9 @@ class MainPresenter {
         view.ShowDialog()
             .then((value) => __awaiter(this, void 0, void 0, function* () {
             if (value) {
-                this.model.Add(TLPeriod_1.TLPeriod.CreateTLPeriodWithArgs(value.Name, value.IsPeriod, value.BeginType, value.Begin_DayDay, value.Begin_DayMonth, value.Begin_DayYear, value.Begin_MonthMonth, value.Begin_MonthYear, value.Begin_Year, value.Begin_DecadeDecade, value.Begin_DecadeCentury, value.Begin_Century, value.EndType, value.End_DayDay, value.End_DayMonth, value.End_DayYear, value.End_MonthMonth, value.End_MonthYear, value.End_Year, value.End_DecadeDecade, value.End_DecadeCentury, value.End_Century));
+                let period = TLPeriod_1.TLPeriod.CreateTLPeriodWithArgs(value.Name, value.IsPeriod, value.BeginType, value.Begin_DayDay, value.Begin_DayMonth, value.Begin_DayYear, value.Begin_MonthMonth, value.Begin_MonthYear, value.Begin_Year, value.Begin_DecadeDecade, value.Begin_DecadeCentury, value.Begin_Century, value.EndType, value.End_DayDay, value.End_DayMonth, value.End_DayYear, value.End_MonthMonth, value.End_MonthYear, value.End_Year, value.End_DecadeDecade, value.End_DecadeCentury, value.End_Century);
+                period.Parent = null;
+                this.model.Add(period);
             }
         }))
             .catch();
@@ -20116,7 +20089,10 @@ class MainPresenter {
             view.ShowDialog()
                 .then((value) => __awaiter(this, void 0, void 0, function* () {
                 if (value) {
-                    this.model.Item(idx).Add(TLPeriod_1.TLPeriod.CreateTLPeriodWithArgs(value.Name, value.IsPeriod, value.BeginType, value.Begin_DayDay, value.Begin_DayMonth, value.Begin_DayYear, value.Begin_MonthMonth, value.Begin_MonthYear, value.Begin_Year, value.Begin_DecadeDecade, value.Begin_DecadeCentury, value.Begin_Century, value.EndType, value.End_DayDay, value.End_DayMonth, value.End_DayYear, value.End_MonthMonth, value.End_MonthYear, value.End_Year, value.End_DecadeDecade, value.End_DecadeCentury, value.End_Century));
+                    let period0 = this.model.Item(idx);
+                    let period = TLPeriod_1.TLPeriod.CreateTLPeriodWithArgs(value.Name, value.IsPeriod, value.BeginType, value.Begin_DayDay, value.Begin_DayMonth, value.Begin_DayYear, value.Begin_MonthMonth, value.Begin_MonthYear, value.Begin_Year, value.Begin_DecadeDecade, value.Begin_DecadeCentury, value.Begin_Century, value.EndType, value.End_DayDay, value.End_DayMonth, value.End_DayYear, value.End_MonthMonth, value.End_MonthYear, value.End_Year, value.End_DecadeDecade, value.End_DecadeCentury, value.End_Century);
+                    period.Parent = period0;
+                    period0.Add(period);
                 }
             }))
                 .catch();
@@ -20280,6 +20256,9 @@ class MainPresenter {
         let items = model.Items.filter((value, index, array) => {
             return value.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period);
         });
+        if (model.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period)) {
+            items.push(model);
+        }
         // вычисляем индексы
         let exItems = [];
         for (let p of items) {
@@ -20608,65 +20587,6 @@ class MainView {
     }
 }
 exports.MainView = MainView;
-
-
-/***/ }),
-
-/***/ "./src/MyContextMenu.ts":
-/*!******************************!*\
-  !*** ./src/MyContextMenu.ts ***!
-  \******************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const contextmenu_1 = __webpack_require__(/*! ./contextmenu */ "./src/contextmenu.ts");
-const TLEvent_1 = __webpack_require__(/*! ./TLEvent */ "./src/TLEvent.ts");
-class MyContextMenu {
-    static Create() {
-        let menuitems = [];
-        menuitems.push(new contextmenu_1.MenuItem('new', 'Новая', '<i class="far fa-file"></i>'));
-        menuitems.push(new contextmenu_1.MenuItem('load', 'Загрузить', '<i class="far fa-folder-open"></i>'));
-        menuitems.push(new contextmenu_1.MenuItem('save', 'Сохранить', '<i class="far fa-save"></i>', false));
-        menuitems.push(new contextmenu_1.MenuItemDivider());
-        let sub = [];
-        sub.push(MyContextMenu.PeriodDay = new contextmenu_1.MenuItem('switch_to_day', 'День', null));
-        sub.push(MyContextMenu.PeriodMonth = new contextmenu_1.MenuItem('switch_to_month', 'Месяц', null));
-        sub.push(MyContextMenu.PeriodYear = new contextmenu_1.MenuItem('switch_to_year', 'Год', null));
-        sub.push(MyContextMenu.PeriodDecade = new contextmenu_1.MenuItem('switch_to_decade', 'Десятилетие', null));
-        sub.push(MyContextMenu.PeriodCentury = new contextmenu_1.MenuItem('switch_to_century', 'Век', null));
-        menuitems.push(new contextmenu_1.MenuItemSub('period', 'Периодичность', sub));
-        return new contextmenu_1.ContextMenu(menuitems);
-    }
-    static ChangeIconMenuPeriod(period) {
-        const fa_angle_down = '<i class="far fa-check-square"></i>';
-        MyContextMenu.PeriodDay.icon = '';
-        MyContextMenu.PeriodMonth.icon = '';
-        MyContextMenu.PeriodYear.icon = '';
-        MyContextMenu.PeriodDecade.icon = '';
-        MyContextMenu.PeriodCentury.icon = '';
-        switch (period) {
-            case TLEvent_1.EnumPeriod.day:
-                MyContextMenu.PeriodDay.icon = fa_angle_down;
-                break;
-            case TLEvent_1.EnumPeriod.month:
-                MyContextMenu.PeriodMonth.icon = fa_angle_down;
-                break;
-            case TLEvent_1.EnumPeriod.year:
-                MyContextMenu.PeriodYear.icon = fa_angle_down;
-                break;
-            case TLEvent_1.EnumPeriod.decade:
-                MyContextMenu.PeriodDecade.icon = fa_angle_down;
-                break;
-            case TLEvent_1.EnumPeriod.century:
-                MyContextMenu.PeriodCentury.icon = fa_angle_down;
-                break;
-        }
-    }
-}
-exports.MyContextMenu = MyContextMenu;
 
 
 /***/ }),
@@ -21365,7 +21285,9 @@ class TLPeriod {
         rt.m_EndDay = rt.GetEndDate();
         if (o.Periods && o.Periods.length > 0) {
             o.Periods.forEach(o1 => {
-                rt.Periods.push(TLPeriod.CreateTLPeriod(o1));
+                let period = TLPeriod.CreateTLPeriod(o1);
+                period.Parent = rt;
+                rt.Periods.push(period);
             });
         }
         return rt;
@@ -21656,7 +21578,9 @@ class TlistPresenter {
                 });
                 let tline = JSON.parse(tl);
                 //return TimeLineModel.CreateTimeLineModel(tl.Name, tline)
-                return TLPeriod_1.TLPeriod.CreateTLPeriod(tline);
+                let period = TLPeriod_1.TLPeriod.CreateTLPeriod(tline);
+                period.Parent = null;
+                return period;
             }
             catch (err) {
                 this.view.SetError(Globals_1.Globals.ResponseErrorText(err));
@@ -21788,6 +21712,7 @@ class UploadFileView {
                         this.tbModal.modal('hide');
                         try {
                             const tl = TLPeriod_1.TLPeriod.CreateTLPeriod(JSON.parse(this.value));
+                            tl.Parent = null;
                             resolve(tl);
                         }
                         catch (err) {

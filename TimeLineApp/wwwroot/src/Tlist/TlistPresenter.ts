@@ -40,7 +40,9 @@ export class TlistPresenter {
         })
       let tline = JSON.parse(tl)
       //return TimeLineModel.CreateTimeLineModel(tl.Name, tline)
-      return TLPeriod.CreateTLPeriod(tline)
+      let period = TLPeriod.CreateTLPeriod(tline)
+      period.Parent = null
+      return period
     } catch (err) {
       this.view.SetError(Globals.ResponseErrorText(err))
       return null

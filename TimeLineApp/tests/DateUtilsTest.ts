@@ -15,6 +15,13 @@ describe('DateUtils', () => {
     });
   });
 
+  describe('YMDFromAD', () => {
+    it('737382 -> 19.11.2019', () => {
+      const result = DateUtils.YMDFromAD(737382)
+      expect(result).to.deep.equal({ year: 2019, month: 11, day: 19 });
+    });
+  });
+
   describe('FirstDayOfMonth - сборный', () => {
     it('111', () => {
       const result = DateUtils.getMonthFromYMD({ year: 1963, month: 6, day: 5 });
