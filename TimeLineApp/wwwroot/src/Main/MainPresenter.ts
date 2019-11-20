@@ -155,6 +155,13 @@ export class MainPresenter {
     }
   }
 
+  public async OnCollapse(idx: number) {
+    let item = this.model.Item(idx)
+    if (item.Parent) {
+
+    }
+  }
+
   // Function to download data to a file
   private download(data: string, filename: string, type: string) {
     let file = new Blob([data], { type: type })
@@ -184,6 +191,10 @@ export class MainPresenter {
     let menu = PeriodContextMenu.Create();
     menu.evSelect.subscribe(async (arg) => {
       switch (arg) {
+        case 'expand':
+          period.Parent = this.model.Item(idx)
+          this.model.Add(period)
+          break;
         case 'edit':
           await this.EditPeriod(idx, idx0, period)
           break;
@@ -333,8 +344,12 @@ export class MainPresenter {
             value.End_DecadeCentury,
             value.End_Century
           ) 
-          period.Parent = period0
-          period0.Add(period)
+          if (period.IsSubsetOf(period0, this.Period)) {
+            period.Parent = period0
+            period0.Add(period)
+          } else {
+            new BoxView("Добавляемый период не попадает в интервал Линии Времени").Show()
+          }
         }
       })
     .catch()
@@ -360,10 +375,9 @@ export class MainPresenter {
   constructor(view: MainView, model: MainModel) {
     this.model = model
     this.view = view
-    //this.m_Period = EnumPeriod.decade
-    this.m_Period = EnumPeriod.day
+    this.m_Period = EnumPeriod.decade
     this.model.evAddTimeLine.subscribe((tl) => {
-      this.view.DrawHeader(this.Count - 1, tl.Name)
+      this.view.DrawHeader(this.Count - 1, this.getHeaderText(this.Count - 1))
       this.DrawTL(this.Count - 1, tl)
     })
     this.model.evAddPeriod.subscribe((t) => {
@@ -501,9 +515,50 @@ export class MainPresenter {
     this.view.ClearContent()
     this.view.DrawDates(this.GetDrawDates())
     for (let i = 0; i < this.Count; i++) {
-      this.view.DrawHeader(i, this.Item(i).Name)
+      this.view.DrawHeader(i, this.getHeaderText(i))
       this.DrawTL(i, this.Item(i))
     }
+  }
+
+  private getHeaderText(tl_index: number): string {
+    let item = this.Item(tl_index)
+    let left: string
+    let right: string
+    switch (item.Begin.Type) {
+      case EnumPeriod.day:
+        left = DateUtils.formatDate(item.Begin.Day)
+        break;
+      case EnumPeriod.month:
+        left = DateUtils.formatMonth(item.Begin.Month)
+        break;
+      case EnumPeriod.year:
+        left = DateUtils.formatYear(item.Begin.Year)
+        break;
+      case EnumPeriod.decade:
+        left = DateUtils.formatDecade(item.Begin.Decade)
+        break;
+      case EnumPeriod.century:
+        left = DateUtils.formatCentury(item.Begin.Century)
+        break;
+    }
+    switch (item.End.Type) {
+      case EnumPeriod.day:
+        right = DateUtils.formatDate(item.End.Day)
+        break;
+      case EnumPeriod.month:
+        right = DateUtils.formatMonth(item.End.Month)
+        break;
+      case EnumPeriod.year:
+        right = DateUtils.formatYear(item.End.Year)
+        break;
+      case EnumPeriod.decade:
+        right = DateUtils.formatDecade(item.End.Decade)
+        break;
+      case EnumPeriod.century:
+        right = DateUtils.formatCentury(item.End.Century)
+        break;
+    }
+    return item.Name + ' ' + left + ' - ' + right
   }
 
   private GetDrawDates(): string[] {
@@ -535,9 +590,9 @@ export class MainPresenter {
     let items = model.Items.filter((value, index, array) => {
       return value.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period)
     })
-    if (model.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period)) {
-      items.push(model)
-    }
+    //if (model.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period)) {
+    //  items.push(model)
+    //}
     // вычисляем индексы
     let exItems: IExTLPeriod[] = []
     for (let p of items) {

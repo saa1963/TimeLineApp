@@ -135,11 +135,19 @@ export class MainView {
     aSaveToFile.onclick = async (ev) => {
       await this.Presenter.OnSaveToFile(idx)
     }
+    let aCollapse = <HTMLAnchorElement>document.createElement('a')
+    aCollapse.classList.add('dropdown-item')
+    aCollapse.textContent = "Свернуть"
+    aCollapse.href = '#'
+    aCollapse.onclick = async (ev) => {
+      await this.Presenter.OnCollapse(idx)
+    }
     let divGroup = <HTMLDivElement>document.createElement('div')
     divGroup.classList.add('dropdown-menu')
     divGroup.append(aPlus)
     divGroup.append(aSave)
     divGroup.append(aSaveToFile)
+    divGroup.append(aCollapse)
 
     let divDropDown = <HTMLDivElement>document.createElement('div')
     divDropDown.classList.add('dropdown')

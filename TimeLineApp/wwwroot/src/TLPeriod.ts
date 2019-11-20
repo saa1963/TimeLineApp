@@ -156,6 +156,9 @@ export class TLPeriod {
     TLPeriod.id++
     rt.Id = TLPeriod.id
     rt.Name = o.Name;
+    if (!o.Begin) {
+      o.Begin = TLEventCentury.CreateTLEventCentury("Начало", 19)
+    }
     let type: EnumPeriod = TLEvent.GetType(o.Begin);
     if (type === EnumPeriod.day) {
       rt.Begin = TLEventDay.CreateTLEventDay(
@@ -178,6 +181,9 @@ export class TLPeriod {
     }
     else if (type === EnumPeriod.century) {
       rt.Begin = TLEventCentury.CreateTLEventCentury(o.Begin.Name, o.Begin.Century);
+    }
+    if (!o.End) {
+      o.End = TLEventCentury.CreateTLEventCentury("Конец", 21)
     }
     type = TLEvent.GetType(o.End);
     if (type === EnumPeriod.day) {
@@ -363,6 +369,34 @@ export class TLPeriod {
     let r = Math.max(r1, r2);
     let s = r - l;
     return s <= (r1 - l1) + (r2 - l2);
+  }
+
+  /**
+   * Является ли интервал внутренним по отношению к другому
+   * @param l1 - внешний интервал левая граница
+   * @param r1 - внешний интервал правая граница
+   * @param l2 - внутренний интервал левая граница
+   * @param r2 - внутренний интервал правая граница
+   */
+  static isInnerInterval(
+    l1: number, r1: number,
+    l2: number, r2: number): boolean {
+    if (l1 > r1 || l2 > r2) throw "Неверно заданы интервалы"
+    return l2 >= l1 && l2 <= r1 && r2 >= l1 && r2 <= r1
+  }
+
+  /**
+   * Является ли период подмножеством другого периода, который передается параметром
+   * @param period
+   * @param periodType
+   */
+  IsSubsetOf(period: TLPeriod, periodType: EnumPeriod) {
+    return TLPeriod.isInnerInterval(
+      period.getLeftBoundForPeriod(periodType),
+      period.getRightBoundForPeriod(periodType),
+      this.getLeftBoundForPeriod(periodType),
+      this.getRightBoundForPeriod(periodType)
+    )
   }
 
   /**

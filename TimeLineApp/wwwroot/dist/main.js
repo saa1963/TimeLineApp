@@ -19834,10 +19834,9 @@ class MainPresenter {
         this.m_Period = TLEvent_1.EnumPeriod.day;
         this.model = model;
         this.view = view;
-        //this.m_Period = EnumPeriod.decade
-        this.m_Period = TLEvent_1.EnumPeriod.day;
+        this.m_Period = TLEvent_1.EnumPeriod.decade;
         this.model.evAddTimeLine.subscribe((tl) => {
-            this.view.DrawHeader(this.Count - 1, tl.Name);
+            this.view.DrawHeader(this.Count - 1, this.getHeaderText(this.Count - 1));
             this.DrawTL(this.Count - 1, tl);
         });
         this.model.evAddPeriod.subscribe((t) => {
@@ -19959,6 +19958,13 @@ class MainPresenter {
             }
         });
     }
+    OnCollapse(idx) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let item = this.model.Item(idx);
+            if (item.Parent) {
+            }
+        });
+    }
     // Function to download data to a file
     download(data, filename, type) {
         let file = new Blob([data], { type: type });
@@ -19987,6 +19993,10 @@ class MainPresenter {
         let menu = PeriodContextMenu_1.PeriodContextMenu.Create();
         menu.evSelect.subscribe((arg) => __awaiter(this, void 0, void 0, function* () {
             switch (arg) {
+                case 'expand':
+                    period.Parent = this.model.Item(idx);
+                    this.model.Add(period);
+                    break;
                 case 'edit':
                     yield this.EditPeriod(idx, idx0, period);
                     break;
@@ -20091,8 +20101,13 @@ class MainPresenter {
                 if (value) {
                     let period0 = this.model.Item(idx);
                     let period = TLPeriod_1.TLPeriod.CreateTLPeriodWithArgs(value.Name, value.IsPeriod, value.BeginType, value.Begin_DayDay, value.Begin_DayMonth, value.Begin_DayYear, value.Begin_MonthMonth, value.Begin_MonthYear, value.Begin_Year, value.Begin_DecadeDecade, value.Begin_DecadeCentury, value.Begin_Century, value.EndType, value.End_DayDay, value.End_DayMonth, value.End_DayYear, value.End_MonthMonth, value.End_MonthYear, value.End_Year, value.End_DecadeDecade, value.End_DecadeCentury, value.End_Century);
-                    period.Parent = period0;
-                    period0.Add(period);
+                    if (period.IsSubsetOf(period0, this.Period)) {
+                        period.Parent = period0;
+                        period0.Add(period);
+                    }
+                    else {
+                        new BoxView_1.BoxView("Добавляемый период не попадает в интервал Линии Времени").Show();
+                    }
                 }
             }))
                 .catch();
@@ -20224,9 +20239,49 @@ class MainPresenter {
         this.view.ClearContent();
         this.view.DrawDates(this.GetDrawDates());
         for (let i = 0; i < this.Count; i++) {
-            this.view.DrawHeader(i, this.Item(i).Name);
+            this.view.DrawHeader(i, this.getHeaderText(i));
             this.DrawTL(i, this.Item(i));
         }
+    }
+    getHeaderText(tl_index) {
+        let item = this.Item(tl_index);
+        let left;
+        let right;
+        switch (item.Begin.Type) {
+            case TLEvent_1.EnumPeriod.day:
+                left = dateutils_1.DateUtils.formatDate(item.Begin.Day);
+                break;
+            case TLEvent_1.EnumPeriod.month:
+                left = dateutils_1.DateUtils.formatMonth(item.Begin.Month);
+                break;
+            case TLEvent_1.EnumPeriod.year:
+                left = dateutils_1.DateUtils.formatYear(item.Begin.Year);
+                break;
+            case TLEvent_1.EnumPeriod.decade:
+                left = dateutils_1.DateUtils.formatDecade(item.Begin.Decade);
+                break;
+            case TLEvent_1.EnumPeriod.century:
+                left = dateutils_1.DateUtils.formatCentury(item.Begin.Century);
+                break;
+        }
+        switch (item.End.Type) {
+            case TLEvent_1.EnumPeriod.day:
+                right = dateutils_1.DateUtils.formatDate(item.End.Day);
+                break;
+            case TLEvent_1.EnumPeriod.month:
+                right = dateutils_1.DateUtils.formatMonth(item.End.Month);
+                break;
+            case TLEvent_1.EnumPeriod.year:
+                right = dateutils_1.DateUtils.formatYear(item.End.Year);
+                break;
+            case TLEvent_1.EnumPeriod.decade:
+                right = dateutils_1.DateUtils.formatDecade(item.End.Decade);
+                break;
+            case TLEvent_1.EnumPeriod.century:
+                right = dateutils_1.DateUtils.formatCentury(item.End.Century);
+                break;
+        }
+        return item.Name + ' ' + left + ' - ' + right;
     }
     GetDrawDates() {
         let dates = [];
@@ -20256,9 +20311,9 @@ class MainPresenter {
         let items = model.Items.filter((value, index, array) => {
             return value.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period);
         });
-        if (model.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period)) {
-            items.push(model);
-        }
+        //if (model.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period)) {
+        //  items.push(model)
+        //}
         // вычисляем индексы
         let exItems = [];
         for (let p of items) {
@@ -20529,11 +20584,19 @@ class MainView {
             aSaveToFile.onclick = (ev) => __awaiter(this, void 0, void 0, function* () {
                 yield this.Presenter.OnSaveToFile(idx);
             });
+            let aCollapse = document.createElement('a');
+            aCollapse.classList.add('dropdown-item');
+            aCollapse.textContent = "Свернуть";
+            aCollapse.href = '#';
+            aCollapse.onclick = (ev) => __awaiter(this, void 0, void 0, function* () {
+                yield this.Presenter.OnCollapse(idx);
+            });
             let divGroup = document.createElement('div');
             divGroup.classList.add('dropdown-menu');
             divGroup.append(aPlus);
             divGroup.append(aSave);
             divGroup.append(aSaveToFile);
+            divGroup.append(aCollapse);
             let divDropDown = document.createElement('div');
             divDropDown.classList.add('dropdown');
             divDropDown.append(btnMenu);
@@ -20607,6 +20670,7 @@ class PeriodContextMenu {
         let menuitems = [];
         menuitems.push(new contextmenu_1.MenuItem('edit', 'Изменить'));
         menuitems.push(new contextmenu_1.MenuItem('del', 'Удалить'));
+        menuitems.push(new contextmenu_1.MenuItem('expand', 'Развернуть'));
         menuitems.push(new contextmenu_1.MenuItemDivider());
         return new contextmenu_1.ContextMenu(menuitems);
     }
@@ -21249,6 +21313,9 @@ class TLPeriod {
         TLPeriod.id++;
         rt.Id = TLPeriod.id;
         rt.Name = o.Name;
+        if (!o.Begin) {
+            o.Begin = TLEvent_1.TLEventCentury.CreateTLEventCentury("Начало", 19);
+        }
         let type = TLEvent_1.TLEvent.GetType(o.Begin);
         if (type === TLEvent_1.EnumPeriod.day) {
             rt.Begin = TLEvent_1.TLEventDay.CreateTLEventDay(o.Begin.Name, o.Begin.Day, o.Begin.Month, o.Begin.Year, o.Begin.Decade, o.Begin.Century);
@@ -21264,6 +21331,9 @@ class TLPeriod {
         }
         else if (type === TLEvent_1.EnumPeriod.century) {
             rt.Begin = TLEvent_1.TLEventCentury.CreateTLEventCentury(o.Begin.Name, o.Begin.Century);
+        }
+        if (!o.End) {
+            o.End = TLEvent_1.TLEventCentury.CreateTLEventCentury("Конец", 21);
         }
         type = TLEvent_1.TLEvent.GetType(o.End);
         if (type === TLEvent_1.EnumPeriod.day) {
@@ -21435,6 +21505,26 @@ class TLPeriod {
         let r = Math.max(r1, r2);
         let s = r - l;
         return s <= (r1 - l1) + (r2 - l2);
+    }
+    /**
+     * Является ли интервал внутренним по отношению к другому
+     * @param l1 - внешний интервал левая граница
+     * @param r1 - внешний интервал правая граница
+     * @param l2 - внутренний интервал левая граница
+     * @param r2 - внутренний интервал правая граница
+     */
+    static isInnerInterval(l1, r1, l2, r2) {
+        if (l1 > r1 || l2 > r2)
+            throw "Неверно заданы интервалы";
+        return l2 >= l1 && l2 <= r1 && r2 >= l1 && r2 <= r1;
+    }
+    /**
+     * Является ли период подмножеством другого периода, который передается параметром
+     * @param period
+     * @param periodType
+     */
+    IsSubsetOf(period, periodType) {
+        return TLPeriod.isInnerInterval(period.getLeftBoundForPeriod(periodType), period.getRightBoundForPeriod(periodType), this.getLeftBoundForPeriod(periodType), this.getRightBoundForPeriod(periodType));
     }
     /**
      * Первый день интервала
