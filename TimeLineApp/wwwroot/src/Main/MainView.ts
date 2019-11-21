@@ -194,6 +194,15 @@ export class MainView {
   }
 
   /**
+   * Удалить заголовок TL по индексу
+   * @param idx
+   */
+  public RemoveHeader(idx: number) {
+    let row = this.mainTable.querySelector('#row-header-' + idx)
+    this.mainTable.removeChild(row)
+  }
+
+  /**
    * Удалить строки из TL с индексом idx
    * @param idx
    */

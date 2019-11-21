@@ -158,7 +158,7 @@ export class MainPresenter {
   public async OnCollapse(idx: number) {
     let item = this.model.Item(idx)
     if (item.Parent) {
-
+      this.model.Remove(idx)
     }
   }
 
@@ -379,6 +379,10 @@ export class MainPresenter {
     this.model.evAddTimeLine.subscribe((tl) => {
       this.view.DrawHeader(this.Count - 1, this.getHeaderText(this.Count - 1))
       this.DrawTL(this.Count - 1, tl)
+    })
+    this.model.evRemoveTimeLine.subscribe((idx) => {
+      this.view.RemoveHeader(idx)
+      this.view.RemoveDataRows(idx)
     })
     this.model.evAddPeriod.subscribe((t) => {
       this.view.RemoveDataRows(t[0])

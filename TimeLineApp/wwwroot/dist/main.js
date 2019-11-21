@@ -19839,6 +19839,10 @@ class MainPresenter {
             this.view.DrawHeader(this.Count - 1, this.getHeaderText(this.Count - 1));
             this.DrawTL(this.Count - 1, tl);
         });
+        this.model.evRemoveTimeLine.subscribe((idx) => {
+            this.view.RemoveHeader(idx);
+            this.view.RemoveDataRows(idx);
+        });
         this.model.evAddPeriod.subscribe((t) => {
             this.view.RemoveDataRows(t[0]);
             this.DrawTL(t[0], this.model.Item(t[0]));
@@ -19962,6 +19966,7 @@ class MainPresenter {
         return __awaiter(this, void 0, void 0, function* () {
             let item = this.model.Item(idx);
             if (item.Parent) {
+                this.model.Remove(idx);
             }
         });
     }
@@ -20637,6 +20642,14 @@ class MainView {
             ev.preventDefault();
             this.Presenter.OnPeriodContextMenu(ev, idx, i);
         };
+    }
+    /**
+     * Удалить заголовок TL по индексу
+     * @param idx
+     */
+    RemoveHeader(idx) {
+        let row = this.mainTable.querySelector('#row-header-' + idx);
+        this.mainTable.removeChild(row);
     }
     /**
      * Удалить строки из TL с индексом idx
