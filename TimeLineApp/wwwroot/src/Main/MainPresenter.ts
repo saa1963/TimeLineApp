@@ -180,6 +180,7 @@ export class MainPresenter {
   public OnDragStart(ev: DragEvent, idx: number, id: number) {
     let [period] = this.FindPeriod(idx, id)
     ev.dataTransfer.setData('application/json', JSON.stringify(period))
+    ev.dataTransfer.dropEffect = 'copy'
   }
 
   /**
@@ -608,9 +609,6 @@ export class MainPresenter {
     let items = model.Items.filter((value, index, array) => {
       return value.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period)
     })
-    //if (model.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period)) {
-    //  items.push(model)
-    //}
     // вычисляем индексы
     let exItems: IExTLPeriod[] = []
     for (let p of items) {

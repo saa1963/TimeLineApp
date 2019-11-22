@@ -19987,6 +19987,7 @@ class MainPresenter {
     OnDragStart(ev, idx, id) {
         let [period] = this.FindPeriod(idx, id);
         ev.dataTransfer.setData('application/json', JSON.stringify(period));
+        //ev.dataTransfer.dropEffect = 'copy'
     }
     /**
      * Поиск TLPeriod в модели, возвращает Tuple [TLPeriod, number]
@@ -20328,9 +20329,6 @@ class MainPresenter {
         let items = model.Items.filter((value, index, array) => {
             return value.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period);
         });
-        //if (model.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period)) {
-        //  items.push(model)
-        //}
         // вычисляем индексы
         let exItems = [];
         for (let p of items) {
@@ -20521,9 +20519,6 @@ class MainView {
         document.getElementById('next_page').onclick = () => {
             this.Presenter.OnNext_Page();
         };
-        //document.addEventListener('contextmenu', (ev) => {
-        //  this.Presenter.OnContextMenu(ev)
-        //})
         window.onresize = () => {
             this.Presenter.Draw();
         };
@@ -20657,8 +20652,10 @@ class MainView {
                 ev.target.classList.add('period_cell_drop');
             };
             td.ondragleave = (ev) => {
-                ev.preventDefault();
                 ev.target.classList.remove('period_cell_drop');
+            };
+            td.ondragover = (ev) => {
+                ev.preventDefault();
             };
             td.oncontextmenu = this.create_contextmenu_handler(idx, Id);
             last = items[i].ir;

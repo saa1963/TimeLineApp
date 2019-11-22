@@ -50,9 +50,6 @@ export class MainView {
     document.getElementById('next_page').onclick = () => {
       this.Presenter.OnNext_Page()
     }
-    //document.addEventListener('contextmenu', (ev) => {
-    //  this.Presenter.OnContextMenu(ev)
-    //})
     window.onresize = () => {
       this.Presenter.Draw()
     }
@@ -193,9 +190,12 @@ export class MainView {
         (<HTMLTableCellElement>ev.target).classList.add('period_cell_drop')
       }
       td.ondragleave = (ev) => {
-        ev.preventDefault();
         (<HTMLTableCellElement>ev.target).classList.remove('period_cell_drop')
       }
+      td.ondragover = (ev) => {
+        ev.preventDefault();
+      }
+      td.ondrop = this.create_drop_handler()
       td.oncontextmenu = this.create_contextmenu_handler(idx, Id)
       last = items[i].ir
       let txt = document.createTextNode(items[i].item.Name)
@@ -205,6 +205,12 @@ export class MainView {
     }
     let header = document.getElementById('row-header-' + idx)
     header.after(row)
+  }
+
+  private create_drop_handler(idx: number, id: number) {
+    return (ev) => {
+      this.Presenter.OnDrop(ev, idx, id)
+    }
   }
 
   private create_dragstart_handler(idx: number, id: number) {
