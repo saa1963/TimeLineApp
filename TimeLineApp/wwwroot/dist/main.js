@@ -19836,7 +19836,7 @@ class MainPresenter {
         this.view = view;
         this.m_Period = TLEvent_1.EnumPeriod.decade;
         this.model.evAddTimeLine.subscribe((tl) => {
-            this.view.DrawHeader(this.Count - 1, this.getHeaderText(this.Count - 1));
+            this.view.DrawHeader(this.Count - 1, this.getHeaderText(this.Count - 1), tl.Parent == null);
             this.DrawTL(this.Count - 1, tl);
         });
         this.model.evRemoveTimeLine.subscribe((idx) => {
@@ -19984,7 +19984,16 @@ class MainPresenter {
             window.URL.revokeObjectURL(url);
         }, 0);
     }
-    OnPeriodContextMenu(ev, idx, id) {
+    OnDragStart(ev, idx, id) {
+        let [period] = this.FindPeriod(idx, id);
+        ev.dataTransfer.setData('application/json', JSON.stringify(period));
+    }
+    /**
+     * Поиск TLPeriod в модели, возвращает Tuple [TLPeriod, number]
+     * @param idx - родительский TLPeriod
+     * @param id - Свойства Id искомого периода
+     */
+    FindPeriod(idx, id) {
         let idx0;
         let period = this.model.Item(idx).Items.find((value, index, array) => {
             if (value.Id == id) {
@@ -19995,6 +20004,10 @@ class MainPresenter {
                 return false;
             }
         });
+        return [period, idx0];
+    }
+    OnPeriodContextMenu(ev, idx, id) {
+        let [period, idx0] = this.FindPeriod(idx, id);
         let menu = PeriodContextMenu_1.PeriodContextMenu.Create();
         menu.evSelect.subscribe((arg) => __awaiter(this, void 0, void 0, function* () {
             switch (arg) {
@@ -20133,7 +20146,6 @@ class MainPresenter {
         return this.model.Item(i);
     }
     GetFirstInit() {
-        let init;
         let dt = new Date();
         let cur;
         switch (this.Period) {
@@ -20244,7 +20256,7 @@ class MainPresenter {
         this.view.ClearContent();
         this.view.DrawDates(this.GetDrawDates());
         for (let i = 0; i < this.Count; i++) {
-            this.view.DrawHeader(i, this.getHeaderText(i));
+            this.view.DrawHeader(i, this.getHeaderText(i), this.Item(i).Parent == null);
             this.DrawTL(i, this.Item(i));
         }
     }
@@ -20549,13 +20561,18 @@ class MainView {
         this.mainTable.append(row);
         this.tls.append(this.mainTable);
     }
-    DrawHeader(idx, s) {
+    DrawHeader(idx, s, isMain) {
         return __awaiter(this, void 0, void 0, function* () {
             let table = document.getElementsByTagName('table')[0];
             let row = document.createElement('tr');
             row.id = "row-header-" + idx;
             let td = document.createElement('td');
-            td.classList.add('tl_head');
+            if (isMain) {
+                td.classList.add('tl_head');
+            }
+            else {
+                td.classList.add('tl_head_sub');
+            }
             td.colSpan = this.Presenter.MainLineCount - 1;
             let txt = document.createTextNode(s);
             td.append(txt);
@@ -20613,10 +20630,12 @@ class MainView {
         });
     }
     DrawEventsRow(idx, items) {
+        let Id;
         let row = document.createElement('tr');
         row.classList.add('row-data-' + idx);
         let i = 0, last = -1;
         while (i < items.length) {
+            Id = items[i].item.Id;
             if (items[i].il - last != 1) {
                 let td = document.createElement('td');
                 td.classList.add('hidden_cell');
@@ -20625,9 +20644,23 @@ class MainView {
                 row.append(td);
             }
             let td = document.createElement('td');
+            td.id = 'cell-' + idx + '-' + Id;
+            td.draggable = true;
             td.colSpan = items[i].ir - items[i].il + 1;
             td.classList.add('period_cell');
-            td.oncontextmenu = this.createcontextmenuhandler(idx, items[i].item.Id);
+            if (items[i].item.Count > 0) {
+                td.classList.add('note');
+            }
+            td.ondragstart = this.create_dragstart_handler(idx, Id);
+            td.ondragenter = (ev) => {
+                ev.preventDefault();
+                ev.target.classList.add('period_cell_drop');
+            };
+            td.ondragleave = (ev) => {
+                ev.preventDefault();
+                ev.target.classList.remove('period_cell_drop');
+            };
+            td.oncontextmenu = this.create_contextmenu_handler(idx, Id);
             last = items[i].ir;
             let txt = document.createTextNode(items[i].item.Name);
             td.append(txt);
@@ -20637,10 +20670,15 @@ class MainView {
         let header = document.getElementById('row-header-' + idx);
         header.after(row);
     }
-    createcontextmenuhandler(idx, i) {
+    create_dragstart_handler(idx, id) {
+        return (ev) => {
+            this.Presenter.OnDragStart(ev, idx, id);
+        };
+    }
+    create_contextmenu_handler(idx, id) {
         return (ev) => {
             ev.preventDefault();
-            this.Presenter.OnPeriodContextMenu(ev, idx, i);
+            this.Presenter.OnPeriodContextMenu(ev, idx, id);
         };
     }
     /**

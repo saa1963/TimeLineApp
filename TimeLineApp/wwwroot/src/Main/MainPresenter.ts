@@ -177,7 +177,17 @@ export class MainPresenter {
     }, 0)
   }
 
-  public OnPeriodContextMenu(ev: MouseEvent, idx: number, id: number) {
+  public OnDragStart(ev: DragEvent, idx: number, id: number) {
+    let [period] = this.FindPeriod(idx, id)
+    ev.dataTransfer.setData('application/json', JSON.stringify(period))
+  }
+
+  /**
+   * Поиск TLPeriod в модели, возвращает Tuple [TLPeriod, number]
+   * @param idx - родительский TLPeriod
+   * @param id - Свойства Id искомого периода
+   */
+  private FindPeriod(idx: number, id: number): [TLPeriod, number] {
     let idx0: number
     let period = this.model.Item(idx).Items.find((value, index, array) => {
       if (value.Id == id) {
@@ -188,6 +198,11 @@ export class MainPresenter {
         return false
       }
     })
+    return [period, idx0]
+  }
+
+  public OnPeriodContextMenu(ev: MouseEvent, idx: number, id: number) {
+    let [period, idx0] = this.FindPeriod(idx, id)
     let menu = PeriodContextMenu.Create();
     menu.evSelect.subscribe(async (arg) => {
       switch (arg) {
@@ -377,7 +392,7 @@ export class MainPresenter {
     this.view = view
     this.m_Period = EnumPeriod.decade
     this.model.evAddTimeLine.subscribe((tl) => {
-      this.view.DrawHeader(this.Count - 1, this.getHeaderText(this.Count - 1))
+      this.view.DrawHeader(this.Count - 1, this.getHeaderText(this.Count - 1), tl.Parent == null)
       this.DrawTL(this.Count - 1, tl)
     })
     this.model.evRemoveTimeLine.subscribe((idx) => {
@@ -399,7 +414,6 @@ export class MainPresenter {
   }
 
   private GetFirstInit() {
-    let init
     let dt = new Date()
     let cur: number
     switch (this.Period) {
@@ -519,7 +533,7 @@ export class MainPresenter {
     this.view.ClearContent()
     this.view.DrawDates(this.GetDrawDates())
     for (let i = 0; i < this.Count; i++) {
-      this.view.DrawHeader(i, this.getHeaderText(i))
+      this.view.DrawHeader(i, this.getHeaderText(i), this.Item(i).Parent == null)
       this.DrawTL(i, this.Item(i))
     }
   }

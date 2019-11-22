@@ -11332,19 +11332,46 @@ table {
   background-color: lightgray;
   padding: 2px;
   border-radius: 5px;
+  border-width: 1px;
+  border-style: solid;
   font-size: smaller; }
   .period_cell:hover {
     cursor: pointer;
     background-color: darkgray; }
+
+.period_cell_drop {
+  border-color: red; }
 
 .tl_head {
   background: #f5bcbc;
   background: linear-gradient(90deg, #f5bcbc 0%, gainsboro 54%, #f0f0f0 100%);
   padding: 2px; }
 
+.tl_head_sub {
+  background: #77e44a;
+  background: linear-gradient(90deg, #77e44a 0%, gainsboro 54%, #f0f0f0 100%);
+  padding: 2px; }
+
 .table_container {
   overflow: scroll; }
 
+.note {
+  position: relative; }
+
+.note:after {
+  /* Magic Happens Here!!! */
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  display: block;
+  border-left: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-top: 10px solid #f00; }
+
+/* </magic> */
 /* To remove the scrollbars */
 
 /*# sourceMappingURL=main.css.map */

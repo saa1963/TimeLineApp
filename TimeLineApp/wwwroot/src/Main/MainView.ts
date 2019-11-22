@@ -1,5 +1,6 @@
 ﻿import { MainPresenter, IExTLPeriod } from "./MainPresenter";
 import { MainModel } from "./MainModel";
+import { TLPeriod } from "../TLPeriod";
 
 export class MainView {
   // private свойства
@@ -94,12 +95,16 @@ export class MainView {
     this.tls.append(this.mainTable)
   }
 
-  public async DrawHeader(idx: number, s: string) {
+  public async DrawHeader(idx: number, s: string, isMain: boolean) {
     let table = document.getElementsByTagName('table')[0]
     let row = document.createElement('tr')
     row.id = "row-header-" + idx
     let td = <HTMLTableDataCellElement>document.createElement('td')
-    td.classList.add('tl_head')
+    if (isMain) {
+      td.classList.add('tl_head')
+    } else {
+      td.classList.add('tl_head_sub')
+    }
     td.colSpan = this.Presenter.MainLineCount - 1
     let txt = document.createTextNode(s)
     td.append(txt)
@@ -161,10 +166,12 @@ export class MainView {
   }
 
   public DrawEventsRow(idx: number, items: IExTLPeriod[]) {
+    let Id: number;
     let row = document.createElement('tr')
     row.classList.add('row-data-' + idx)
     let i = 0, last = -1
     while (i < items.length) {
+      Id = items[i].item.Id
       if (items[i].il - last != 1) {
         let td = <HTMLTableDataCellElement>document.createElement('td')
         td.classList.add('hidden_cell')
@@ -173,9 +180,23 @@ export class MainView {
         row.append(td)
       }
       let td = <HTMLTableDataCellElement>document.createElement('td')
+      td.id = 'cell-' + idx + '-' + Id
+      td.draggable = true
       td.colSpan = items[i].ir - items[i].il + 1
       td.classList.add('period_cell')
-      td.oncontextmenu = this.createcontextmenuhandler(idx, items[i].item.Id)
+      if (items[i].item.Count > 0) {
+        td.classList.add('note')
+      }
+      td.ondragstart = this.create_dragstart_handler(idx, Id)
+      td.ondragenter = (ev) => {
+        ev.preventDefault();
+        (<HTMLTableCellElement>ev.target).classList.add('period_cell_drop')
+      }
+      td.ondragleave = (ev) => {
+        ev.preventDefault();
+        (<HTMLTableCellElement>ev.target).classList.remove('period_cell_drop')
+      }
+      td.oncontextmenu = this.create_contextmenu_handler(idx, Id)
       last = items[i].ir
       let txt = document.createTextNode(items[i].item.Name)
       td.append(txt)
@@ -186,10 +207,16 @@ export class MainView {
     header.after(row)
   }
 
-  private createcontextmenuhandler(idx: number, i: number) {
+  private create_dragstart_handler(idx: number, id: number) {
+    return (ev) => {
+      this.Presenter.OnDragStart(ev, idx, id)
+    }
+  }
+
+  private create_contextmenu_handler(idx: number, id: number) {
     return (ev) => {
       ev.preventDefault()
-      this.Presenter.OnPeriodContextMenu(ev, idx, i)
+      this.Presenter.OnPeriodContextMenu(ev, idx, id)
     }
   }
 
