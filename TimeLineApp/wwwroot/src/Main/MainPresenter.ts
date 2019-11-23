@@ -183,6 +183,19 @@ export class MainPresenter {
     ev.dataTransfer.dropEffect = 'copy'
   }
 
+  public OnDrop(ev: DragEvent, idx: number, id: number) {
+    let period: TLPeriod
+    if (id !== -1) {
+      [period] = this.FindPeriod(idx, id)
+    } else {
+      period = this.model[idx]
+    }
+    let data = ev.dataTransfer.getData('application/json')
+    let tl = TLPeriod.CreateTLPeriod(JSON.parse(data))
+    period.Add(tl)
+    event.preventDefault();
+  }
+
   /**
    * Поиск TLPeriod в модели, возвращает Tuple [TLPeriod, number]
    * @param idx - родительский TLPeriod
@@ -227,7 +240,7 @@ export class MainPresenter {
     let model = new AddPeriodModel()
     let view = new AddPeriodView(model)
     model.Name = period.Name
-    model.IsPeriod = (period.m_BeginDay != period.m_EndDay)
+    model.IsPeriod = period.IsPeriod
     model.BeginType = period.Begin.Type
     switch (period.Begin.Type) {
       case EnumPeriod.day:

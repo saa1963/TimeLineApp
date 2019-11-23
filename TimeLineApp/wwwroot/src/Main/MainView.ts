@@ -102,6 +102,17 @@ export class MainView {
     } else {
       td.classList.add('tl_head_sub')
     }
+    td.ondragenter = (ev) => {
+      ev.preventDefault();
+      (<HTMLTableCellElement>ev.target).classList.add('period_cell_drop')
+    }
+    td.ondragleave = (ev) => {
+      (<HTMLTableCellElement>ev.target).classList.remove('period_cell_drop')
+    }
+    td.ondragover = (ev) => {
+      ev.preventDefault();
+    }
+    td.ondrop = this.create_drop_handler(idx, -1)
     td.colSpan = this.Presenter.MainLineCount - 1
     let txt = document.createTextNode(s)
     td.append(txt)
@@ -195,7 +206,7 @@ export class MainView {
       td.ondragover = (ev) => {
         ev.preventDefault();
       }
-      td.ondrop = this.create_drop_handler()
+      td.ondrop = this.create_drop_handler(idx, Id)
       td.oncontextmenu = this.create_contextmenu_handler(idx, Id)
       last = items[i].ir
       let txt = document.createTextNode(items[i].item.Name)

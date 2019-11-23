@@ -19987,7 +19987,20 @@ class MainPresenter {
     OnDragStart(ev, idx, id) {
         let [period] = this.FindPeriod(idx, id);
         ev.dataTransfer.setData('application/json', JSON.stringify(period));
-        //ev.dataTransfer.dropEffect = 'copy'
+        ev.dataTransfer.dropEffect = 'copy';
+    }
+    OnDrop(ev, idx, id) {
+        let period;
+        if (id !== -1) {
+            [period] = this.FindPeriod(idx, id);
+        }
+        else {
+            period = this.model[idx];
+        }
+        let data = ev.dataTransfer.getData('application/json');
+        let tl = TLPeriod_1.TLPeriod.CreateTLPeriod(JSON.parse(data));
+        period.Add(tl);
+        event.preventDefault();
     }
     /**
      * Поиск TLPeriod в модели, возвращает Tuple [TLPeriod, number]
@@ -20032,7 +20045,7 @@ class MainPresenter {
             let model = new AddPeriodModel_1.AddPeriodModel();
             let view = new AddPeriodView_1.AddPeriodView(model);
             model.Name = period.Name;
-            model.IsPeriod = (period.m_BeginDay != period.m_EndDay);
+            model.IsPeriod = period.IsPeriod;
             model.BeginType = period.Begin.Type;
             switch (period.Begin.Type) {
                 case TLEvent_1.EnumPeriod.day:
@@ -20568,6 +20581,17 @@ class MainView {
             else {
                 td.classList.add('tl_head_sub');
             }
+            td.ondragenter = (ev) => {
+                ev.preventDefault();
+                ev.target.classList.add('period_cell_drop');
+            };
+            td.ondragleave = (ev) => {
+                ev.target.classList.remove('period_cell_drop');
+            };
+            td.ondragover = (ev) => {
+                ev.preventDefault();
+            };
+            td.ondrop = this.create_drop_handler(idx, -1);
             td.colSpan = this.Presenter.MainLineCount - 1;
             let txt = document.createTextNode(s);
             td.append(txt);
@@ -20657,6 +20681,7 @@ class MainView {
             td.ondragover = (ev) => {
                 ev.preventDefault();
             };
+            td.ondrop = this.create_drop_handler(idx, Id);
             td.oncontextmenu = this.create_contextmenu_handler(idx, Id);
             last = items[i].ir;
             let txt = document.createTextNode(items[i].item.Name);
@@ -20666,6 +20691,11 @@ class MainView {
         }
         let header = document.getElementById('row-header-' + idx);
         header.after(row);
+    }
+    create_drop_handler(idx, id) {
+        return (ev) => {
+            this.Presenter.OnDrop(ev, idx, id);
+        };
     }
     create_dragstart_handler(idx, id) {
         return (ev) => {
@@ -21644,6 +21674,33 @@ class TLPeriod {
         if (!this.validIndex(i))
             throw "Неверный индекс";
         return this.Periods[i];
+    }
+    get IsPeriod() {
+        let rt;
+        if (this.Begin.Type === this.End.Type) {
+            switch (this.Begin.Type) {
+                case TLEvent_1.EnumPeriod.day:
+                    rt = this.Begin.Day != this.End.Day;
+                    return;
+                    break;
+                case TLEvent_1.EnumPeriod.month:
+                    rt = this.Begin.Month != this.End.Month;
+                    break;
+                case TLEvent_1.EnumPeriod.year:
+                    rt = this.Begin.Year != this.End.Year;
+                    break;
+                case TLEvent_1.EnumPeriod.decade:
+                    rt = this.Begin.Decade != this.End.Decade;
+                    break;
+                case TLEvent_1.EnumPeriod.century:
+                    rt = this.Begin.Century != this.End.Century;
+                    break;
+            }
+        }
+        else {
+            rt = true;
+        }
+        return rt;
     }
     validIndex(i) {
         if (!this.Periods)

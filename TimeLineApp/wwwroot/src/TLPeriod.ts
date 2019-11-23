@@ -474,6 +474,33 @@ export class TLPeriod {
     return this.Periods[i]
   }
 
+  public get IsPeriod() {
+    let rt: boolean
+    if (this.Begin.Type === this.End.Type) {
+      switch (this.Begin.Type) {
+        case EnumPeriod.day:
+          rt = this.Begin.Day != this.End.Day
+          return
+          break;
+        case EnumPeriod.month:
+          rt = this.Begin.Month != this.End.Month
+          break;
+        case EnumPeriod.year:
+          rt = this.Begin.Year != this.End.Year
+          break;
+        case EnumPeriod.decade:
+          rt = this.Begin.Decade != this.End.Decade
+          break;
+        case EnumPeriod.century:
+          rt = this.Begin.Century != this.End.Century
+          break;
+      }
+    } else {
+      rt = true
+    }
+    return rt
+  }
+
   private validIndex(i: number): boolean {
     if (!this.Periods) return false
     if (this.Periods.length === 0) return false
