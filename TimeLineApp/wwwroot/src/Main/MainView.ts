@@ -85,7 +85,11 @@ export class MainView {
         this.Presenter.OnScaleForward(i)
       }
       td.onauxclick = (ev) => {
+        ev.preventDefault()
         this.Presenter.OnScaleBack(i)
+      }
+      td.oncontextmenu = (ev) => {
+        ev.preventDefault()
       }
       let dt = document.createTextNode(dates[i])
       td.append(dt)

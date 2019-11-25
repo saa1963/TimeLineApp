@@ -20434,7 +20434,7 @@ class MainPresenter {
             }
         });
     }
-    OnScale(idx) {
+    OnScaleForward(idx) {
         return __awaiter(this, void 0, void 0, function* () {
             let value = this.mainLine[idx].ValueEvent;
             let init;
@@ -20458,6 +20458,36 @@ class MainPresenter {
                 case TLEvent_1.EnumPeriod.century:
                     this.Period = TLEvent_1.EnumPeriod.decade;
                     init = dateutils_1.DateUtils.getDecadeFromYMD(dateutils_1.DateUtils.YMDFromAD(dateutils_1.DateUtils.FirstDayOfCentury(value)));
+                    break;
+            }
+            this.InitMainLine(init);
+            this.Draw();
+        });
+    }
+    OnScaleBack(idx) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let value = this.mainLine[idx].ValueEvent;
+            let init;
+            switch (this.Period) {
+                case TLEvent_1.EnumPeriod.day:
+                    this.Period = TLEvent_1.EnumPeriod.month;
+                    init = dateutils_1.DateUtils.getMonthFromYMD(dateutils_1.DateUtils.YMDFromAD(value));
+                    break;
+                case TLEvent_1.EnumPeriod.month:
+                    this.Period = TLEvent_1.EnumPeriod.year;
+                    init = dateutils_1.DateUtils.getYearFromYMD(dateutils_1.DateUtils.getYMDFromMonth(value));
+                    break;
+                case TLEvent_1.EnumPeriod.year:
+                    this.Period = TLEvent_1.EnumPeriod.decade;
+                    init = dateutils_1.DateUtils.getDecadeFromYMD(dateutils_1.DateUtils.getYMDFromYear(value));
+                    break;
+                case TLEvent_1.EnumPeriod.decade:
+                    this.Period = TLEvent_1.EnumPeriod.century;
+                    init = dateutils_1.DateUtils.getCenturyFromYMD(dateutils_1.DateUtils.getYMDFromDecade(value));
+                    break;
+                case TLEvent_1.EnumPeriod.century:
+                    this.Period = TLEvent_1.EnumPeriod.day;
+                    init = dateutils_1.DateUtils.getDayFromYMD(dateutils_1.DateUtils.getYMDFromCentury(value));
                     break;
             }
             this.InitMainLine(init);
@@ -20560,7 +20590,14 @@ class MainView {
             td.classList.add('date_cell');
             td.id = 'i' + i;
             td.onclick = (ev) => {
-                this.Presenter.OnScale(i);
+                this.Presenter.OnScaleForward(i);
+            };
+            td.onauxclick = (ev) => {
+                ev.preventDefault();
+                this.Presenter.OnScaleBack(i);
+            };
+            td.oncontextmenu = (ev) => {
+                ev.preventDefault();
             };
             let dt = document.createTextNode(dates[i]);
             td.append(dt);
@@ -22653,7 +22690,6 @@ class DateUtils {
     }
     static getYMDFromMonth(num) {
         let year;
-        let month;
         let rt;
         if (num > 0) {
             year = Math.floor(num / 12);
@@ -22664,6 +22700,28 @@ class DateUtils {
             rt = { year: year - 1, month: Math.abs(num) - Math.abs(year * 12), day: 1 };
         }
         return rt;
+    }
+    static getYMDFromDecade(num) {
+        let rt;
+        let year;
+        if (num > 0) {
+            year = (num - 1) * 10 + 1;
+        }
+        else {
+            year = (num + 1) * 10 - 1;
+        }
+        return { year: year, month: 1, day: 1 };
+    }
+    static getYMDFromCentury(num) {
+        let rt;
+        let year;
+        if (num > 0) {
+            year = (num - 1) * 100 + 1;
+        }
+        else {
+            year = (num + 1) * 100 - 1;
+        }
+        return { year: year, month: 1, day: 1 };
     }
     static getCenturyFromDecade(decade) {
         let century;

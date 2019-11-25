@@ -751,19 +751,19 @@ export class MainPresenter {
         break
       case EnumPeriod.month:
         this.Period = EnumPeriod.year
-        init = DateUtils.getYearFromYMD(DateUtils.getYMDFromYear(value))
+        init = DateUtils.getYearFromYMD(DateUtils.getYMDFromMonth(value))
         break
       case EnumPeriod.year:
         this.Period = EnumPeriod.decade
-        init = DateUtils.getDecadeFromYMD(DateUtils.getYMDFromDecade(value))
+        init = DateUtils.getDecadeFromYMD(DateUtils.getYMDFromYear(value))
         break
       case EnumPeriod.decade:
         this.Period = EnumPeriod.century
-        init = DateUtils.get(DateUtils.FirstDayOfDecade(value)).year
+        init = DateUtils.getCenturyFromYMD(DateUtils.getYMDFromDecade(value))
         break
       case EnumPeriod.century:
         this.Period = EnumPeriod.day
-        //init = DateUtils.getDecadeFromYMD(DateUtils.YMDFromAD(DateUtils.FirstDayOfCentury(value)))
+        init = DateUtils.getDayFromYMD(DateUtils.getYMDFromCentury(value))
         break
     }
     this.InitMainLine(init)
