@@ -494,7 +494,6 @@ export class DateUtils {
   }
   static getYMDFromMonth(num: number): YearMonthDay {
     let year: number
-    let month: number
     let rt: YearMonthDay
     if (num > 0) {
       year = Math.floor(num / 12)
@@ -504,6 +503,16 @@ export class DateUtils {
       rt = { year: year - 1, month: Math.abs(num) - Math.abs(year * 12), day: 1 }
     }
     return rt
+  }
+  static getYMDFromDecade(num: number): YearMonthDay {
+    let rt: YearMonthDay
+    let year: number
+    if (num > 0) {
+      year = (num - 1) * 10 + 1
+    } else {
+      year = (num + 1) * 10 - 1
+    }
+    return {year: year, month: 1, day: 1}
   }
   static getCenturyFromDecade(decade: number) {
     let century: number
