@@ -82,7 +82,10 @@ export class MainView {
       td.classList.add('date_cell')
       td.id = 'i' + i
       td.onclick = (ev) => {
-        this.Presenter.OnScale(i)
+        this.Presenter.OnScaleForward(i)
+      }
+      td.onauxclick = (ev) => {
+        this.Presenter.OnScaleBack(i)
       }
       let dt = document.createTextNode(dates[i])
       td.append(dt)

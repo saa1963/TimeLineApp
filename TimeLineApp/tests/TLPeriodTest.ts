@@ -1,6 +1,7 @@
 ﻿import { TLPeriod } from '../wwwroot/src/TLPeriod';
 import { expect } from 'chai';
 import 'mocha';
+import { EnumPeriod } from '../wwwroot/src/TLEvent';
 
 describe('TLPeriod', () => {
 
@@ -31,4 +32,38 @@ describe('TLPeriod', () => {
       expect(period.Name).to.equal('Рождение');
     });
   });
+
+  describe('getLeftBoundForPeriod', () => {
+    it('Test_1', () => {
+      const json = `{
+      "Name": "Биография Жукова Г.К.",
+        "Begin": {
+          "Name": "Начало",
+          "Day": null,
+          "Month": null,
+          "Year": null,
+          "Decade": null,
+          "Century": 19,
+          "Type": 5
+        },
+        "End": {
+          "Name": "Конец",
+          "Day": null,
+          "Month": null,
+          "Year": null,
+          "Decade": null,
+          "Century": 21,
+          "Type": 5
+        },
+      "Periods": []
+    }`;
+      const data = JSON.parse(json);
+      const period = TLPeriod.CreateTLPeriod(data);
+      period.Parent = null
+      period.Id = 1
+      let left = period.getLeftBoundForPeriod(EnumPeriod.month)
+      expect(left).to.equal(21601);
+    });
+  });
+
 });

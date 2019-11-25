@@ -220,7 +220,7 @@ export class TLPeriod {
     return rt
   }
 
-  private getRightBoundForPeriod(period: EnumPeriod): number {
+  public getRightBoundForPeriod(period: EnumPeriod): number {
     let l2: number
     // [текущий(имеющаяся точность), внешний(точность сравнения)]
     switch (true) {
@@ -244,13 +244,13 @@ export class TLPeriod {
         l2 = this.End.Month
         break;
       case this.End.Type == EnumPeriod.year && period == EnumPeriod.month:
-        l2 = DateUtils.RightMonthOfYear(this.End.Month)
+        l2 = DateUtils.RightMonthOfYear(this.End.Year)
         break;
       case this.End.Type == EnumPeriod.decade && period == EnumPeriod.month:
         l2 = DateUtils.RightMonthOfDecade(this.End.Decade)
         break;
       case this.End.Type == EnumPeriod.century && period == EnumPeriod.month:
-        l2 = DateUtils.RightMonthOfCentury(this.End.Decade)
+        l2 = DateUtils.RightMonthOfCentury(this.End.Century)
         break;
       case this.End.Type == EnumPeriod.day && period == EnumPeriod.year:
       case this.End.Type == EnumPeriod.month && period == EnumPeriod.year:
@@ -261,7 +261,7 @@ export class TLPeriod {
         l2 = DateUtils.RightYearOfDecade(this.End.Decade)
         break;
       case this.End.Type == EnumPeriod.century && period == EnumPeriod.year:
-        l2 = DateUtils.RightYearOfCentury(this.End.Decade)
+        l2 = DateUtils.RightYearOfCentury(this.End.Century)
         break;
       case this.End.Type == EnumPeriod.day && period == EnumPeriod.decade:
       case this.End.Type == EnumPeriod.month && period == EnumPeriod.decade:
@@ -283,7 +283,7 @@ export class TLPeriod {
     return l2
   }
 
-  private getLeftBoundForPeriod(period: EnumPeriod): number {
+  public getLeftBoundForPeriod(period: EnumPeriod): number {
     let l2: number
     // [текущий(имеющаяся точность), внешний(точность сравнения)]
     switch (true) {
@@ -307,13 +307,13 @@ export class TLPeriod {
         l2 = this.Begin.Month
         break;
       case this.Begin.Type == EnumPeriod.year && period == EnumPeriod.month:
-        l2 = DateUtils.LeftMonthOfYear(this.Begin.Month)
+        l2 = DateUtils.LeftMonthOfYear(this.Begin.Year)
         break;
       case this.Begin.Type == EnumPeriod.decade && period == EnumPeriod.month:
         l2 = DateUtils.LeftMonthOfDecade(this.Begin.Decade)
         break;
       case this.Begin.Type == EnumPeriod.century && period == EnumPeriod.month:
-        l2 = DateUtils.LeftMonthOfCentury(this.Begin.Decade)
+        l2 = DateUtils.LeftMonthOfCentury(this.Begin.Century)
         break;
       case this.Begin.Type == EnumPeriod.day && period == EnumPeriod.year:
       case this.Begin.Type == EnumPeriod.month && period == EnumPeriod.year:
@@ -324,7 +324,7 @@ export class TLPeriod {
         l2 = DateUtils.LeftYearOfDecade(this.Begin.Decade)
         break;
       case this.Begin.Type == EnumPeriod.century && period == EnumPeriod.year:
-        l2 = DateUtils.LeftYearOfCentury(this.Begin.Decade)
+        l2 = DateUtils.LeftYearOfCentury(this.Begin.Century)
         break;
       case this.Begin.Type == EnumPeriod.day && period == EnumPeriod.decade:
       case this.Begin.Type == EnumPeriod.month && period == EnumPeriod.decade:

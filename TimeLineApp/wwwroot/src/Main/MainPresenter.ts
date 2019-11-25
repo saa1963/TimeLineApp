@@ -188,7 +188,7 @@ export class MainPresenter {
     if (id !== -1) {
       [period] = this.FindPeriod(idx, id)
     } else {
-      period = this.model[idx]
+      period = this.model.Item(idx)
     }
     let data = ev.dataTransfer.getData('application/json')
     let tl = TLPeriod.CreateTLPeriod(JSON.parse(data))
@@ -712,7 +712,7 @@ export class MainPresenter {
     }
   }
 
-  public async OnScale(idx: number) {
+  public async OnScaleForward(idx: number) {
     let value = this.mainLine[idx].ValueEvent
     let init: number
     switch (this.Period) {
@@ -735,6 +735,35 @@ export class MainPresenter {
       case EnumPeriod.century:
         this.Period = EnumPeriod.decade
         init = DateUtils.getDecadeFromYMD(DateUtils.YMDFromAD(DateUtils.FirstDayOfCentury(value)))
+        break
+    }
+    this.InitMainLine(init)
+    this.Draw()
+  }
+
+  public async OnScaleBack(idx: number) {
+    let value = this.mainLine[idx].ValueEvent
+    let init: number
+    switch (this.Period) {
+      case EnumPeriod.day:
+        this.Period = EnumPeriod.month
+        //init = DateUtils.getCenturyFromYMD(DateUtils.YMDFromAD(value))
+        break
+      case EnumPeriod.month:
+        this.Period = EnumPeriod.year
+        //init = DateUtils.getDayFromYMD(DateUtils.YMDFromAD(DateUtils.FirstDayOfMonth(value)))
+        break
+      case EnumPeriod.year:
+        this.Period = EnumPeriod.decade
+        //init = DateUtils.getMonthFromYMD(DateUtils.YMDFromAD(DateUtils.FirstDayOfYear(value)))
+        break
+      case EnumPeriod.decade:
+        this.Period = EnumPeriod.century
+        //init = DateUtils.YMDFromAD(DateUtils.FirstDayOfDecade(value)).year
+        break
+      case EnumPeriod.century:
+        this.Period = EnumPeriod.day
+        //init = DateUtils.getDecadeFromYMD(DateUtils.YMDFromAD(DateUtils.FirstDayOfCentury(value)))
         break
     }
     this.InitMainLine(init)

@@ -19995,7 +19995,7 @@ class MainPresenter {
             [period] = this.FindPeriod(idx, id);
         }
         else {
-            period = this.model[idx];
+            period = this.model.Item(idx);
         }
         let data = ev.dataTransfer.getData('application/json');
         let tl = TLPeriod_1.TLPeriod.CreateTLPeriod(JSON.parse(data));
@@ -21464,13 +21464,13 @@ class TLPeriod {
                 l2 = this.End.Month;
                 break;
             case this.End.Type == TLEvent_1.EnumPeriod.year && period == TLEvent_1.EnumPeriod.month:
-                l2 = dateutils_1.DateUtils.RightMonthOfYear(this.End.Month);
+                l2 = dateutils_1.DateUtils.RightMonthOfYear(this.End.Year);
                 break;
             case this.End.Type == TLEvent_1.EnumPeriod.decade && period == TLEvent_1.EnumPeriod.month:
                 l2 = dateutils_1.DateUtils.RightMonthOfDecade(this.End.Decade);
                 break;
             case this.End.Type == TLEvent_1.EnumPeriod.century && period == TLEvent_1.EnumPeriod.month:
-                l2 = dateutils_1.DateUtils.RightMonthOfCentury(this.End.Decade);
+                l2 = dateutils_1.DateUtils.RightMonthOfCentury(this.End.Century);
                 break;
             case this.End.Type == TLEvent_1.EnumPeriod.day && period == TLEvent_1.EnumPeriod.year:
             case this.End.Type == TLEvent_1.EnumPeriod.month && period == TLEvent_1.EnumPeriod.year:
@@ -21481,7 +21481,7 @@ class TLPeriod {
                 l2 = dateutils_1.DateUtils.RightYearOfDecade(this.End.Decade);
                 break;
             case this.End.Type == TLEvent_1.EnumPeriod.century && period == TLEvent_1.EnumPeriod.year:
-                l2 = dateutils_1.DateUtils.RightYearOfCentury(this.End.Decade);
+                l2 = dateutils_1.DateUtils.RightYearOfCentury(this.End.Century);
                 break;
             case this.End.Type == TLEvent_1.EnumPeriod.day && period == TLEvent_1.EnumPeriod.decade:
             case this.End.Type == TLEvent_1.EnumPeriod.month && period == TLEvent_1.EnumPeriod.decade:
@@ -21526,13 +21526,13 @@ class TLPeriod {
                 l2 = this.Begin.Month;
                 break;
             case this.Begin.Type == TLEvent_1.EnumPeriod.year && period == TLEvent_1.EnumPeriod.month:
-                l2 = dateutils_1.DateUtils.LeftMonthOfYear(this.Begin.Month);
+                l2 = dateutils_1.DateUtils.LeftMonthOfYear(this.Begin.Year);
                 break;
             case this.Begin.Type == TLEvent_1.EnumPeriod.decade && period == TLEvent_1.EnumPeriod.month:
                 l2 = dateutils_1.DateUtils.LeftMonthOfDecade(this.Begin.Decade);
                 break;
             case this.Begin.Type == TLEvent_1.EnumPeriod.century && period == TLEvent_1.EnumPeriod.month:
-                l2 = dateutils_1.DateUtils.LeftMonthOfCentury(this.Begin.Decade);
+                l2 = dateutils_1.DateUtils.LeftMonthOfCentury(this.Begin.Century);
                 break;
             case this.Begin.Type == TLEvent_1.EnumPeriod.day && period == TLEvent_1.EnumPeriod.year:
             case this.Begin.Type == TLEvent_1.EnumPeriod.month && period == TLEvent_1.EnumPeriod.year:
@@ -21543,7 +21543,7 @@ class TLPeriod {
                 l2 = dateutils_1.DateUtils.LeftYearOfDecade(this.Begin.Decade);
                 break;
             case this.Begin.Type == TLEvent_1.EnumPeriod.century && period == TLEvent_1.EnumPeriod.year:
-                l2 = dateutils_1.DateUtils.LeftYearOfCentury(this.Begin.Decade);
+                l2 = dateutils_1.DateUtils.LeftYearOfCentury(this.Begin.Century);
                 break;
             case this.Begin.Type == TLEvent_1.EnumPeriod.day && period == TLEvent_1.EnumPeriod.decade:
             case this.Begin.Type == TLEvent_1.EnumPeriod.month && period == TLEvent_1.EnumPeriod.decade:
