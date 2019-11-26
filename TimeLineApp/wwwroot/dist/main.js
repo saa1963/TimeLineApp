@@ -22937,7 +22937,7 @@ const MainView_1 = __webpack_require__(/*! ./Main/MainView */ "./Main/MainView.t
 __webpack_require__(/*! bootstrap */ "../node_modules/bootstrap/dist/js/bootstrap.js");
 const MainModel_1 = __webpack_require__(/*! ./Main/MainModel */ "./Main/MainModel.ts");
 (function main() {
-    let mainView = new MainView_1.MainView(MainModel_1.MainModel.getInstance());
+    new MainView_1.MainView(MainModel_1.MainModel.getInstance());
 })();
 
 
