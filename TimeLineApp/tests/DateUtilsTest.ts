@@ -1,4 +1,4 @@
-﻿import { DateUtils } from '../wwwroot/src/dateutils';
+﻿import { DateUtils } from '../src/dateutils';
 import { expect } from 'chai';
 import 'mocha';
 

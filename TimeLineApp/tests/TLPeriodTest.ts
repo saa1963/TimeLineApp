@@ -1,7 +1,7 @@
-﻿import { TLPeriod } from '../wwwroot/src/TLPeriod';
+﻿import { TLPeriod } from '../src/TLPeriod';
 import { expect } from 'chai';
 import 'mocha';
-import { EnumPeriod } from '../wwwroot/src/TLEvent';
+import { EnumPeriod } from '../src/TLEvent';
 
 describe('TLPeriod', () => {
 

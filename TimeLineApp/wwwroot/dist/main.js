@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/index0.ts");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./index0.ts");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -18343,10 +18343,10 @@ module.exports = g;
 
 /***/ }),
 
-/***/ "./src/AddPeriod/AddPeriodModel.ts":
-/*!*****************************************!*\
-  !*** ./src/AddPeriod/AddPeriodModel.ts ***!
-  \*****************************************/
+/***/ "./AddPeriod/AddPeriodModel.ts":
+/*!*************************************!*\
+  !*** ./AddPeriod/AddPeriodModel.ts ***!
+  \*************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18605,10 +18605,10 @@ exports.AddPeriodModel = AddPeriodModel;
 
 /***/ }),
 
-/***/ "./src/AddPeriod/AddPeriodPresenter.ts":
-/*!*********************************************!*\
-  !*** ./src/AddPeriod/AddPeriodPresenter.ts ***!
-  \*********************************************/
+/***/ "./AddPeriod/AddPeriodPresenter.ts":
+/*!*****************************************!*\
+  !*** ./AddPeriod/AddPeriodPresenter.ts ***!
+  \*****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18874,10 +18874,10 @@ exports.AddPeriodPresenter = AddPeriodPresenter;
 
 /***/ }),
 
-/***/ "./src/AddPeriod/AddPeriodView.ts":
-/*!****************************************!*\
-  !*** ./src/AddPeriod/AddPeriodView.ts ***!
-  \****************************************/
+/***/ "./AddPeriod/AddPeriodView.ts":
+/*!************************************!*\
+  !*** ./AddPeriod/AddPeriodView.ts ***!
+  \************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18892,7 +18892,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const AddPeriodPresenter_1 = __webpack_require__(/*! ./AddPeriodPresenter */ "./src/AddPeriod/AddPeriodPresenter.ts");
+const AddPeriodPresenter_1 = __webpack_require__(/*! ./AddPeriodPresenter */ "./AddPeriod/AddPeriodPresenter.ts");
 const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
 class AddPeriodView {
     constructor(model) {
@@ -19262,10 +19262,10 @@ exports.AddPeriodView = AddPeriodView;
 
 /***/ }),
 
-/***/ "./src/ApiClient.ts":
-/*!**************************!*\
-  !*** ./src/ApiClient.ts ***!
-  \**************************/
+/***/ "./ApiClient.ts":
+/*!**********************!*\
+  !*** ./ApiClient.ts ***!
+  \**********************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19281,7 +19281,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
-const Globals_1 = __webpack_require__(/*! ./Globals */ "./src/Globals.ts");
+const Globals_1 = __webpack_require__(/*! ./Globals */ "./Globals.ts");
 class ApiClient {
     constructor() {
         // do something construct...
@@ -19360,10 +19360,10 @@ exports.ApiClient = ApiClient;
 
 /***/ }),
 
-/***/ "./src/BoxView.ts":
-/*!************************!*\
-  !*** ./src/BoxView.ts ***!
-  \************************/
+/***/ "./BoxView.ts":
+/*!********************!*\
+  !*** ./BoxView.ts ***!
+  \********************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19401,18 +19401,18 @@ exports.BoxView = BoxView;
 
 /***/ }),
 
-/***/ "./src/EP/EventPeriod.ts":
-/*!*******************************!*\
-  !*** ./src/EP/EventPeriod.ts ***!
-  \*******************************/
+/***/ "./EP/EventPeriod.ts":
+/*!***************************!*\
+  !*** ./EP/EventPeriod.ts ***!
+  \***************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const TLEvent_1 = __webpack_require__(/*! ../TLEvent */ "./src/TLEvent.ts");
-const dateutils_1 = __webpack_require__(/*! ../dateutils */ "./src/dateutils.ts");
+const TLEvent_1 = __webpack_require__(/*! ../TLEvent */ "./TLEvent.ts");
+const dateutils_1 = __webpack_require__(/*! ../dateutils */ "./dateutils.ts");
 var NS_EventPeriod;
 (function (NS_EventPeriod) {
     class Event {
@@ -19485,10 +19485,10 @@ var NS_EventPeriod;
 
 /***/ }),
 
-/***/ "./src/Globals.ts":
-/*!************************!*\
-  !*** ./src/Globals.ts ***!
-  \************************/
+/***/ "./Globals.ts":
+/*!********************!*\
+  !*** ./Globals.ts ***!
+  \********************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19520,10 +19520,10 @@ exports.Globals = Globals;
 
 /***/ }),
 
-/***/ "./src/Login/LoginModel.ts":
-/*!*********************************!*\
-  !*** ./src/Login/LoginModel.ts ***!
-  \*********************************/
+/***/ "./Login/LoginModel.ts":
+/*!*****************************!*\
+  !*** ./Login/LoginModel.ts ***!
+  \*****************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19568,10 +19568,10 @@ exports.LoginModel = LoginModel;
 
 /***/ }),
 
-/***/ "./src/Login/LoginPresenter.ts":
-/*!*************************************!*\
-  !*** ./src/Login/LoginPresenter.ts ***!
-  \*************************************/
+/***/ "./Login/LoginPresenter.ts":
+/*!*********************************!*\
+  !*** ./Login/LoginPresenter.ts ***!
+  \*********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19586,7 +19586,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const ApiClient_1 = __webpack_require__(/*! ../ApiClient */ "./src/ApiClient.ts");
+const ApiClient_1 = __webpack_require__(/*! ../ApiClient */ "./ApiClient.ts");
 class LoginPresenter {
     constructor(view, model) {
         this.model = model;
@@ -19626,10 +19626,10 @@ exports.LoginPresenter = LoginPresenter;
 
 /***/ }),
 
-/***/ "./src/Login/LoginView.ts":
-/*!********************************!*\
-  !*** ./src/Login/LoginView.ts ***!
-  \********************************/
+/***/ "./Login/LoginView.ts":
+/*!****************************!*\
+  !*** ./Login/LoginView.ts ***!
+  \****************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19644,9 +19644,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const LoginPresenter_1 = __webpack_require__(/*! ./LoginPresenter */ "./src/Login/LoginPresenter.ts");
+const LoginPresenter_1 = __webpack_require__(/*! ./LoginPresenter */ "./Login/LoginPresenter.ts");
 const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
-const Globals_1 = __webpack_require__(/*! ../Globals */ "./src/Globals.ts");
+const Globals_1 = __webpack_require__(/*! ../Globals */ "./Globals.ts");
 class LoginView {
     constructor(model) {
         this.tbLogin = document.getElementById('logLogin');
@@ -19713,10 +19713,10 @@ exports.LoginView = LoginView;
 
 /***/ }),
 
-/***/ "./src/Main/MainModel.ts":
-/*!*******************************!*\
-  !*** ./src/Main/MainModel.ts ***!
-  \*******************************/
+/***/ "./Main/MainModel.ts":
+/*!***************************!*\
+  !*** ./Main/MainModel.ts ***!
+  \***************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19793,10 +19793,10 @@ exports.MainModel = MainModel;
 
 /***/ }),
 
-/***/ "./src/Main/MainPresenter.ts":
-/*!***********************************!*\
-  !*** ./src/Main/MainPresenter.ts ***!
-  \***********************************/
+/***/ "./Main/MainPresenter.ts":
+/*!*******************************!*\
+  !*** ./Main/MainPresenter.ts ***!
+  \*******************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19811,22 +19811,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const ApiClient_1 = __webpack_require__(/*! ../ApiClient */ "./src/ApiClient.ts");
-const BoxView_1 = __webpack_require__(/*! ../BoxView */ "./src/BoxView.ts");
-const dateutils_1 = __webpack_require__(/*! ../dateutils */ "./src/dateutils.ts");
-const Globals_1 = __webpack_require__(/*! ../Globals */ "./src/Globals.ts");
-const LoginModel_1 = __webpack_require__(/*! ../Login/LoginModel */ "./src/Login/LoginModel.ts");
-const LoginView_1 = __webpack_require__(/*! ../Login/LoginView */ "./src/Login/LoginView.ts");
-const RegisterModel_1 = __webpack_require__(/*! ../Register/RegisterModel */ "./src/Register/RegisterModel.ts");
-const RegisterView_1 = __webpack_require__(/*! ../Register//RegisterView */ "./src/Register/RegisterView.ts");
-const TLEvent_1 = __webpack_require__(/*! ../TLEvent */ "./src/TLEvent.ts");
-const TlistView_1 = __webpack_require__(/*! ../Tlist/TlistView */ "./src/Tlist/TlistView.ts");
-const TLPeriod_1 = __webpack_require__(/*! ../TLPeriod */ "./src/TLPeriod.ts");
-const EventPeriod_1 = __webpack_require__(/*! ../EP/EventPeriod */ "./src/EP/EventPeriod.ts");
-const AddPeriodView_1 = __webpack_require__(/*! ../AddPeriod/AddPeriodView */ "./src/AddPeriod/AddPeriodView.ts");
-const AddPeriodModel_1 = __webpack_require__(/*! ../AddPeriod/AddPeriodModel */ "./src/AddPeriod/AddPeriodModel.ts");
-const UploadFileView_1 = __webpack_require__(/*! ../UploadFileView */ "./src/UploadFileView.ts");
-const PeriodContextMenu_1 = __webpack_require__(/*! ../PeriodContextMenu */ "./src/PeriodContextMenu.ts");
+const ApiClient_1 = __webpack_require__(/*! ../ApiClient */ "./ApiClient.ts");
+const BoxView_1 = __webpack_require__(/*! ../BoxView */ "./BoxView.ts");
+const dateutils_1 = __webpack_require__(/*! ../dateutils */ "./dateutils.ts");
+const Globals_1 = __webpack_require__(/*! ../Globals */ "./Globals.ts");
+const LoginModel_1 = __webpack_require__(/*! ../Login/LoginModel */ "./Login/LoginModel.ts");
+const LoginView_1 = __webpack_require__(/*! ../Login/LoginView */ "./Login/LoginView.ts");
+const RegisterModel_1 = __webpack_require__(/*! ../Register/RegisterModel */ "./Register/RegisterModel.ts");
+const RegisterView_1 = __webpack_require__(/*! ../Register/RegisterView */ "./Register/RegisterView.ts");
+const TLEvent_1 = __webpack_require__(/*! ../TLEvent */ "./TLEvent.ts");
+const TlistView_1 = __webpack_require__(/*! ../Tlist/TlistView */ "./Tlist/TlistView.ts");
+const TLPeriod_1 = __webpack_require__(/*! ../TLPeriod */ "./TLPeriod.ts");
+const EventPeriod_1 = __webpack_require__(/*! ../EP/EventPeriod */ "./EP/EventPeriod.ts");
+const AddPeriodView_1 = __webpack_require__(/*! ../AddPeriod/AddPeriodView */ "./AddPeriod/AddPeriodView.ts");
+const AddPeriodModel_1 = __webpack_require__(/*! ../AddPeriod/AddPeriodModel */ "./AddPeriod/AddPeriodModel.ts");
+const UploadFileView_1 = __webpack_require__(/*! ../UploadFileView */ "./UploadFileView.ts");
+const PeriodContextMenu_1 = __webpack_require__(/*! ../PeriodContextMenu */ "./PeriodContextMenu.ts");
 class MainPresenter {
     constructor(view, model) {
         // ******************* Свойства *********************************
@@ -20531,10 +20531,10 @@ exports.MainPresenter = MainPresenter;
 
 /***/ }),
 
-/***/ "./src/Main/MainView.ts":
-/*!******************************!*\
-  !*** ./src/Main/MainView.ts ***!
-  \******************************/
+/***/ "./Main/MainView.ts":
+/*!**************************!*\
+  !*** ./Main/MainView.ts ***!
+  \**************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -20549,7 +20549,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const MainPresenter_1 = __webpack_require__(/*! ./MainPresenter */ "./src/Main/MainPresenter.ts");
+const MainPresenter_1 = __webpack_require__(/*! ./MainPresenter */ "./Main/MainPresenter.ts");
 class MainView {
     constructor(model) {
         // элементы страницы
@@ -20808,17 +20808,17 @@ exports.MainView = MainView;
 
 /***/ }),
 
-/***/ "./src/PeriodContextMenu.ts":
-/*!**********************************!*\
-  !*** ./src/PeriodContextMenu.ts ***!
-  \**********************************/
+/***/ "./PeriodContextMenu.ts":
+/*!******************************!*\
+  !*** ./PeriodContextMenu.ts ***!
+  \******************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const contextmenu_1 = __webpack_require__(/*! ./contextmenu */ "./src/contextmenu.ts");
+const contextmenu_1 = __webpack_require__(/*! ./contextmenu */ "./contextmenu.ts");
 class PeriodContextMenu {
     static Create() {
         let menuitems = [];
@@ -20834,10 +20834,10 @@ exports.PeriodContextMenu = PeriodContextMenu;
 
 /***/ }),
 
-/***/ "./src/Register/RegisterModel.ts":
-/*!***************************************!*\
-  !*** ./src/Register/RegisterModel.ts ***!
-  \***************************************/
+/***/ "./Register/RegisterModel.ts":
+/*!***********************************!*\
+  !*** ./Register/RegisterModel.ts ***!
+  \***********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -20910,10 +20910,10 @@ exports.RegisterModel = RegisterModel;
 
 /***/ }),
 
-/***/ "./src/Register/RegisterPresenter.ts":
-/*!*******************************************!*\
-  !*** ./src/Register/RegisterPresenter.ts ***!
-  \*******************************************/
+/***/ "./Register/RegisterPresenter.ts":
+/*!***************************************!*\
+  !*** ./Register/RegisterPresenter.ts ***!
+  \***************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -20928,7 +20928,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const ApiClient_1 = __webpack_require__(/*! ../ApiClient */ "./src/ApiClient.ts");
+const ApiClient_1 = __webpack_require__(/*! ../ApiClient */ "./ApiClient.ts");
 class RegisterPresenter {
     constructor(view, model) {
         this.model = model;
@@ -20993,10 +20993,10 @@ exports.RegisterPresenter = RegisterPresenter;
 
 /***/ }),
 
-/***/ "./src/Register/RegisterView.ts":
-/*!**************************************!*\
-  !*** ./src/Register/RegisterView.ts ***!
-  \**************************************/
+/***/ "./Register/RegisterView.ts":
+/*!**********************************!*\
+  !*** ./Register/RegisterView.ts ***!
+  \**********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -21012,8 +21012,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
-const RegisterPresenter_1 = __webpack_require__(/*! ./RegisterPresenter */ "./src/Register/RegisterPresenter.ts");
-const Globals_1 = __webpack_require__(/*! ../Globals */ "./src/Globals.ts");
+const RegisterPresenter_1 = __webpack_require__(/*! ./RegisterPresenter */ "./Register/RegisterPresenter.ts");
+const Globals_1 = __webpack_require__(/*! ../Globals */ "./Globals.ts");
 class RegisterView {
     constructor(model) {
         this.tbLogin = document.getElementById('regLogin');
@@ -21097,17 +21097,17 @@ exports.RegisterView = RegisterView;
 
 /***/ }),
 
-/***/ "./src/TLEvent.ts":
-/*!************************!*\
-  !*** ./src/TLEvent.ts ***!
-  \************************/
+/***/ "./TLEvent.ts":
+/*!********************!*\
+  !*** ./TLEvent.ts ***!
+  \********************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const dateutils_1 = __webpack_require__(/*! ./dateutils */ "./src/dateutils.ts");
+const dateutils_1 = __webpack_require__(/*! ./dateutils */ "./dateutils.ts");
 var EnumPeriod;
 (function (EnumPeriod) {
     EnumPeriod[EnumPeriod["day"] = 1] = "day";
@@ -21381,18 +21381,18 @@ exports.TLEventCentury = TLEventCentury;
 
 /***/ }),
 
-/***/ "./src/TLPeriod.ts":
-/*!*************************!*\
-  !*** ./src/TLPeriod.ts ***!
-  \*************************/
+/***/ "./TLPeriod.ts":
+/*!*********************!*\
+  !*** ./TLPeriod.ts ***!
+  \*********************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const dateutils_1 = __webpack_require__(/*! ./dateutils */ "./src/dateutils.ts");
-const TLEvent_1 = __webpack_require__(/*! ./TLEvent */ "./src/TLEvent.ts");
+const dateutils_1 = __webpack_require__(/*! ./dateutils */ "./dateutils.ts");
+const TLEvent_1 = __webpack_require__(/*! ./TLEvent */ "./TLEvent.ts");
 const ste_simple_events_1 = __webpack_require__(/*! ste-simple-events */ "../node_modules/ste-simple-events/dist/index.js");
 class TLPeriod {
     constructor() {
@@ -21800,10 +21800,10 @@ exports.TLPeriod = TLPeriod;
 
 /***/ }),
 
-/***/ "./src/Tlist/TlistPresenter.ts":
-/*!*************************************!*\
-  !*** ./src/Tlist/TlistPresenter.ts ***!
-  \*************************************/
+/***/ "./Tlist/TlistPresenter.ts":
+/*!*********************************!*\
+  !*** ./Tlist/TlistPresenter.ts ***!
+  \*********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -21818,9 +21818,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Globals_1 = __webpack_require__(/*! ../Globals */ "./src/Globals.ts");
+const Globals_1 = __webpack_require__(/*! ../Globals */ "./Globals.ts");
 const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
-const TLPeriod_1 = __webpack_require__(/*! ../TLPeriod */ "./src/TLPeriod.ts");
+const TLPeriod_1 = __webpack_require__(/*! ../TLPeriod */ "./TLPeriod.ts");
 class TlistPresenter {
     constructor(view, model) {
         this.model = model;
@@ -21865,10 +21865,10 @@ exports.TlistPresenter = TlistPresenter;
 
 /***/ }),
 
-/***/ "./src/Tlist/TlistView.ts":
-/*!********************************!*\
-  !*** ./src/Tlist/TlistView.ts ***!
-  \********************************/
+/***/ "./Tlist/TlistView.ts":
+/*!****************************!*\
+  !*** ./Tlist/TlistView.ts ***!
+  \****************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -21884,8 +21884,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
-const TlistPresenter_1 = __webpack_require__(/*! ./TlistPresenter */ "./src/Tlist/TlistPresenter.ts");
-const Globals_1 = __webpack_require__(/*! ../Globals */ "./src/Globals.ts");
+const TlistPresenter_1 = __webpack_require__(/*! ./TlistPresenter */ "./Tlist/TlistPresenter.ts");
+const Globals_1 = __webpack_require__(/*! ../Globals */ "./Globals.ts");
 class TlistView {
     constructor(model) {
         this.tbList = document.getElementById('files_list');
@@ -21939,10 +21939,10 @@ exports.TlistView = TlistView;
 
 /***/ }),
 
-/***/ "./src/UploadFileView.ts":
-/*!*******************************!*\
-  !*** ./src/UploadFileView.ts ***!
-  \*******************************/
+/***/ "./UploadFileView.ts":
+/*!***************************!*\
+  !*** ./UploadFileView.ts ***!
+  \***************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -21958,7 +21958,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
-const TLPeriod_1 = __webpack_require__(/*! ./TLPeriod */ "./src/TLPeriod.ts");
+const TLPeriod_1 = __webpack_require__(/*! ./TLPeriod */ "./TLPeriod.ts");
 class UploadFileView {
     constructor() {
         this.btnUploadFile = document.getElementById('btnUploadFile');
@@ -22008,10 +22008,10 @@ exports.UploadFileView = UploadFileView;
 
 /***/ }),
 
-/***/ "./src/contextmenu.ts":
-/*!****************************!*\
-  !*** ./src/contextmenu.ts ***!
-  \****************************/
+/***/ "./contextmenu.ts":
+/*!************************!*\
+  !*** ./contextmenu.ts ***!
+  \************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -22254,17 +22254,17 @@ exports.MenuOptions = MenuOptions;
 
 /***/ }),
 
-/***/ "./src/dateutils.ts":
-/*!**************************!*\
-  !*** ./src/dateutils.ts ***!
-  \**************************/
+/***/ "./dateutils.ts":
+/*!**********************!*\
+  !*** ./dateutils.ts ***!
+  \**********************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const stringutils_1 = __webpack_require__(/*! ./stringutils */ "./src/stringutils.ts");
+const stringutils_1 = __webpack_require__(/*! ./stringutils */ "./stringutils.ts");
 class TLeapData {
     constructor(year) {
         if (TLeapData.leapYear(year)) {
@@ -22923,19 +22923,19 @@ function romanize(num) {
 
 /***/ }),
 
-/***/ "./src/index0.ts":
-/*!***********************!*\
-  !*** ./src/index0.ts ***!
-  \***********************/
+/***/ "./index0.ts":
+/*!*******************!*\
+  !*** ./index0.ts ***!
+  \*******************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const MainView_1 = __webpack_require__(/*! ./Main/MainView */ "./src/Main/MainView.ts");
+const MainView_1 = __webpack_require__(/*! ./Main/MainView */ "./Main/MainView.ts");
 __webpack_require__(/*! bootstrap */ "../node_modules/bootstrap/dist/js/bootstrap.js");
-const MainModel_1 = __webpack_require__(/*! ./Main/MainModel */ "./src/Main/MainModel.ts");
+const MainModel_1 = __webpack_require__(/*! ./Main/MainModel */ "./Main/MainModel.ts");
 (function main() {
     let mainView = new MainView_1.MainView(MainModel_1.MainModel.getInstance());
 })();
@@ -22943,10 +22943,10 @@ const MainModel_1 = __webpack_require__(/*! ./Main/MainModel */ "./src/Main/Main
 
 /***/ }),
 
-/***/ "./src/stringutils.ts":
-/*!****************************!*\
-  !*** ./src/stringutils.ts ***!
-  \****************************/
+/***/ "./stringutils.ts":
+/*!************************!*\
+  !*** ./stringutils.ts ***!
+  \************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 

@@ -8,7 +8,7 @@ import { LoginView } from "../Login/LoginView";
 import { MainModel } from "./MainModel";
 import { MainView } from "./MainView";
 import { RegisterModel } from "../Register/RegisterModel";
-import { RegisterView } from "../Register//RegisterView";
+import { RegisterView } from "../Register/RegisterView";
 import { EnumPeriod } from "../TLEvent";
 import { TlistView } from "../Tlist/TlistView";
 import { TLPeriod } from "../TLPeriod";

@@ -2,13 +2,13 @@ const path = require('path');
 //const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-  entry: './src/index0.ts',
+  entry: './index0.ts',
   devtool: 'source-map',
-  context: path.resolve(__dirname, 'wwwroot'),
+  context: path.resolve(__dirname, 'src'),
   mode: 'development',
   output: {
     filename: 'main.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'wwwroot/dist')
   },
   resolve: {
     modules: ['node_modules'],

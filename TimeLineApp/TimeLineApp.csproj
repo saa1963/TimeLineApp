@@ -6,44 +6,44 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="wwwroot\src\ts\**" />
-    <Content Remove="wwwroot\src\ts\**" />
-    <EmbeddedResource Remove="wwwroot\src\ts\**" />
-    <None Remove="wwwroot\src\ts\**" />
+    <Compile Remove="src\ts\**" />
+    <Content Remove="src\ts\**" />
+    <EmbeddedResource Remove="src\ts\**" />
+    <None Remove="src\ts\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\src\AddPeriodModel.ts" />
-    <Content Remove="wwwroot\src\AddPeriodPresenter.ts" />
-    <Content Remove="wwwroot\src\AddPeriod\AddPeriodView.ts" />
-    <Content Remove="wwwroot\src\AddPeriod\IAddPeriodView.ts" />
-    <Content Remove="wwwroot\src\ApiClient.ts" />
-    <Content Remove="wwwroot\src\BoxView.ts" />
-    <Content Remove="wwwroot\src\contextmenu.ts" />
-    <Content Remove="wwwroot\src\dateutils.ts" />
-    <Content Remove="wwwroot\src\EditStringView.ts" />
-    <Content Remove="wwwroot\src\EP\EventPeriod.ts" />
-    <Content Remove="wwwroot\src\Globals.ts" />
-    <Content Remove="wwwroot\src\ILoginView.ts" />
-    <Content Remove="wwwroot\src\index0.ts" />
-    <Content Remove="wwwroot\src\IRegisterView.ts" />
-    <Content Remove="wwwroot\src\ITlistView.ts" />
-    <Content Remove="wwwroot\src\LoginModel.ts" />
-    <Content Remove="wwwroot\src\LoginPresenter.ts" />
-    <Content Remove="wwwroot\src\LoginView.ts" />
-    <Content Remove="wwwroot\src\MainModel.ts" />
-    <Content Remove="wwwroot\src\MainPresenter.ts" />
-    <Content Remove="wwwroot\src\MainView.ts" />
-    <Content Remove="wwwroot\src\PeriodContextMenu.ts" />
-    <Content Remove="wwwroot\src\RegisterModel.ts" />
-    <Content Remove="wwwroot\src\RegisterPresenter.ts" />
-    <Content Remove="wwwroot\src\RegisterView.ts" />
-    <Content Remove="wwwroot\src\stringutils.ts" />
-    <Content Remove="wwwroot\src\TLEvent.ts" />
-    <Content Remove="wwwroot\src\TlistModel.ts" />
-    <Content Remove="wwwroot\src\TlistPresenter.ts" />
-    <Content Remove="wwwroot\src\TlistView.ts" />
-    <Content Remove="wwwroot\src\UploadFileView.ts" />
+    <Content Remove="src\AddPeriodModel.ts" />
+    <Content Remove="src\AddPeriodPresenter.ts" />
+    <Content Remove="src\AddPeriod\AddPeriodView.ts" />
+    <Content Remove="src\AddPeriod\IAddPeriodView.ts" />
+    <Content Remove="src\ApiClient.ts" />
+    <Content Remove="src\BoxView.ts" />
+    <Content Remove="src\contextmenu.ts" />
+    <Content Remove="src\dateutils.ts" />
+    <Content Remove="src\EditStringView.ts" />
+    <Content Remove="src\EP\EventPeriod.ts" />
+    <Content Remove="src\Globals.ts" />
+    <Content Remove="src\ILoginView.ts" />
+    <Content Remove="src\index0.ts" />
+    <Content Remove="src\IRegisterView.ts" />
+    <Content Remove="src\ITlistView.ts" />
+    <Content Remove="src\LoginModel.ts" />
+    <Content Remove="src\LoginPresenter.ts" />
+    <Content Remove="src\LoginView.ts" />
+    <Content Remove="src\MainModel.ts" />
+    <Content Remove="src\MainPresenter.ts" />
+    <Content Remove="src\MainView.ts" />
+    <Content Remove="src\PeriodContextMenu.ts" />
+    <Content Remove="src\RegisterModel.ts" />
+    <Content Remove="src\RegisterPresenter.ts" />
+    <Content Remove="src\RegisterView.ts" />
+    <Content Remove="src\stringutils.ts" />
+    <Content Remove="src\TLEvent.ts" />
+    <Content Remove="src\TlistModel.ts" />
+    <Content Remove="src\TlistPresenter.ts" />
+    <Content Remove="src\TlistView.ts" />
+    <Content Remove="src\UploadFileView.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -56,6 +56,23 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="src\AddPeriod\AddPeriodModel.ts" />
+    <Content Include="src\AddPeriod\AddPeriodPresenter.ts" />
+    <Content Include="src\Login\ILoginView.ts" />
+    <Content Include="src\Login\LoginModel.ts" />
+    <Content Include="src\Login\LoginPresenter.ts" />
+    <Content Include="src\Login\LoginView.ts" />
+    <Content Include="src\Main\MainModel.ts" />
+    <Content Include="src\Main\MainPresenter.ts" />
+    <Content Include="src\Main\MainView.ts" />
+    <Content Include="src\Register\IRegisterView.ts" />
+    <Content Include="src\Register\RegisterModel.ts" />
+    <Content Include="src\Register\RegisterPresenter.ts" />
+    <Content Include="src\Register\RegisterView.ts" />
+    <Content Include="src\Tlist\TlistModel.ts" />
+    <Content Include="src\Tlist\TlistPresenter.ts" />
+    <Content Include="src\Tlist\TlistView.ts" />
+    <Content Include="src\TLPeriod.ts" />
     <Content Include="webpack.config.js" />
   </ItemGroup>
 
@@ -88,42 +105,37 @@
     <None Include="wwwroot\fonts\fa-solid-900.ttf" />
     <None Include="wwwroot\fonts\fa-solid-900.woff" />
     <None Include="wwwroot\fonts\fa-solid-900.woff2" />
-    <None Include="wwwroot\src\contextmenu.ts" />
-    <None Include="wwwroot\src\dateutils.ts" />
-    <None Include="wwwroot\src\Globals.ts" />
-    <None Include="wwwroot\src\stringutils.ts" />
-    <None Include="wwwroot\src\TLEvent.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="tests\DateUtilsTest.ts" />
     <TypeScriptCompile Include="tests\TLPeriodTest.ts" />
-    <TypeScriptCompile Include="wwwroot\src\AddPeriod\AddPeriodModel.ts" />
-    <TypeScriptCompile Include="wwwroot\src\AddPeriod\AddPeriodPresenter.ts" />
-    <TypeScriptCompile Include="wwwroot\src\AddPeriod\AddPeriodView.ts" />
-    <TypeScriptCompile Include="wwwroot\src\AddPeriod\IAddPeriodView.ts" />
-    <TypeScriptCompile Include="wwwroot\src\ApiClient.ts" />
-    <TypeScriptCompile Include="wwwroot\src\BoxView.ts" />
-    <TypeScriptCompile Include="wwwroot\src\EditStringView.ts" />
-    <TypeScriptCompile Include="wwwroot\src\EP\EventPeriod.ts" />
-    <TypeScriptCompile Include="wwwroot\src\Login\ILoginView.ts" />
-    <TypeScriptCompile Include="wwwroot\src\index0.ts" />
-    <TypeScriptCompile Include="wwwroot\src\PeriodContextMenu.ts" />
-    <TypeScriptCompile Include="wwwroot\src\Register\IRegisterView.ts" />
-    <TypeScriptCompile Include="wwwroot\src\ITlistView.ts" />
-    <TypeScriptCompile Include="wwwroot\src\Login\LoginModel.ts" />
-    <TypeScriptCompile Include="wwwroot\src\Login\LoginPresenter.ts" />
-    <TypeScriptCompile Include="wwwroot\src\Login\LoginView.ts" />
-    <TypeScriptCompile Include="wwwroot\src\Main\MainModel.ts" />
-    <TypeScriptCompile Include="wwwroot\src\Main\MainPresenter.ts" />
-    <TypeScriptCompile Include="wwwroot\src\Main\MainView.ts" />
-    <TypeScriptCompile Include="wwwroot\src\Register\RegisterModel.ts" />
-    <TypeScriptCompile Include="wwwroot\src\Register\RegisterPresenter.ts" />
-    <TypeScriptCompile Include="wwwroot\src\Register\RegisterView.ts" />
-    <TypeScriptCompile Include="wwwroot\src\Tlist\TlistModel.ts" />
-    <TypeScriptCompile Include="wwwroot\src\Tlist\TlistPresenter.ts" />
-    <TypeScriptCompile Include="wwwroot\src\Tlist\TlistView.ts" />
-    <TypeScriptCompile Include="wwwroot\src\UploadFileView.ts" />
+    <TypeScriptCompile Include="src\AddPeriod\AddPeriodModel.ts" />
+    <TypeScriptCompile Include="src\AddPeriod\AddPeriodPresenter.ts" />
+    <TypeScriptCompile Include="src\AddPeriod\AddPeriodView.ts" />
+    <TypeScriptCompile Include="src\AddPeriod\IAddPeriodView.ts" />
+    <TypeScriptCompile Include="src\ApiClient.ts" />
+    <TypeScriptCompile Include="src\BoxView.ts" />
+    <TypeScriptCompile Include="src\EditStringView.ts" />
+    <TypeScriptCompile Include="src\EP\EventPeriod.ts" />
+    <TypeScriptCompile Include="src\Login\ILoginView.ts" />
+    <TypeScriptCompile Include="src\index0.ts" />
+    <TypeScriptCompile Include="src\PeriodContextMenu.ts" />
+    <TypeScriptCompile Include="src\Register\IRegisterView.ts" />
+    <TypeScriptCompile Include="src\ITlistView.ts" />
+    <TypeScriptCompile Include="src\Login\LoginModel.ts" />
+    <TypeScriptCompile Include="src\Login\LoginPresenter.ts" />
+    <TypeScriptCompile Include="src\Login\LoginView.ts" />
+    <TypeScriptCompile Include="src\Main\MainModel.ts" />
+    <TypeScriptCompile Include="src\Main\MainPresenter.ts" />
+    <TypeScriptCompile Include="src\Main\MainView.ts" />
+    <TypeScriptCompile Include="src\Register\RegisterModel.ts" />
+    <TypeScriptCompile Include="src\Register\RegisterPresenter.ts" />
+    <TypeScriptCompile Include="src\Register\RegisterView.ts" />
+    <TypeScriptCompile Include="src\Tlist\TlistModel.ts" />
+    <TypeScriptCompile Include="src\Tlist\TlistPresenter.ts" />
+    <TypeScriptCompile Include="src\Tlist\TlistView.ts" />
+    <TypeScriptCompile Include="src\UploadFileView.ts" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
