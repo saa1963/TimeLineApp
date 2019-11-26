@@ -163,21 +163,21 @@ export class MainPresenter {
   }
 
   public async OnShowAll(idx: number) {
-    this.view.DrawHeader(idx, this.getHeaderText(idx), this.model.Item(idx).Parent == null)
-    this.DrawTL(idx, this.model.Item(idx), (x) => {
-      // value.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period)
-      let rt = TLPeriod[]
-      this.getPeriodsInInterval(x).forEach((value) => {
-
-      }
-    })
+    this.model.Add(this.model.Item(idx))
+    //this.view.DrawHeader(idx, this.getHeaderText(idx), this.model.Item(idx).Parent == null)
+    //this.DrawTL(idx, this.model.Item(idx), (x) => { return this.qq(x) })
   }
 
   private qq(p: TLPeriod): TLPeriod[] {
-    let rt: TLPeriod[]
+    let rt: TLPeriod[] = []
     for (let i = 0; i < p.Periods.length; i++) {
-      if p.Periods[i].IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period){
-        rt.push(p.Periods[i])
+      let period = p.Periods[i]
+      if (period.Count == 0) {
+        if (period.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period)) {
+          rt.push(period)
+        }
+      } else {
+        rt.concat(this.qq(period))
       }
     }
     return rt

@@ -19970,6 +19970,28 @@ class MainPresenter {
             }
         });
     }
+    OnShowAll(idx) {
+        return __awaiter(this, void 0, void 0, function* () {
+            this.model.Add(this.model.Item(idx));
+            //this.view.DrawHeader(idx, this.getHeaderText(idx), this.model.Item(idx).Parent == null)
+            //this.DrawTL(idx, this.model.Item(idx), (x) => { return this.qq(x) })
+        });
+    }
+    qq(p) {
+        let rt = [];
+        for (let i = 0; i < p.Periods.length; i++) {
+            let period = p.Periods[i];
+            if (period.Count == 0) {
+                if (period.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period)) {
+                    rt.push(period);
+                }
+            }
+            else {
+                rt.concat(this.qq(period));
+            }
+        }
+        return rt;
+    }
     // Function to download data to a file
     download(data, filename, type) {
         let file = new Blob([data], { type: type });
@@ -20337,11 +20359,20 @@ class MainPresenter {
         }
         return dates;
     }
-    DrawTL(tl_index, model) {
-        // выбрать периоды попадающие в общий диапазон
-        let items = model.Items.filter((value, index, array) => {
+    getPeriodsInInterval(model) {
+        return model.Items.filter((value, index, array) => {
             return value.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period);
         });
+    }
+    DrawTL(tl_index, model, filter) {
+        // выбрать периоды попадающие в общий диапазон
+        let items;
+        if (!filter) {
+            items = this.getPeriodsInInterval(model);
+        }
+        else {
+            items = filter(model);
+        }
         // вычисляем индексы
         let exItems = [];
         for (let p of items) {
@@ -20657,7 +20688,7 @@ class MainView {
             });
             let aSaveToFile = document.createElement('a');
             aSaveToFile.classList.add('dropdown-item');
-            aSaveToFile.textContent = "Сохранить в файл";
+            aSaveToFile.textContent = "В файл";
             aSaveToFile.href = '#';
             aSaveToFile.onclick = (ev) => __awaiter(this, void 0, void 0, function* () {
                 yield this.Presenter.OnSaveToFile(idx);
@@ -20669,12 +20700,20 @@ class MainView {
             aCollapse.onclick = (ev) => __awaiter(this, void 0, void 0, function* () {
                 yield this.Presenter.OnCollapse(idx);
             });
+            let aShowAll = document.createElement('a');
+            aShowAll.classList.add('dropdown-item');
+            aShowAll.textContent = "Показать все";
+            aShowAll.href = '#';
+            aShowAll.onclick = (ev) => __awaiter(this, void 0, void 0, function* () {
+                yield this.Presenter.OnShowAll(idx);
+            });
             let divGroup = document.createElement('div');
             divGroup.classList.add('dropdown-menu');
             divGroup.append(aPlus);
             divGroup.append(aSave);
             divGroup.append(aSaveToFile);
             divGroup.append(aCollapse);
+            divGroup.append(aShowAll);
             let divDropDown = document.createElement('div');
             divDropDown.classList.add('dropdown');
             divDropDown.append(btnMenu);
