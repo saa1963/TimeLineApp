@@ -162,6 +162,27 @@ export class MainPresenter {
     }
   }
 
+  public async OnShowAll(idx: number) {
+    this.view.DrawHeader(idx, this.getHeaderText(idx), this.model.Item(idx).Parent == null)
+    this.DrawTL(idx, this.model.Item(idx), (x) => {
+      // value.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period)
+      let rt = TLPeriod[]
+      this.getPeriodsInInterval(x).forEach((value) => {
+
+      }
+    })
+  }
+
+  private qq(p: TLPeriod): TLPeriod[] {
+    let rt: TLPeriod[]
+    for (let i = 0; i < p.Periods.length; i++) {
+      if p.Periods[i].IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period){
+        rt.push(p.Periods[i])
+      }
+    }
+    return rt
+  }
+
   // Function to download data to a file
   private download(data: string, filename: string, type: string) {
     let file = new Blob([data], { type: type })
@@ -617,11 +638,20 @@ export class MainPresenter {
     return dates
   }
 
-  private DrawTL(tl_index: number, model: TLPeriod) {
-    // выбрать периоды попадающие в общий диапазон
-    let items = model.Items.filter((value, index, array) => {
+  private getPeriodsInInterval(model: TLPeriod): TLPeriod[] {
+    return model.Items.filter((value, index, array) => {
       return value.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period)
     })
+  }
+
+  private DrawTL(tl_index: number, model: TLPeriod, filter?: (x: TLPeriod) => TLPeriod[]) {
+    // выбрать периоды попадающие в общий диапазон
+    let items: TLPeriod[]
+    if (!filter) {
+      items = this.getPeriodsInInterval(model)
+    } else {
+      items = filter(model)
+    }
     // вычисляем индексы
     let exItems: IExTLPeriod[] = []
     for (let p of items) {
