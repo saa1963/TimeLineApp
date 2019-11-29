@@ -13,6 +13,7 @@ export class TLPeriod {
   m_EndDay: number
   Periods: TLPeriod[] = []
   Parent: TLPeriod
+  IsShowAll: boolean = false
 
 
   public toJSON() {

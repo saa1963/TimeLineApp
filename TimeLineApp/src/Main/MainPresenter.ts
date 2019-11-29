@@ -163,24 +163,24 @@ export class MainPresenter {
   }
 
   public async OnShowAll(idx: number) {
-    this.model.Add(this.model.Item(idx))
-    //this.view.DrawHeader(idx, this.getHeaderText(idx), this.model.Item(idx).Parent == null)
-    //this.DrawTL(idx, this.model.Item(idx), (x) => { return this.qq(x) })
+    let source = this.model.Item(idx)
+    let target = TLPeriod.CreateTLPeriod(source)
+    target.IsShowAll = true
+    this.model.Add(target)
   }
 
-  private qq(p: TLPeriod): TLPeriod[] {
-    let rt: TLPeriod[] = []
+  private getAllSuitablePeriodsFromHierarchy(p: TLPeriod, items: TLPeriod[]): void {
     for (let i = 0; i < p.Periods.length; i++) {
       let period = p.Periods[i]
       if (period.Count == 0) {
         if (period.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period)) {
-          rt.push(period)
+          items.push(period)
         }
       } else {
-        rt.concat(this.qq(period))
+        items.push(period)
+        this.getAllSuitablePeriodsFromHierarchy(period, items)
       }
     }
-    return rt
   }
 
   // Function to download data to a file
@@ -644,13 +644,13 @@ export class MainPresenter {
     })
   }
 
-  private DrawTL(tl_index: number, model: TLPeriod, filter?: (x: TLPeriod) => TLPeriod[]) {
+  private DrawTL(tl_index: number, model: TLPeriod) {
     // выбрать периоды попадающие в общий диапазон
-    let items: TLPeriod[]
-    if (!filter) {
+    let items: TLPeriod[] = []
+    if (!model.IsShowAll) {
       items = this.getPeriodsInInterval(model)
     } else {
-      items = filter(model)
+      this.getAllSuitablePeriodsFromHierarchy(model, items)
     }
     // вычисляем индексы
     let exItems: IExTLPeriod[] = []

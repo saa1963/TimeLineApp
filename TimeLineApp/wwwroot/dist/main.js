@@ -19972,25 +19972,25 @@ class MainPresenter {
     }
     OnShowAll(idx) {
         return __awaiter(this, void 0, void 0, function* () {
-            this.model.Add(this.model.Item(idx));
-            //this.view.DrawHeader(idx, this.getHeaderText(idx), this.model.Item(idx).Parent == null)
-            //this.DrawTL(idx, this.model.Item(idx), (x) => { return this.qq(x) })
+            let source = this.model.Item(idx);
+            let target = TLPeriod_1.TLPeriod.CreateTLPeriod(source);
+            target.IsShowAll = true;
+            this.model.Add(target);
         });
     }
-    qq(p) {
-        let rt = [];
+    getAllSuitablePeriodsFromHierarchy(p, items) {
         for (let i = 0; i < p.Periods.length; i++) {
             let period = p.Periods[i];
             if (period.Count == 0) {
                 if (period.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period)) {
-                    rt.push(period);
+                    items.push(period);
                 }
             }
             else {
-                rt.concat(this.qq(period));
+                items.push(period);
+                this.getAllSuitablePeriodsFromHierarchy(period, items);
             }
         }
-        return rt;
     }
     // Function to download data to a file
     download(data, filename, type) {
@@ -20364,14 +20364,14 @@ class MainPresenter {
             return value.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period);
         });
     }
-    DrawTL(tl_index, model, filter) {
+    DrawTL(tl_index, model) {
         // выбрать периоды попадающие в общий диапазон
-        let items;
-        if (!filter) {
+        let items = [];
+        if (!model.IsShowAll) {
             items = this.getPeriodsInInterval(model);
         }
         else {
-            items = filter(model);
+            this.getAllSuitablePeriodsFromHierarchy(model, items);
         }
         // вычисляем индексы
         let exItems = [];
@@ -21398,6 +21398,7 @@ class TLPeriod {
     constructor() {
         this.Name = "Новый";
         this.Periods = [];
+        this.IsShowAll = false;
         this.e_AddPeriod = new ste_simple_events_1.SimpleEventDispatcher();
         this.e_RemovePeriod = new ste_simple_events_1.SimpleEventDispatcher();
     }

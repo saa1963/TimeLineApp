@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack')
 //const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
@@ -8,7 +9,8 @@ module.exports = {
   mode: 'development',
   output: {
     filename: 'main.js',
-    path: path.resolve(__dirname, 'wwwroot/dist')
+    path: path.resolve(__dirname, 'wwwroot/dist'),
+    devtoolModuleFilenameTemplate: '../../src/[resource-path]'  // Removes the webpack:/// prefix
   },
   resolve: {
     modules: ['node_modules'],
