@@ -19987,7 +19987,9 @@ class MainPresenter {
                 }
             }
             else {
-                items.push(period);
+                if (period.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period)) {
+                    items.push(period);
+                }
                 this.getAllSuitablePeriodsFromHierarchy(period, items);
             }
         }
