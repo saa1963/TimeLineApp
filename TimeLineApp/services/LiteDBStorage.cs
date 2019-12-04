@@ -1,15 +1,11 @@
-﻿using System;
+﻿using LiteDB;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LiteDB;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using TimeLineApp.Models;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace TimeLineApp.services
 {
@@ -24,7 +20,7 @@ namespace TimeLineApp.services
             dbName = Path.Combine(env.ContentRootPath, "data", "db.dat");
             using (var db = new LiteDatabase(dbName))
             {
-                if(!db.GetCollectionNames().Contains(timelines))
+                if (!db.GetCollectionNames().Contains(timelines))
                 {
                     var col = db.GetCollection<TString>(timelines);
                     col.EnsureIndex(s => s.Header);

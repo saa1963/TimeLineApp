@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using TimeLineApp.Models;
 using TimeLineApp.services;
 
@@ -40,8 +39,8 @@ namespace TimeLineApp.Controllers
             if (storage.Logon(model.Login, model.Password))
             {
                 await AuthenticateUser(model.Login);
-                HttpContext.Response.Cookies.Append("timelineuser", model.Login, 
-                    new CookieOptions() { Expires = new DateTimeOffset(DateTime.Now.AddMonths(1)), HttpOnly = false});
+                HttpContext.Response.Cookies.Append("timelineuser", model.Login,
+                    new CookieOptions() { Expires = new DateTimeOffset(DateTime.Now.AddMonths(1)), HttpOnly = false });
                 return "";
             }
             return "Ошибка входа";

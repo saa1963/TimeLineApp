@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 //using Newtonsoft.Json;
 //using Newtonsoft.Json.Linq;
 using System.Text.Json;
@@ -145,9 +144,9 @@ namespace TimeLineApp.Models
     }
 
     [Serializable]
-    public class EventCentury: Event
+    public class EventCentury : Event
     {
-        public EventCentury(string name, int century): base(name)
+        public EventCentury(string name, int century) : base(name)
         {
             Century = century;
         }
@@ -165,7 +164,7 @@ namespace TimeLineApp.Models
         public EventDecade(string name, int century, int decade) : base(name)
         {
             Debug.Assert(decade >= 0 && decade <= 9);
-            Decade = ((Math.Abs(century) - 1) * 10 + decade + 1) * (century/Math.Abs(century));
+            Decade = ((Math.Abs(century) - 1) * 10 + decade + 1) * (century / Math.Abs(century));
             Century = century;
         }
 
@@ -182,9 +181,9 @@ namespace TimeLineApp.Models
     }
 
     [Serializable]
-    public class EventYear: Event
+    public class EventYear : Event
     {
-        public EventYear(string name, int year): base(name)
+        public EventYear(string name, int year) : base(name)
         {
             Year = year;
             Decade = DecadeFromYear(year);
@@ -193,7 +192,7 @@ namespace TimeLineApp.Models
     }
 
     [Serializable]
-    public class EventMonth: Event
+    public class EventMonth : Event
     {
         /// <summary>
         /// 
@@ -201,7 +200,7 @@ namespace TimeLineApp.Models
         /// <param name="name"></param>
         /// <param name="year"></param>
         /// <param name="month">месяц от 1 до 12</param>
-        public EventMonth(string name, int year, int month):base(name)
+        public EventMonth(string name, int year, int month) : base(name)
         {
             Month = ((Math.Abs(year) - 1) * 12 + month) * (year / Math.Abs(year));
             Year = year;
@@ -214,7 +213,7 @@ namespace TimeLineApp.Models
         /// </summary>
         /// <param name="name"></param>
         /// <param name="month">-1 ... +1</param>
-        public EventMonth(string name, int month):base(name)
+        public EventMonth(string name, int month) : base(name)
         {
             Month = month;
             Year = YearFromMonth(month);
@@ -224,7 +223,7 @@ namespace TimeLineApp.Models
     }
 
     [Serializable]
-    public class EventDay: Event
+    public class EventDay : Event
     {
         /// <summary>
         /// 
@@ -233,7 +232,7 @@ namespace TimeLineApp.Models
         /// <param name="year"></param>
         /// <param name="month">1-12</param>
         /// <param name="day"></param>
-        public EventDay(string name, int year, int month, int day):base(name)
+        public EventDay(string name, int year, int month, int day) : base(name)
         {
             //Day = new Date(year, month, day);
             //Month = ((Math.Abs(year) - 1) * 12 + month) * (year / Math.Abs(year));
@@ -261,9 +260,9 @@ namespace TimeLineApp.Models
     }
 
     [Serializable]
-    public class PeriodEvent: Period
+    public class PeriodEvent : Period
     {
-        public PeriodEvent(string name, Event ev):base(name, ev, ev)
+        public PeriodEvent(string name, Event ev) : base(name, ev, ev)
         { }
     }
 }
