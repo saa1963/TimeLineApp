@@ -81,18 +81,23 @@ export class MainView {
       let td = document.createElement('td')
       td.classList.add('date_cell')
       td.id = 'i' + i
-      td.onclick = (ev) => {
-        this.Presenter.OnScaleForward(i)
-      }
-      td.onauxclick = (ev) => {
-        ev.preventDefault()
-        this.Presenter.OnScaleBack(i)
-      }
-      td.oncontextmenu = (ev) => {
-        ev.preventDefault()
-      }
+      //td.onclick = (ev) => {
+      //  this.Presenter.OnScaleForward(i)
+      //}
+      //td.onauxclick = (ev) => {
+      //  ev.preventDefault()
+      //  this.Presenter.OnScaleBack(i)
+      //}
+      //td.oncontextmenu = (ev) => {
+      //  ev.preventDefault()
+      //}
       let dt = document.createTextNode(dates[i])
-      td.append(dt)
+      let cell1 = <HTMLButtonElement>document.createElement('button')
+      cell1.textContent = '123'
+      let cell2 = <HTMLDivElement>document.createElement('div')
+      cell2.append(document.createTextNode(dates[i]))
+      td.append(cell1)
+      td.append(cell2)
       row.append(td)
     }
     this.mainTable.append(row)
@@ -125,6 +130,13 @@ export class MainView {
     td.append(txt)
     row.append(td)
 
+    td = <HTMLTableDataCellElement>document.createElement('td')
+    td.append(this.CreateTLDropDown(idx))
+    row.append(td)
+    table.append(row)
+  }
+
+  private CreateDropDown(header: string, mas: { header: string, handler: (ev) => void }[]) {
     let btnMenu = <HTMLButtonElement>document.createElement('button')
     btnMenu.type = 'button'
     btnMenu.setAttribute('data-toggle', 'dropdown')
@@ -132,60 +144,60 @@ export class MainView {
     btnMenu.classList.add('btn-secondary')
     btnMenu.classList.add('btn-block')
     btnMenu.classList.add('dropdown-toggle')
-    btnMenu.textContent = '>>'
-    
-    let aPlus = <HTMLAnchorElement>document.createElement('a')
-    aPlus.classList.add('dropdown-item')
-    aPlus.textContent = "Добавить"
-    aPlus.href = '#'
-    aPlus.onclick = async (ev) => {
-      await this.Presenter.OnAddPeriod(idx)
-    }
-    let aSave = <HTMLAnchorElement>document.createElement('a')
-    aSave.classList.add('dropdown-item')
-    aSave.textContent = "Сохранить"
-    aSave.href = '#'
-    aSave.onclick = async (ev) => {
-      await this.Presenter.OnSave(idx)
-    }
-    let aSaveToFile = <HTMLAnchorElement>document.createElement('a')
-    aSaveToFile.classList.add('dropdown-item')
-    aSaveToFile.textContent = "В файл"
-    aSaveToFile.href = '#'
-    aSaveToFile.onclick = async (ev) => {
-      await this.Presenter.OnSaveToFile(idx)
-    }
-    let aCollapse = <HTMLAnchorElement>document.createElement('a')
-    aCollapse.classList.add('dropdown-item')
-    aCollapse.textContent = "Свернуть"
-    aCollapse.href = '#'
-    aCollapse.onclick = async (ev) => {
-      await this.Presenter.OnCollapse(idx)
-    }
-    let aShowAll = <HTMLAnchorElement>document.createElement('a')
-    aShowAll.classList.add('dropdown-item')
-    aShowAll.textContent = "Показать все"
-    aShowAll.href = '#'
-    aShowAll.onclick = async (ev) => {
-      await this.Presenter.OnShowAll(idx)
-    }
+    btnMenu.textContent = header
     let divGroup = <HTMLDivElement>document.createElement('div')
     divGroup.classList.add('dropdown-menu')
-    divGroup.append(aPlus)
-    divGroup.append(aSave)
-    divGroup.append(aSaveToFile)
-    divGroup.append(aCollapse)
-    divGroup.append(aShowAll)
+
+    for (let item of mas) {
+      let newMenuItem = <HTMLAnchorElement>document.createElement('a')
+      newMenuItem.classList.add('dropdown-item')
+      newMenuItem.textContent = item.header
+      newMenuItem.href = '#'
+      newMenuItem.onclick = item.handler
+      divGroup.append(newMenuItem)
+    }
 
     let divDropDown = <HTMLDivElement>document.createElement('div')
     divDropDown.classList.add('dropdown')
     divDropDown.append(btnMenu)
     divDropDown.append(divGroup)
 
-    td = <HTMLTableDataCellElement>document.createElement('td')
-    td.append(divDropDown)
-    row.append(td)
-    table.append(row)
+    return divDropDown
+  }
+
+  private CreateTLDropDown(idx: number): HTMLDivElement {
+    return this.CreateDropDown('>>', [
+      {
+        header: 'Добавить',
+        handler: async (ev) => {
+          await this.Presenter.OnAddPeriod(idx)
+        }
+      },
+      {
+        header: 'Сохранить',
+        handler: async (ev) => {
+          await this.Presenter.OnSave(idx)
+        }
+      },
+      {
+        header: 'В файл',
+        handler: async (ev) => {
+          await this.Presenter.OnSaveToFile(idx)
+        }
+      },
+      {
+        header: 'Свернуть',
+        handler: async (ev) => {
+          await this.Presenter.OnCollapse(idx)
+        }
+      },
+      {
+        header: 'Показать все',
+        handler: async (ev) => {
+          await this.Presenter.OnShowAll(idx)
+        }
+      }
+    ])
   }
 
   public DrawEventsRow(idx: number, items: IExTLPeriod[]) {

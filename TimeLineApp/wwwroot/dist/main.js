@@ -20622,18 +20622,23 @@ class MainView {
             let td = document.createElement('td');
             td.classList.add('date_cell');
             td.id = 'i' + i;
-            td.onclick = (ev) => {
-                this.Presenter.OnScaleForward(i);
-            };
-            td.onauxclick = (ev) => {
-                ev.preventDefault();
-                this.Presenter.OnScaleBack(i);
-            };
-            td.oncontextmenu = (ev) => {
-                ev.preventDefault();
-            };
+            //td.onclick = (ev) => {
+            //  this.Presenter.OnScaleForward(i)
+            //}
+            //td.onauxclick = (ev) => {
+            //  ev.preventDefault()
+            //  this.Presenter.OnScaleBack(i)
+            //}
+            //td.oncontextmenu = (ev) => {
+            //  ev.preventDefault()
+            //}
             let dt = document.createTextNode(dates[i]);
-            td.append(dt);
+            let cell1 = document.createElement('button');
+            cell1.textContent = '123';
+            let cell2 = document.createElement('div');
+            cell2.append(document.createTextNode(dates[i]));
+            td.append(cell1);
+            td.append(cell2);
             row.append(td);
         }
         this.mainTable.append(row);
@@ -20666,65 +20671,70 @@ class MainView {
             let txt = document.createTextNode(s);
             td.append(txt);
             row.append(td);
-            let btnMenu = document.createElement('button');
-            btnMenu.type = 'button';
-            btnMenu.setAttribute('data-toggle', 'dropdown');
-            btnMenu.classList.add('btn');
-            btnMenu.classList.add('btn-secondary');
-            btnMenu.classList.add('btn-block');
-            btnMenu.classList.add('dropdown-toggle');
-            btnMenu.textContent = '>>';
-            let aPlus = document.createElement('a');
-            aPlus.classList.add('dropdown-item');
-            aPlus.textContent = "Добавить";
-            aPlus.href = '#';
-            aPlus.onclick = (ev) => __awaiter(this, void 0, void 0, function* () {
-                yield this.Presenter.OnAddPeriod(idx);
-            });
-            let aSave = document.createElement('a');
-            aSave.classList.add('dropdown-item');
-            aSave.textContent = "Сохранить";
-            aSave.href = '#';
-            aSave.onclick = (ev) => __awaiter(this, void 0, void 0, function* () {
-                yield this.Presenter.OnSave(idx);
-            });
-            let aSaveToFile = document.createElement('a');
-            aSaveToFile.classList.add('dropdown-item');
-            aSaveToFile.textContent = "В файл";
-            aSaveToFile.href = '#';
-            aSaveToFile.onclick = (ev) => __awaiter(this, void 0, void 0, function* () {
-                yield this.Presenter.OnSaveToFile(idx);
-            });
-            let aCollapse = document.createElement('a');
-            aCollapse.classList.add('dropdown-item');
-            aCollapse.textContent = "Свернуть";
-            aCollapse.href = '#';
-            aCollapse.onclick = (ev) => __awaiter(this, void 0, void 0, function* () {
-                yield this.Presenter.OnCollapse(idx);
-            });
-            let aShowAll = document.createElement('a');
-            aShowAll.classList.add('dropdown-item');
-            aShowAll.textContent = "Показать все";
-            aShowAll.href = '#';
-            aShowAll.onclick = (ev) => __awaiter(this, void 0, void 0, function* () {
-                yield this.Presenter.OnShowAll(idx);
-            });
-            let divGroup = document.createElement('div');
-            divGroup.classList.add('dropdown-menu');
-            divGroup.append(aPlus);
-            divGroup.append(aSave);
-            divGroup.append(aSaveToFile);
-            divGroup.append(aCollapse);
-            divGroup.append(aShowAll);
-            let divDropDown = document.createElement('div');
-            divDropDown.classList.add('dropdown');
-            divDropDown.append(btnMenu);
-            divDropDown.append(divGroup);
             td = document.createElement('td');
-            td.append(divDropDown);
+            td.append(this.CreateTLDropDown(idx));
             row.append(td);
             table.append(row);
         });
+    }
+    CreateDropDown(header, mas) {
+        let btnMenu = document.createElement('button');
+        btnMenu.type = 'button';
+        btnMenu.setAttribute('data-toggle', 'dropdown');
+        btnMenu.classList.add('btn');
+        btnMenu.classList.add('btn-secondary');
+        btnMenu.classList.add('btn-block');
+        btnMenu.classList.add('dropdown-toggle');
+        btnMenu.textContent = header;
+        let divGroup = document.createElement('div');
+        divGroup.classList.add('dropdown-menu');
+        for (let item of mas) {
+            let newMenuItem = document.createElement('a');
+            newMenuItem.classList.add('dropdown-item');
+            newMenuItem.textContent = item.header;
+            newMenuItem.href = '#';
+            newMenuItem.onclick = item.handler;
+            divGroup.append(newMenuItem);
+        }
+        let divDropDown = document.createElement('div');
+        divDropDown.classList.add('dropdown');
+        divDropDown.append(btnMenu);
+        divDropDown.append(divGroup);
+        return divDropDown;
+    }
+    CreateTLDropDown(idx) {
+        return this.CreateDropDown('>>', [
+            {
+                header: 'Добавить',
+                handler: (ev) => __awaiter(this, void 0, void 0, function* () {
+                    yield this.Presenter.OnAddPeriod(idx);
+                })
+            },
+            {
+                header: 'Сохранить',
+                handler: (ev) => __awaiter(this, void 0, void 0, function* () {
+                    yield this.Presenter.OnSave(idx);
+                })
+            },
+            {
+                header: 'В файл',
+                handler: (ev) => __awaiter(this, void 0, void 0, function* () {
+                    yield this.Presenter.OnSaveToFile(idx);
+                })
+            },
+            {
+                header: 'Свернуть',
+                handler: (ev) => __awaiter(this, void 0, void 0, function* () {
+                    yield this.Presenter.OnCollapse(idx);
+                })
+            },
+            {
+                header: 'Показать все',
+                handler: (ev) => __awaiter(this, void 0, void 0, function* () {
+                    yield this.Presenter.OnShowAll(idx);
+                })
+            }
+        ]);
     }
     DrawEventsRow(idx, items) {
         let Id;
