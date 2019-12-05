@@ -92,8 +92,38 @@ export class MainView {
       //  ev.preventDefault()
       //}
       let dt = document.createTextNode(dates[i])
-      let cell1 = <HTMLButtonElement>document.createElement('button')
-      cell1.textContent = '123'
+      let cell1 = this.CreateDropDown('>>', [
+        {
+          header: 'Добавить',
+          handler: async (ev) => {
+            alert('Добавить')
+          }
+        },
+        {
+          header: 'Сохранить',
+          handler: async (ev) => {
+            alert('Сохранить')
+          }
+        },
+        {
+          header: 'В файл',
+          handler: async (ev) => {
+            alert('В файл')
+          }
+        },
+        {
+          header: 'Свернуть',
+          handler: async (ev) => {
+            alert('Свернуть')
+          }
+        },
+        {
+          header: 'Показать все',
+          handler: async (ev) => {
+            alert('Показать все')
+          }
+        }
+      ])
       let cell2 = <HTMLDivElement>document.createElement('div')
       cell2.append(document.createTextNode(dates[i]))
       td.append(cell1)

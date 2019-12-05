@@ -20633,8 +20633,38 @@ class MainView {
             //  ev.preventDefault()
             //}
             let dt = document.createTextNode(dates[i]);
-            let cell1 = document.createElement('button');
-            cell1.textContent = '123';
+            let cell1 = this.CreateDropDown('>>', [
+                {
+                    header: 'Добавить',
+                    handler: (ev) => __awaiter(this, void 0, void 0, function* () {
+                        alert('Добавить');
+                    })
+                },
+                {
+                    header: 'Сохранить',
+                    handler: (ev) => __awaiter(this, void 0, void 0, function* () {
+                        alert('Сохранить');
+                    })
+                },
+                {
+                    header: 'В файл',
+                    handler: (ev) => __awaiter(this, void 0, void 0, function* () {
+                        alert('В файл');
+                    })
+                },
+                {
+                    header: 'Свернуть',
+                    handler: (ev) => __awaiter(this, void 0, void 0, function* () {
+                        alert('Свернуть');
+                    })
+                },
+                {
+                    header: 'Показать все',
+                    handler: (ev) => __awaiter(this, void 0, void 0, function* () {
+                        alert('Показать все');
+                    })
+                }
+            ]);
             let cell2 = document.createElement('div');
             cell2.append(document.createTextNode(dates[i]));
             td.append(cell1);
