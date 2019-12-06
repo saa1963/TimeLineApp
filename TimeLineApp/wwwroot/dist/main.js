@@ -20622,53 +20622,32 @@ class MainView {
             let td = document.createElement('td');
             td.classList.add('date_cell');
             td.id = 'i' + i;
-            //td.onclick = (ev) => {
-            //  this.Presenter.OnScaleForward(i)
-            //}
-            //td.onauxclick = (ev) => {
-            //  ev.preventDefault()
-            //  this.Presenter.OnScaleBack(i)
-            //}
-            //td.oncontextmenu = (ev) => {
-            //  ev.preventDefault()
-            //}
-            let dt = document.createTextNode(dates[i]);
-            let cell1 = this.CreateDropDown('>>', [
-                {
-                    header: 'Добавить',
-                    handler: (ev) => __awaiter(this, void 0, void 0, function* () {
-                        alert('Добавить');
-                    })
-                },
-                {
-                    header: 'Сохранить',
-                    handler: (ev) => __awaiter(this, void 0, void 0, function* () {
-                        alert('Сохранить');
-                    })
-                },
-                {
-                    header: 'В файл',
-                    handler: (ev) => __awaiter(this, void 0, void 0, function* () {
-                        alert('В файл');
-                    })
-                },
-                {
-                    header: 'Свернуть',
-                    handler: (ev) => __awaiter(this, void 0, void 0, function* () {
-                        alert('Свернуть');
-                    })
-                },
-                {
-                    header: 'Показать все',
-                    handler: (ev) => __awaiter(this, void 0, void 0, function* () {
-                        alert('Показать все');
-                    })
-                }
-            ]);
-            let cell2 = document.createElement('div');
-            cell2.append(document.createTextNode(dates[i]));
-            td.append(cell1);
-            td.append(cell2);
+            let btnGroup = document.createElement('div');
+            btnGroup.classList.add('d-flex', 'justify-content-between');
+            let btnZoomOut = document.createElement('button');
+            btnZoomOut.classList.add('btn', 'border-0', 'm-0', 'p-0');
+            btnZoomOut.onclick = (ev) => {
+                this.Presenter.OnScaleBack(i);
+            };
+            let imgZoomOut = document.createElement('img');
+            imgZoomOut.src = '../images/icons8-zoom-out-50.png';
+            imgZoomOut.width = 20;
+            imgZoomOut.height = 20;
+            btnZoomOut.append(imgZoomOut);
+            btnGroup.append(btnZoomOut);
+            btnGroup.append(document.createTextNode(dates[i]));
+            let btnZoomIn = document.createElement('button');
+            btnZoomIn.classList.add('btn', 'border-0', 'm-0', 'p-0');
+            btnZoomIn.onclick = (ev) => {
+                this.Presenter.OnScaleForward(i);
+            };
+            let imgZoomIn = document.createElement('img');
+            imgZoomIn.src = '../images/icons8-zoom-in-50.png';
+            imgZoomIn.width = 20;
+            imgZoomIn.height = 20;
+            btnZoomIn.append(imgZoomIn);
+            btnGroup.append(btnZoomIn);
+            td.append(btnGroup);
             row.append(td);
         }
         this.mainTable.append(row);

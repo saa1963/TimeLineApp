@@ -81,53 +81,37 @@ export class MainView {
       let td = document.createElement('td')
       td.classList.add('date_cell')
       td.id = 'i' + i
-      //td.onclick = (ev) => {
-      //  this.Presenter.OnScaleForward(i)
-      //}
-      //td.onauxclick = (ev) => {
-      //  ev.preventDefault()
-      //  this.Presenter.OnScaleBack(i)
-      //}
-      //td.oncontextmenu = (ev) => {
-      //  ev.preventDefault()
-      //}
-      let dt = document.createTextNode(dates[i])
-      let cell1 = this.CreateDropDown('>>', [
-        {
-          header: 'Добавить',
-          handler: async (ev) => {
-            alert('Добавить')
-          }
-        },
-        {
-          header: 'Сохранить',
-          handler: async (ev) => {
-            alert('Сохранить')
-          }
-        },
-        {
-          header: 'В файл',
-          handler: async (ev) => {
-            alert('В файл')
-          }
-        },
-        {
-          header: 'Свернуть',
-          handler: async (ev) => {
-            alert('Свернуть')
-          }
-        },
-        {
-          header: 'Показать все',
-          handler: async (ev) => {
-            alert('Показать все')
-          }
-        }
-      ])
-      let cell2 = <HTMLDivElement>document.createElement('div')
-      cell2.append(document.createTextNode(dates[i]))
-      td.append(cell1)
-      td.append(cell2)
+
+      let btnGroup = <HTMLDivElement>document.createElement('div')
+      btnGroup.classList.add('d-flex', 'justify-content-between')
+
+      let btnZoomOut = <HTMLButtonElement>document.createElement('button')
+      btnZoomOut.classList.add('btn', 'border-0', 'm-0', 'p-0')
+      btnZoomOut.onclick = (ev) => {
+        this.Presenter.OnScaleBack(i)
+      }
+      let imgZoomOut = <HTMLImageElement>document.createElement('img')
+      imgZoomOut.src = '../images/icons8-zoom-out-50.png'
+      imgZoomOut.width = 20
+      imgZoomOut.height = 20
+      btnZoomOut.append(imgZoomOut)
+      btnGroup.append(btnZoomOut)
+
+      btnGroup.append(document.createTextNode(dates[i]))
+
+      let btnZoomIn = <HTMLButtonElement>document.createElement('button')
+      btnZoomIn.classList.add('btn', 'border-0', 'm-0', 'p-0')
+      btnZoomIn.onclick = (ev) => {
+        this.Presenter.OnScaleForward(i)
+      }
+      let imgZoomIn = <HTMLImageElement>document.createElement('img')
+      imgZoomIn.src = '../images/icons8-zoom-in-50.png'
+      imgZoomIn.width = 20
+      imgZoomIn.height = 20
+      btnZoomIn.append(imgZoomIn)
+      btnGroup.append(btnZoomIn)
+
+      td.append(btnGroup)
       row.append(td)
     }
     this.mainTable.append(row)
