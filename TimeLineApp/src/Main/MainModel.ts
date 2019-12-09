@@ -1,10 +1,11 @@
 ﻿import { SimpleEventDispatcher, ISimpleEvent } from "ste-simple-events";
 import { TLPeriod } from "../TLPeriod";
+import { EnumPeriod } from "../TLEvent";
 
 export class MainModel {
   private static instance: MainModel;
   private models: TLPeriod[] = []
-  
+
   private constructor() {
   }
 
@@ -55,8 +56,8 @@ export class MainModel {
     return this.e_RemoveTimeLine.asEvent();
   }
 
-  private e_AddPeriod = new SimpleEventDispatcher<[number,TLPeriod]>();
-  public get evAddPeriod(): ISimpleEvent<[number,TLPeriod]> {
+  private e_AddPeriod = new SimpleEventDispatcher<[number, TLPeriod]>();
+  public get evAddPeriod(): ISimpleEvent<[number, TLPeriod]> {
     return this.e_AddPeriod.asEvent();
   }
 
@@ -70,5 +71,11 @@ export class MainModel {
     if (this.models.length === 0) return false
     if (i < 0 || i >= this.models.length) return false
     return true
+  }
+
+  public GetSlice(n: number, period: EnumPeriod) {
+    let f = this.models.filter((value) => {
+      return value.IsIntersectIntervalsForPeriod(1, 2, period)
+    })
   }
 }

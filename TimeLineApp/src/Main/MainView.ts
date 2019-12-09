@@ -112,6 +112,10 @@ export class MainView {
       btnGroup.append(btnZoomIn)
 
       td.append(btnGroup)
+      td.ondblclick = (ev) => {
+        ev.preventDefault()
+
+      }
       row.append(td)
     }
     this.mainTable.append(row)

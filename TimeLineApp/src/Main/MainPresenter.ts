@@ -407,6 +407,10 @@ export class MainPresenter {
     .catch()
   }
 
+  public OnShowSlice(ev: number) {
+
+  }
+
   public async SaveCurrentTL() {
 
   }

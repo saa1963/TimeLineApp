@@ -221,6 +221,18 @@ export class TLPeriod {
     return rt
   }
 
+  public static CreateTLPeriodFromNumber(n: number, period: EnumPeriod) {
+    let rt = new TLPeriod();
+    TLPeriod.id++
+    rt.Id = TLPeriod.id
+    rt.Name = ''
+    rt.Begin.Type = period
+    switch (period) {
+      case
+    }
+    return rt
+  }
+
   public getRightBoundForPeriod(period: EnumPeriod): number {
     let l2: number
     // [текущий(имеющаяся точность), внешний(точность сравнения)]
@@ -346,7 +358,7 @@ export class TLPeriod {
     }
     return l2
   }
-
+  
   public IsIntersectIntervalsForPeriod(l1: number, r1: number, period: EnumPeriod): boolean {
     let l2: number = this.getLeftBoundForPeriod(period)
     let r2: number = this.getRightBoundForPeriod(period)
