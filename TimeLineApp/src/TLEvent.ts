@@ -258,6 +258,12 @@ export class TLEventDecade extends TLEvent {
     rt.Type = EnumPeriod.decade
     return rt
   }
+
+  public static CreateTLEventDecade1(name: string, decade: number): TLEventYear {
+    let ymd = DateUtils.getYMDFromDecade(decade)
+    let century: number = DateUtils.getCenturyFromYMD(ymd)
+    return TLEventDecade.CreateTLEventDecade(name, decade, century)
+  }
 }
 
 export class TLEventCentury extends TLEvent {

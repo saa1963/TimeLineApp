@@ -74,8 +74,18 @@ export class MainModel {
   }
 
   public GetSlice(n: number, period: EnumPeriod) {
-    let f = this.models.filter((value) => {
-      return value.IsIntersectIntervalsForPeriod(1, 2, period)
-    })
+    let p = TLPeriod.CreateTLPeriodFromNumber(n, period)
+    let sl = new Map<number, TLPeriod>()
+    let items: TLPeriod[] = []
+    for (let q of this.models) {
+      q.h
+    }
+    //let f = this.models.filter((value) => {
+    //  return value.IsIntersectIntervalsForPeriod(
+    //    p.getLeftBoundForPeriod(period),
+    //    p.getRightBoundForPeriod(period),
+    //    period
+    //  )
+    //})
   }
 }

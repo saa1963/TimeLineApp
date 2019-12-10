@@ -3,9 +3,7 @@ import { TLEvent, EnumPeriod, TLEventDay, TLEventMonth, TLEventYear, TLEventDeca
 import { SimpleEventDispatcher, ISimpleEvent } from 'ste-simple-events';
 
 export class TLPeriod {
-  private static id = 0
-
-  Id: number
+  Id: number = Math.floor(Math.random() * Math.floor(1000000000))
   Name: string = "Новый"
   Begin: TLEvent
   End: TLEvent
@@ -53,8 +51,6 @@ export class TLPeriod {
     end_century: number
   ): TLPeriod {
     let rt = new TLPeriod()
-    TLPeriod.id++
-    rt.Id = TLPeriod.id
     rt.Name = name
 
     let type: EnumPeriod = begin_type
@@ -154,8 +150,6 @@ export class TLPeriod {
    */
   static CreateTLPeriod(o: any): TLPeriod {
     let rt = new TLPeriod();
-    TLPeriod.id++
-    rt.Id = TLPeriod.id
     rt.Name = o.Name;
     if (!o.Begin) {
       o.Begin = TLEventCentury.CreateTLEventCentury("Начало", 19)
@@ -223,13 +217,33 @@ export class TLPeriod {
 
   public static CreateTLPeriodFromNumber(n: number, period: EnumPeriod) {
     let rt = new TLPeriod();
-    TLPeriod.id++
-    rt.Id = TLPeriod.id
     rt.Name = ''
-    rt.Begin.Type = period
+    let ymd: YearMonthDay
     switch (period) {
-      case
+      case EnumPeriod.day:
+        ymd = DateUtils.YMDFromAD(n)
+        rt.Begin = TLEventDay.CreateTLEventDay1('', n)
+        break;
+      case EnumPeriod.month:
+        ymd = DateUtils.getYMDFromMonth(n)
+        rt.Begin = TLEventMonth.CreateTLEventMonth1('', n)
+        break;
+      case EnumPeriod.year:
+        ymd = DateUtils.getYMDFromYear(n)
+        rt.Begin = TLEventYear.CreateTLEventYear1('', n)
+        break;
+      case EnumPeriod.decade:
+        ymd = DateUtils.getYMDFromDecade(n)
+        rt.Begin = TLEventDecade.CreateTLEventDecade1('', n)
+        break;
+      case EnumPeriod.century:
+        ymd = DateUtils.getYMDFromCentury(n)
+        rt.Begin = TLEventCentury.CreateTLEventCentury('', n)
     }
+    rt.End = Object.assign({}, rt.Begin)
+    rt.Parent = null
+    rt.m_BeginDay = rt.GetBeginDate();
+    rt.m_EndDay = rt.GetEndDate();
     return rt
   }
 

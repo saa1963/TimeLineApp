@@ -169,18 +169,18 @@ export class MainPresenter {
     this.model.Add(target)
   }
 
-  private getAllSuitablePeriodsFromHierarchy(p: TLPeriod, items: TLPeriod[]): void {
+  private getAllSuitablePeriodsFromHierarchy(p: TLPeriod, leftBorder: number, rightBorder: number, items: TLPeriod[]): void {
     for (let i = 0; i < p.Periods.length; i++) {
       let period = p.Periods[i]
       if (period.Count == 0) {
-        if (period.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period)) {
+        if (period.IsIntersectIntervalsForPeriod(leftBorder, rightBorder, this.Period)) {
           items.push(period)
         }
       } else {
-        if (period.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period)) {
+        if (period.IsIntersectIntervalsForPeriod(leftBorder, rightBorder, this.Period)) {
           items.push(period)
         }
-        this.getAllSuitablePeriodsFromHierarchy(period, items)
+        this.getAllSuitablePeriodsFromHierarchy(period, leftBorder, rightBorder, items)
       }
     }
   }
@@ -656,7 +656,7 @@ export class MainPresenter {
     if (!model.IsShowAll) {
       items = this.getPeriodsInInterval(model)
     } else {
-      this.getAllSuitablePeriodsFromHierarchy(model, items)
+      this.getAllSuitablePeriodsFromHierarchy(model, this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, items)
     }
     // вычисляем индексы
     let exItems: IExTLPeriod[] = []
