@@ -528,6 +528,28 @@ export class TLPeriod {
     return rt
   }
 
+  /**
+   * Метод проходит по дереву TLPeriod и выбирает элементы пересекающие интервал 
+   * @param leftBorder Левая граница интервала
+   * @param rightBorder Правая граница интервала
+   * @param items Заполняемый массив
+   */
+  public getAllSuitablePeriodsFromHierarchy(leftBorder: number, rightBorder: number, globalPeriod: EnumPeriod, items: TLPeriod[]): void {
+    for (let i = 0; i < this.Periods.length; i++) {
+      let period = this.Periods[i]
+      if (period.Count == 0) {
+        if (period.IsIntersectIntervalsForPeriod(leftBorder, rightBorder, globalPeriod)) {
+          items.push(period)
+        }
+      } else {
+        if (period.IsIntersectIntervalsForPeriod(leftBorder, rightBorder, globalPeriod)) {
+          items.push(period)
+        }
+        period.getAllSuitablePeriodsFromHierarchy(leftBorder, rightBorder, globalPeriod, items)
+      }
+    }
+  }
+
   private validIndex(i: number): boolean {
     if (!this.Periods) return false
     if (this.Periods.length === 0) return false

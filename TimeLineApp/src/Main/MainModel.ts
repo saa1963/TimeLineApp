@@ -73,19 +73,18 @@ export class MainModel {
     return true
   }
 
-  public GetSlice(n: number, period: EnumPeriod) {
-    let p = TLPeriod.CreateTLPeriodFromNumber(n, period)
-    let sl = new Map<number, TLPeriod>()
+  public GetSlice(n: number, period: EnumPeriod): TLPeriod[] {
     let items: TLPeriod[] = []
     for (let q of this.models) {
-      q.h
+      q.getAllSuitablePeriodsFromHierarchy(n, n, period, items)
     }
-    //let f = this.models.filter((value) => {
-    //  return value.IsIntersectIntervalsForPeriod(
-    //    p.getLeftBoundForPeriod(period),
-    //    p.getRightBoundForPeriod(period),
-    //    period
-    //  )
-    //})
+    let items1: TLPeriod[] = []
+    items.forEach((value) => {
+      if (items1.find(value1 => value1.Id != value.Id)) {
+        items1.push(value)
+      }
+    })
+    items1.sort((a, b) => a.m_BeginDay - b.m_BeginDay)
+    return items1
   }
 }

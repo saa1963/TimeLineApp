@@ -169,21 +169,21 @@ export class MainPresenter {
     this.model.Add(target)
   }
 
-  private getAllSuitablePeriodsFromHierarchy(p: TLPeriod, leftBorder: number, rightBorder: number, items: TLPeriod[]): void {
-    for (let i = 0; i < p.Periods.length; i++) {
-      let period = p.Periods[i]
-      if (period.Count == 0) {
-        if (period.IsIntersectIntervalsForPeriod(leftBorder, rightBorder, this.Period)) {
-          items.push(period)
-        }
-      } else {
-        if (period.IsIntersectIntervalsForPeriod(leftBorder, rightBorder, this.Period)) {
-          items.push(period)
-        }
-        this.getAllSuitablePeriodsFromHierarchy(period, leftBorder, rightBorder, items)
-      }
-    }
-  }
+  //private getAllSuitablePeriodsFromHierarchy(p: TLPeriod, leftBorder: number, rightBorder: number, items: TLPeriod[]): void {
+  //  for (let i = 0; i < p.Periods.length; i++) {
+  //    let period = p.Periods[i]
+  //    if (period.Count == 0) {
+  //      if (period.IsIntersectIntervalsForPeriod(leftBorder, rightBorder, this.Period)) {
+  //        items.push(period)
+  //      }
+  //    } else {
+  //      if (period.IsIntersectIntervalsForPeriod(leftBorder, rightBorder, this.Period)) {
+  //        items.push(period)
+  //      }
+  //      this.getAllSuitablePeriodsFromHierarchy(period, leftBorder, rightBorder, items)
+  //    }
+  //  }
+  //}
 
   // Function to download data to a file
   private download(data: string, filename: string, type: string) {
@@ -408,7 +408,7 @@ export class MainPresenter {
   }
 
   public OnShowSlice(ev: number) {
-
+    let ar =  this.model.GetSlice(ev, this.Period)
   }
 
   public async SaveCurrentTL() {
@@ -656,7 +656,7 @@ export class MainPresenter {
     if (!model.IsShowAll) {
       items = this.getPeriodsInInterval(model)
     } else {
-      this.getAllSuitablePeriodsFromHierarchy(model, this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, items)
+      model.getAllSuitablePeriodsFromHierarchy(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period, items)
     }
     // вычисляем индексы
     let exItems: IExTLPeriod[] = []
