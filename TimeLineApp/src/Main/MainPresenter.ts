@@ -1,5 +1,5 @@
 ﻿import { ApiClient } from "../ApiClient";
-import { BoxView } from "../BoxView";
+import { BoxView, BoxViewHtml } from "../BoxView";
 import { ContextMenu } from "../contextmenu";
 import { DateUtils, YearMonthDay } from "../dateutils";
 import { Globals } from "../Globals";
@@ -408,7 +408,15 @@ export class MainPresenter {
   }
 
   public OnShowSlice(ev: number) {
-    let ar =  this.model.GetSlice(ev, this.Period)
+    let ar: TLPeriod[] = this.model.GetSlice(ev, this.Period)
+    let s = <HTMLUListElement>document.createElement('ul')
+    for (let o of ar) {
+      //let txt = document.createTextNode(o.Name)
+      let li = document.createElement('li')
+      li.textContent = o.Name
+      s.append(li)
+    }
+    new BoxViewHtml(s).Show()
   }
 
   public async SaveCurrentTL() {
@@ -620,9 +628,11 @@ export class MainPresenter {
     return item.Name + ' ' + left + ' - ' + right
   }
 
-  private GetDrawDates(): string[] {
+  private GetDrawDates(): [string[], number[]] {
     let dates: string[] = []
+    let dates_num: number[] = []
     for (let i = 0; i < this.mainLine.length; ++i) {
+      dates_num.push(this.mainLine[i].ValueEvent)
       switch (this.Period) {
         case EnumPeriod.day:
           dates.push(DateUtils.formatDate(this.mainLine[i].ValueEvent))
@@ -641,7 +651,7 @@ export class MainPresenter {
           break
       }
     }
-    return dates
+    return [dates, dates_num]
   }
 
   private getPeriodsInInterval(model: TLPeriod): TLPeriod[] {

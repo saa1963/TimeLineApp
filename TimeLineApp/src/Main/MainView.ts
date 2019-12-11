@@ -72,12 +72,12 @@ export class MainView {
     this.aLogin.textContent = 'Вход'
   }
 
-  public DrawDates(dates: string[]) {
+  public DrawDates(dates: [string[], number[]]) {
     this.mainTable = <HTMLTableElement>document.createElement('table')
     this.mainTable.cellSpacing = '2'
     let row = document.createElement('tr')
     row.classList.add('date')
-    for (let i = 0; i < dates.length; ++i) {
+    for (let i = 0; i < dates[0].length; ++i) {
       let td = document.createElement('td')
       td.classList.add('date_cell')
       td.id = 'i' + i
@@ -97,7 +97,7 @@ export class MainView {
       btnZoomOut.append(imgZoomOut)
       btnGroup.append(btnZoomOut)
 
-      btnGroup.append(document.createTextNode(dates[i]))
+      btnGroup.append(document.createTextNode(dates[0][i]))
 
       let btnZoomIn = <HTMLButtonElement>document.createElement('button')
       btnZoomIn.classList.add('btn', 'border-0', 'm-0', 'p-0')
@@ -114,7 +114,7 @@ export class MainView {
       td.append(btnGroup)
       td.ondblclick = (ev) => {
         ev.preventDefault()
-
+        this.Presenter.OnShowSlice(dates[1][i])
       }
       row.append(td)
     }

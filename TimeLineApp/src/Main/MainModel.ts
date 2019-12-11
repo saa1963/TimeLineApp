@@ -79,11 +79,11 @@ export class MainModel {
       q.getAllSuitablePeriodsFromHierarchy(n, n, period, items)
     }
     let items1: TLPeriod[] = []
-    items.forEach((value) => {
-      if (items1.find(value1 => value1.Id != value.Id)) {
-        items1.push(value)
+    for (let it of items) {
+      if (!items1.includes(it)) {
+        items1.push(it)
       }
-    })
+    }
     items1.sort((a, b) => a.m_BeginDay - b.m_BeginDay)
     return items1
   }

@@ -19397,6 +19397,26 @@ class BoxView {
     }
 }
 exports.BoxView = BoxView;
+class BoxViewHtml {
+    constructor(text) {
+        this.btnBoxOk = document.getElementById('btnBoxOk');
+        let box_message = document.getElementById('box_message');
+        box_message.removeChild(box_message.firstChild);
+        $('#box_message').append(text);
+    }
+    Show() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve, reject) => {
+                $('#tmBoxModal').modal();
+                this.btnBoxOk.onclick = () => __awaiter(this, void 0, void 0, function* () {
+                    $('#tmBoxModal').modal('hide');
+                    resolve();
+                });
+            });
+        });
+    }
+}
+exports.BoxViewHtml = BoxViewHtml;
 
 
 /***/ }),
@@ -19787,6 +19807,20 @@ class MainModel {
             return false;
         return true;
     }
+    GetSlice(n, period) {
+        let items = [];
+        for (let q of this.models) {
+            q.getAllSuitablePeriodsFromHierarchy(n, n, period, items);
+        }
+        let items1 = [];
+        for (let it of items) {
+            if (!items1.includes(it)) {
+                items1.push(it);
+            }
+        }
+        items1.sort((a, b) => a.m_BeginDay - b.m_BeginDay);
+        return items1;
+    }
 }
 exports.MainModel = MainModel;
 
@@ -19978,22 +20012,21 @@ class MainPresenter {
             this.model.Add(target);
         });
     }
-    getAllSuitablePeriodsFromHierarchy(p, items) {
-        for (let i = 0; i < p.Periods.length; i++) {
-            let period = p.Periods[i];
-            if (period.Count == 0) {
-                if (period.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period)) {
-                    items.push(period);
-                }
-            }
-            else {
-                if (period.IsIntersectIntervalsForPeriod(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period)) {
-                    items.push(period);
-                }
-                this.getAllSuitablePeriodsFromHierarchy(period, items);
-            }
-        }
-    }
+    //private getAllSuitablePeriodsFromHierarchy(p: TLPeriod, leftBorder: number, rightBorder: number, items: TLPeriod[]): void {
+    //  for (let i = 0; i < p.Periods.length; i++) {
+    //    let period = p.Periods[i]
+    //    if (period.Count == 0) {
+    //      if (period.IsIntersectIntervalsForPeriod(leftBorder, rightBorder, this.Period)) {
+    //        items.push(period)
+    //      }
+    //    } else {
+    //      if (period.IsIntersectIntervalsForPeriod(leftBorder, rightBorder, this.Period)) {
+    //        items.push(period)
+    //      }
+    //      this.getAllSuitablePeriodsFromHierarchy(period, leftBorder, rightBorder, items)
+    //    }
+    //  }
+    //}
     // Function to download data to a file
     download(data, filename, type) {
         let file = new Blob([data], { type: type });
@@ -20169,6 +20202,17 @@ class MainPresenter {
                 .catch();
         });
     }
+    OnShowSlice(ev) {
+        let ar = this.model.GetSlice(ev, this.Period);
+        let s = document.createElement('ul');
+        for (let o of ar) {
+            //let txt = document.createTextNode(o.Name)
+            let li = document.createElement('li');
+            li.textContent = o.Name;
+            s.append(li);
+        }
+        new BoxView_1.BoxViewHtml(s).Show();
+    }
     SaveCurrentTL() {
         return __awaiter(this, void 0, void 0, function* () {
         });
@@ -20340,7 +20384,9 @@ class MainPresenter {
     }
     GetDrawDates() {
         let dates = [];
+        let dates_num = [];
         for (let i = 0; i < this.mainLine.length; ++i) {
+            dates_num.push(this.mainLine[i].ValueEvent);
             switch (this.Period) {
                 case TLEvent_1.EnumPeriod.day:
                     dates.push(dateutils_1.DateUtils.formatDate(this.mainLine[i].ValueEvent));
@@ -20359,7 +20405,7 @@ class MainPresenter {
                     break;
             }
         }
-        return dates;
+        return [dates, dates_num];
     }
     getPeriodsInInterval(model) {
         return model.Items.filter((value, index, array) => {
@@ -20373,7 +20419,7 @@ class MainPresenter {
             items = this.getPeriodsInInterval(model);
         }
         else {
-            this.getAllSuitablePeriodsFromHierarchy(model, items);
+            model.getAllSuitablePeriodsFromHierarchy(this.mainLine[0].ValueEvent, this.mainLine[this.mainLine.length - 1].ValueEvent, this.Period, items);
         }
         // вычисляем индексы
         let exItems = [];
@@ -20618,7 +20664,7 @@ class MainView {
         this.mainTable.cellSpacing = '2';
         let row = document.createElement('tr');
         row.classList.add('date');
-        for (let i = 0; i < dates.length; ++i) {
+        for (let i = 0; i < dates[0].length; ++i) {
             let td = document.createElement('td');
             td.classList.add('date_cell');
             td.id = 'i' + i;
@@ -20635,7 +20681,7 @@ class MainView {
             imgZoomOut.height = 20;
             btnZoomOut.append(imgZoomOut);
             btnGroup.append(btnZoomOut);
-            btnGroup.append(document.createTextNode(dates[i]));
+            btnGroup.append(document.createTextNode(dates[0][i]));
             let btnZoomIn = document.createElement('button');
             btnZoomIn.classList.add('btn', 'border-0', 'm-0', 'p-0');
             btnZoomIn.onclick = (ev) => {
@@ -20648,6 +20694,10 @@ class MainView {
             btnZoomIn.append(imgZoomIn);
             btnGroup.append(btnZoomIn);
             td.append(btnGroup);
+            td.ondblclick = (ev) => {
+                ev.preventDefault();
+                this.Presenter.OnShowSlice(dates[1][i]);
+            };
             row.append(td);
         }
         this.mainTable.append(row);
@@ -21378,6 +21428,11 @@ class TLEventDecade extends TLEvent {
         rt.Type = EnumPeriod.decade;
         return rt;
     }
+    static CreateTLEventDecade1(name, decade) {
+        let ymd = dateutils_1.DateUtils.getYMDFromDecade(decade);
+        let century = dateutils_1.DateUtils.getCenturyFromYMD(ymd);
+        return TLEventDecade.CreateTLEventDecade(name, decade, century);
+    }
 }
 exports.TLEventDecade = TLEventDecade;
 class TLEventCentury extends TLEvent {
@@ -21417,6 +21472,7 @@ const TLEvent_1 = __webpack_require__(/*! ./TLEvent */ "./TLEvent.ts");
 const ste_simple_events_1 = __webpack_require__(/*! ste-simple-events */ "../node_modules/ste-simple-events/dist/index.js");
 class TLPeriod {
     constructor() {
+        this.Id = Math.floor(Math.random() * Math.floor(1000000000));
         this.Name = "Новый";
         this.Periods = [];
         this.IsShowAll = false;
@@ -21436,8 +21492,6 @@ class TLPeriod {
      */
     static CreateTLPeriodWithArgs(name, isperiod, begin_type, begin_dayday, begin_daymonth, begin_dayyear, begin_monthmonth, begin_monthyear, begin_year, begin_decadedecade, begin_decadecentury, begin_century, end_type, end_dayday, end_daymonth, end_dayyear, end_monthmonth, end_monthyear, end_year, end_decadedecade, end_decadecentury, end_century) {
         let rt = new TLPeriod();
-        TLPeriod.id++;
-        rt.Id = TLPeriod.id;
         rt.Name = name;
         let type = begin_type;
         if (type === TLEvent_1.EnumPeriod.day) {
@@ -21486,8 +21540,6 @@ class TLPeriod {
      */
     static CreateTLPeriod(o) {
         let rt = new TLPeriod();
-        TLPeriod.id++;
-        rt.Id = TLPeriod.id;
         rt.Name = o.Name;
         if (!o.Begin) {
             o.Begin = TLEvent_1.TLEventCentury.CreateTLEventCentury("Начало", 19);
@@ -21536,6 +21588,37 @@ class TLPeriod {
                 rt.Periods.push(period);
             });
         }
+        return rt;
+    }
+    static CreateTLPeriodFromNumber(n, period) {
+        let rt = new TLPeriod();
+        rt.Name = '';
+        let ymd;
+        switch (period) {
+            case TLEvent_1.EnumPeriod.day:
+                ymd = dateutils_1.DateUtils.YMDFromAD(n);
+                rt.Begin = TLEvent_1.TLEventDay.CreateTLEventDay1('', n);
+                break;
+            case TLEvent_1.EnumPeriod.month:
+                ymd = dateutils_1.DateUtils.getYMDFromMonth(n);
+                rt.Begin = TLEvent_1.TLEventMonth.CreateTLEventMonth1('', n);
+                break;
+            case TLEvent_1.EnumPeriod.year:
+                ymd = dateutils_1.DateUtils.getYMDFromYear(n);
+                rt.Begin = TLEvent_1.TLEventYear.CreateTLEventYear1('', n);
+                break;
+            case TLEvent_1.EnumPeriod.decade:
+                ymd = dateutils_1.DateUtils.getYMDFromDecade(n);
+                rt.Begin = TLEvent_1.TLEventDecade.CreateTLEventDecade1('', n);
+                break;
+            case TLEvent_1.EnumPeriod.century:
+                ymd = dateutils_1.DateUtils.getYMDFromCentury(n);
+                rt.Begin = TLEvent_1.TLEventCentury.CreateTLEventCentury('', n);
+        }
+        rt.End = Object.assign({}, rt.Begin);
+        rt.Parent = null;
+        rt.m_BeginDay = rt.GetBeginDate();
+        rt.m_EndDay = rt.GetEndDate();
         return rt;
     }
     getRightBoundForPeriod(period) {
@@ -21800,6 +21883,28 @@ class TLPeriod {
         }
         return rt;
     }
+    /**
+     * Метод проходит по дереву TLPeriod и выбирает элементы пересекающие интервал
+     * @param leftBorder Левая граница интервала
+     * @param rightBorder Правая граница интервала
+     * @param items Заполняемый массив
+     */
+    getAllSuitablePeriodsFromHierarchy(leftBorder, rightBorder, globalPeriod, items) {
+        for (let i = 0; i < this.Periods.length; i++) {
+            let period = this.Periods[i];
+            if (period.Count == 0) {
+                if (period.IsIntersectIntervalsForPeriod(leftBorder, rightBorder, globalPeriod)) {
+                    items.push(period);
+                }
+            }
+            else {
+                if (period.IsIntersectIntervalsForPeriod(leftBorder, rightBorder, globalPeriod)) {
+                    items.push(period);
+                }
+                period.getAllSuitablePeriodsFromHierarchy(leftBorder, rightBorder, globalPeriod, items);
+            }
+        }
+    }
     validIndex(i) {
         if (!this.Periods)
             return false;
@@ -21816,7 +21921,6 @@ class TLPeriod {
         return this.e_RemovePeriod.asEvent();
     }
 }
-TLPeriod.id = 0;
 exports.TLPeriod = TLPeriod;
 
 
@@ -22982,6 +23086,13 @@ exports.stringUtils = (function () {
             while (s.length < size)
                 s = '0' + s;
             return s;
+        },
+        // http://www.broofa.com/Tools/Math.uuid.js
+        uuid: function () {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            }).toUpperCase();
         }
     };
 })();
