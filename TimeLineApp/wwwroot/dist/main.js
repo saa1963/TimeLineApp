@@ -19402,7 +19402,7 @@ class BoxViewHtml {
         this.btnBoxOk = document.getElementById('btnBoxOk');
         let box_message = document.getElementById('box_message');
         box_message.removeChild(box_message.firstChild);
-        $('#box_message').append(text);
+        box_message.append(text);
     }
     Show() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -20206,9 +20206,15 @@ class MainPresenter {
         let ar = this.model.GetSlice(ev, this.Period);
         let s = document.createElement('ul');
         for (let o of ar) {
-            //let txt = document.createTextNode(o.Name)
             let li = document.createElement('li');
-            li.textContent = o.Name;
+            let txtPeriod;
+            if (o.IsPeriod) {
+                txtPeriod = '(' + o.Begin.Format() + ' - ' + o.End.Format() + ')';
+            }
+            else {
+                txtPeriod = '(' + o.Begin.Format() + ')';
+            }
+            li.textContent = txtPeriod + ' ' + o.Name;
             s.append(li);
         }
         new BoxView_1.BoxViewHtml(s).Show();
@@ -20348,7 +20354,7 @@ class MainPresenter {
         let right;
         switch (item.Begin.Type) {
             case TLEvent_1.EnumPeriod.day:
-                left = dateutils_1.DateUtils.formatDate(item.Begin.Day);
+                left = dateutils_1.DateUtils.formatDay(item.Begin.Day);
                 break;
             case TLEvent_1.EnumPeriod.month:
                 left = dateutils_1.DateUtils.formatMonth(item.Begin.Month);
@@ -20365,7 +20371,7 @@ class MainPresenter {
         }
         switch (item.End.Type) {
             case TLEvent_1.EnumPeriod.day:
-                right = dateutils_1.DateUtils.formatDate(item.End.Day);
+                right = dateutils_1.DateUtils.formatDay(item.End.Day);
                 break;
             case TLEvent_1.EnumPeriod.month:
                 right = dateutils_1.DateUtils.formatMonth(item.End.Month);
@@ -20389,7 +20395,7 @@ class MainPresenter {
             dates_num.push(this.mainLine[i].ValueEvent);
             switch (this.Period) {
                 case TLEvent_1.EnumPeriod.day:
-                    dates.push(dateutils_1.DateUtils.formatDate(this.mainLine[i].ValueEvent));
+                    dates.push(dateutils_1.DateUtils.formatDay(this.mainLine[i].ValueEvent));
                     break;
                 case TLEvent_1.EnumPeriod.month:
                     dates.push(dateutils_1.DateUtils.formatMonth(this.mainLine[i].ValueEvent));
@@ -21340,6 +21346,27 @@ class TLEvent {
             rt = true;
         return rt;
     }
+    Format() {
+        let rt;
+        switch (this.Type) {
+            case EnumPeriod.day:
+                rt = dateutils_1.DateUtils.formatDay(this.Day);
+                break;
+            case EnumPeriod.month:
+                rt = dateutils_1.DateUtils.formatMonth(this.Month);
+                break;
+            case EnumPeriod.year:
+                rt = dateutils_1.DateUtils.formatYear(this.Year);
+                break;
+            case EnumPeriod.decade:
+                rt = dateutils_1.DateUtils.formatDecade(this.Decade);
+                break;
+            case EnumPeriod.century:
+                rt = dateutils_1.DateUtils.formatCentury(this.Century);
+                break;
+        }
+        return rt;
+    }
 }
 exports.TLEvent = TLEvent;
 class TLEventDay extends TLEvent {
@@ -21403,21 +21430,6 @@ class TLEventYear extends TLEvent {
 }
 exports.TLEventYear = TLEventYear;
 class TLEventDecade extends TLEvent {
-    //constructor(name: string, par1: number, par2?: number) {
-    //  super(name)
-    //  if (par2 !== undefined) {
-    //    let century = par1
-    //    let decade = par2
-    //    if(decade < 0 || decade > 9) throw Error('Неверный номер десятилетия')
-    //    this.Decade = ((Math.abs(century) - 1) * 10 + decade + 1) * (century / Math.abs(century))
-    //    this.Century = century;
-    //  } else {
-    //    let decade = par1
-    //    this.Decade = decade;
-    //    this.Century = this.CenturyFromDecade(decade)
-    //  }
-    //  this.Type = EnumPeriod.decade
-    //}
     static CreateTLEventDecade(name, decade, century) {
         let rt = new TLEventDay(name);
         rt.Day = null;
@@ -21436,11 +21448,6 @@ class TLEventDecade extends TLEvent {
 }
 exports.TLEventDecade = TLEventDecade;
 class TLEventCentury extends TLEvent {
-    //constructor(name: string, century: number) {
-    //  super(name)
-    //  this.Century = century
-    //  this.Type = EnumPeriod.century
-    //}
     static CreateTLEventCentury(name, century) {
         let rt = new TLEventDay(name);
         rt.Day = null;
@@ -21862,7 +21869,6 @@ class TLPeriod {
             switch (this.Begin.Type) {
                 case TLEvent_1.EnumPeriod.day:
                     rt = this.Begin.Day != this.End.Day;
-                    return;
                     break;
                 case TLEvent_1.EnumPeriod.month:
                     rt = this.Begin.Month != this.End.Month;
@@ -22391,6 +22397,7 @@ exports.MenuOptions = MenuOptions;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const stringutils_1 = __webpack_require__(/*! ./stringutils */ "./stringutils.ts");
+const TLEvent_1 = __webpack_require__(/*! ./TLEvent */ "./TLEvent.ts");
 class TLeapData {
     constructor(year) {
         if (TLeapData.leapYear(year)) {
@@ -22824,7 +22831,7 @@ class DateUtils {
         dateCopy.setDate(dateCopy.getDate() + days);
         return dateCopy;
     }
-    static formatDate(period) {
+    static formatDay(period) {
         let o = DateUtils.YMDFromAD(period);
         if (period > 0)
             return stringutils_1.stringUtils.pad(o.day.toString(), 2) + '.'
@@ -23010,6 +23017,27 @@ class DateUtils {
             return `${romanize(num)} н.э.`;
         else
             return `${romanize(num)} до н.э.`;
+    }
+    static Format(n, period) {
+        let rt;
+        switch (period) {
+            case TLEvent_1.EnumPeriod.day:
+                rt = DateUtils.formatDay(n);
+                break;
+            case TLEvent_1.EnumPeriod.month:
+                rt = DateUtils.formatMonth(n);
+                break;
+            case TLEvent_1.EnumPeriod.year:
+                rt = DateUtils.formatYear(n);
+                break;
+            case TLEvent_1.EnumPeriod.decade:
+                rt = DateUtils.formatDecade(n);
+                break;
+            case TLEvent_1.EnumPeriod.century:
+                rt = DateUtils.formatCentury(n);
+                break;
+        }
+        return rt;
     }
     static getDecadeComponent(decade) {
         let century = Math.floor((decade - 1) / 10) + 1;

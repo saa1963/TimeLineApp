@@ -26,7 +26,7 @@ export class BoxViewHtml {
     this.btnBoxOk = <HTMLButtonElement>document.getElementById('btnBoxOk')
     let box_message = <HTMLDivElement>document.getElementById('box_message')
     box_message.removeChild(box_message.firstChild);
-    $('#box_message').append(text)
+    box_message.append(text)
   }
 
   public async Show(): Promise<void> {

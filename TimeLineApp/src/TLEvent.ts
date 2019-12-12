@@ -164,6 +164,28 @@ export abstract class TLEvent {
     ) rt = true
     return rt
   }
+
+  public Format(): string {
+    let rt: string
+    switch (this.Type) {
+      case EnumPeriod.day:
+        rt = DateUtils.formatDay(this.Day)
+        break;
+      case EnumPeriod.month:
+        rt = DateUtils.formatMonth(this.Month)
+        break;
+      case EnumPeriod.year:
+        rt = DateUtils.formatYear(this.Year)
+        break;
+      case EnumPeriod.decade:
+        rt = DateUtils.formatDecade(this.Decade)
+        break;
+      case EnumPeriod.century:
+        rt = DateUtils.formatCentury(this.Century)
+        break;
+    }
+    return rt
+  }
 }
 
 export class TLEventDay extends TLEvent {
@@ -187,6 +209,8 @@ export class TLEventDay extends TLEvent {
     let century: number = DateUtils.getCenturyFromYMD(ymd)
     return TLEventDay.CreateTLEventDay(name, day, month, year, decade, century)
   }
+
+  
 }
 
 export class TLEventMonth extends TLEvent {
@@ -233,21 +257,7 @@ export class TLEventYear extends TLEvent {
 }
 
 export class TLEventDecade extends TLEvent {
-  //constructor(name: string, par1: number, par2?: number) {
-  //  super(name)
-  //  if (par2 !== undefined) {
-  //    let century = par1
-  //    let decade = par2
-  //    if(decade < 0 || decade > 9) throw Error('Неверный номер десятилетия')
-  //    this.Decade = ((Math.abs(century) - 1) * 10 + decade + 1) * (century / Math.abs(century))
-  //    this.Century = century;
-  //  } else {
-  //    let decade = par1
-  //    this.Decade = decade;
-  //    this.Century = this.CenturyFromDecade(decade)
-  //  }
-  //  this.Type = EnumPeriod.decade
-  //}
+  
   public static CreateTLEventDecade(name: string, decade: number, century: number): TLEventDay {
     let rt = new TLEventDay(name)
     rt.Day = null
@@ -267,11 +277,7 @@ export class TLEventDecade extends TLEvent {
 }
 
 export class TLEventCentury extends TLEvent {
-  //constructor(name: string, century: number) {
-  //  super(name)
-  //  this.Century = century
-  //  this.Type = EnumPeriod.century
-  //}
+
   public static CreateTLEventCentury(name: string, century: number): TLEventDay {
     let rt = new TLEventDay(name)
     rt.Day = null

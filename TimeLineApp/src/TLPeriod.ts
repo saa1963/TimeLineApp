@@ -507,7 +507,6 @@ export class TLPeriod {
       switch (this.Begin.Type) {
         case EnumPeriod.day:
           rt = this.Begin.Day != this.End.Day
-          return
           break;
         case EnumPeriod.month:
           rt = this.Begin.Month != this.End.Month

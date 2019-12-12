@@ -1,4 +1,5 @@
 import { stringUtils } from './stringutils'
+import { EnumPeriod } from './TLEvent'
 
 export interface YearMonthDay {
   year: number
@@ -463,7 +464,7 @@ export class DateUtils {
     dateCopy.setDate(dateCopy.getDate() + days)
     return dateCopy
   }
-  static formatDate(period: number): string {
+  static formatDay(period: number): string {
     let o = DateUtils.YMDFromAD(period)
     if (period > 0)
       return stringUtils.pad(o.day.toString(), 2) + '.'
@@ -642,6 +643,27 @@ export class DateUtils {
       return `${romanize(num)} н.э.`
     else
       return `${romanize(num)} до н.э.`
+  }
+  static Format(n: number, period: EnumPeriod): string {
+    let rt: string
+    switch (period) {
+      case EnumPeriod.day:
+        rt = DateUtils.formatDay(n)
+        break;
+      case EnumPeriod.month:
+        rt = DateUtils.formatMonth(n)
+        break;
+      case EnumPeriod.year:
+        rt = DateUtils.formatYear(n)
+        break;
+      case EnumPeriod.decade:
+        rt = DateUtils.formatDecade(n)
+        break;
+      case EnumPeriod.century:
+        rt = DateUtils.formatCentury(n)
+        break;
+    }
+    return rt
   }
   static getDecadeComponent(decade: number): number {
     let century = Math.floor((decade - 1) / 10) + 1

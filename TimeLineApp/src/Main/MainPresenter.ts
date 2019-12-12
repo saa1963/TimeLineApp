@@ -411,9 +411,14 @@ export class MainPresenter {
     let ar: TLPeriod[] = this.model.GetSlice(ev, this.Period)
     let s = <HTMLUListElement>document.createElement('ul')
     for (let o of ar) {
-      //let txt = document.createTextNode(o.Name)
       let li = document.createElement('li')
-      li.textContent = o.Name
+      let txtPeriod: string
+      if (o.IsPeriod) {
+        txtPeriod = '(' + o.Begin.Format() + ' - ' + o.End.Format() + ')'
+      } else {
+        txtPeriod = '(' + o.Begin.Format() + ')'
+      }
+      li.textContent = txtPeriod + ' ' + o.Name
       s.append(li)
     }
     new BoxViewHtml(s).Show()
@@ -593,7 +598,7 @@ export class MainPresenter {
     let right: string
     switch (item.Begin.Type) {
       case EnumPeriod.day:
-        left = DateUtils.formatDate(item.Begin.Day)
+        left = DateUtils.formatDay(item.Begin.Day)
         break;
       case EnumPeriod.month:
         left = DateUtils.formatMonth(item.Begin.Month)
@@ -610,7 +615,7 @@ export class MainPresenter {
     }
     switch (item.End.Type) {
       case EnumPeriod.day:
-        right = DateUtils.formatDate(item.End.Day)
+        right = DateUtils.formatDay(item.End.Day)
         break;
       case EnumPeriod.month:
         right = DateUtils.formatMonth(item.End.Month)
@@ -635,7 +640,7 @@ export class MainPresenter {
       dates_num.push(this.mainLine[i].ValueEvent)
       switch (this.Period) {
         case EnumPeriod.day:
-          dates.push(DateUtils.formatDate(this.mainLine[i].ValueEvent))
+          dates.push(DateUtils.formatDay(this.mainLine[i].ValueEvent))
           break
         case EnumPeriod.month:
           dates.push(DateUtils.formatMonth(this.mainLine[i].ValueEvent))
