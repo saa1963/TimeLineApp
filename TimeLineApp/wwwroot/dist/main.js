@@ -19435,7 +19435,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
-const Globals_1 = __webpack_require__(/*! ./Globals */ "./Globals.ts");
 class ApiClient {
     constructor() {
         // do something construct...
@@ -19466,29 +19465,40 @@ class ApiClient {
     }
     SaveTL(model) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield $.ajax('api/storage/save', {
-                type: 'POST',
-                data: {
-                    s1: model.Name,
-                    s2: JSON.stringify(model)
-                }
+            const response = yield fetch('api/storage/save', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ s1: model.Name, s2: JSON.stringify(model) })
             });
+            if (response.ok)
+                return '';
+            else
+                return 'Ошибка: ' + (yield response.text());
         });
     }
     DoLogout() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield $.ajax('api/register/logout');
+            const response = yield fetch('api/register/logout');
+            return Boolean(yield response.text());
         });
     }
     GetUsersList() {
         return __awaiter(this, void 0, void 0, function* () {
-            try {
-                let data = yield $.ajax('api/storage/list');
-                return data;
+            const response = yield fetch('api/storage/list');
+            if (response.ok) {
+                return yield response.json();
             }
-            catch (err) {
-                throw Globals_1.Globals.ResponseErrorText(err);
+            else {
+                throw 'Статус - ' + response.status + ' ' + response.statusText;
             }
+            //try {
+            //  let data = await $.ajax('api/storage/list')
+            //  return data
+            //} catch (err) {
+            //  throw Globals.ResponseErrorText(err)
+            //}
         });
     }
     DoRegister(login, email, password1, password2) {

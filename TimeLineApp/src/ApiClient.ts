@@ -1,6 +1,4 @@
-﻿import * as $ from 'jquery'
-import { Globals } from './Globals';
-import { TLPeriod } from './TLPeriod';
+﻿import { TLPeriod } from './TLPeriod';
 
 export class ApiClient {
   private static instance: ApiClient;
@@ -31,26 +29,28 @@ export class ApiClient {
   }
 
   public async SaveTL(model: TLPeriod): Promise<string> {
-      return await $.ajax(
-        'api/storage/save', {
-          type: 'POST',
-          data: {
-            s1: model.Name,
-            s2: JSON.stringify(model)
-          }
-      })
+    const response = await fetch('api/storage/save', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ s1: model.Name, s2: JSON.stringify(model) })
+    })
+    if (response.ok) return '';
+    else return 'Ошибка: ' + await response.text()
   }
 
   public async DoLogout(): Promise<boolean> {
-    return await $.ajax('api/register/logout')
+    const response = await fetch('api/register/logout')
+    return Boolean(await response.text())
   }
 
   public async GetUsersList(): Promise<string[]> {
-    try {
-      const data = await $.ajax('api/storage/list')
-      return data
-    } catch (err) {
-      throw Globals.ResponseErrorText(err)
+    const response = await fetch('api/storage/list')
+    if (response.ok) {
+      return await response.json()
+    } else {
+      throw 'Статус - ' + response.status + ' ' + response.statusText;
     }
   }
 
@@ -58,7 +58,7 @@ export class ApiClient {
     if (password1 !== password2) {
       return 'Не совпадают пароли'
     }
-    const err = await $.ajax(
+    let err = await $.ajax(
       'api/register/reg', {
         type: 'POST',
         data: {
