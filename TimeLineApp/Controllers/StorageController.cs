@@ -21,7 +21,7 @@ namespace TimeLineApp.Controllers
 
         [HttpPost]
         [Route("api/storage/save")]
-        public IActionResult Save([FromForm]DblString model)
+        public IActionResult Save(DblString model)
         {
             try
             {
