@@ -54,12 +54,13 @@ namespace TimeLineApp.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("api/storage/load")]
-        public ActionResult<string> Load(string fname)
+        public ActionResult<string> Load(dynamic o)
         {
             try
             {
+                string fname = o.ValueKind.fname;
                 return storage.Load(HttpContext, fname);
             }
             catch (Exception e)

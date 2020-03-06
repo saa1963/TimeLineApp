@@ -54,20 +54,45 @@ export class ApiClient {
     }
   }
 
+  public async GetTL(value: string): Promise<TLPeriod> {
+    const response = await fetch('api/storage/load', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ fname: value })
+    })
+    if (response.ok) {
+      let tline = await response.json()
+      let period = TLPeriod.CreateTLPeriod(tline)
+      period.Parent = null
+      return period
+    } else {
+      return null
+    }
+  }
+
   public async DoRegister(login: string, email: string, password1: string, password2: string): Promise<string> {
     if (password1 !== password2) {
       return 'Не совпадают пароли'
     }
-    let err = await $.ajax(
-      'api/register/reg', {
-        type: 'POST',
-        data: {
+    const response = await fetch('api/register/reg', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(
+        {
           Login: login,
           Email: email,
           Password1: password1,
           Password2: password2
-        }
-      })
-    return err
+        })
+    })
+    if (response.ok) {
+      return ''
+    } else {
+      'Статус - ' + response.status + ' ' + response.statusText;
+    }
   }
 }

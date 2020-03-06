@@ -19434,7 +19434,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
+const TLPeriod_1 = __webpack_require__(/*! ./TLPeriod */ "./TLPeriod.ts");
 class ApiClient {
     constructor() {
         // do something construct...
@@ -19493,12 +19493,26 @@ class ApiClient {
             else {
                 throw 'Статус - ' + response.status + ' ' + response.statusText;
             }
-            //try {
-            //  let data = await $.ajax('api/storage/list')
-            //  return data
-            //} catch (err) {
-            //  throw Globals.ResponseErrorText(err)
-            //}
+        });
+    }
+    GetTL(value) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield fetch('api/storage/load', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ fname: value })
+            });
+            if (response.ok) {
+                let tline = yield response.json();
+                let period = TLPeriod_1.TLPeriod.CreateTLPeriod(tline);
+                period.Parent = null;
+                return period;
+            }
+            else {
+                return null;
+            }
         });
     }
     DoRegister(login, email, password1, password2) {
@@ -19506,16 +19520,24 @@ class ApiClient {
             if (password1 !== password2) {
                 return 'Не совпадают пароли';
             }
-            let err = yield $.ajax('api/register/reg', {
-                type: 'POST',
-                data: {
+            const response = yield fetch('api/register/reg', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
                     Login: login,
                     Email: email,
                     Password1: password1,
                     Password2: password2
-                }
+                })
             });
-            return err;
+            if (response.ok) {
+                return '';
+            }
+            else {
+                'Статус - ' + response.status + ' ' + response.statusText;
+            }
         });
     }
 }
@@ -22122,9 +22144,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Globals_1 = __webpack_require__(/*! ../Globals */ "./Globals.ts");
-const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
-const TLPeriod_1 = __webpack_require__(/*! ../TLPeriod */ "./TLPeriod.ts");
+const ApiClient_1 = __webpack_require__(/*! ../ApiClient */ "./ApiClient.ts");
 class TlistPresenter {
     constructor(view, model) {
         this.model = model;
@@ -22145,22 +22165,11 @@ class TlistPresenter {
                 this.view.SetError('Не выбрано значение');
                 return null;
             }
-            try {
-                let tl = yield $.ajax('api/storage/load', {
-                    data: {
-                        fname: this.m_Value
-                    }
-                });
-                let tline = JSON.parse(tl);
-                //return TimeLineModel.CreateTimeLineModel(tl.Name, tline)
-                let period = TLPeriod_1.TLPeriod.CreateTLPeriod(tline);
-                period.Parent = null;
-                return period;
+            let tline = yield ApiClient_1.ApiClient.getInstance().GetTL(this.m_Value);
+            if (!tline) {
+                this.view.SetError('Ошибка загрузки');
             }
-            catch (err) {
-                this.view.SetError(Globals_1.Globals.ResponseErrorText(err));
-                return null;
-            }
+            return tline;
         });
     }
 }
