@@ -3,6 +3,7 @@ import { InterfaceTlistView } from "../ITlistView";
 import { Globals } from "../Globals";
 import * as $ from 'jquery'
 import { TLPeriod } from "../TLPeriod";
+import { ApiClient } from "../ApiClient";
 
 export class TlistPresenter {
   private model: TlistModel
@@ -31,21 +32,10 @@ export class TlistPresenter {
       this.view.SetError('Не выбрано значение')
       return null
     }
-    try {
-      let tl = await $.ajax('api/storage/load',
-        {
-          data: {
-            fname: this.m_Value
-          }
-        })
-      let tline = JSON.parse(tl)
-      //return TimeLineModel.CreateTimeLineModel(tl.Name, tline)
-      let period = TLPeriod.CreateTLPeriod(tline)
-      period.Parent = null
-      return period
-    } catch (err) {
-      this.view.SetError(Globals.ResponseErrorText(err))
-      return null
+    let tline = await ApiClient.getInstance().GetTL(this.m_Value)
+    if (!tline) {
+      this.view.SetError('Ошибка загрузки')
     }
+    return tline
   }
 }

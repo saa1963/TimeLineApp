@@ -23,7 +23,7 @@ namespace TimeLineApp.Controllers
 
         [Route("api/register/reg")]
         [HttpPost]
-        public string Post([FromForm]Register model)
+        public string Post(Register model)
         {
             if (storage.Save(model.Login, model.Email, model.Password1))
             {
