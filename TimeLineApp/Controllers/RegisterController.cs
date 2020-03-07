@@ -34,16 +34,29 @@ namespace TimeLineApp.Controllers
 
         [Route("api/register/log")]
         [HttpPost]
-        public async Task<string> Logon(Logon model)
+        public async Task<IActionResult> Logon(Logon model)
         {
-            if (storage.Logon(model.Login, model.Password))
+            try
             {
-                await AuthenticateUser(model.Login);
-                HttpContext.Response.Cookies.Append("timelineuser", model.Login,
-                    new CookieOptions() { Expires = new DateTimeOffset(DateTime.Now.AddMonths(1)), HttpOnly = false });
-                return "";
+                if (storage.Logon(model.Login, model.Password))
+                {
+                    await AuthenticateUser(model.Login);
+                    HttpContext.Response.Cookies.Append("timelineuser", model.Login,
+                        new CookieOptions() { Expires = new DateTimeOffset(DateTime.Now.AddMonths(1)), HttpOnly = false });
+                    return Ok();
+                }
+                return StatusCode(511, "Неверный пользователь или пароль");
             }
-            return "Ошибка входа";
+            catch (Exception e)
+            {
+                var msg = "";
+                while (e != null)
+                {
+                    msg += e.Message;
+                    e = e.InnerException;
+                }
+                return StatusCode(500, msg);
+            }
         }
 
         [Route("api/register/logout")]

@@ -13,6 +13,10 @@ export class ApiClient {
     return ApiClient.instance;
   }
 
+  private HttpError(response: Response) {
+    return 'Ошибка HTTP - ' + response.status
+  }
+
   public async DoLogin(login: string, password: string): Promise<string> {
     if ((login || '').trim() !== '' && (password || '').trim() !== '') {
       const response = await fetch('api/register/log', {
@@ -22,6 +26,11 @@ export class ApiClient {
         },
         body: JSON.stringify({Login: login, Password: password})
       })
+      if (response.ok) {
+        return await response.text()
+      } else {
+        return this.HttpError(response)
+      }
       return await response.text()
     } else {
       return 'Не введены логин или пароль.'

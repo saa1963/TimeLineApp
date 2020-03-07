@@ -19456,6 +19456,12 @@ class ApiClient {
                     },
                     body: JSON.stringify({ Login: login, Password: password })
                 });
+                if (response.ok) {
+                    return yield response.text();
+                }
+                else {
+                    return 'Ошибка HTTP - ' + response.status;
+                }
                 return yield response.text();
             }
             else {
