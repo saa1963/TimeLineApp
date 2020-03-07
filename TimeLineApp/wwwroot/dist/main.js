@@ -19502,7 +19502,7 @@ class ApiClient {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ fname: value })
+                body: JSON.stringify({ s1: value, s2: '' })
             });
             if (response.ok) {
                 let tline = yield response.json();
@@ -19511,7 +19511,8 @@ class ApiClient {
                 return period;
             }
             else {
-                return null;
+                console.log(response.text());
+                return 'Ошибка загрузки данных';
             }
         });
     }
@@ -22166,10 +22167,13 @@ class TlistPresenter {
                 return null;
             }
             let tline = yield ApiClient_1.ApiClient.getInstance().GetTL(this.m_Value);
-            if (!tline) {
-                this.view.SetError('Ошибка загрузки');
+            if (typeof tline === 'string') {
+                this.view.SetError(tline);
+                return null;
             }
-            return tline;
+            else {
+                return tline;
+            }
         });
     }
 }

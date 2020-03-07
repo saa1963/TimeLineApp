@@ -54,13 +54,13 @@ export class ApiClient {
     }
   }
 
-  public async GetTL(value: string): Promise<TLPeriod> {
+  public async GetTL(value: string): Promise<TLPeriod | string> {
     const response = await fetch('api/storage/load', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ fname: value })
+      body: JSON.stringify({ s1: value, s2: '' })
     })
     if (response.ok) {
       let tline = await response.json()
@@ -68,7 +68,8 @@ export class ApiClient {
       period.Parent = null
       return period
     } else {
-      return null
+      console.log(response.text())
+      return 'Ошибка загрузки данных' 
     }
   }
 
