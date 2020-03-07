@@ -33,9 +33,11 @@ export class TlistPresenter {
       return null
     }
     let tline = await ApiClient.getInstance().GetTL(this.m_Value)
-    if (!tline) {
-      this.view.SetError('Ошибка загрузки')
+    if (typeof tline === 'string') {
+      this.view.SetError(tline)
+      return null
+    } else {
+      return tline
     }
-    return tline
   }
 }
