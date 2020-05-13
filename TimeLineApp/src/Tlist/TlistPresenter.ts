@@ -1,15 +1,15 @@
 ﻿import { TlistModel } from "./TlistModel";
-import { ITlistView } from "../ITlistView";
+import { InterfaceTlistView } from "../ITlistView";
 import { Globals } from "../Globals";
 import * as $ from 'jquery'
 import { TLPeriod } from "../TLPeriod";
 
 export class TlistPresenter {
   private model: TlistModel
-  private view: ITlistView
+  private view: InterfaceTlistView
   private m_Value: string
 
-  constructor(view: ITlistView, model: TlistModel) {
+  constructor(view: InterfaceTlistView, model: TlistModel) {
     this.model = model
     this.view = view
 

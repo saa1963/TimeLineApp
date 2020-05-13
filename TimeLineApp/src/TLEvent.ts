@@ -1,105 +1,7 @@
-﻿import { DateUtils, TLeapData, YearMonthDay } from './dateutils';
+﻿import { DateUtils } from './dateutils';
 
 export enum EnumPeriod {
   day = 1, month = 2, year = 3, decade = 4, century = 5
-}
-
-class TLDate {
-  Day: number
-  Month: number
-  Year: number
-  FromCrismas: number
-  constructor(year: number, month: number, day: number, fromCrismas?: number) {
-    if (fromCrismas === undefined) {
-      if (year == 0) throw new Error('Год равен 0')
-      if (month > 12 || month < 1) throw new Error('Неверный месяц месяца')
-      if (day < 1) throw new Error('День меньше 1')
-      if (this.Includes([1, 3, 5, 7, 8, 10, 12], month)) {
-        if (day > 31) throw new Error('Неверный день месяца')
-      } else if (this.Includes([4, 6, 9, 11], month)) {
-        if (day > 30) throw new Error('Неверный день месяца')
-      } else {
-        if (day > 29) {
-          throw new Error('Неверный день месяца')
-        }
-        if (year >= 1 && year <= 9999) {
-          var dt = new Date(year, month - 1, day);
-          if (TLeapData.leapYear(year)) {
-            if (day > 27) throw new Error('Неверный день месяца')
-          }
-          else {
-            if (day > 28) throw new Error('Неверный день месяца')
-          }
-        }
-      }
-      this.Day = day
-      this.Month = month
-      this.Year = year
-      this.FromCrismas = DateUtils.DaysFromAD(year, month, day)
-    } else {
-      this.FromCrismas = fromCrismas
-      let temp = DateUtils.YMDFromAD(fromCrismas)
-      this.Day = temp.day
-      this.Month = temp.month
-      this.Year = temp.year
-    }
-  }
-
-  public toJSON() {
-    return Object.assign({}, {Day: this.Day, Month: this.Month, Year: this.Year})
-  }
-
-  private Includes(arr: number[], value: number): boolean {
-    for (let i = 0; i < arr.length; i++) {
-      if (arr[i] === value) return true
-    }
-    return false
-  }
-  
-  Greater(o: TLDate): boolean {
-    return this.FromCrismas > o.FromCrismas
-  }
-
-  GreaterOrEqual(o: TLDate): boolean {
-    return this.FromCrismas >= o.FromCrismas
-  }
-
-  Less(o: TLDate): boolean {
-    return this.FromCrismas < o.FromCrismas
-  }
-
-  LessOrEqual(o: TLDate): boolean {
-    return this.FromCrismas <= o.FromCrismas
-  }
-
-  Equal(o: TLDate): boolean {
-    return this.FromCrismas === o.FromCrismas
-  }
-
-  AddDays(n: number): TLDate {
-    return new TLDate(null, null, null, this.FromCrismas + n)
-  }
-
-  AddMonths(n: number): TLDate {
-    let rt: TLDate
-    let mth: YearMonthDay
-    let mmn = DateUtils.makeMonthNumber(this.Year, this.Month, n < 0)
-    for (let i = 0; i < n; i++) {
-      mth = mmn.next().value
-    }
-    let day = this.Day
-    while (true) {
-      try {
-        rt = new TLDate(mth.year, mth.month, day)
-        break
-      }
-      catch (ex) {
-        day--
-        continue
-      }
-    }
-    return rt
-  }
 }
 
 export abstract class TLEvent {
@@ -154,7 +56,7 @@ export abstract class TLEvent {
    * @param vl
    * Текущее значение ОВ, которое в данный момент отрисовывается
    */
-  static Equal(o1:TLEvent, o2: TLEvent): boolean {
+  static Equal(o1: TLEvent, o2: TLEvent): boolean {
     let rt = false
     if (o1.Century === o2.Century
       && o1.Decade === o2.Decade
@@ -191,7 +93,7 @@ export abstract class TLEvent {
 export class TLEventDay extends TLEvent {
 
   public static CreateTLEventDay(name: string, day: number, month: number, year: number, decade: number, century: number): TLEventDay {
-    let rt = new TLEventDay(name)
+    const rt = new TLEventDay(name)
     rt.Day = day
     rt.Month = month
     rt.Year = year
@@ -202,11 +104,11 @@ export class TLEventDay extends TLEvent {
   }
 
   public static CreateTLEventDay1(name: string, day: number): TLEventDay {
-    let ymd = DateUtils.YMDFromAD(day)
-    let month: number = DateUtils.getMonthFromYMD(ymd)
-    let year: number = DateUtils.getYearFromYMD(ymd)
-    let decade: number = DateUtils.getDecadeFromYMD(ymd)
-    let century: number = DateUtils.getCenturyFromYMD(ymd)
+    const ymd = DateUtils.YMDFromAD(day)
+    const month: number = DateUtils.getMonthFromYMD(ymd)
+    const year: number = DateUtils.getYearFromYMD(ymd)
+    const decade: number = DateUtils.getDecadeFromYMD(ymd)
+    const century: number = DateUtils.getCenturyFromYMD(ymd)
     return TLEventDay.CreateTLEventDay(name, day, month, year, decade, century)
   }
 
@@ -216,7 +118,7 @@ export class TLEventDay extends TLEvent {
 export class TLEventMonth extends TLEvent {
 
   public static CreateTLEventMonth(name: string, month: number, year: number, decade: number, century: number): TLEventDay {
-    let rt = new TLEventDay(name)
+    const rt = new TLEventDay(name)
     rt.Day = null
     rt.Month = month
     rt.Year = year
@@ -227,10 +129,10 @@ export class TLEventMonth extends TLEvent {
   }
 
   public static CreateTLEventMonth1(name: string, month: number): TLEventMonth {
-    let ymd = DateUtils.getYMDFromMonth(month)
-    let year: number = DateUtils.getYearFromYMD(ymd)
-    let decade: number = DateUtils.getDecadeFromYMD(ymd)
-    let century: number = DateUtils.getCenturyFromYMD(ymd)
+    const ymd = DateUtils.getYMDFromMonth(month)
+    const year: number = DateUtils.getYearFromYMD(ymd)
+    const decade: number = DateUtils.getDecadeFromYMD(ymd)
+    const century: number = DateUtils.getCenturyFromYMD(ymd)
     return TLEventMonth.CreateTLEventMonth(name, month, year, decade, century)
   }
 }
@@ -238,7 +140,7 @@ export class TLEventMonth extends TLEvent {
 export class TLEventYear extends TLEvent {
 
   public static CreateTLEventYear(name: string, year: number, decade: number, century: number): TLEventDay {
-    let rt = new TLEventDay(name)
+    const rt = new TLEventDay(name)
     rt.Day = null
     rt.Month = null
     rt.Year = year
@@ -249,9 +151,9 @@ export class TLEventYear extends TLEvent {
   }
 
   public static CreateTLEventYear1(name: string, year: number): TLEventYear {
-    let ymd = DateUtils.getYMDFromYear(year)
-    let decade: number = DateUtils.getDecadeFromYMD(ymd)
-    let century: number = DateUtils.getCenturyFromYMD(ymd)
+    const ymd = DateUtils.getYMDFromYear(year)
+    const decade: number = DateUtils.getDecadeFromYMD(ymd)
+    const century: number = DateUtils.getCenturyFromYMD(ymd)
     return TLEventYear.CreateTLEventYear(name, year, decade, century)
   }
 }
@@ -259,7 +161,7 @@ export class TLEventYear extends TLEvent {
 export class TLEventDecade extends TLEvent {
   
   public static CreateTLEventDecade(name: string, decade: number, century: number): TLEventDay {
-    let rt = new TLEventDay(name)
+    const rt = new TLEventDay(name)
     rt.Day = null
     rt.Month = null
     rt.Year = null
@@ -270,8 +172,8 @@ export class TLEventDecade extends TLEvent {
   }
 
   public static CreateTLEventDecade1(name: string, decade: number): TLEventYear {
-    let ymd = DateUtils.getYMDFromDecade(decade)
-    let century: number = DateUtils.getCenturyFromYMD(ymd)
+    const ymd = DateUtils.getYMDFromDecade(decade)
+    const century: number = DateUtils.getCenturyFromYMD(ymd)
     return TLEventDecade.CreateTLEventDecade(name, decade, century)
   }
 }
@@ -279,7 +181,7 @@ export class TLEventDecade extends TLEvent {
 export class TLEventCentury extends TLEvent {
 
   public static CreateTLEventCentury(name: string, century: number): TLEventDay {
-    let rt = new TLEventDay(name)
+    const rt = new TLEventDay(name)
     rt.Day = null
     rt.Month = null
     rt.Year = null

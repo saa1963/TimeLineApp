@@ -1,9 +1,8 @@
-﻿import { ContextMenu, MenuItem, MenuItemSub, MenuItemDivider } from "./contextmenu";
-import { EnumPeriod } from "./TLEvent";
+﻿import { ContextMenu, MenuItem, MenuItemDivider } from "./contextmenu";
 
 export class PeriodContextMenu {
   public static Create(): ContextMenu {
-    let menuitems: MenuItem[] = []
+    const menuitems: MenuItem[] = []
     menuitems.push(new MenuItem('edit', 'Изменить'))
     menuitems.push(new MenuItem('del', 'Удалить'))
     menuitems.push(new MenuItem('expand', 'Развернуть'))

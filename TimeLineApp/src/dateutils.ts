@@ -1,10 +1,11 @@
 import { stringUtils } from './stringutils'
 import { EnumPeriod } from './TLEvent'
+import { romanize } from './romanize'
 
 export interface YearMonthDay {
-  year: number
-  month: number
-  day: number
+  year: number;
+  month: number;
+  day: number;
 }
 
 export class TLeapData {
@@ -14,20 +15,20 @@ export class TLeapData {
   daysInYear: number
   daysInFeb: number
   dth: number[]
-  dth_reverse: number[]
+  dthReverse: number[]
   constructor(year: number) {
     if (TLeapData.leapYear(year)) {
       this.isLeap = true
       this.daysInYear = 366
       this.daysInFeb = 29
       this.dth = [].concat(TLeapData.dth_leap)
-      this.dth_reverse = [].concat(TLeapData.dth_leap).reverse()
+      this.dthReverse = [].concat(TLeapData.dth_leap).reverse()
     } else {
       this.isLeap = false
       this.daysInYear = 365
       this.daysInFeb = 28
       this.dth = [].concat(TLeapData.dth)
-      this.dth_reverse = [].concat(TLeapData.dth).reverse()
+      this.dthReverse = [].concat(TLeapData.dth).reverse()
     }
   }
   static getDaysInYear(year): number {
@@ -37,16 +38,15 @@ export class TLeapData {
       return 365
   }
   static leapYear(year) {
-    return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
+    return ((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0);
   }
 }
 
 export class DateUtils {
   private static mth: string[] = ['ЯНВ', 'ФЕВ', 'МАР', 'АПР', 'МАЙ', 'ИЮН', 'ИЮЛ', 'АВГ', 'СЕН', 'ОКТ', 'НОЯ', 'ДЕК']
   
-  static makeMonthNumber = function* (_initYear: number, _initMonth: number, reverse: boolean = false) {
-    let delta = reverse ? -1 : 1
-    let absinitYear = Math.abs(_initYear)
+  static makeMonthNumber = function* (_initYear: number, _initMonth: number, reverse = false) {
+    const delta = reverse ? -1 : 1
     let init = DateUtils.getNumberFromMonth(_initYear, _initMonth)
     while (true) {
       init += delta
@@ -61,28 +61,28 @@ export class DateUtils {
    * @param days день от РХ
    */
   static YMDFromAD(days: number): YearMonthDay {
-    let d: number = 0
-    let yr: number, delta: number
-    let abs_days = Math.abs(days)
+    let d = 0
+    let yr: number
+    const absDays = Math.abs(days)
     if (days === 0) return null
-    delta = yr = days / abs_days
+    const delta: number = yr = days / absDays
 
     do {
       d += (TLeapData.getDaysInYear(yr) * delta)
       yr += delta
-    } while (Math.abs(d) < abs_days)
+    } while (Math.abs(d) < absDays)
     
     // отматываем год назад
     yr -= delta
     d -= (TLeapData.getDaysInYear(yr) * delta)
 
-    let leapData = new TLeapData(yr)
+    const leapData = new TLeapData(yr)
     let mth = 0
-    while (Math.abs(d) < abs_days) {
+    while (Math.abs(d) < absDays) {
       if (days > 0) {
         d += leapData.dth[mth]
       } else {
-        d -= leapData.dth_reverse[mth]
+        d -= leapData.dthReverse[mth]
       }
       mth++
     }
@@ -90,13 +90,13 @@ export class DateUtils {
     if (days > 0) {
       d -= leapData.dth[mth]
     } else {
-      d += leapData.dth_reverse[mth]
+      d += leapData.dthReverse[mth]
     }
-    let ds = abs_days - Math.abs(d)
+    const ds = absDays - Math.abs(d)
     if (days > 0) {
       return { year: yr, month: mth + 1, day: ds }
     } else {
-      return { year: yr, month: 12 - mth, day: leapData.dth_reverse[mth] - ds + 1}
+      return { year: yr, month: 12 - mth, day: leapData.dthReverse[mth] - ds + 1}
     }
   }
 
@@ -111,8 +111,8 @@ export class DateUtils {
    * @param day
    */
   static DaysFromAD(_year: number, month: number, day: number): number {
-    let year = Math.abs(_year)
-    let leapData = new TLeapData(year)
+    const year = Math.abs(_year)
+    const leapData = new TLeapData(year)
     if (month !== 2) {
       if (day > leapData.dth[month - 1] || day < 1) {
         throw "Неверное значение номера месяца"
@@ -123,9 +123,9 @@ export class DateUtils {
         throw "Неверное значение номера месяца"
       }
     }
-    let days_from_Crismas: number = 0
+    let daysFromCrismas = 0
     for (let i = 1; i < year; i++) {
-      days_from_Crismas += TLeapData.getDaysInYear(i)
+      daysFromCrismas += TLeapData.getDaysInYear(i)
     }
     let sliceMonth: number[]
     if (_year > 0) {
@@ -138,12 +138,12 @@ export class DateUtils {
       }
     }
     sliceMonth.forEach(s => {
-      days_from_Crismas += s
+      daysFromCrismas += s
     })
     if (_year > 0) {
-      return days_from_Crismas + day
+      return daysFromCrismas + day
     } else {
-      return -(days_from_Crismas + (leapData.dth[month - 1] - day + 1))
+      return -(daysFromCrismas + (leapData.dth[month - 1] - day + 1))
     }
   }
   /**
@@ -194,18 +194,14 @@ export class DateUtils {
    * @param month
    */
   static LastDayOfMonth(month: number): number {
-    let f: number
-    f = this.FirstDayOfMonth(month + 1) - 1
-    return f
+    return this.FirstDayOfMonth(month + 1) - 1
   }
   /**
    * Последний день года
    * @param month
    */
   static LastDayOfYear(year: number): number {
-    let f: number
-    f = this.FirstDayOfYear(year + 1) - 1
-    return f
+    return this.FirstDayOfYear(year + 1) - 1
   }
   /**
    * Левое (по шкале времени) десятилетие столетия
@@ -420,9 +416,7 @@ export class DateUtils {
    * @param decade может быть отрицательным
    */
   static LastDayOfDecade(decade: number) {
-    let f: number
-    f = this.FirstDayOfDecade(decade + 1) - 1
-    return f
+    return this.FirstDayOfDecade(decade + 1) - 1
   }
   /**
    * Первый день столетия
@@ -451,21 +445,19 @@ export class DateUtils {
    * @param century может быть отрицательным
    */
   static LastDayOfCentury(century: number) {
-    let f: number
-    f = this.FirstDayOfCentury(century + 1) - 1
-    return f
+    return this.FirstDayOfCentury(century + 1) - 1
   }
   static getCurDate(): Date {
-    let dt = new Date()
+    const dt = new Date()
     return new Date(dt.getFullYear(), dt.getMonth(), dt.getDate())
   }
   static getDateAgo(date: Date, days: number): Date {
-    var dateCopy = new Date(date)
+    const dateCopy = new Date(date)
     dateCopy.setDate(dateCopy.getDate() + days)
     return dateCopy
   }
   static formatDay(period: number): string {
-    let o = DateUtils.YMDFromAD(period)
+    const o = DateUtils.YMDFromAD(period)
     if (period > 0)
       return stringUtils.pad(o.day.toString(), 2) + '.'
         + stringUtils.pad(o.month.toString(), 2) + '.'
@@ -479,7 +471,7 @@ export class DateUtils {
     return (dt.getFullYear() - 1) * 12 + dt.getMonth() + 1
   }
   static getMonthFromYMD(dt: YearMonthDay): number {
-    let delta = dt.year / Math.abs(dt.year)
+    const delta = dt.year / Math.abs(dt.year)
     if (delta === 1) {
       return (dt.year - 1) * 12 + dt.month
     } else {
@@ -488,10 +480,8 @@ export class DateUtils {
     
   }
   static getNumberFromMonth(year: number, month: number): number {
-    let rt: number
-    let delta = year / Math.abs(year)
-    rt = (year - delta) * 12 + (month * delta)
-    return rt
+    const delta = year / Math.abs(year)
+    return (year - delta) * 12 + (month * delta)
   }
   static getYMDFromMonth(num: number): YearMonthDay {
     let year: number
@@ -506,7 +496,6 @@ export class DateUtils {
     return rt
   }
   static getYMDFromDecade(num: number): YearMonthDay {
-    let rt: YearMonthDay
     let year: number
     if (num > 0) {
       year = (num - 1) * 10 + 1
@@ -516,7 +505,6 @@ export class DateUtils {
     return {year: year, month: 1, day: 1}
   }
   static getYMDFromCentury(num: number): YearMonthDay {
-    let rt: YearMonthDay
     let year: number
     if (num > 0) {
       year = (num - 1) * 100 + 1
@@ -566,12 +554,12 @@ export class DateUtils {
    */
   static getMonthFromMonth(month: number) {
     let rtMonth: number
-    let absmonth = Math.abs(month)
-    let лишние_месяцы = Math.floor((absmonth - 1) / 12) * 12
+    const absmonth = Math.abs(month)
+    const лишниеМесяцы = Math.floor((absmonth - 1) / 12) * 12
     if (month > 0) {
-      rtMonth = absmonth - лишние_месяцы
+      rtMonth = absmonth - лишниеМесяцы
     } else {
-      rtMonth = 13 - (absmonth - лишние_месяцы)
+      rtMonth = 13 - (absmonth - лишниеМесяцы)
     }
     return rtMonth
   }
@@ -588,8 +576,8 @@ export class DateUtils {
     return Math.floor(dt.getFullYear() / 10) + 1
   }
   static getDecadeFromYMD(dt: YearMonthDay): number {
-    let delta = dt.year / Math.abs(dt.year)
-    let ab = Math.floor(Math.abs(dt.year) / 10)
+    const delta = dt.year / Math.abs(dt.year)
+    const ab = Math.floor(Math.abs(dt.year) / 10)
     if (delta > 0)
       return ab + 1
     else
@@ -606,8 +594,8 @@ export class DateUtils {
     return Math.floor(dt.getFullYear() / 100) + 1
   }
   static getCenturyFromYMD(dt: YearMonthDay): number {
-    let delta = dt.year / Math.abs(dt.year)
-    let ab = Math.floor(Math.abs(dt.year) / 100)
+    const delta = dt.year / Math.abs(dt.year)
+    const ab = Math.floor(Math.abs(dt.year) / 100)
     if (delta)
       return ab + 1
     else
@@ -617,8 +605,8 @@ export class DateUtils {
     return (century - 1) * 10 + decade + 1
   }
   static formatMonth(period: number): string {
-    let year = Math.floor((period - 1) / 12) + 1
-    let month = period - (year - 1) * 12
+    const year = Math.floor((period - 1) / 12) + 1
+    const month = period - (year - 1) * 12
     if (period > 0)
       return this.mth[month - 1] + ' ' + Math.abs(year)
     else
@@ -631,8 +619,8 @@ export class DateUtils {
       return Math.abs(period) + ' до нэ'
   }
   static formatDecade(period: number): string {
-    let century = Math.floor((Math.abs(period) - 1) / 10) + 1
-    let decade = Math.abs(period) - (century - 1) * 10
+    const century = Math.floor((Math.abs(period) - 1) / 10) + 1
+    const decade = Math.abs(period) - (century - 1) * 10
     if (period > 0)
       return romanize(century) + ' ' + (decade - 1) * 10 + 'е'
     else
@@ -666,21 +654,9 @@ export class DateUtils {
     return rt
   }
   static getDecadeComponent(decade: number): number {
-    let century = Math.floor((decade - 1) / 10) + 1
+    const century = Math.floor((decade - 1) / 10) + 1
     return decade - (century - 1) * 10
   }
   
 }
 
-function romanize (num: number): string {
-  if (!+num) { return null }
-  var digits = String(+num).split('')
-  var key = ['', 'C', 'CC', 'CCC', 'CD', 'D', 'DC', 'DCC', 'DCCC', 'CM',
-    '', 'X', 'XX', 'XXX', 'XL', 'L', 'LX', 'LXX', 'LXXX', 'XC',
-    '', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX']
-
-  var roman = ''
-  var i = 3
-  while (i--) { roman = (key[+digits.pop() + (i * 10)] || '') + roman }
-  return Array(+digits.join('') + 1).join('M') + roman
-}

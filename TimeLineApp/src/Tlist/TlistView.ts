@@ -1,11 +1,11 @@
-﻿import { ITlistView } from "../ITlistView";
+﻿import { InterfaceTlistView } from "../ITlistView";
 import * as $ from 'jquery'
 import { TlistPresenter } from "./TlistPresenter";
 import { TlistModel } from "./TlistModel";
 import { Globals } from "../Globals";
 import { TLPeriod } from "../TLPeriod";
 
-export class TlistView implements ITlistView {
+export class TlistView implements InterfaceTlistView {
   private Presenter: TlistPresenter
   private tbList: HTMLSelectElement
   private btnOk: HTMLButtonElement

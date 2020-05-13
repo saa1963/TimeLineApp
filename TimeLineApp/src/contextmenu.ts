@@ -1,20 +1,22 @@
 import { SimpleEventDispatcher, ISimpleEvent } from "ste-simple-events";
+import { MenuOptions } from "./MenuOptions";
+import { ContextUtil } from "./ContextUtil";
 
 export enum MenuItemType {
   default, divider
 }
 
 export class ContextMenu {
-  private static count: number = 0
+  private static count = 0
   private options: MenuOptions
   public menu: MenuItem[]
   private contextTarget: EventTarget = null
   static readonly DIVIDER: string = 'cm_divider'
 
   constructor(menu: MenuItem[], options?: MenuOptions) {
-    let num = ContextMenu.count++
+    ContextMenu.count++
     this.menu = menu
-    if (options == undefined) this.options = new MenuOptions()
+    if (options === undefined) this.options = new MenuOptions()
     else this.options = options
     window.addEventListener('resize', () => this.onresize())
     this.reload()
@@ -41,50 +43,50 @@ export class ContextMenu {
   }
 
   public reload() {
-    if (document.getElementById('cm_' + ContextMenu.count) == null) {
-      var cnt = document.createElement('div')
+    if (document.getElementById('cm_' + ContextMenu.count) === null) {
+      const cnt = document.createElement('div')
       cnt.className = 'cm_container'
       cnt.id = 'cm_' + ContextMenu.count
 
       document.body.appendChild(cnt)
     }
 
-    var container = document.getElementById('cm_' + ContextMenu.count)
+    const container = document.getElementById('cm_' + ContextMenu.count)
     container.innerHTML = ''
 
     container.appendChild(this.renderLevel(this.menu))
   }
 
   private renderLevel(level: MenuItem[]) {
-    var ulOuter = document.createElement('ul')
+    const ulOuter = document.createElement('ul')
     level.forEach((item) => {
-      let li = <MyHTMLLIElement>document.createElement('li')
+      const li = document.createElement('li') as MyHTMLLIElement
       li.menu = this
 
       if (item.type === MenuItemType.default) {
-        var iconSpan = document.createElement('span')
+        const iconSpan = document.createElement('span')
         iconSpan.className = 'cm_icon_span'
 
-        if (item.icon != '') {
+        if (item.icon !== '') {
           iconSpan.innerHTML = item.icon
         } else {
           iconSpan.innerHTML = this.options.default_icon
         }
 
-        var textSpan = document.createElement('span')
+        const textSpan = document.createElement('span')
         textSpan.className = 'cm_text'
 
-        if (item.text != '') {
+        if (item.text !== '') {
           textSpan.innerHTML = item.text
         } else {
           textSpan.innerHTML = this.options.default_text
         }
 
-        var subSpan = document.createElement('span')
+        const subSpan = document.createElement('span')
         subSpan.className = 'cm_sub_span'
 
-        if (item.sub != null) {
-          if (this.options.sub_icon != null) {
+        if (item.sub !== null) {
+          if (this.options.sub_icon !== null) {
             subSpan.innerHTML = this.options.sub_icon
           } else {
             subSpan.innerHTML = '&#155;'
@@ -98,7 +100,7 @@ export class ContextMenu {
         if (!item.enabled) {
           li.setAttribute('disabled', '')
         } else {
-          li.addEventListener('click', (ev) => {
+          li.addEventListener('click', () => {
             this.e_Select.dispatch(item.id)
           })
 
@@ -108,7 +110,7 @@ export class ContextMenu {
           }
         }
       } else {
-        if (item.type == MenuItemType.divider) {
+        if (item.type === MenuItemType.divider) {
           li.className = 'cm_divider'
         }
       }
@@ -126,19 +128,19 @@ export class ContextMenu {
       this.contextTarget = e.target
     }
 
-    var menu = document.getElementById('cm_' + ContextMenu.count)
+    const menu = document.getElementById('cm_' + ContextMenu.count)
 
-    var clickCoords = { x: e.clientX, y: e.clientY }
-    var clickCoordsX = clickCoords.x
-    var clickCoordsY = clickCoords.y
+    const clickCoords = { x: e.clientX, y: e.clientY }
+    const clickCoordsX = clickCoords.x
+    const clickCoordsY = clickCoords.y
 
-    var menuWidth = menu.offsetWidth + 4
-    var menuHeight = menu.offsetHeight + 4
+    const menuWidth = menu.offsetWidth + 4
+    const menuHeight = menu.offsetHeight + 4
 
-    var windowWidth = window.innerWidth
-    var windowHeight = window.innerHeight
+    const windowWidth = window.innerWidth
+    const windowHeight = window.innerHeight
 
-    var mouseOffset = this.options.mouse_offset
+    const mouseOffset = this.options.mouse_offset
 
     if ((windowWidth - clickCoordsX) < menuWidth) {
       menu.style.left = windowWidth - menuWidth + 'px'
@@ -152,7 +154,7 @@ export class ContextMenu {
       menu.style.top = (clickCoordsY + mouseOffset) + 'px'
     }
 
-    var sizes = ContextUtil.getSizes(menu)
+    const sizes = ContextUtil.getSizes(menu)
 
     if ((windowWidth - clickCoordsX) < sizes.width) {
       menu.classList.add('cm_border_right')
@@ -180,52 +182,6 @@ export class ContextMenu {
   }
 }
 
-class ContextUtil {
-  static getSizes(obj) {
-    var lis = obj.getElementsByTagName('li')
-
-    var widthDef = 0
-    var heightDef = 0
-
-    for (var i = 0; i < lis.length; i++) {
-      var li = lis[i]
-
-      if (li.offsetWidth > widthDef) {
-        widthDef = li.offsetWidth
-      }
-
-      if (li.offsetHeight > heightDef) {
-        heightDef = li.offsetHeight
-      }
-    }
-
-    var width = widthDef
-    var height = heightDef
-
-    for (let i = 0; i < lis.length; i++) {
-      let li = lis[i]
-
-      var ul = li.getElementsByTagName('ul')
-      if (typeof ul[0] !== 'undefined') {
-        var ulSize = ContextUtil.getSizes(ul[0])
-
-        if (widthDef + ulSize.width > width) {
-          width = widthDef + ulSize.width
-        }
-
-        if (heightDef + ulSize.height > height) {
-          height = heightDef + ulSize.height
-        }
-      }
-    }
-
-    return {
-      'width': width,
-      'height': height
-    }
-  }
-}
-
 class MyHTMLLIElement extends HTMLLIElement {
   menu: ContextMenu
 }
@@ -233,8 +189,8 @@ class MyHTMLLIElement extends HTMLLIElement {
 export class MenuItem {
   id: string = null
   text: string = null
-  icon: string = ''
-  enabled: Boolean = true
+  icon = ''
+  enabled = true
   sub: MenuItem[] = null
   type: MenuItemType = MenuItemType.default
   public constructor(id: string, text?: string, icon?: string, enabled?: boolean, sub?: MenuItem[], type?: MenuItemType) {
@@ -259,11 +215,3 @@ export class MenuItemSub extends MenuItem {
   }
 }
 
-export class MenuOptions {
-  default_icon: string = ''
-  default_text: string = 'item'
-  sub_icon: string = '<i class="far fa-arrow-alt-circle-right"></i>'
-  mouse_offset: number = 2
-  close_on_click: boolean = true
-  close_on_resize: boolean = true
-}

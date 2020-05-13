@@ -47,7 +47,7 @@ export class ApiClient {
 
   public async GetUsersList(): Promise<string[]> {
     try {
-      let data = await $.ajax('api/storage/list')
+      const data = await $.ajax('api/storage/list')
       return data
     } catch (err) {
       throw Globals.ResponseErrorText(err)
@@ -58,7 +58,7 @@ export class ApiClient {
     if (password1 !== password2) {
       return 'Не совпадают пароли'
     }
-    let err = await $.ajax(
+    const err = await $.ajax(
       'api/register/reg', {
         type: 'POST',
         data: {

@@ -332,8 +332,8 @@ export class MainPresenter {
           period.Name = temp_period.Name,
           period.Begin = temp_period.Begin
           period.End = temp_period.End
-          period.m_BeginDay = temp_period.m_BeginDay
-          period.m_EndDay = temp_period.m_EndDay
+          period.mBeginDay = temp_period.mBeginDay
+          period.mEndDay = temp_period.mEndDay
           period.Id = temp_period.Id
           this.view.RemoveDataRows(idx)
           this.DrawTL(idx, this.model.Item(idx))

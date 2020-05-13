@@ -84,7 +84,7 @@ export class MainModel {
         items1.push(it)
       }
     }
-    items1.sort((a, b) => a.m_BeginDay - b.m_BeginDay)
+    items1.sort((a, b) => a.mBeginDay - b.mBeginDay)
     return items1
   }
 }

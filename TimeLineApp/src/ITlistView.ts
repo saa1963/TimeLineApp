@@ -1,5 +1,5 @@
-﻿export interface ITlistView {
-  ShowDialog(): void
-  GetSelectedValue(): string
-  SetError(err: string): void
+﻿export interface InterfaceTlistView {
+  ShowDialog(): void;
+  GetSelectedValue(): string;
+  SetError(err: string): void;
 }
