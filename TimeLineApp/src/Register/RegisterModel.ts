@@ -1,53 +1,53 @@
 ﻿import { SimpleEventDispatcher, ISimpleEvent } from "ste-simple-events";
 
 export class RegisterModel {
-  public constructor(login: string, email:string) {
+  public constructor(login: string, email: string) {
     this.Login = login
     this.Email = email
     this.Password1 = ''
     this.Password2 = ''
   }
 
-  private m_Login: string
+  private mLogin: string
   get Login() {
-    return this.m_Login
+    return this.mLogin
   }
   set Login(value: string) {
-    if (value !== this.m_Login) {
-      this.m_Login = value
+    if (value !== this.mLogin) {
+      this.mLogin = value
       this.e_ChangeLogin.dispatch(value)
     }
   }
 
-  private m_Email: string
+  private mEmail: string
   get Email() {
-    return this.m_Email
+    return this.mEmail
   }
   set Email(value: string) {
-    if (value !== this.m_Email) {
-      this.m_Email = value
+    if (value !== this.mEmail) {
+      this.mEmail = value
       this.e_ChangeEmail.dispatch(value)
     }
   }
 
-  private m_Password1: string
+  private mPassword1: string
   get Password1() {
-    return this.m_Password1
+    return this.mPassword1
   }
   set Password1(value: string) {
-    if (value !== this.m_Password1) {
-      this.m_Password1 = value
+    if (value !== this.mPassword1) {
+      this.mPassword1 = value
       this.e_ChangePassword1.dispatch(value)
     }
   }
 
-  private m_Password2: string
+  private mPassword2: string
   get Password2() {
-    return this.m_Password2
+    return this.mPassword2
   }
   set Password2(value: string) {
-    if (value !== this.m_Password2) {
-      this.m_Password2 = value
+    if (value !== this.mPassword2) {
+      this.mPassword2 = value
       this.e_ChangePassword2.dispatch(value)
     }
   }

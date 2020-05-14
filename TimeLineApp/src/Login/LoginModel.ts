@@ -5,23 +5,23 @@ export class LoginModel {
     this.Login = login
     this.Password = ''
   }
-  private m_Login: string
+  private mLogin: string
   get Login() {
-    return this.m_Login
+    return this.mLogin
   }
   set Login(value: string) {
-    if (value !== this.m_Login) {
-      this.m_Login = value
+    if (value !== this.mLogin) {
+      this.mLogin = value
       this.e_ChangeLogin.dispatch(value)
     }
   }
-  private m_Password: string
+  private mPassword: string
   get Password() {
-    return this.m_Password
+    return this.mPassword
   }
   set Password(value: string) {
-    if (value !== this.m_Password) {
-      this.m_Password = value
+    if (value !== this.mPassword) {
+      this.mPassword = value
       this.e_ChangePassword.dispatch(value)
     }
   }

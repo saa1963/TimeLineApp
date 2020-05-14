@@ -1,42 +1,42 @@
 ﻿import { RegisterModel } from "./RegisterModel";
-import { IRegisterView } from "./IRegisterView";
+import { InterfaceRegisterView } from "./IRegisterView";
 import { ApiClient } from "../ApiClient";
 
 export class RegisterPresenter {
   private model: RegisterModel
-  private view: IRegisterView
-  private m_Login: string
-  private m_Email: string
-  private m_Password1: string
-  private m_Password2: string
+  private view: InterfaceRegisterView
+  private mLogin: string
+  private mEmail: string
+  private mPassword1: string
+  private mPassword2: string
 
-  constructor(view: IRegisterView, model: RegisterModel) {
+  constructor(view: InterfaceRegisterView, model: RegisterModel) {
     this.model = model
     this.view = view
     this.model.evChangeLogin.subscribe((login) => {
-      if (login !== this.m_Login) {
+      if (login !== this.mLogin) {
         this.view.SetLogin(login)
       }
     })
     this.model.evChangeEmail.subscribe((email) => {
-      if (email !== this.m_Email) {
+      if (email !== this.mEmail) {
         this.view.SetEmail(email)
       }
     })
     this.model.evChangePassword1.subscribe((password) => {
-      if (password !== this.m_Password1) {
+      if (password !== this.mPassword1) {
         this.view.SetPassword1(password)
       }
     })
     this.model.evChangePassword2.subscribe((password) => {
-      if (password !== this.m_Password2) {
+      if (password !== this.mPassword2) {
         this.view.SetPassword2(password)
       }
     })
-    this.m_Login = model.Login
-    this.m_Email = model.Email
-    this.m_Password1 = model.Password1
-    this.m_Password2 = model.Password2
+    this.mLogin = model.Login
+    this.mEmail = model.Email
+    this.mPassword1 = model.Password1
+    this.mPassword2 = model.Password2
     this.view.SetLogin(model.Login)
     this.view.SetEmail(model.Email)
     this.view.SetPassword1(model.Password1)
@@ -44,28 +44,28 @@ export class RegisterPresenter {
   }
 
   public get Login(): string {
-    return this.m_Login
+    return this.mLogin
   }
 
   // обработчики вызовов из View
   public OnChangeLoginInView() {
-    this.m_Login = this.view.GetLogin()
-    this.model.Login = this.m_Login
+    this.mLogin = this.view.GetLogin()
+    this.model.Login = this.mLogin
   }
   public OnChangeEmailInView() {
-    this.m_Email = this.view.GetEmail()
-    this.model.Email = this.m_Email
+    this.mEmail = this.view.GetEmail()
+    this.model.Email = this.mEmail
   }
   public OnChangePassword1InView() {
-    this.m_Password1 = this.view.GetPassword1()
-    this.model.Password1 = this.m_Password1
+    this.mPassword1 = this.view.GetPassword1()
+    this.model.Password1 = this.mPassword1
   }
   public OnChangePassword2InView() {
-    this.m_Password2 = this.view.GetPassword2()
-    this.model.Password2 = this.m_Password2
+    this.mPassword2 = this.view.GetPassword2()
+    this.model.Password2 = this.mPassword2
   }
 
   public async DoRegister(): Promise<string> {
-    return await ApiClient.getInstance().DoRegister(this.m_Login, this.m_Email, this.m_Password1, this.m_Password2)
+    return await ApiClient.getInstance().DoRegister(this.mLogin, this.mEmail, this.mPassword1, this.mPassword2)
   }
 }

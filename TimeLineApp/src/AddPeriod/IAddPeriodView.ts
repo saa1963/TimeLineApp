@@ -1,50 +1,50 @@
 ﻿import { EnumPeriod } from "../TLEvent";
 
-export interface IAddPeriodView {
-  ShowDialog(): void
-  SetName(value: string): void
-  SetIsPeriod(value: boolean): void
-  SetBeginType(value: EnumPeriod): void
-  SetBegin_DayDay(value: number): void
-  SetBegin_DayMonth(value: number): void
-  SetBegin_DayYear(value: number): void
-  SetBegin_MonthMonth(value: number): void
-  SetBegin_MonthYear(value: number): void
-  SetBegin_Year(value: number): void
-  SetBegin_DecadeDecade(value: number): void
-  SetBegin_DecadeCentury(value: number): void
-  SetBegin_Century(value: number): void
-  SetEndType(value: EnumPeriod): void
-  SetEnd_DayDay(value: number): void
-  SetEnd_DayMonth(value: number): void
-  SetEnd_DayYear(value: number): void
-  SetEnd_MonthMonth(value: number): void
-  SetEnd_MonthYear(value: number): void
-  SetEnd_Year(value: number): void
-  SetEnd_DecadeDecade(value: number): void
-  SetEnd_DecadeCentury(value: number): void
-  SetEnd_Century(value: number): void
-  SetError(err: string): void
-  GetName(): string
-  GetIsPeriod(): boolean
-  GetBeginType(): EnumPeriod
-  GetBegin_DayDay(): number
-  GetBegin_DayMonth(): number
-  GetBegin_DayYear(): number
-  GetBegin_MonthMonth(): number
-  GetBegin_MonthYear(): number
-  GetBegin_Year(): number
-  GetBegin_DecadeDecade(): number
-  GetBegin_DecadeCentury(): number
-  GetBegin_Century(): number
-  GetEndType(): EnumPeriod
-  GetEnd_DayDay(): number
-  GetEnd_DayMonth(): number
-  GetEnd_DayYear(): number
-  GetEnd_MonthMonth(): number
-  GetEnd_MonthYear(): number
-  GetEnd_Year(): number
-  GetEnd_DecadeDecade(): number
-  GetEnd_DecadeCentury(): number
-  GetEnd_Century(): number
+export interface InterfaceAddPeriodView {
+  ShowDialog(): void;
+  SetName(value: string): void;
+  SetIsPeriod(value: boolean): void;
+  SetBeginType(value: EnumPeriod): void;
+  SetBeginDayDay(value: number): void;
+  SetBeginDayMonth(value: number): void;
+  SetBeginDayYear(value: number): void;
+  SetBeginMonthMonth(value: number): void;
+  SetBeginMonthYear(value: number): void;
+  SetBeginYear(value: number): void;
+  SetBeginDecadeDecade(value: number): void;
+  SetBeginDecadeCentury(value: number): void;
+  SetBeginCentury(value: number): void;
+  SetEndType(value: EnumPeriod): void;
+  SetEndDayDay(value: number): void;
+  SetEndDayMonth(value: number): void;
+  SetEndDayYear(value: number): void;
+  SetEndMonthMonth(value: number): void;
+  SetEndMonthYear(value: number): void;
+  SetEndYear(value: number): void;
+  SetEndDecadeDecade(value: number): void;
+  SetEndDecadeCentury(value: number): void;
+  SetEndCentury(value: number): void;
+  SetError(err: string): void;
+  GetName(): string;
+  GetIsPeriod(): boolean;
+  GetBeginType(): EnumPeriod;
+  GetBeginDayDay(): number;
+  GetBeginDayMonth(): number;
+  GetBeginDayYear(): number;
+  GetBeginMonthMonth(): number;
+  GetBeginMonthYear(): number;
+  GetBeginYear(): number;
+  GetBeginDecadeDecade(): number;
+  GetBeginDecadeCentury(): number;
+  GetBeginCentury(): number;
+  GetEndType(): EnumPeriod;
+  GetEndDayDay(): number;
+  GetEndDayMonth(): number;
+  GetEndDayYear(): number;
+  GetEndMonthMonth(): number;
+  GetEndMonthYear(): number;
+  GetEndYear(): number;
+  GetEndDecadeDecade(): number;
+  GetEndDecadeCentury(): number;
+  GetEndCentury(): number;
 }

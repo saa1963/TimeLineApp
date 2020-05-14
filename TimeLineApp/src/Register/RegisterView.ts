@@ -1,10 +1,10 @@
-﻿import { IRegisterView } from "./IRegisterView";
+﻿import { InterfaceRegisterView } from "./IRegisterView";
 import * as $ from 'jquery'
 import { RegisterPresenter } from "./RegisterPresenter";
 import { RegisterModel } from "./RegisterModel";
 import { Globals } from "../Globals";
 
-export class RegisterView implements IRegisterView {
+export class RegisterView implements InterfaceRegisterView {
   private Presenter: RegisterPresenter
   private tbLogin: HTMLInputElement
   private tbEmail: HTMLInputElement
@@ -15,13 +15,13 @@ export class RegisterView implements IRegisterView {
   private dlg: HTMLElement
 
   constructor(model: RegisterModel) {
-    this.tbLogin = <HTMLInputElement>document.getElementById('regLogin')
-    this.tbEmail = <HTMLInputElement>document.getElementById('regEmail')
-    this.tbPassword1 = <HTMLInputElement>document.getElementById('regPassword1')
-    this.tbPassword2 = <HTMLInputElement>document.getElementById('regPassword2')
-    this.btnOk = <HTMLButtonElement>document.getElementById('btnRegisterUser')
-    this.btnCancel = <HTMLButtonElement>document.getElementById('btnCancelRegisterUser')
-    this.dlg = <HTMLElement>document.getElementById('tmRegisterModal')
+    this.tbLogin = document.getElementById('regLogin') as HTMLInputElement
+    this.tbEmail = document.getElementById('regEmail') as HTMLInputElement
+    this.tbPassword1 = document.getElementById('regPassword1') as HTMLInputElement
+    this.tbPassword2 = document.getElementById('regPassword2') as HTMLInputElement
+    this.btnOk = document.getElementById('btnRegisterUser') as HTMLButtonElement
+    this.btnCancel = document.getElementById('btnCancelRegisterUser') as HTMLButtonElement
+    this.dlg = document.getElementById('tmRegisterModal') as HTMLElement
 
     this.tbLogin.onchange = () => {
       this.Presenter.OnChangeLoginInView()
@@ -44,7 +44,7 @@ export class RegisterView implements IRegisterView {
       this.ClearError()
       this.btnOk.onclick = async () => {
         if (!Globals.ValidateElements(this.dlg)) return
-        let err = await this.Presenter.DoRegister()
+        const err = await this.Presenter.DoRegister()
         if (err === '') {
           $('#tmRegisterModal').modal('hide')
           resolve(true)
@@ -76,16 +76,16 @@ export class RegisterView implements IRegisterView {
     $('#reg_server_error').css('display', 'unset')
   }
   GetLogin(): string {
-    return <string>$('#regLogin').val()
+    return $('#regLogin').val() as string
   }
   GetEmail(): string {
-    return <string>$('#regEmail').val()
+    return $('#regEmail').val() as string
   }
   GetPassword1(): string {
-    return <string>$('#regPassword1').val()
+    return $('#regPassword1').val() as string
   }
   GetPassword2(): string {
-    return <string>$('#regPassword2').val()
+    return $('#regPassword2').val() as string
   }
   private ClearError(): void {
     $('#reg_server_error').css('display', 'none')

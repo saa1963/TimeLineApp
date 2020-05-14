@@ -2,9 +2,9 @@
 import * as $ from 'jquery'
 import { LoginModel } from "./LoginModel";
 import { Globals } from "../Globals";
-import { ILoginView } from "./ILoginView";
+import { InterfaceLoginView } from "./ILoginView";
 
-export class LoginView implements ILoginView {
+export class LoginView implements InterfaceLoginView {
   private Presenter: LoginPresenter
   private tbLogin: HTMLInputElement
   private tbPassword: HTMLInputElement
@@ -13,11 +13,11 @@ export class LoginView implements ILoginView {
   private dlg: HTMLElement
 
   constructor(model: LoginModel) {
-    this.tbLogin = <HTMLInputElement>document.getElementById('logLogin')
-    this.tbPassword = <HTMLInputElement>document.getElementById('logPassword')
-    this.btnOk = <HTMLButtonElement>document.getElementById('btnLoginUser')
-    this.btnCancel = <HTMLButtonElement>document.getElementById('btnCancelLoginUser')
-    this.dlg = <HTMLElement>document.getElementById('tmLoginModal')
+    this.tbLogin = document.getElementById('logLogin') as HTMLInputElement
+    this.tbPassword = document.getElementById('logPassword') as HTMLInputElement
+    this.btnOk = document.getElementById('btnLoginUser') as HTMLButtonElement
+    this.btnCancel = document.getElementById('btnCancelLoginUser') as HTMLButtonElement
+    this.dlg = document.getElementById('tmLoginModal') as HTMLElement
 
     this.tbLogin.onchange = () => {
       this.Presenter.OnChangeLoginInView()
@@ -34,7 +34,7 @@ export class LoginView implements ILoginView {
       this.ClearError()
       this.btnOk.onclick = async () => {
         if (!Globals.ValidateElements(this.dlg)) return
-        let err = await this.Presenter.DoLogin()
+        const err = await this.Presenter.DoLogin()
         if (err === '') {
           $('#tmLoginModal').modal('hide')
           resolve(true)
@@ -68,14 +68,10 @@ export class LoginView implements ILoginView {
   }
 
   public GetLogin(): string {
-    return <string>$('#logLogin').val()
+    return $('#logLogin').val() as string
   }
 
   public GetPassword(): string {
-    return <string>$('#logPassword').val()
-  }
-
-  public static Logout() {
-    Globals.IsAuthentificated = false
+    return $('#logPassword').val() as string
   }
 }

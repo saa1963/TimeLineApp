@@ -1,8 +1,7 @@
 ﻿import * as $ from 'jquery'
 
 export class Globals {
-  static IsAuthentificated = false
-
+  
   static getCookie(name: string) {
     let c = document.cookie
     const matches = document.cookie.match(new RegExp(

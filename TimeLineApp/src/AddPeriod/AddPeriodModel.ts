@@ -73,128 +73,128 @@ export class AddPeriodModel {
     }
   }
 
-  private m_Begin_Year
-  public get Begin_Year(): number { return this.m_Begin_Year; }
-  public set Begin_Year(value: number) {
-    if (value !== this.m_Begin_Year) {
-      this.m_Begin_Year = value
+  private mBeginYear
+  public get BeginYear(): number { return this.mBeginYear; }
+  public set BeginYear(value: number) {
+    if (value !== this.mBeginYear) {
+      this.mBeginYear = value
       this.e_ChangeBegin_Year.dispatch(value)
     }
   }
 
-  private m_Begin_DecadeDecade
-  public get Begin_DecadeDecade(): number { return this.m_Begin_DecadeDecade; }
-  public set Begin_DecadeDecade(value: number) {
-    if (value !== this.m_Begin_DecadeDecade) {
-      this.m_Begin_DecadeDecade = value
+  private mBeginDecadeDecade
+  public get BeginDecadeDecade(): number { return this.mBeginDecadeDecade; }
+  public set BeginDecadeDecade(value: number) {
+    if (value !== this.mBeginDecadeDecade) {
+      this.mBeginDecadeDecade = value
       this.e_ChangeBegin_DecadeDecade.dispatch(value)
     }
   }
 
-  private m_Begin_DecadeCentury
-  public get Begin_DecadeCentury(): number { return this.m_Begin_DecadeCentury; }
-  public set Begin_DecadeCentury(value: number) {
-    if (value !== this.m_Begin_DecadeCentury) {
-      this.m_Begin_DecadeCentury = value
+  private mBeginDecadeCentury
+  public get BeginDecadeCentury(): number { return this.mBeginDecadeCentury; }
+  public set BeginDecadeCentury(value: number) {
+    if (value !== this.mBeginDecadeCentury) {
+      this.mBeginDecadeCentury = value
       this.e_ChangeBegin_DecadeCentury.dispatch(value)
     }
   }
 
-  private m_Begin_Century
-  public get Begin_Century(): number { return this.m_Begin_Century; }
-  public set Begin_Century(value: number) {
-    if (value !== this.m_Begin_Century) {
-      this.m_Begin_Century = value
+  private mBeginCentury
+  public get BeginCentury(): number { return this.mBeginCentury; }
+  public set BeginCentury(value: number) {
+    if (value !== this.mBeginCentury) {
+      this.mBeginCentury = value
       this.e_ChangeBegin_Century.dispatch(value)
     }
   }
 
-  private m_EndType: EnumPeriod
-  public get EndType(): EnumPeriod { return this.m_EndType; }
+  private mEndType: EnumPeriod
+  public get EndType(): EnumPeriod { return this.mEndType; }
   public set EndType(value: EnumPeriod) {
-    if (value !== this.m_EndType) {
-      this.m_EndType = value
+    if (value !== this.mEndType) {
+      this.mEndType = value
       this.e_ChangeEndType.dispatch(value)
     }
   }
 
-  private m_End_DayDay: number
-  public get End_DayDay(): number { return this.m_End_DayDay; }
-  public set End_DayDay(value: number) {
-    if (value !== this.m_End_DayDay) {
-      this.m_End_DayDay = value
+  private mEndDayDay: number
+  public get EndDayDay(): number { return this.mEndDayDay; }
+  public set EndDayDay(value: number) {
+    if (value !== this.mEndDayDay) {
+      this.mEndDayDay = value
       this.e_ChangeEnd_DayDay.dispatch(value)
     }
   }
 
-  private m_End_DayMonth: number
-  public get End_DayMonth(): number { return this.m_End_DayMonth; }
-  public set End_DayMonth(value: number) {
-    if (value !== this.m_End_DayMonth) {
-      this.m_End_DayMonth = value
+  private mEndDayMonth: number
+  public get EndDayMonth(): number { return this.mEndDayMonth; }
+  public set EndDayMonth(value: number) {
+    if (value !== this.mEndDayMonth) {
+      this.mEndDayMonth = value
       this.e_ChangeEnd_DayMonth.dispatch(value)
     }
   }
 
-  private m_End_DayYear: number
-  public get End_DayYear(): number { return this.m_End_DayYear; }
-  public set End_DayYear(value: number) {
-    if (value !== this.m_End_DayYear) {
-      this.m_End_DayYear = value
+  private mEndDayYear: number
+  public get EndDayYear(): number { return this.mEndDayYear; }
+  public set EndDayYear(value: number) {
+    if (value !== this.mEndDayYear) {
+      this.mEndDayYear = value
       this.e_ChangeEnd_DayYear.dispatch(value)
     }
   }
 
-  private m_End_MonthMonth: number
-  public get End_MonthMonth(): number { return this.m_End_MonthMonth; }
-  public set End_MonthMonth(value: number) {
-    if (value !== this.m_End_MonthMonth) {
-      this.m_End_MonthMonth = value
+  private mEndMonthMonth: number
+  public get EndMonthMonth(): number { return this.mEndMonthMonth; }
+  public set EndMonthMonth(value: number) {
+    if (value !== this.mEndMonthMonth) {
+      this.mEndMonthMonth = value
       this.e_ChangeEnd_MonthMonth.dispatch(value)
     }
   }
 
-  private m_End_MonthYear: number
-  public get End_MonthYear(): number { return this.m_End_MonthYear; }
-  public set End_MonthYear(value: number) {
-    if (value !== this.m_End_MonthYear) {
-      this.m_End_MonthYear = value
+  private mEndMonthYear: number
+  public get EndMonthYear(): number { return this.mEndMonthYear; }
+  public set EndMonthYear(value: number) {
+    if (value !== this.mEndMonthYear) {
+      this.mEndMonthYear = value
       this.e_ChangeEnd_MonthYear.dispatch(value)
     }
   }
 
-  private m_End_Year
-  public get End_Year(): number { return this.m_End_Year; }
-  public set End_Year(value: number) {
-    if (value !== this.m_End_Year) {
-      this.m_End_Year = value
+  private mEndYear
+  public get EndYear(): number { return this.mEndYear; }
+  public set EndYear(value: number) {
+    if (value !== this.mEndYear) {
+      this.mEndYear = value
       this.e_ChangeEnd_Year.dispatch(value)
     }
   }
 
-  private m_End_DecadeDecade
-  public get End_DecadeDecade(): number { return this.m_End_DecadeDecade; }
-  public set End_DecadeDecade(value: number) {
-    if (value !== this.m_End_DecadeDecade) {
-      this.m_End_DecadeDecade = value
+  private mEndDecadeDecade
+  public get EndDecadeDecade(): number { return this.mEndDecadeDecade; }
+  public set EndDecadeDecade(value: number) {
+    if (value !== this.mEndDecadeDecade) {
+      this.mEndDecadeDecade = value
       this.e_ChangeEnd_DecadeDecade.dispatch(value)
     }
   }
 
-  private m_End_DecadeCentury
-  public get End_DecadeCentury(): number { return this.m_End_DecadeCentury; }
-  public set End_DecadeCentury(value: number) {
-    if (value !== this.m_End_DecadeCentury) {
-      this.m_End_DecadeCentury = value
+  private mEndDecadeCentury
+  public get EndDecadeCentury(): number { return this.mEndDecadeCentury; }
+  public set EndDecadeCentury(value: number) {
+    if (value !== this.mEndDecadeCentury) {
+      this.mEndDecadeCentury = value
       this.e_ChangeEnd_DecadeCentury.dispatch(value)
     }
   }
 
-  private m_End_Century
-  public get End_Century(): number { return this.m_End_Century; }
-  public set End_Century(value: number) {
-    if (value !== this.m_End_Century) {
-      this.m_End_Century = value
+  private mEndCentury
+  public get EndCentury(): number { return this.mEndCentury; }
+  public set EndCentury(value: number) {
+    if (value !== this.mEndCentury) {
+      this.mEndCentury = value
       this.e_ChangeEnd_Century.dispatch(value)
     }
   }
@@ -212,39 +212,39 @@ export class AddPeriodModel {
     return this.e_ChangeBeginType.asEvent();
   }
   private e_ChangeBegin_DayDay = new SimpleEventDispatcher<number>();
-  public get evChangeBegin_DayDay(): ISimpleEvent<number> {
+  public get evChangeBeginDayDay(): ISimpleEvent<number> {
     return this.e_ChangeBegin_DayDay.asEvent();
   }
   private e_ChangeBegin_DayMonth = new SimpleEventDispatcher<number>();
-  public get evChangeBegin_DayMonth(): ISimpleEvent<number> {
+  public get evChangeBeginDayMonth(): ISimpleEvent<number> {
     return this.e_ChangeBegin_DayMonth.asEvent();
   }
   private e_ChangeBegin_DayYear = new SimpleEventDispatcher<number>();
-  public get evChangeBegin_DayYear(): ISimpleEvent<number> {
+  public get evChangeBeginDayYear(): ISimpleEvent<number> {
     return this.e_ChangeBegin_DayYear.asEvent();
   }
   private e_ChangeBegin_MonthMonth = new SimpleEventDispatcher<number>();
-  public get evChangeBegin_MonthMonth(): ISimpleEvent<number> {
+  public get evChangeBeginMonthMonth(): ISimpleEvent<number> {
     return this.e_ChangeBegin_MonthMonth.asEvent();
   }
   private e_ChangeBegin_MonthYear = new SimpleEventDispatcher<number>();
-  public get evChangeBegin_MonthYear(): ISimpleEvent<number> {
+  public get evChangeBeginMonthYear(): ISimpleEvent<number> {
     return this.e_ChangeBegin_MonthYear.asEvent();
   }
   private e_ChangeBegin_Year = new SimpleEventDispatcher<number>();
-  public get evChangeBegin_Year(): ISimpleEvent<number> {
+  public get evChangeBeginYear(): ISimpleEvent<number> {
     return this.e_ChangeBegin_Year.asEvent();
   }
   private e_ChangeBegin_DecadeDecade = new SimpleEventDispatcher<number>();
-  public get evChangeBegin_DecadeDecade(): ISimpleEvent<number> {
+  public get evChangeBeginDecadeDecade(): ISimpleEvent<number> {
     return this.e_ChangeBegin_DecadeDecade.asEvent();
   }
   private e_ChangeBegin_DecadeCentury = new SimpleEventDispatcher<number>();
-  public get evChangeBegin_DecadeCentury(): ISimpleEvent<number> {
+  public get evChangeBeginDecadeCentury(): ISimpleEvent<number> {
     return this.e_ChangeBegin_DecadeCentury.asEvent();
   }
   private e_ChangeBegin_Century = new SimpleEventDispatcher<number>();
-  public get evChangeBegin_Century(): ISimpleEvent<number> {
+  public get evChangeBeginCentury(): ISimpleEvent<number> {
     return this.e_ChangeBegin_Century.asEvent();
   }
 
@@ -253,39 +253,39 @@ export class AddPeriodModel {
     return this.e_ChangeEndType.asEvent();
   }
   private e_ChangeEnd_DayDay = new SimpleEventDispatcher<number>();
-  public get evChangeEnd_DayDay(): ISimpleEvent<number> {
+  public get evChangeEndDayDay(): ISimpleEvent<number> {
     return this.e_ChangeEnd_DayDay.asEvent();
   }
   private e_ChangeEnd_DayMonth = new SimpleEventDispatcher<number>();
-  public get evChangeEnd_DayMonth(): ISimpleEvent<number> {
+  public get evChangeEndDayMonth(): ISimpleEvent<number> {
     return this.e_ChangeEnd_DayMonth.asEvent();
   }
   private e_ChangeEnd_DayYear = new SimpleEventDispatcher<number>();
-  public get evChangeEnd_DayYear(): ISimpleEvent<number> {
+  public get evChangeEndDayYear(): ISimpleEvent<number> {
     return this.e_ChangeEnd_DayYear.asEvent();
   }
   private e_ChangeEnd_MonthMonth = new SimpleEventDispatcher<number>();
-  public get evChangeEnd_MonthMonth(): ISimpleEvent<number> {
+  public get evChangeEndMonthMonth(): ISimpleEvent<number> {
     return this.e_ChangeEnd_MonthMonth.asEvent();
   }
   private e_ChangeEnd_MonthYear = new SimpleEventDispatcher<number>();
-  public get evChangeEnd_MonthYear(): ISimpleEvent<number> {
+  public get evChangeEndMonthYear(): ISimpleEvent<number> {
     return this.e_ChangeEnd_MonthYear.asEvent();
   }
   private e_ChangeEnd_Year = new SimpleEventDispatcher<number>();
-  public get evChangeEnd_Year(): ISimpleEvent<number> {
+  public get evChangeEndYear(): ISimpleEvent<number> {
     return this.e_ChangeEnd_Year.asEvent();
   }
   private e_ChangeEnd_DecadeDecade = new SimpleEventDispatcher<number>();
-  public get evChangeEnd_DecadeDecade(): ISimpleEvent<number> {
+  public get evChangeEndDecadeDecade(): ISimpleEvent<number> {
     return this.e_ChangeEnd_DecadeDecade.asEvent();
   }
   private e_ChangeEnd_DecadeCentury = new SimpleEventDispatcher<number>();
-  public get evChangeEnd_DecadeCentury(): ISimpleEvent<number> {
+  public get evChangeEndDecadeCentury(): ISimpleEvent<number> {
     return this.e_ChangeEnd_DecadeCentury.asEvent();
   }
   private e_ChangeEnd_Century = new SimpleEventDispatcher<number>();
-  public get evChangeEnd_Century(): ISimpleEvent<number> {
+  public get evChangeEndCentury(): ISimpleEvent<number> {
     return this.e_ChangeEnd_Century.asEvent();
   }
 }

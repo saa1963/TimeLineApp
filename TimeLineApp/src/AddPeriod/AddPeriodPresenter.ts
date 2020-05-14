@@ -1,287 +1,287 @@
 ﻿import { AddPeriodModel } from "./AddPeriodModel"
-import { IAddPeriodView } from "./IAddPeriodView"
+import { InterfaceAddPeriodView } from "./IAddPeriodView"
 import { EnumPeriod } from "../TLEvent"
 
 export class AddPeriodPresenter {
   private model: AddPeriodModel
-  private view: IAddPeriodView
-  private m_Name: string
-  private m_IsPeriod: boolean
-  private m_Begin_Type: EnumPeriod
-  private m_Begin_DayDay: number
-  private m_Begin_DayMonth: number
-  private m_Begin_DayYear: number
-  private m_Begin_MonthMonth: number
-  private m_Begin_MonthYear: number
-  private m_Begin_Year: number
-  private m_Begin_DecadeDecade: number
-  private m_Begin_DecadeCentury: number
-  private m_Begin_Century: number
-  private m_End_Type: number
-  private m_End_DayDay: number
-  private m_End_DayMonth: number
-  private m_End_DayYear: number
-  private m_End_MonthMonth: number
-  private m_End_MonthYear: number
-  private m_End_Year: number
-  private m_End_DecadeDecade: number
-  private m_End_DecadeCentury: number
-  private m_End_Century: number
+  private view: InterfaceAddPeriodView
+  private mName: string
+  private mIsPeriod: boolean
+  private mBeginType: EnumPeriod
+  private mBeginDayDay: number
+  private mBeginDayMonth: number
+  private mBeginDayYear: number
+  private mBeginMonthMonth: number
+  private mBeginMonthYear: number
+  private mBeginYear: number
+  private mBeginDecadeDecade: number
+  private mBeginDecadeCentury: number
+  private mBeginCentury: number
+  private mEndType: number
+  private mEndDayDay: number
+  private mEndDayMonth: number
+  private mEndDayYear: number
+  private mEndMonthMonth: number
+  private mEndMonthYear: number
+  private mEndYear: number
+  private mEndDecadeDecade: number
+  private mEndDecadeCentury: number
+  private mEndCentury: number
 
-  constructor(view: IAddPeriodView, model: AddPeriodModel) {
+  constructor(view: InterfaceAddPeriodView, model: AddPeriodModel) {
     this.model = model
     this.view = view
     this.model.evChangeName.subscribe((value) => {
-      if (value !== this.m_Name) {
+      if (value !== this.mName) {
         this.view.SetName(value)
       }
     })
     this.model.evChangeIsPeriod.subscribe((value) => {
-      if (value !== this.m_IsPeriod) {
+      if (value !== this.mIsPeriod) {
         this.view.SetIsPeriod(value)
       }
     })
     this.model.evChangeBeginType.subscribe((value) => {
-      if (value !== this.m_Begin_Type) {
+      if (value !== this.mBeginType) {
         this.view.SetBeginType(value)
       }
     })
-    this.model.evChangeBegin_DayDay.subscribe((value) => {
-      if (value !== this.m_Begin_DayDay) {
-        this.view.SetBegin_DayDay(value)
+    this.model.evChangeBeginDayDay.subscribe((value) => {
+      if (value !== this.mBeginDayDay) {
+        this.view.SetBeginDayDay(value)
       }
     })
-    this.model.evChangeBegin_DayMonth.subscribe((value) => {
-      if (value !== this.m_Begin_DayMonth) {
-        this.view.SetBegin_DayMonth(value)
+    this.model.evChangeBeginDayMonth.subscribe((value) => {
+      if (value !== this.mBeginDayMonth) {
+        this.view.SetBeginDayMonth(value)
       }
     })
-    this.model.evChangeBegin_DayYear.subscribe((value) => {
-      if (value !== this.m_Begin_DayYear) {
-        this.view.SetBegin_DayYear(value)
+    this.model.evChangeBeginDayYear.subscribe((value) => {
+      if (value !== this.mBeginDayYear) {
+        this.view.SetBeginDayYear(value)
       }
     })
-    this.model.evChangeBegin_MonthMonth.subscribe((value) => {
-      if (value !== this.m_Begin_MonthMonth) {
-        this.view.SetBegin_MonthMonth(value)
+    this.model.evChangeBeginMonthMonth.subscribe((value) => {
+      if (value !== this.mBeginMonthMonth) {
+        this.view.SetBeginMonthMonth(value)
       }
     })
-    this.model.evChangeBegin_MonthYear.subscribe((value) => {
-      if (value !== this.m_Begin_MonthYear) {
-        this.view.SetBegin_MonthYear(value)
+    this.model.evChangeBeginMonthYear.subscribe((value) => {
+      if (value !== this.mBeginMonthYear) {
+        this.view.SetBeginMonthYear(value)
       }
     })
-    this.model.evChangeBegin_Year.subscribe((value) => {
-      if (value !== this.m_Begin_Year) {
-        this.view.SetBegin_Year(value)
+    this.model.evChangeBeginYear.subscribe((value) => {
+      if (value !== this.mBeginYear) {
+        this.view.SetBeginYear(value)
       }
     })
-    this.model.evChangeBegin_DecadeDecade.subscribe((value) => {
-      if (value !== this.m_Begin_DecadeDecade) {
-        this.view.SetBegin_DecadeDecade(value)
+    this.model.evChangeBeginDecadeDecade.subscribe((value) => {
+      if (value !== this.mBeginDecadeDecade) {
+        this.view.SetBeginDecadeDecade(value)
       }
     })
-    this.model.evChangeBegin_DecadeCentury.subscribe((value) => {
-      if (value !== this.m_Begin_DecadeCentury) {
-        this.view.SetBegin_DecadeCentury(value)
+    this.model.evChangeBeginDecadeCentury.subscribe((value) => {
+      if (value !== this.mBeginDecadeCentury) {
+        this.view.SetBeginDecadeCentury(value)
       }
     })
-    this.model.evChangeBegin_Century.subscribe((value) => {
-      if (value !== this.m_Begin_Century) {
-        this.view.SetBegin_Century(value)
+    this.model.evChangeBeginCentury.subscribe((value) => {
+      if (value !== this.mBeginCentury) {
+        this.view.SetBeginCentury(value)
       }
     })
 
     this.model.evChangeEndType.subscribe((value) => {
-      if (value !== this.m_End_Type) {
+      if (value !== this.mEndType) {
         this.view.SetEndType(value)
       }
     })
-    this.model.evChangeEnd_DayDay.subscribe((value) => {
-      if (value !== this.m_End_DayDay) {
-        this.view.SetEnd_DayDay(value)
+    this.model.evChangeEndDayDay.subscribe((value) => {
+      if (value !== this.mEndDayDay) {
+        this.view.SetEndDayDay(value)
       }
     })
-    this.model.evChangeEnd_DayDay.subscribe((value) => {
-      if (value !== this.m_End_DayDay) {
-        this.view.SetEnd_DayDay(value)
+    this.model.evChangeEndDayDay.subscribe((value) => {
+      if (value !== this.mEndDayDay) {
+        this.view.SetEndDayDay(value)
       }
     })
-    this.model.evChangeEnd_DayMonth.subscribe((value) => {
-      if (value !== this.m_End_DayMonth) {
-        this.view.SetEnd_DayMonth(value)
+    this.model.evChangeEndDayMonth.subscribe((value) => {
+      if (value !== this.mEndDayMonth) {
+        this.view.SetEndDayMonth(value)
       }
     })
-    this.model.evChangeEnd_DayYear.subscribe((value) => {
-      if (value !== this.m_End_DayYear) {
-        this.view.SetEnd_DayYear(value)
+    this.model.evChangeEndDayYear.subscribe((value) => {
+      if (value !== this.mEndDayYear) {
+        this.view.SetEndDayYear(value)
       }
     })
-    this.model.evChangeEnd_MonthMonth.subscribe((value) => {
-      if (value !== this.m_End_MonthMonth) {
-        this.view.SetEnd_MonthMonth(value)
+    this.model.evChangeEndMonthMonth.subscribe((value) => {
+      if (value !== this.mEndMonthMonth) {
+        this.view.SetEndMonthMonth(value)
       }
     })
-    this.model.evChangeEnd_MonthYear.subscribe((value) => {
-      if (value !== this.m_End_MonthYear) {
-        this.view.SetEnd_MonthYear(value)
+    this.model.evChangeEndMonthYear.subscribe((value) => {
+      if (value !== this.mEndMonthYear) {
+        this.view.SetEndMonthYear(value)
       }
     })
-    this.model.evChangeEnd_Year.subscribe((value) => {
-      if (value !== this.m_End_Year) {
-        this.view.SetEnd_Year(value)
+    this.model.evChangeEndYear.subscribe((value) => {
+      if (value !== this.mEndYear) {
+        this.view.SetEndYear(value)
       }
     })
-    this.model.evChangeEnd_DecadeDecade.subscribe((value) => {
-      if (value !== this.m_End_DecadeDecade) {
-        this.view.SetEnd_DecadeDecade(value)
+    this.model.evChangeEndDecadeDecade.subscribe((value) => {
+      if (value !== this.mEndDecadeDecade) {
+        this.view.SetEndDecadeDecade(value)
       }
     })
-    this.model.evChangeEnd_DecadeCentury.subscribe((value) => {
-      if (value !== this.m_End_DecadeCentury) {
-        this.view.SetEnd_DecadeCentury(value)
+    this.model.evChangeEndDecadeCentury.subscribe((value) => {
+      if (value !== this.mEndDecadeCentury) {
+        this.view.SetEndDecadeCentury(value)
       }
     })
-    this.model.evChangeEnd_Century.subscribe((value) => {
-      if (value !== this.m_End_Century) {
-        this.view.SetEnd_Century(value)
+    this.model.evChangeEndCentury.subscribe((value) => {
+      if (value !== this.mEndCentury) {
+        this.view.SetEndCentury(value)
       }
     })
 
-    this.m_Name = model.Name
-    this.m_IsPeriod = model.IsPeriod
-    this.m_Begin_Type = model.BeginType
-    this.m_Begin_DayDay = model.BeginDayDay
-    this.m_Begin_DayMonth = model.BeginDayMonth
-    this.m_Begin_DayYear = model.BeginDayYear
-    this.m_Begin_MonthMonth = model.BeginMonthMonth
-    this.m_Begin_MonthYear = model.BeginMonthYear
-    this.m_Begin_Year = model.Begin_Year
-    this.m_Begin_DecadeDecade = model.Begin_DecadeDecade
-    this.m_Begin_DecadeCentury = model.Begin_DecadeCentury
-    this.m_Begin_Century = model.Begin_Century
-    this.m_End_Type = model.EndType
-    this.m_End_DayDay = model.End_DayDay
-    this.m_End_DayMonth = model.End_DayMonth
-    this.m_End_DayYear = model.End_DayYear
-    this.m_End_MonthMonth = model.End_MonthMonth
-    this.m_End_MonthYear = model.End_MonthYear
-    this.m_End_Year = model.End_Year
-    this.m_End_DecadeDecade = model.End_DecadeDecade
-    this.m_End_DecadeCentury = model.End_DecadeCentury
-    this.m_End_Century = model.End_Century
+    this.mName = model.Name
+    this.mIsPeriod = model.IsPeriod
+    this.mBeginType = model.BeginType
+    this.mBeginDayDay = model.BeginDayDay
+    this.mBeginDayMonth = model.BeginDayMonth
+    this.mBeginDayYear = model.BeginDayYear
+    this.mBeginMonthMonth = model.BeginMonthMonth
+    this.mBeginMonthYear = model.BeginMonthYear
+    this.mBeginYear = model.BeginYear
+    this.mBeginDecadeDecade = model.BeginDecadeDecade
+    this.mBeginDecadeCentury = model.BeginDecadeCentury
+    this.mBeginCentury = model.BeginCentury
+    this.mEndType = model.EndType
+    this.mEndDayDay = model.EndDayDay
+    this.mEndDayMonth = model.EndDayMonth
+    this.mEndDayYear = model.EndDayYear
+    this.mEndMonthMonth = model.EndMonthMonth
+    this.mEndMonthYear = model.EndMonthYear
+    this.mEndYear = model.EndYear
+    this.mEndDecadeDecade = model.EndDecadeDecade
+    this.mEndDecadeCentury = model.EndDecadeCentury
+    this.mEndCentury = model.EndCentury
     this.view.SetName(model.Name)
     this.view.SetBeginType(model.BeginType)
     this.view.SetIsPeriod(model.IsPeriod)
-    this.view.SetBegin_DayDay(model.BeginDayDay)
-    this.view.SetBegin_DayMonth(model.BeginDayMonth)
-    this.view.SetBegin_DayYear(model.BeginDayYear)
-    this.view.SetBegin_MonthMonth(model.BeginMonthMonth)
-    this.view.SetBegin_MonthYear(model.BeginMonthYear)
-    this.view.SetBegin_Year(model.Begin_Year)
-    this.view.SetBegin_DecadeDecade(model.Begin_DecadeDecade)
-    this.view.SetBegin_DecadeCentury(model.Begin_DecadeCentury)
-    this.view.SetBegin_Century(model.Begin_Century)
+    this.view.SetBeginDayDay(model.BeginDayDay)
+    this.view.SetBeginDayMonth(model.BeginDayMonth)
+    this.view.SetBeginDayYear(model.BeginDayYear)
+    this.view.SetBeginMonthMonth(model.BeginMonthMonth)
+    this.view.SetBeginMonthYear(model.BeginMonthYear)
+    this.view.SetBeginYear(model.BeginYear)
+    this.view.SetBeginDecadeDecade(model.BeginDecadeDecade)
+    this.view.SetBeginDecadeCentury(model.BeginDecadeCentury)
+    this.view.SetBeginCentury(model.BeginCentury)
     this.view.SetEndType(model.EndType)
-    this.view.SetEnd_DayDay(model.End_DayDay)
-    this.view.SetEnd_DayMonth(model.End_DayMonth)
-    this.view.SetEnd_DayYear(model.End_DayYear)
-    this.view.SetEnd_MonthMonth(model.End_MonthMonth)
-    this.view.SetEnd_MonthYear(model.End_MonthYear)
-    this.view.SetEnd_Year(model.End_Year)
-    this.view.SetEnd_DecadeDecade(model.End_DecadeDecade)
-    this.view.SetEnd_DecadeCentury(model.End_DecadeCentury)
-    this.view.SetEnd_Century(model.End_Century)
+    this.view.SetEndDayDay(model.EndDayDay)
+    this.view.SetEndDayMonth(model.EndDayMonth)
+    this.view.SetEndDayYear(model.EndDayYear)
+    this.view.SetEndMonthMonth(model.EndMonthMonth)
+    this.view.SetEndMonthYear(model.EndMonthYear)
+    this.view.SetEndYear(model.EndYear)
+    this.view.SetEndDecadeDecade(model.EndDecadeDecade)
+    this.view.SetEndDecadeCentury(model.EndDecadeCentury)
+    this.view.SetEndCentury(model.EndCentury)
   }
 
   // обработчики вызовов из View
   public OnChangeNameInView() {
-    this.m_Name = this.view.GetName()
-    this.model.Name = this.m_Name
+    this.mName = this.view.GetName()
+    this.model.Name = this.mName
   }
   public OnChangeIsPeriodInView() {
-    this.m_IsPeriod = this.view.GetIsPeriod()
-    this.model.IsPeriod = this.m_IsPeriod
+    this.mIsPeriod = this.view.GetIsPeriod()
+    this.model.IsPeriod = this.mIsPeriod
   }
-  public OnChangeBegin_TypeInView() {
-    this.m_Begin_Type = this.view.GetBeginType()
-    this.model.BeginType = this.m_Begin_Type
+  public OnChangeBeginTypeInView() {
+    this.mBeginType = this.view.GetBeginType()
+    this.model.BeginType = this.mBeginType
   }
-  public OnChangeBegin_DayDayInView() {
-    this.m_Begin_DayDay = this.view.GetBegin_DayDay()
-    this.model.BeginDayDay = this.m_Begin_DayDay
+  public OnChangeBeginDayDayInView() {
+    this.mBeginDayDay = this.view.GetBeginDayDay()
+    this.model.BeginDayDay = this.mBeginDayDay
   }
-  public OnChangeBegin_DayMonthInView() {
-    this.m_Begin_DayMonth = this.view.GetBegin_DayMonth()
-    this.model.BeginDayMonth = this.m_Begin_DayMonth
+  public OnChangeBeginDayMonthInView() {
+    this.mBeginDayMonth = this.view.GetBeginDayMonth()
+    this.model.BeginDayMonth = this.mBeginDayMonth
   }
-  public OnChangeBegin_DayYearInView() {
-    this.m_Begin_DayYear = this.view.GetBegin_DayYear()
-    this.model.BeginDayYear = this.m_Begin_DayYear
+  public OnChangeBeginDayYearInView() {
+    this.mBeginDayYear = this.view.GetBeginDayYear()
+    this.model.BeginDayYear = this.mBeginDayYear
   }
-  public OnChangeBegin_MonthMonthInView() {
-    this.m_Begin_MonthMonth = this.view.GetBegin_MonthMonth()
-    this.model.BeginMonthMonth = this.m_Begin_MonthMonth
+  public OnChangeBeginMonthMonthInView() {
+    this.mBeginMonthMonth = this.view.GetBeginMonthMonth()
+    this.model.BeginMonthMonth = this.mBeginMonthMonth
   }
-  public OnChangeBegin_MonthYearInView() {
-    this.m_Begin_MonthYear = this.view.GetBegin_MonthYear()
-    this.model.BeginMonthYear = this.m_Begin_MonthYear
+  public OnChangeBeginMonthYearInView() {
+    this.mBeginMonthYear = this.view.GetBeginMonthYear()
+    this.model.BeginMonthYear = this.mBeginMonthYear
   }
-  public OnChangeBegin_YearInView() {
-    this.m_Begin_Year = this.view.GetBegin_Year()
-    this.model.Begin_Year = this.m_Begin_Year
+  public OnChangeBeginYearInView() {
+    this.mBeginYear = this.view.GetBeginYear()
+    this.model.BeginYear = this.mBeginYear
   }
-  public OnChangeBegin_DecadeDecadeInView() {
-    this.m_Begin_DecadeDecade = this.view.GetBegin_DecadeDecade()
-    this.model.Begin_DecadeDecade = this.m_Begin_DecadeDecade
+  public OnChangeBeginDecadeDecadeInView() {
+    this.mBeginDecadeDecade = this.view.GetBeginDecadeDecade()
+    this.model.BeginDecadeDecade = this.mBeginDecadeDecade
   }
-  public OnChangeBegin_DecadeCenturyInView() {
-    this.m_Begin_DecadeCentury = this.view.GetBegin_DecadeCentury()
-    this.model.Begin_DecadeCentury = this.m_Begin_DecadeCentury
+  public OnChangeBeginDecadeCenturyInView() {
+    this.mBeginDecadeCentury = this.view.GetBeginDecadeCentury()
+    this.model.BeginDecadeCentury = this.mBeginDecadeCentury
   }
-  public OnChangeBegin_CenturyInView() {
-    this.m_Begin_Century = this.view.GetBegin_Century()
-    this.model.Begin_Century = this.m_Begin_Century
+  public OnChangeBeginCenturyInView() {
+    this.mBeginCentury = this.view.GetBeginCentury()
+    this.model.BeginCentury = this.mBeginCentury
   }
 
-  public OnChangeEnd_TypeInView() {
-    this.m_End_Type = this.view.GetEndType()
-    this.model.EndType = this.m_End_Type
+  public OnChangeEndTypeInView() {
+    this.mEndType = this.view.GetEndType()
+    this.model.EndType = this.mEndType
   }
-  public OnChangeEnd_DayDayInView() {
-    this.m_End_DayDay = this.view.GetEnd_DayDay()
-    this.model.End_DayDay = this.m_End_DayDay
+  public OnChangeEndDayDayInView() {
+    this.mEndDayDay = this.view.GetEndDayDay()
+    this.model.EndDayDay = this.mEndDayDay
   }
-  public OnChangeEnd_DayMonthInView() {
-    this.m_End_DayMonth = this.view.GetEnd_DayMonth()
-    this.model.End_DayMonth = this.m_End_DayMonth
+  public OnChangeEndDayMonthInView() {
+    this.mEndDayMonth = this.view.GetEndDayMonth()
+    this.model.EndDayMonth = this.mEndDayMonth
   }
-  public OnChangeEnd_DayYearInView() {
-    this.m_End_DayYear = this.view.GetEnd_DayYear()
-    this.model.End_DayYear = this.m_End_DayYear
+  public OnChangeEndDayYearInView() {
+    this.mEndDayYear = this.view.GetEndDayYear()
+    this.model.EndDayYear = this.mEndDayYear
   }
-  public OnChangeEnd_MonthMonthInView() {
-    this.m_End_MonthMonth = this.view.GetEnd_MonthMonth()
-    this.model.End_MonthMonth = this.m_End_MonthMonth
+  public OnChangeEndMonthMonthInView() {
+    this.mEndMonthMonth = this.view.GetEndMonthMonth()
+    this.model.EndMonthMonth = this.mEndMonthMonth
   }
-  public OnChangeEnd_MonthYearInView() {
-    this.m_End_MonthYear = this.view.GetEnd_MonthYear()
-    this.model.End_MonthYear = this.m_End_MonthYear
+  public OnChangeEndMonthYearInView() {
+    this.mEndMonthYear = this.view.GetEndMonthYear()
+    this.model.EndMonthYear = this.mEndMonthYear
   }
-  public OnChangeEnd_YearInView() {
-    this.m_End_Year = this.view.GetEnd_Year()
-    this.model.End_Year = this.m_End_Year
+  public OnChangeEndYearInView() {
+    this.mEndYear = this.view.GetEndYear()
+    this.model.EndYear = this.mEndYear
   }
-  public OnChangeEnd_DecadeDecadeInView() {
-    this.m_End_DecadeDecade = this.view.GetEnd_DecadeDecade()
-    this.model.End_DecadeDecade = this.m_End_DecadeDecade
+  public OnChangeEndDecadeDecadeInView() {
+    this.mEndDecadeDecade = this.view.GetEndDecadeDecade()
+    this.model.EndDecadeDecade = this.mEndDecadeDecade
   }
-  public OnChangeEnd_DecadeCenturyInView() {
-    this.m_End_DecadeCentury = this.view.GetEnd_DecadeCentury()
-    this.model.End_DecadeCentury = this.m_End_DecadeCentury
+  public OnChangeEndDecadeCenturyInView() {
+    this.mEndDecadeCentury = this.view.GetEndDecadeCentury()
+    this.model.EndDecadeCentury = this.mEndDecadeCentury
   }
-  public OnChangeEnd_CenturyInView() {
-    this.m_End_Century = this.view.GetEnd_Century()
-    this.model.End_Century = this.m_End_Century
+  public OnChangeEndCenturyInView() {
+    this.mEndCentury = this.view.GetEndCentury()
+    this.model.EndCentury = this.mEndCentury
   }
 }

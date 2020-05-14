@@ -1,42 +1,42 @@
 ﻿import { LoginModel } from "./LoginModel";
-import { ILoginView } from "./ILoginView";
+import { InterfaceLoginView } from "./ILoginView";
 import { ApiClient } from "../ApiClient";
 
 export class LoginPresenter {
   private model: LoginModel
-  private view: ILoginView
-  private m_Login: string
-  private m_Password: string
-  constructor(view: ILoginView, model: LoginModel) {
+  private view: InterfaceLoginView
+  private mLogin: string
+  private mPassword: string
+  constructor(view: InterfaceLoginView, model: LoginModel) {
     this.model = model
     this.view = view
     this.model.evChangeLogin.subscribe((login) => {
-      if (login !== this.m_Login) {
+      if (login !== this.mLogin) {
         this.view.SetLogin(login)
       }
     })
     this.model.evChangePassword.subscribe((password) => {
-      if (password !== this.m_Password) {
+      if (password !== this.mPassword) {
         this.view.SetPassword(password)
       }
     })
-    this.m_Login = model.Login
-    this.m_Password = model.Password
+    this.mLogin = model.Login
+    this.mPassword = model.Password
     this.view.SetLogin(model.Login)
     this.view.SetPassword(model.Password)
   }
 
   // обработчики вызовов из View
   public OnChangeLoginInView() {
-    this.m_Login = this.view.GetLogin()
-    this.model.Login =  this.m_Login
+    this.mLogin = this.view.GetLogin()
+    this.model.Login =  this.mLogin
   }
   public OnChangePasswordInView() {
-    this.m_Password = this.view.GetPassword()
-    this.model.Password = this.m_Password
+    this.mPassword = this.view.GetPassword()
+    this.model.Password = this.mPassword
   }
   
   public async DoLogin(): Promise<string> {
-    return await ApiClient.getInstance().DoLogin(this.m_Login, this.m_Password)
+    return await ApiClient.getInstance().DoLogin(this.mLogin, this.mPassword)
   }
 }

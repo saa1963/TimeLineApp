@@ -6,9 +6,6 @@ export class MainModel {
   private static instance: MainModel;
   private models: TLPeriod[] = []
 
-  private constructor() {
-  }
-
   public static getInstance() {
     if (!MainModel.instance) {
       MainModel.instance = new MainModel();
@@ -18,8 +15,8 @@ export class MainModel {
   }
 
   public Add(model: TLPeriod): number {
-    let idx: number = this.models.length
-    let rt = this.models.push(model)
+    const idx: number = this.models.length
+    const rt = this.models.push(model)
     model.evAddPeriod.subscribe((period) => {
       this.e_AddPeriod.dispatch([idx, period])
     })
@@ -74,12 +71,12 @@ export class MainModel {
   }
 
   public GetSlice(n: number, period: EnumPeriod): TLPeriod[] {
-    let items: TLPeriod[] = []
-    for (let q of this.models) {
+    const items: TLPeriod[] = []
+    for (const q of this.models) {
       q.getAllSuitablePeriodsFromHierarchy(n, n, period, items)
     }
-    let items1: TLPeriod[] = []
-    for (let it of items) {
+    const items1: TLPeriod[] = []
+    for (const it of items) {
       if (!items1.includes(it)) {
         items1.push(it)
       }

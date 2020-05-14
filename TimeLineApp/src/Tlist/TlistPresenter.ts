@@ -1,38 +1,36 @@
 ﻿import { TlistModel } from "./TlistModel";
 import { InterfaceTlistView } from "../ITlistView";
-import { Globals } from "../Globals";
-import * as $ from 'jquery'
 import { TLPeriod } from "../TLPeriod";
 import { ApiClient } from "../ApiClient";
 
 export class TlistPresenter {
   private model: TlistModel
   private view: InterfaceTlistView
-  private m_Value: string
+  private mValue: string
 
   constructor(view: InterfaceTlistView, model: TlistModel) {
     this.model = model
     this.view = view
 
-    this.m_Value = model[0]
+    this.mValue = model[0]
     //this.view.SetValue(model[0])
   }
 
   public get Login(): string {
-    return this.m_Value
+    return this.mValue
   }
 
   // обработчики вызовов из View
   public OnChangeValueInView() {
-    this.m_Value = this.view.GetSelectedValue()
+    this.mValue = this.view.GetSelectedValue()
   }
 
   public async DoSelect(): Promise<TLPeriod> {
-    if ((this.m_Value || '').trim() === '') {
+    if ((this.mValue || '').trim() === '') {
       this.view.SetError('Не выбрано значение')
       return null
     }
-    let tline = await ApiClient.getInstance().GetTL(this.m_Value)
+    const tline = await ApiClient.getInstance().GetTL(this.mValue)
     if (typeof tline === 'string') {
       this.view.SetError(tline)
       return null

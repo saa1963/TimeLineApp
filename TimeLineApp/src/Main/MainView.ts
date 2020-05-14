@@ -1,17 +1,16 @@
-﻿import { MainPresenter, IExTLPeriod } from "./MainPresenter";
+﻿import { MainPresenter, InterfaceExTLPeriod } from "./MainPresenter";
 import { MainModel } from "./MainModel";
-import { TLPeriod } from "../TLPeriod";
 
 export class MainView {
   // private свойства
   private Presenter: MainPresenter;
 
   // элементы страницы
-  private aLogin = <HTMLAnchorElement>document.getElementById('btnLogin')
-  private aReg = <HTMLAnchorElement>document.getElementById('btnReg')
-  private btnNewTL = <HTMLButtonElement>document.getElementById('newTimeline')
-  private lblUser = <HTMLLabelElement>document.getElementById('lblUser')
-  private btnUploadFile = <HTMLButtonElement>document.getElementById('load_file')
+  private aLogin = document.getElementById('btnLogin') as HTMLAnchorElement
+  private aReg = document.getElementById('btnReg') as HTMLAnchorElement
+  private btnNewTL = document.getElementById('newTimeline') as HTMLButtonElement
+  private lblUser = document.getElementById('lblUser') as HTMLLabelElement
+  private btnUploadFile = document.getElementById('load_file') as HTMLButtonElement
   private tls = document.getElementById('tls')
   private mainTable: HTMLTableElement
 
@@ -19,7 +18,7 @@ export class MainView {
     this.Presenter = new MainPresenter(this, model)
 
     this.aLogin.onclick = async () => {
-      let login = await this.Presenter.OnLogin()
+      const login = await this.Presenter.OnLogin()
       if (login) {
         this.SetUserLabel(login)
       } else {
@@ -39,16 +38,16 @@ export class MainView {
       this.Presenter.UploadFile()
     }
     document.getElementById('prev_period').onclick = () => {
-      this.Presenter.OnPrev_Period()
+      this.Presenter.OnPrevPeriod()
     }
     document.getElementById('next_period').onclick = () => {
-      this.Presenter.OnNext_Period()
+      this.Presenter.OnNextPeriod()
     }
     document.getElementById('prev_page').onclick = () => {
-      this.Presenter.OnPrev_Page()
+      this.Presenter.OnPrevPage()
     }
     document.getElementById('next_page').onclick = () => {
-      this.Presenter.OnNext_Page()
+      this.Presenter.OnNextPage()
     }
     window.onresize = () => {
       this.Presenter.Draw()
@@ -73,24 +72,24 @@ export class MainView {
   }
 
   public DrawDates(dates: [string[], number[]]) {
-    this.mainTable = <HTMLTableElement>document.createElement('table')
+    this.mainTable = document.createElement('table') as HTMLTableElement
     this.mainTable.cellSpacing = '2'
-    let row = document.createElement('tr')
+    const row = document.createElement('tr')
     row.classList.add('date')
     for (let i = 0; i < dates[0].length; ++i) {
-      let td = document.createElement('td')
+      const td = document.createElement('td')
       td.classList.add('date_cell')
       td.id = 'i' + i
 
-      let btnGroup = <HTMLDivElement>document.createElement('div')
+      const btnGroup = document.createElement('div') as HTMLDivElement
       btnGroup.classList.add('d-flex', 'justify-content-between')
 
-      let btnZoomOut = <HTMLButtonElement>document.createElement('button')
+      const btnZoomOut = document.createElement('button') as HTMLButtonElement
       btnZoomOut.classList.add('btn', 'border-0', 'm-0', 'p-0')
-      btnZoomOut.onclick = (ev) => {
+      btnZoomOut.onclick = () => {
         this.Presenter.OnScaleBack(i)
       }
-      let imgZoomOut = <HTMLImageElement>document.createElement('img')
+      const imgZoomOut = document.createElement('img') as HTMLImageElement
       imgZoomOut.src = '../images/icons8-zoom-out-50.png'
       imgZoomOut.width = 20
       imgZoomOut.height = 20
@@ -99,12 +98,12 @@ export class MainView {
 
       btnGroup.append(document.createTextNode(dates[0][i]))
 
-      let btnZoomIn = <HTMLButtonElement>document.createElement('button')
+      const btnZoomIn = document.createElement('button') as HTMLButtonElement
       btnZoomIn.classList.add('btn', 'border-0', 'm-0', 'p-0')
-      btnZoomIn.onclick = (ev) => {
+      btnZoomIn.onclick = () => {
         this.Presenter.OnScaleForward(i)
       }
-      let imgZoomIn = <HTMLImageElement>document.createElement('img')
+      const imgZoomIn = document.createElement('img') as HTMLImageElement
       imgZoomIn.src = '../images/icons8-zoom-in-50.png'
       imgZoomIn.width = 20
       imgZoomIn.height = 20
@@ -123,10 +122,10 @@ export class MainView {
   }
 
   public async DrawHeader(idx: number, s: string, isMain: boolean) {
-    let table = document.getElementsByTagName('table')[0]
-    let row = document.createElement('tr')
+    const table = document.getElementsByTagName('table')[0]
+    const row = document.createElement('tr')
     row.id = "row-header-" + idx
-    let td = <HTMLTableDataCellElement>document.createElement('td')
+    let td = document.createElement('td') as HTMLTableDataCellElement
     if (isMain) {
       td.classList.add('tl_head')
     } else {
@@ -134,28 +133,28 @@ export class MainView {
     }
     td.ondragenter = (ev) => {
       ev.preventDefault();
-      (<HTMLTableCellElement>ev.target).classList.add('period_cell_drop')
+      (ev.target as HTMLTableCellElement).classList.add('period_cell_drop')
     }
     td.ondragleave = (ev) => {
-      (<HTMLTableCellElement>ev.target).classList.remove('period_cell_drop')
+      (ev.target as HTMLTableCellElement).classList.remove('period_cell_drop')
     }
     td.ondragover = (ev) => {
       ev.preventDefault();
     }
-    td.ondrop = this.create_drop_handler(idx, -1)
+    td.ondrop = this.createDrophandler(idx, -1)
     td.colSpan = this.Presenter.MainLineCount - 1
-    let txt = document.createTextNode(s)
+    const txt = document.createTextNode(s)
     td.append(txt)
     row.append(td)
 
-    td = <HTMLTableDataCellElement>document.createElement('td')
+    td = document.createElement('td') as HTMLTableDataCellElement
     td.append(this.CreateTLDropDown(idx))
     row.append(td)
     table.append(row)
   }
 
-  private CreateDropDown(header: string, mas: { header: string, handler: (ev) => void }[]) {
-    let btnMenu = <HTMLButtonElement>document.createElement('button')
+  private CreateDropDown(header: string, mas: { header: string; handler: (ev) => void }[]) {
+    const btnMenu = document.createElement('button') as HTMLButtonElement
     btnMenu.type = 'button'
     btnMenu.setAttribute('data-toggle', 'dropdown')
     btnMenu.classList.add('btn')
@@ -163,11 +162,11 @@ export class MainView {
     btnMenu.classList.add('btn-block')
     btnMenu.classList.add('dropdown-toggle')
     btnMenu.textContent = header
-    let divGroup = <HTMLDivElement>document.createElement('div')
+    const divGroup = document.createElement('div') as HTMLDivElement
     divGroup.classList.add('dropdown-menu')
 
-    for (let item of mas) {
-      let newMenuItem = <HTMLAnchorElement>document.createElement('a')
+    for (const item of mas) {
+      const newMenuItem = document.createElement('a') as HTMLAnchorElement
       newMenuItem.classList.add('dropdown-item')
       newMenuItem.textContent = item.header
       newMenuItem.href = '#'
@@ -175,7 +174,7 @@ export class MainView {
       divGroup.append(newMenuItem)
     }
 
-    let divDropDown = <HTMLDivElement>document.createElement('div')
+    const divDropDown = document.createElement('div') as HTMLDivElement
     divDropDown.classList.add('dropdown')
     divDropDown.append(btnMenu)
     divDropDown.append(divGroup)
@@ -187,52 +186,52 @@ export class MainView {
     return this.CreateDropDown('>>', [
       {
         header: 'Добавить',
-        handler: async (ev) => {
+        handler: async () => {
           await this.Presenter.OnAddPeriod(idx)
         }
       },
       {
         header: 'Сохранить',
-        handler: async (ev) => {
+        handler: async () => {
           await this.Presenter.OnSave(idx)
         }
       },
       {
         header: 'В файл',
-        handler: async (ev) => {
+        handler: async () => {
           await this.Presenter.OnSaveToFile(idx)
         }
       },
       {
         header: 'Свернуть',
-        handler: async (ev) => {
+        handler: async () => {
           await this.Presenter.OnCollapse(idx)
         }
       },
       {
         header: 'Показать все',
-        handler: async (ev) => {
+        handler: async () => {
           await this.Presenter.OnShowAll(idx)
         }
       }
     ])
   }
 
-  public DrawEventsRow(idx: number, items: IExTLPeriod[]) {
+  public DrawEventsRow(idx: number, items: InterfaceExTLPeriod[]) {
     let Id: number;
-    let row = document.createElement('tr')
+    const row = document.createElement('tr')
     row.classList.add('row-data-' + idx)
     let i = 0, last = -1
     while (i < items.length) {
       Id = items[i].item.Id
-      if (items[i].il - last != 1) {
-        let td = <HTMLTableDataCellElement>document.createElement('td')
+      if (items[i].il - last !== 1) {
+        const td = document.createElement('td') as HTMLTableDataCellElement
         td.classList.add('hidden_cell')
         td.colSpan = items[i].il - last - 1
         last = items[i].il - 1
         row.append(td)
       }
-      let td = <HTMLTableDataCellElement>document.createElement('td')
+      const td = document.createElement('td') as HTMLTableDataCellElement
       td.id = 'cell-' + idx + '-' + Id
       td.draggable = true
       td.colSpan = items[i].ir - items[i].il + 1
@@ -240,42 +239,42 @@ export class MainView {
       if (items[i].item.Count > 0) {
         td.classList.add('note')
       }
-      td.ondragstart = this.create_dragstart_handler(idx, Id)
+      td.ondragstart = this.createDragstarthandler(idx, Id)
       td.ondragenter = (ev) => {
         ev.preventDefault();
-        (<HTMLTableCellElement>ev.target).classList.add('period_cell_drop')
+        (ev.target as HTMLTableCellElement).classList.add('period_cell_drop')
       }
       td.ondragleave = (ev) => {
-        (<HTMLTableCellElement>ev.target).classList.remove('period_cell_drop')
+        (ev.target as HTMLTableCellElement).classList.remove('period_cell_drop')
       }
       td.ondragover = (ev) => {
         ev.preventDefault();
       }
-      td.ondrop = this.create_drop_handler(idx, Id)
-      td.oncontextmenu = this.create_contextmenu_handler(idx, Id)
+      td.ondrop = this.createDrophandler(idx, Id)
+      td.oncontextmenu = this.createContextmenuhandler(idx, Id)
       last = items[i].ir
-      let txt = document.createTextNode(items[i].item.Name)
+      const txt = document.createTextNode(items[i].item.Name)
       td.append(txt)
       row.append(td)
       i++
     }
-    let header = document.getElementById('row-header-' + idx)
+    const header = document.getElementById('row-header-' + idx)
     header.after(row)
   }
 
-  private create_drop_handler(idx: number, id: number) {
+  private createDrophandler(idx: number, id: number) {
     return (ev) => {
       this.Presenter.OnDrop(ev, idx, id)
     }
   }
 
-  private create_dragstart_handler(idx: number, id: number) {
+  private createDragstarthandler(idx: number, id: number) {
     return (ev) => {
       this.Presenter.OnDragStart(ev, idx, id)
     }
   }
 
-  private create_contextmenu_handler(idx: number, id: number) {
+  private createContextmenuhandler(idx: number, id: number) {
     return (ev) => {
       ev.preventDefault()
       this.Presenter.OnPeriodContextMenu(ev, idx, id)
@@ -287,7 +286,7 @@ export class MainView {
    * @param idx
    */
   public RemoveHeader(idx: number) {
-    let row = this.mainTable.querySelector('#row-header-' + idx)
+    const row = this.mainTable.querySelector('#row-header-' + idx)
     this.mainTable.removeChild(row)
   }
 
@@ -296,8 +295,8 @@ export class MainView {
    * @param idx
    */
   public RemoveDataRows(idx: number) {
-    let rows = this.mainTable.querySelectorAll('tr.row-data-' + idx)
-    for (let el of rows) {
+    const rows = this.mainTable.querySelectorAll('tr.row-data-' + idx)
+    for (const el of rows) {
       this.mainTable.removeChild(el)
     }
   }

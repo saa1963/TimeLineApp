@@ -31,7 +31,6 @@ export class ApiClient {
       } else {
         return this.HttpError(response)
       }
-      return await response.text()
     } else {
       return 'Не введены логин или пароль.'
     }
@@ -72,8 +71,8 @@ export class ApiClient {
       body: JSON.stringify({ s1: value, s2: '' })
     })
     if (response.ok) {
-      let tline = await response.json()
-      let period = TLPeriod.CreateTLPeriod(tline)
+      const tline = await response.json()
+      const period = TLPeriod.CreateTLPeriod(tline)
       period.Parent = null
       return period
     } else {

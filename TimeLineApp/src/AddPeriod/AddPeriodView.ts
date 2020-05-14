@@ -1,35 +1,35 @@
-﻿import { IAddPeriodView } from "./IAddPeriodView";
+﻿import { InterfaceAddPeriodView } from "./IAddPeriodView";
 import { EnumPeriod } from "../TLEvent"
 import { AddPeriodPresenter } from "./AddPeriodPresenter";
 import { AddPeriodModel } from "./AddPeriodModel";
 import { Globals } from "../Globals";
 import * as $ from 'jquery'
 
-export class AddPeriodView implements IAddPeriodView {
+export class AddPeriodView implements InterfaceAddPeriodView {
   private Presenter: AddPeriodPresenter
   private model: AddPeriodModel
   private tbName: HTMLInputElement
   private tbIsPeriod: HTMLInputElement
-  private tbBegin_Type: HTMLSelectElement
-  private tbBegin_DayDay: HTMLInputElement
-  private tbBegin_DayMonth: HTMLSelectElement
-  private tbBegin_DayYear: HTMLInputElement
-  private tbBegin_MonthMonth: HTMLSelectElement
-  private tbBegin_MonthYear: HTMLInputElement
-  private tbBegin_Year: HTMLInputElement
-  private tbBegin_DecadeDecade: HTMLSelectElement
-  private tbBegin_DecadeCentury: HTMLInputElement
-  private tbBegin_Century: HTMLInputElement
-  private tbEnd_Type: HTMLSelectElement
-  private tbEnd_DayDay: HTMLInputElement
-  private tbEnd_DayMonth: HTMLSelectElement
-  private tbEnd_DayYear: HTMLInputElement
-  private tbEnd_MonthMonth: HTMLSelectElement
-  private tbEnd_MonthYear: HTMLInputElement
-  private tbEnd_Year: HTMLInputElement
-  private tbEnd_DecadeDecade: HTMLSelectElement
-  private tbEnd_DecadeCentury: HTMLInputElement
-  private tbEnd_Century: HTMLInputElement
+  private tbBeginType: HTMLSelectElement
+  private tbBeginDayDay: HTMLInputElement
+  private tbBeginDayMonth: HTMLSelectElement
+  private tbBeginDayYear: HTMLInputElement
+  private tbBeginMonthMonth: HTMLSelectElement
+  private tbBeginMonthYear: HTMLInputElement
+  private tbBeginYear: HTMLInputElement
+  private tbBeginDecadeDecade: HTMLSelectElement
+  private tbBeginDecadeCentury: HTMLInputElement
+  private tbBeginCentury: HTMLInputElement
+  private tbEndType: HTMLSelectElement
+  private tbEndDayDay: HTMLInputElement
+  private tbEndDayMonth: HTMLSelectElement
+  private tbEndDayYear: HTMLInputElement
+  private tbEndMonthMonth: HTMLSelectElement
+  private tbEndMonthYear: HTMLInputElement
+  private tbEndYear: HTMLInputElement
+  private tbEndDecadeDecade: HTMLSelectElement
+  private tbEndDecadeCentury: HTMLInputElement
+  private tbEndCentury: HTMLInputElement
   private tbError: HTMLDivElement
   private tbCard1: HTMLDivElement
   private tbCard2: HTMLDivElement
@@ -39,36 +39,36 @@ export class AddPeriodView implements IAddPeriodView {
   private btnCancel: HTMLButtonElement
   private dlg: HTMLElement
   public constructor(model: AddPeriodModel) {
-    this.tbName = <HTMLInputElement>document.getElementById('addperiod_Name')
-    this.tbIsPeriod = <HTMLInputElement>document.getElementById('addperiod_IsPeriod')
-    this.tbBegin_Type = <HTMLSelectElement>document.getElementById('addperiod_Begin_Type')
-    this.tbBegin_DayDay = <HTMLInputElement>document.getElementById('addperiod_Begin_DayDay')
-    this.tbBegin_DayMonth = <HTMLSelectElement>document.getElementById('addperiod_Begin_DayMonth')
-    this.tbBegin_DayYear = <HTMLInputElement>document.getElementById('addperiod_Begin_DayYear')
-    this.tbBegin_MonthMonth = <HTMLSelectElement>document.getElementById('addperiod_Begin_MonthMonth')
-    this.tbBegin_MonthYear = <HTMLInputElement>document.getElementById('addperiod_Begin_MonthYear')
-    this.tbBegin_Year = <HTMLInputElement>document.getElementById('addperiod_Begin_Year')
-    this.tbBegin_DecadeDecade = <HTMLSelectElement>document.getElementById('addperiod_Begin_DecadeDecade')
-    this.tbBegin_DecadeCentury = <HTMLInputElement>document.getElementById('addperiod_Begin_DecadeCentury')
-    this.tbBegin_Century = <HTMLInputElement>document.getElementById('addperiod_Begin_Century')
-    this.tbEnd_Type = <HTMLSelectElement>document.getElementById('addperiod_End_Type')
-    this.tbEnd_DayDay = <HTMLInputElement>document.getElementById('addperiod_End_DayDay')
-    this.tbEnd_DayMonth = <HTMLSelectElement>document.getElementById('addperiod_End_DayMonth')
-    this.tbEnd_DayYear = <HTMLInputElement>document.getElementById('addperiod_End_DayYear')
-    this.tbEnd_MonthMonth = <HTMLSelectElement>document.getElementById('addperiod_End_MonthMonth')
-    this.tbEnd_MonthYear = <HTMLInputElement>document.getElementById('addperiod_End_MonthYear')
-    this.tbEnd_Year = <HTMLInputElement>document.getElementById('addperiod_End_Year')
-    this.tbEnd_DecadeDecade = <HTMLSelectElement>document.getElementById('addperiod_End_DecadeDecade')
-    this.tbEnd_DecadeCentury = <HTMLInputElement>document.getElementById('addperiod_End_DecadeCentury')
-    this.tbEnd_Century = <HTMLInputElement>document.getElementById('addperiod_End_Century')
-    this.tbError = <HTMLDivElement>document.getElementById('addperiod_server_error')
-    this.tbCard1 = <HTMLDivElement>document.getElementById('addperiod_card1')
-    this.tbCard2 = <HTMLDivElement>document.getElementById('addperiod_card2')
-    this.form = <HTMLFormElement>document.getElementById('addperiod_form')
-    this.submit = <HTMLInputElement>document.getElementById('addperiod_submit')
-    this.btnOk = <HTMLButtonElement>document.getElementById('btnAddPeriod')
-    this.btnCancel = <HTMLButtonElement>document.getElementById('btnCancelAddPeriod')
-    this.dlg = <HTMLElement>document.getElementById('tmAddPeriod')
+    this.tbName = document.getElementById('addperiod_Name') as HTMLInputElement
+    this.tbIsPeriod = document.getElementById('addperiod_IsPeriod') as HTMLInputElement
+    this.tbBeginType = document.getElementById('addperiod_Begin_Type') as HTMLSelectElement
+    this.tbBeginDayDay = document.getElementById('addperiod_Begin_DayDay') as HTMLInputElement
+    this.tbBeginDayMonth = document.getElementById('addperiod_Begin_DayMonth') as HTMLSelectElement
+    this.tbBeginDayYear = document.getElementById('addperiod_Begin_DayYear') as HTMLInputElement
+    this.tbBeginMonthMonth = document.getElementById('addperiod_Begin_MonthMonth') as HTMLSelectElement
+    this.tbBeginMonthYear = document.getElementById('addperiod_Begin_MonthYear') as HTMLInputElement
+    this.tbBeginYear = document.getElementById('addperiod_Begin_Year') as HTMLInputElement
+    this.tbBeginDecadeDecade = document.getElementById('addperiod_Begin_DecadeDecade') as HTMLSelectElement
+    this.tbBeginDecadeCentury = document.getElementById('addperiod_Begin_DecadeCentury') as HTMLInputElement
+    this.tbBeginCentury = document.getElementById('addperiod_Begin_Century') as HTMLInputElement
+    this.tbEndType = document.getElementById('addperiod_End_Type') as HTMLSelectElement
+    this.tbEndDayDay = document.getElementById('addperiod_End_DayDay') as HTMLInputElement
+    this.tbEndDayMonth = document.getElementById('addperiod_End_DayMonth') as HTMLSelectElement
+    this.tbEndDayYear = document.getElementById('addperiod_End_DayYear') as HTMLInputElement
+    this.tbEndMonthMonth = document.getElementById('addperiod_End_MonthMonth') as HTMLSelectElement
+    this.tbEndMonthYear = document.getElementById('addperiod_End_MonthYear') as HTMLInputElement
+    this.tbEndYear = document.getElementById('addperiod_End_Year') as HTMLInputElement
+    this.tbEndDecadeDecade = document.getElementById('addperiod_End_DecadeDecade') as HTMLSelectElement
+    this.tbEndDecadeCentury = document.getElementById('addperiod_End_DecadeCentury') as HTMLInputElement
+    this.tbEndCentury = document.getElementById('addperiod_End_Century') as HTMLInputElement
+    this.tbError = document.getElementById('addperiod_server_error') as HTMLDivElement
+    this.tbCard1 = document.getElementById('addperiod_card1') as HTMLDivElement
+    this.tbCard2 = document.getElementById('addperiod_card2') as HTMLDivElement
+    this.form = document.getElementById('addperiod_form') as HTMLFormElement
+    this.submit = document.getElementById('addperiod_submit') as HTMLInputElement
+    this.btnOk = document.getElementById('btnAddPeriod') as HTMLButtonElement
+    this.btnCancel = document.getElementById('btnCancelAddPeriod') as HTMLButtonElement
+    this.dlg = document.getElementById('tmAddPeriod') as HTMLElement
 
     this.tbName.onchange = () => {
       this.Presenter.OnChangeNameInView()
@@ -77,78 +77,78 @@ export class AddPeriodView implements IAddPeriodView {
       this.Presenter.OnChangeIsPeriodInView()
       this.IsPeriodTune()
     }
-    this.tbBegin_Type.onchange = () => {
-      this.Presenter.OnChangeBegin_TypeInView()
+    this.tbBeginType.onchange = () => {
+      this.Presenter.OnChangeBeginTypeInView()
       this.BeginTypeTune()
     }
-    this.tbBegin_DayDay.onchange = () => {
-      this.Presenter.OnChangeBegin_DayDayInView()
+    this.tbBeginDayDay.onchange = () => {
+      this.Presenter.OnChangeBeginDayDayInView()
     }
-    this.tbBegin_DayMonth.onchange = () => {
-      this.Presenter.OnChangeBegin_DayMonthInView()
+    this.tbBeginDayMonth.onchange = () => {
+      this.Presenter.OnChangeBeginDayMonthInView()
     }
-    this.tbBegin_DayYear.onchange = () => {
-      this.Presenter.OnChangeBegin_DayYearInView()
+    this.tbBeginDayYear.onchange = () => {
+      this.Presenter.OnChangeBeginDayYearInView()
     }
-    this.tbBegin_MonthMonth.onchange = () => {
-      this.Presenter.OnChangeBegin_MonthMonthInView()
+    this.tbBeginMonthMonth.onchange = () => {
+      this.Presenter.OnChangeBeginMonthMonthInView()
     }
-    this.tbBegin_MonthYear.onchange = () => {
-      this.Presenter.OnChangeBegin_MonthYearInView()
+    this.tbBeginMonthYear.onchange = () => {
+      this.Presenter.OnChangeBeginMonthYearInView()
     }
-    this.tbBegin_Year.onchange = () => {
-      this.Presenter.OnChangeBegin_YearInView()
+    this.tbBeginYear.onchange = () => {
+      this.Presenter.OnChangeBeginYearInView()
     }
-    this.tbBegin_DecadeDecade.onchange = () => {
-      this.Presenter.OnChangeBegin_DecadeDecadeInView()
+    this.tbBeginDecadeDecade.onchange = () => {
+      this.Presenter.OnChangeBeginDecadeDecadeInView()
     }
-    this.tbBegin_DecadeCentury.onchange = () => {
-      this.Presenter.OnChangeBegin_DecadeCenturyInView()
+    this.tbBeginDecadeCentury.onchange = () => {
+      this.Presenter.OnChangeBeginDecadeCenturyInView()
     }
-    this.tbBegin_Century.onchange = () => {
-      this.Presenter.OnChangeBegin_CenturyInView()
+    this.tbBeginCentury.onchange = () => {
+      this.Presenter.OnChangeBeginCenturyInView()
     }
-    this.tbEnd_Type.onchange = () => {
-      this.Presenter.OnChangeEnd_TypeInView()
+    this.tbEndType.onchange = () => {
+      this.Presenter.OnChangeEndTypeInView()
       this.EndTypeTune()
     }
-    this.tbEnd_DayDay.onchange = () => {
-      this.Presenter.OnChangeEnd_DayDayInView()
+    this.tbEndDayDay.onchange = () => {
+      this.Presenter.OnChangeEndDayDayInView()
     }
-    this.tbEnd_DayMonth.onchange = () => {
-      this.Presenter.OnChangeEnd_DayMonthInView()
+    this.tbEndDayMonth.onchange = () => {
+      this.Presenter.OnChangeEndDayMonthInView()
     }
-    this.tbEnd_DayYear.onchange = () => {
-      this.Presenter.OnChangeEnd_DayYearInView()
+    this.tbEndDayYear.onchange = () => {
+      this.Presenter.OnChangeEndDayYearInView()
     }
-    this.tbEnd_MonthMonth.onchange = () => {
-      this.Presenter.OnChangeEnd_MonthMonthInView()
+    this.tbEndMonthMonth.onchange = () => {
+      this.Presenter.OnChangeEndMonthMonthInView()
     }
-    this.tbEnd_MonthYear.onchange = () => {
-      this.Presenter.OnChangeEnd_MonthYearInView()
+    this.tbEndMonthYear.onchange = () => {
+      this.Presenter.OnChangeEndMonthYearInView()
     }
-    this.tbEnd_Year.onchange = () => {
-      this.Presenter.OnChangeEnd_YearInView()
+    this.tbEndYear.onchange = () => {
+      this.Presenter.OnChangeEndYearInView()
     }
-    this.tbEnd_DecadeDecade.onchange = () => {
-      this.Presenter.OnChangeEnd_DecadeDecadeInView()
+    this.tbEndDecadeDecade.onchange = () => {
+      this.Presenter.OnChangeEndDecadeDecadeInView()
     }
-    this.tbEnd_DecadeCentury.onchange = () => {
-      this.Presenter.OnChangeEnd_DecadeCenturyInView()
+    this.tbEndDecadeCentury.onchange = () => {
+      this.Presenter.OnChangeEndDecadeCenturyInView()
     }
-    this.tbEnd_Century.onchange = () => {
-      this.Presenter.OnChangeEnd_CenturyInView()
+    this.tbEndCentury.onchange = () => {
+      this.Presenter.OnChangeEndCenturyInView()
     }
     this.tbCard2.setAttribute('hidden', '')
-    this.tbBegin_Type.selectedIndex = 0;
-    this.tbEnd_Type.selectedIndex = 0;
+    this.tbBeginType.selectedIndex = 0;
+    this.tbEndType.selectedIndex = 0;
 
     this.model = model
     this.Presenter = new AddPeriodPresenter(this, model)
   }
 
   ShowDialog(): Promise<AddPeriodModel> {
-    return new Promise<AddPeriodModel>((resolve, reject) => {
+    return new Promise<AddPeriodModel>((resolve) => {
       $('#tmAddPeriod').modal()
       this.ClearError()
       this.btnOk.onclick = async () => {
@@ -169,47 +169,47 @@ export class AddPeriodView implements IAddPeriodView {
   private ValidateElementsAddPeriod(): boolean {
     let rt = true
     if (!this.tbName.checkValidity()) { rt = false }
-    switch (this.tbBegin_Type.selectedIndex) {
+    switch (this.tbBeginType.selectedIndex) {
       case 0:
-        if (!this.tbBegin_DayDay.checkValidity()) rt = false
-        if (!this.tbBegin_DayMonth.checkValidity()) rt = false
-        if (!this.tbBegin_DayYear.checkValidity()) rt = false
+        if (!this.tbBeginDayDay.checkValidity()) rt = false
+        if (!this.tbBeginDayMonth.checkValidity()) rt = false
+        if (!this.tbBeginDayYear.checkValidity()) rt = false
         break;
       case 1:
-        if (!this.tbBegin_MonthMonth.checkValidity()) rt = false
-        if (!this.tbBegin_MonthYear.checkValidity()) rt = false
+        if (!this.tbBeginMonthMonth.checkValidity()) rt = false
+        if (!this.tbBeginMonthYear.checkValidity()) rt = false
         break;
       case 2:
-        if (!this.tbBegin_Year.checkValidity()) rt = false
+        if (!this.tbBeginYear.checkValidity()) rt = false
         break;
       case 3:
-        if (!this.tbBegin_DecadeDecade.checkValidity()) rt = false
-        if (!this.tbBegin_DecadeCentury.checkValidity()) rt = false
+        if (!this.tbBeginDecadeDecade.checkValidity()) rt = false
+        if (!this.tbBeginDecadeCentury.checkValidity()) rt = false
         break;
       case 4:
-        if (!this.tbBegin_Century.checkValidity()) rt = false
+        if (!this.tbBeginCentury.checkValidity()) rt = false
         break;
     }
     if (this.tbIsPeriod.checked === true) {
-      switch (this.tbEnd_Type.selectedIndex) {
+      switch (this.tbEndType.selectedIndex) {
         case 0:
-          if (!this.tbEnd_DayDay.checkValidity()) rt = false
-          if (!this.tbEnd_DayMonth.checkValidity()) rt = false
-          if (!this.tbEnd_DayYear.checkValidity()) rt = false
+          if (!this.tbEndDayDay.checkValidity()) rt = false
+          if (!this.tbEndDayMonth.checkValidity()) rt = false
+          if (!this.tbEndDayYear.checkValidity()) rt = false
           break;
         case 1:
-          if (!this.tbEnd_MonthMonth.checkValidity()) rt = false
-          if (!this.tbEnd_MonthYear.checkValidity()) rt = false
+          if (!this.tbEndMonthMonth.checkValidity()) rt = false
+          if (!this.tbEndMonthYear.checkValidity()) rt = false
           break;
         case 2:
-          if (!this.tbEnd_Year.checkValidity()) rt = false
+          if (!this.tbEndYear.checkValidity()) rt = false
           break;
         case 3:
-          if (!this.tbEnd_DecadeDecade.checkValidity()) rt = false
-          if (!this.tbEnd_DecadeCentury.checkValidity()) rt = false
+          if (!this.tbEndDecadeDecade.checkValidity()) rt = false
+          if (!this.tbEndDecadeCentury.checkValidity()) rt = false
           break;
         case 4:
-          if (!this.tbEnd_Century.checkValidity()) rt = false
+          if (!this.tbEndCentury.checkValidity()) rt = false
           break;
       }
     }
@@ -230,66 +230,66 @@ export class AddPeriodView implements IAddPeriodView {
     this.IsPeriodTune()
   }
   SetBeginType(value: EnumPeriod): void {
-    this.tbBegin_Type.selectedIndex = value - 1
+    this.tbBeginType.selectedIndex = value - 1
     this.BeginTypeTune()
   }
-  SetBegin_DayDay(value: number): void {
-    this.tbBegin_DayDay.valueAsNumber = value
+  SetBeginDayDay(value: number): void {
+    this.tbBeginDayDay.valueAsNumber = value
   }
-  SetBegin_DayMonth(value: number): void {
-    this.tbBegin_DayMonth.selectedIndex = value
+  SetBeginDayMonth(value: number): void {
+    this.tbBeginDayMonth.selectedIndex = value
   }
-  SetBegin_DayYear(value: number): void {
-    this.tbBegin_DayYear.valueAsNumber = value
+  SetBeginDayYear(value: number): void {
+    this.tbBeginDayYear.valueAsNumber = value
   }
-  SetBegin_MonthMonth(value: number): void {
-    this.tbBegin_MonthMonth.selectedIndex = value
+  SetBeginMonthMonth(value: number): void {
+    this.tbBeginMonthMonth.selectedIndex = value
   }
-  SetBegin_MonthYear(value: number): void {
-    this.tbBegin_MonthYear.valueAsNumber = value
+  SetBeginMonthYear(value: number): void {
+    this.tbBeginMonthYear.valueAsNumber = value
   }
-  SetBegin_Year(value: number): void {
-    this.tbBegin_Year.valueAsNumber = value
+  SetBeginYear(value: number): void {
+    this.tbBeginYear.valueAsNumber = value
   }
-  SetBegin_DecadeDecade(value: number): void {
-    this.tbBegin_DecadeDecade.selectedIndex = value
+  SetBeginDecadeDecade(value: number): void {
+    this.tbBeginDecadeDecade.selectedIndex = value
   }
-  SetBegin_DecadeCentury(value: number): void {
-    this.tbBegin_DecadeCentury.valueAsNumber = value
+  SetBeginDecadeCentury(value: number): void {
+    this.tbBeginDecadeCentury.valueAsNumber = value
   }
-  SetBegin_Century(value: number): void {
-    this.tbBegin_Century.valueAsNumber = value
+  SetBeginCentury(value: number): void {
+    this.tbBeginCentury.valueAsNumber = value
   }
   SetEndType(value: EnumPeriod): void {
-    this.tbEnd_Type.selectedIndex = value - 1
+    this.tbEndType.selectedIndex = value - 1
     this.EndTypeTune()
   }
-  SetEnd_DayDay(value: number): void {
-    this.tbEnd_DayDay.valueAsNumber = value
+  SetEndDayDay(value: number): void {
+    this.tbEndDayDay.valueAsNumber = value
   }
-  SetEnd_DayMonth(value: number): void {
-    this.tbEnd_DayMonth.selectedIndex = value
+  SetEndDayMonth(value: number): void {
+    this.tbEndDayMonth.selectedIndex = value
   }
-  SetEnd_DayYear(value: number): void {
-    this.tbEnd_DayYear.valueAsNumber = value
+  SetEndDayYear(value: number): void {
+    this.tbEndDayYear.valueAsNumber = value
   }
-  SetEnd_MonthMonth(value: number): void {
-    this.tbEnd_MonthMonth.selectedIndex = value
+  SetEndMonthMonth(value: number): void {
+    this.tbEndMonthMonth.selectedIndex = value
   }
-  SetEnd_MonthYear(value: number): void {
-    this.tbEnd_MonthYear.valueAsNumber = value
+  SetEndMonthYear(value: number): void {
+    this.tbEndMonthYear.valueAsNumber = value
   }
-  SetEnd_Year(value: number): void {
-    this.tbEnd_Year.valueAsNumber = value
+  SetEndYear(value: number): void {
+    this.tbEndYear.valueAsNumber = value
   }
-  SetEnd_DecadeDecade(value: number): void {
-    this.tbEnd_DecadeDecade.selectedIndex = value
+  SetEndDecadeDecade(value: number): void {
+    this.tbEndDecadeDecade.selectedIndex = value
   }
-  SetEnd_DecadeCentury(value: number): void {
-    this.tbEnd_DecadeCentury.valueAsNumber = value
+  SetEndDecadeCentury(value: number): void {
+    this.tbEndDecadeCentury.valueAsNumber = value
   }
-  SetEnd_Century(value: number): void {
-    this.tbEnd_Century.valueAsNumber = value
+  SetEndCentury(value: number): void {
+    this.tbEndCentury.valueAsNumber = value
   }
   SetError(err: string): void {
     this.ClearError()
@@ -303,64 +303,64 @@ export class AddPeriodView implements IAddPeriodView {
     return this.tbIsPeriod.checked
   }
   GetBeginType(): EnumPeriod {
-    return this.tbBegin_Type.selectedIndex + 1
+    return this.tbBeginType.selectedIndex + 1
   }
-  GetBegin_DayDay(): number {
-    return this.tbBegin_DayDay.valueAsNumber
+  GetBeginDayDay(): number {
+    return this.tbBeginDayDay.valueAsNumber
   }
-  GetBegin_DayMonth(): number {
-    return this.tbBegin_DayMonth.selectedIndex
+  GetBeginDayMonth(): number {
+    return this.tbBeginDayMonth.selectedIndex
   }
-  GetBegin_DayYear(): number {
-    return this.tbBegin_DayYear.valueAsNumber
+  GetBeginDayYear(): number {
+    return this.tbBeginDayYear.valueAsNumber
   }
-  GetBegin_MonthMonth(): number {
-    return this.tbBegin_MonthMonth.selectedIndex
+  GetBeginMonthMonth(): number {
+    return this.tbBeginMonthMonth.selectedIndex
   }
-  GetBegin_MonthYear(): number {
-    return this.tbBegin_MonthYear.valueAsNumber
+  GetBeginMonthYear(): number {
+    return this.tbBeginMonthYear.valueAsNumber
   }
-  GetBegin_Year(): number {
-    return this.tbBegin_Year.valueAsNumber
+  GetBeginYear(): number {
+    return this.tbBeginYear.valueAsNumber
   }
-  GetBegin_DecadeDecade(): number {
-    return this.tbBegin_DecadeDecade.selectedIndex
+  GetBeginDecadeDecade(): number {
+    return this.tbBeginDecadeDecade.selectedIndex
   }
-  GetBegin_DecadeCentury(): number {
-    return this.tbBegin_DecadeCentury.valueAsNumber
+  GetBeginDecadeCentury(): number {
+    return this.tbBeginDecadeCentury.valueAsNumber
   }
-  GetBegin_Century(): number {
-    return this.tbBegin_Century.valueAsNumber
+  GetBeginCentury(): number {
+    return this.tbBeginCentury.valueAsNumber
   }
   GetEndType(): EnumPeriod {
-    return this.tbEnd_Type.selectedIndex + 1
+    return this.tbEndType.selectedIndex + 1
   }
-  GetEnd_DayDay(): number {
-    return this.tbEnd_DayDay.valueAsNumber
+  GetEndDayDay(): number {
+    return this.tbEndDayDay.valueAsNumber
   }
-  GetEnd_DayMonth(): number {
-    return this.tbEnd_DayMonth.selectedIndex
+  GetEndDayMonth(): number {
+    return this.tbEndDayMonth.selectedIndex
   }
-  GetEnd_DayYear(): number {
-    return this.tbEnd_DayYear.valueAsNumber
+  GetEndDayYear(): number {
+    return this.tbEndDayYear.valueAsNumber
   }
-  GetEnd_MonthMonth(): number {
-    return this.tbEnd_MonthMonth.selectedIndex
+  GetEndMonthMonth(): number {
+    return this.tbEndMonthMonth.selectedIndex
   }
-  GetEnd_MonthYear(): number {
-    return this.tbEnd_MonthYear.valueAsNumber
+  GetEndMonthYear(): number {
+    return this.tbEndMonthYear.valueAsNumber
   }
-  GetEnd_Year(): number {
-    return this.tbEnd_Year.valueAsNumber
+  GetEndYear(): number {
+    return this.tbEndYear.valueAsNumber
   }
-  GetEnd_DecadeDecade(): number {
-    return this.tbEnd_DecadeDecade.selectedIndex
+  GetEndDecadeDecade(): number {
+    return this.tbEndDecadeDecade.selectedIndex
   }
-  GetEnd_DecadeCentury(): number {
-    return this.tbEnd_DecadeCentury.valueAsNumber
+  GetEndDecadeCentury(): number {
+    return this.tbEndDecadeCentury.valueAsNumber
   }
-  GetEnd_Century(): number {
-    return this.tbEnd_Century.valueAsNumber
+  GetEndCentury(): number {
+    return this.tbEndCentury.valueAsNumber
   }
   private IsPeriodTune() {
     if (this.tbIsPeriod.checked) {
@@ -373,14 +373,14 @@ export class AddPeriodView implements IAddPeriodView {
     this.tbCard1.querySelectorAll('*[id|="addperiod-begin-row"]').forEach((el) => {
       el.setAttribute('hidden', '')
     });
-    document.getElementById('addperiod-begin-row-' + (this.tbBegin_Type.selectedIndex + 1))
+    document.getElementById('addperiod-begin-row-' + (this.tbBeginType.selectedIndex + 1))
       .removeAttribute('hidden')
   }
   private EndTypeTune() {
     this.tbCard2.querySelectorAll('*[id|="addperiod-end-row"]').forEach((el) => {
       el.setAttribute('hidden', '')
     });
-    document.getElementById('addperiod-end-row-' + (this.tbEnd_Type.selectedIndex + 1))
+    document.getElementById('addperiod-end-row-' + (this.tbEndType.selectedIndex + 1))
       .removeAttribute('hidden')
   }
 }

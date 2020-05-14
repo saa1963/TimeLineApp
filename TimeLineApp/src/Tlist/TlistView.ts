@@ -13,10 +13,10 @@ export class TlistView implements InterfaceTlistView {
   private dlg: HTMLElement
 
   constructor(model: TlistModel) {
-    this.tbList = <HTMLSelectElement>document.getElementById('files_list')
-    this.btnOk = <HTMLButtonElement>document.getElementById('btnLoadTL')
-    this.btnCancel = <HTMLButtonElement>document.getElementById('btnCancelLoadTL')
-    this.dlg = <HTMLElement>document.getElementById('tmLoadModal')
+    this.tbList = document.getElementById('files_list') as HTMLSelectElement
+    this.btnOk = document.getElementById('btnLoadTL') as HTMLButtonElement
+    this.btnCancel = document.getElementById('btnCancelLoadTL') as HTMLButtonElement
+    this.dlg = document.getElementById('tmLoadModal') as HTMLElement
 
     this.tbList.onchange = () => {
       this.Presenter.OnChangeValueInView()
@@ -24,10 +24,10 @@ export class TlistView implements InterfaceTlistView {
     
     this.Presenter = new TlistPresenter(this, model)
 
-    let files_list = $('#files_list')
-    files_list.find('option').remove()
+    const filesList = $('#files_list')
+    filesList.find('option').remove()
     for (let i = 0; i < model.length; i++) {
-      files_list.append($('<option></option>', { value: model[i], text: model[i] }))
+      filesList.append($('<option></option>', { value: model[i], text: model[i] }))
     }
   }
 
@@ -37,7 +37,7 @@ export class TlistView implements InterfaceTlistView {
       this.ClearError()
       this.btnOk.onclick = async () => {
         if (!Globals.ValidateElements(this.dlg)) return
-        let tlModel = await this.Presenter.DoSelect()
+        const tlModel = await this.Presenter.DoSelect()
         if (tlModel) {
           $('#tmLoadModal').modal('hide')
           resolve(tlModel)
@@ -50,7 +50,7 @@ export class TlistView implements InterfaceTlistView {
     })
   }
   public GetSelectedValue(): string {
-    return <string>$('#files_list').children("option:selected").val()
+    return $('#files_list').children("option:selected").val() as string
   }
   public SetError(err: string): void {
     $('#load_error').text(err)
