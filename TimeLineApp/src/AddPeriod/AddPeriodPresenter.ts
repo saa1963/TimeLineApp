@@ -151,11 +151,11 @@ export class AddPeriodPresenter {
     this.m_Name = model.Name
     this.m_IsPeriod = model.IsPeriod
     this.m_Begin_Type = model.BeginType
-    this.m_Begin_DayDay = model.Begin_DayDay
-    this.m_Begin_DayMonth = model.Begin_DayMonth
-    this.m_Begin_DayYear = model.Begin_DayYear
-    this.m_Begin_MonthMonth = model.Begin_MonthMonth
-    this.m_Begin_MonthYear = model.Begin_MonthYear
+    this.m_Begin_DayDay = model.BeginDayDay
+    this.m_Begin_DayMonth = model.BeginDayMonth
+    this.m_Begin_DayYear = model.BeginDayYear
+    this.m_Begin_MonthMonth = model.BeginMonthMonth
+    this.m_Begin_MonthYear = model.BeginMonthYear
     this.m_Begin_Year = model.Begin_Year
     this.m_Begin_DecadeDecade = model.Begin_DecadeDecade
     this.m_Begin_DecadeCentury = model.Begin_DecadeCentury
@@ -173,11 +173,11 @@ export class AddPeriodPresenter {
     this.view.SetName(model.Name)
     this.view.SetBeginType(model.BeginType)
     this.view.SetIsPeriod(model.IsPeriod)
-    this.view.SetBegin_DayDay(model.Begin_DayDay)
-    this.view.SetBegin_DayMonth(model.Begin_DayMonth)
-    this.view.SetBegin_DayYear(model.Begin_DayYear)
-    this.view.SetBegin_MonthMonth(model.Begin_MonthMonth)
-    this.view.SetBegin_MonthYear(model.Begin_MonthYear)
+    this.view.SetBegin_DayDay(model.BeginDayDay)
+    this.view.SetBegin_DayMonth(model.BeginDayMonth)
+    this.view.SetBegin_DayYear(model.BeginDayYear)
+    this.view.SetBegin_MonthMonth(model.BeginMonthMonth)
+    this.view.SetBegin_MonthYear(model.BeginMonthYear)
     this.view.SetBegin_Year(model.Begin_Year)
     this.view.SetBegin_DecadeDecade(model.Begin_DecadeDecade)
     this.view.SetBegin_DecadeCentury(model.Begin_DecadeCentury)
@@ -209,23 +209,23 @@ export class AddPeriodPresenter {
   }
   public OnChangeBegin_DayDayInView() {
     this.m_Begin_DayDay = this.view.GetBegin_DayDay()
-    this.model.Begin_DayDay = this.m_Begin_DayDay
+    this.model.BeginDayDay = this.m_Begin_DayDay
   }
   public OnChangeBegin_DayMonthInView() {
     this.m_Begin_DayMonth = this.view.GetBegin_DayMonth()
-    this.model.Begin_DayMonth = this.m_Begin_DayMonth
+    this.model.BeginDayMonth = this.m_Begin_DayMonth
   }
   public OnChangeBegin_DayYearInView() {
     this.m_Begin_DayYear = this.view.GetBegin_DayYear()
-    this.model.Begin_DayYear = this.m_Begin_DayYear
+    this.model.BeginDayYear = this.m_Begin_DayYear
   }
   public OnChangeBegin_MonthMonthInView() {
     this.m_Begin_MonthMonth = this.view.GetBegin_MonthMonth()
-    this.model.Begin_MonthMonth = this.m_Begin_MonthMonth
+    this.model.BeginMonthMonth = this.m_Begin_MonthMonth
   }
   public OnChangeBegin_MonthYearInView() {
     this.m_Begin_MonthYear = this.view.GetBegin_MonthYear()
-    this.model.Begin_MonthYear = this.m_Begin_MonthYear
+    this.model.BeginMonthYear = this.m_Begin_MonthYear
   }
   public OnChangeBegin_YearInView() {
     this.m_Begin_Year = this.view.GetBegin_Year()

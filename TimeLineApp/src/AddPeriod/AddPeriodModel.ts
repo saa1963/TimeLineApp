@@ -2,73 +2,73 @@
 import { SimpleEventDispatcher, ISimpleEvent } from "ste-simple-events"
 
 export class AddPeriodModel {
-  private m_Name: string
-  public get Name(): string { return this.m_Name; }
+  private mName: string
+  public get Name(): string { return this.mName; }
   public set Name(value: string){
-    if (value !== this.m_Name) {
-      this.m_Name = value
+    if (value !== this.mName) {
+      this.mName = value
       this.e_ChangeName.dispatch(value)
     }
   }
 
-  private m_IsPeriod: boolean
-  public get IsPeriod(): boolean { return this.m_IsPeriod; }
+  private mIsPeriod: boolean
+  public get IsPeriod(): boolean { return this.mIsPeriod; }
   public set IsPeriod(value: boolean) {
-    if (value !== this.m_IsPeriod) {
-      this.m_IsPeriod = value
+    if (value !== this.mIsPeriod) {
+      this.mIsPeriod = value
       this.e_ChangeIsPeriod.dispatch(value)
     }
   }
-  private m_BeginType: EnumPeriod
-  public get BeginType(): EnumPeriod { return this.m_BeginType; }
+  private mBeginType: EnumPeriod
+  public get BeginType(): EnumPeriod { return this.mBeginType; }
   public set BeginType(value: EnumPeriod) {
-    if (value !== this.m_BeginType) {
-      this.m_BeginType = value
+    if (value !== this.mBeginType) {
+      this.mBeginType = value
       this.e_ChangeBeginType.dispatch(value)
     }
   }
 
-  private m_Begin_DayDay: number
-  public get Begin_DayDay(): number { return this.m_Begin_DayDay;   }
-  public set Begin_DayDay(value: number) {
-    if (value !== this.m_Begin_DayDay) {
-      this.m_Begin_DayDay = value
+  private mBeginDayDay: number
+  public get BeginDayDay(): number { return this.mBeginDayDay;   }
+  public set BeginDayDay(value: number) {
+    if (value !== this.mBeginDayDay) {
+      this.mBeginDayDay = value
       this.e_ChangeBegin_DayDay.dispatch(value)
     }
   }
 
-  private m_Begin_DayMonth: number
-  public get Begin_DayMonth(): number { return this.m_Begin_DayMonth; }
-  public set Begin_DayMonth(value: number) {
-    if (value !== this.m_Begin_DayMonth) {
-      this.m_Begin_DayMonth = value
+  private mBeginDayMonth: number
+  public get BeginDayMonth(): number { return this.mBeginDayMonth; }
+  public set BeginDayMonth(value: number) {
+    if (value !== this.mBeginDayMonth) {
+      this.mBeginDayMonth = value
       this.e_ChangeBegin_DayMonth.dispatch(value)
     }
   }
 
-  private m_Begin_DayYear: number
-  public get Begin_DayYear(): number { return this.m_Begin_DayYear; }
-  public set Begin_DayYear(value: number) {
-    if (value !== this.m_Begin_DayYear) {
-      this.m_Begin_DayYear = value
+  private mBeginDayYear: number
+  public get BeginDayYear(): number { return this.mBeginDayYear; }
+  public set BeginDayYear(value: number) {
+    if (value !== this.mBeginDayYear) {
+      this.mBeginDayYear = value
       this.e_ChangeBegin_DayYear.dispatch(value)
     }
   }
 
-  private m_Begin_MonthMonth: number
-  public get Begin_MonthMonth(): number { return this.m_Begin_MonthMonth; }
-  public set Begin_MonthMonth(value: number) {
-    if (value !== this.m_Begin_MonthMonth) {
-      this.m_Begin_MonthMonth = value
+  private mBeginMonthMonth: number
+  public get BeginMonthMonth(): number { return this.mBeginMonthMonth; }
+  public set BeginMonthMonth(value: number) {
+    if (value !== this.mBeginMonthMonth) {
+      this.mBeginMonthMonth = value
       this.e_ChangeBegin_MonthMonth.dispatch(value)
     }
   }
 
-  private m_Begin_MonthYear: number
-  public get Begin_MonthYear(): number { return this.m_Begin_MonthYear; }
-  public set Begin_MonthYear(value: number) {
-    if (value !== this.m_Begin_MonthYear) {
-      this.m_Begin_MonthYear = value
+  private mBeginMonthYear: number
+  public get BeginMonthYear(): number { return this.mBeginMonthYear; }
+  public set BeginMonthYear(value: number) {
+    if (value !== this.mBeginMonthYear) {
+      this.mBeginMonthYear = value
       this.e_ChangeBegin_MonthYear.dispatch(value)
     }
   }

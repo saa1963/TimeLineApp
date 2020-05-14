@@ -9,14 +9,14 @@ export class UploadFileView {
   private value: string
 
   public constructor() {
-    this.btnUploadFile = <HTMLButtonElement>document.getElementById('btnUploadFile')
-    this.btnCancelUploadFile = <HTMLButtonElement>document.getElementById('btnCancelUploadFile')
-    this.tbName = <HTMLInputElement>document.getElementById('uploadfile_input')
+    this.btnUploadFile = document.getElementById('btnUploadFile') as HTMLButtonElement
+    this.btnCancelUploadFile = document.getElementById('btnCancelUploadFile') as HTMLButtonElement
+    this.tbName = document.getElementById('uploadfile_input') as HTMLInputElement
     this.tbModal = $('#tmUploadFile')
     this.tbName.onchange = (ev) => {
-      const f = (<HTMLInputElement>ev.target).files[0]
+      const f = (ev.target as HTMLInputElement).files[0]
       const reader = new FileReader()
-      reader.onload = (ev) => {
+      reader.onload = () => {
         this.value = reader.result as string
       }
       reader.readAsText(f);
@@ -24,7 +24,7 @@ export class UploadFileView {
   }
 
   public async ShowDialog(): Promise<TLPeriod> {
-    return new Promise<TLPeriod>((resolve, reject) => {
+    return new Promise<TLPeriod>((resolve) => {
       this.tbModal.modal()
       this.btnUploadFile.onclick = async () => {
         if (this.value) {

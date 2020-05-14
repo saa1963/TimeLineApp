@@ -54,11 +54,11 @@ export class MainPresenter {
     model.Name = ""
     model.IsPeriod = false
     model.BeginType = EnumPeriod.day
-    model.Begin_DayDay = today.getDate()
-    model.Begin_DayMonth = today.getMonth() + 1
-    model.Begin_DayYear = today.getFullYear()
-    model.Begin_MonthMonth = today.getMonth() + 1
-    model.Begin_MonthYear = today.getFullYear()
+    model.BeginDayDay = today.getDate()
+    model.BeginDayMonth = today.getMonth() + 1
+    model.BeginDayYear = today.getFullYear()
+    model.BeginMonthMonth = today.getMonth() + 1
+    model.BeginMonthYear = today.getFullYear()
     model.Begin_Year = today.getFullYear()
     model.Begin_DecadeDecade = DateUtils.getDecadeRelativeFromDate(today) + 1
     model.Begin_DecadeCentury = 21
@@ -81,11 +81,11 @@ export class MainPresenter {
             value.Name,
             value.IsPeriod,
             value.BeginType,
-            value.Begin_DayDay,
-            value.Begin_DayMonth,
-            value.Begin_DayYear,
-            value.Begin_MonthMonth,
-            value.Begin_MonthYear,
+            value.BeginDayDay,
+            value.BeginDayMonth,
+            value.BeginDayYear,
+            value.BeginMonthMonth,
+            value.BeginMonthYear,
             value.Begin_Year,
             value.Begin_DecadeDecade,
             value.Begin_DecadeCentury,
@@ -268,12 +268,12 @@ export class MainPresenter {
     switch (period.Begin.Type) {
       case EnumPeriod.day:
         let ymd = DateUtils.YMDFromAD(period.Begin.Day)
-        model.Begin_DayDay = ymd.day
-        model.Begin_DayMonth = ymd.month
-        model.Begin_DayYear = ymd.year
+        model.BeginDayDay = ymd.day
+        model.BeginDayMonth = ymd.month
+        model.BeginDayYear = ymd.year
       case EnumPeriod.month:
-        model.Begin_MonthMonth = DateUtils.getMonthFromMonth(period.Begin.Month)
-        model.Begin_MonthYear = DateUtils.getYearFromMonth(period.Begin.Month)
+        model.BeginMonthMonth = DateUtils.getMonthFromMonth(period.Begin.Month)
+        model.BeginMonthYear = DateUtils.getYearFromMonth(period.Begin.Month)
       case EnumPeriod.year:
         model.Begin_Year = period.Begin.Year
       case EnumPeriod.decade:
@@ -309,11 +309,11 @@ export class MainPresenter {
             value.Name,
             value.IsPeriod,
             value.BeginType,
-            value.Begin_DayDay,
-            value.Begin_DayMonth,
-            value.Begin_DayYear,
-            value.Begin_MonthMonth,
-            value.Begin_MonthYear,
+            value.BeginDayDay,
+            value.BeginDayMonth,
+            value.BeginDayYear,
+            value.BeginMonthMonth,
+            value.BeginMonthYear,
             value.Begin_Year,
             value.Begin_DecadeDecade,
             value.Begin_DecadeCentury,
@@ -348,11 +348,11 @@ export class MainPresenter {
     model.Name = ""
     model.IsPeriod = false
     model.BeginType = EnumPeriod.day
-    model.Begin_DayDay = today.getDate()
-    model.Begin_DayMonth = today.getMonth() + 1
-    model.Begin_DayYear = today.getFullYear()
-    model.Begin_MonthMonth = today.getMonth() + 1
-    model.Begin_MonthYear = today.getFullYear()
+    model.BeginDayDay = today.getDate()
+    model.BeginDayMonth = today.getMonth() + 1
+    model.BeginDayYear = today.getFullYear()
+    model.BeginMonthMonth = today.getMonth() + 1
+    model.BeginMonthYear = today.getFullYear()
     model.Begin_Year = today.getFullYear()
     model.Begin_DecadeDecade = DateUtils.getDecadeRelativeFromDate(today) + 1
     model.Begin_DecadeCentury = 21
@@ -376,11 +376,11 @@ export class MainPresenter {
             value.Name,
             value.IsPeriod,
             value.BeginType,
-            value.Begin_DayDay,
-            value.Begin_DayMonth,
-            value.Begin_DayYear,
-            value.Begin_MonthMonth,
-            value.Begin_MonthYear,
+            value.BeginDayDay,
+            value.BeginDayMonth,
+            value.BeginDayYear,
+            value.BeginMonthMonth,
+            value.BeginMonthYear,
             value.Begin_Year,
             value.Begin_DecadeDecade,
             value.Begin_DecadeCentury,
