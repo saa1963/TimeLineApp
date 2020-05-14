@@ -240,7 +240,6 @@ export class MainPresenter {
           break;
       }
     })
-    menu.reload()
     menu.display(ev)
   }
   private async EditPeriod(idx: number, idx0: number, period: TLPeriod) {

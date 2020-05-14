@@ -19703,7 +19703,6 @@ exports.Period = Period;
 Object.defineProperty(exports, "__esModule", { value: true });
 const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
 class Globals {
-    //static IsAuthentificated = false
     static getCookie(name) {
         let c = document.cookie;
         const matches = document.cookie.match(new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"));
@@ -20266,7 +20265,7 @@ class MainPresenter {
                     break;
             }
         }));
-        menu.reload();
+        //menu.reload()
         menu.display(ev);
     }
     EditPeriod(idx, idx0, period) {
@@ -20786,7 +20785,7 @@ class MainView {
         this.tls = document.getElementById('tls');
         this.Presenter = new MainPresenter_1.MainPresenter(this, model);
         this.aLogin.onclick = () => __awaiter(this, void 0, void 0, function* () {
-            let login = yield this.Presenter.OnLogin();
+            const login = yield this.Presenter.OnLogin();
             if (login) {
                 this.SetUserLabel(login);
             }
@@ -20839,32 +20838,32 @@ class MainView {
     DrawDates(dates) {
         this.mainTable = document.createElement('table');
         this.mainTable.cellSpacing = '2';
-        let row = document.createElement('tr');
+        const row = document.createElement('tr');
         row.classList.add('date');
         for (let i = 0; i < dates[0].length; ++i) {
-            let td = document.createElement('td');
+            const td = document.createElement('td');
             td.classList.add('date_cell');
             td.id = 'i' + i;
-            let btnGroup = document.createElement('div');
+            const btnGroup = document.createElement('div');
             btnGroup.classList.add('d-flex', 'justify-content-between');
-            let btnZoomOut = document.createElement('button');
+            const btnZoomOut = document.createElement('button');
             btnZoomOut.classList.add('btn', 'border-0', 'm-0', 'p-0');
-            btnZoomOut.onclick = (ev) => {
+            btnZoomOut.onclick = () => {
                 this.Presenter.OnScaleBack(i);
             };
-            let imgZoomOut = document.createElement('img');
+            const imgZoomOut = document.createElement('img');
             imgZoomOut.src = '../images/icons8-zoom-out-50.png';
             imgZoomOut.width = 20;
             imgZoomOut.height = 20;
             btnZoomOut.append(imgZoomOut);
             btnGroup.append(btnZoomOut);
             btnGroup.append(document.createTextNode(dates[0][i]));
-            let btnZoomIn = document.createElement('button');
+            const btnZoomIn = document.createElement('button');
             btnZoomIn.classList.add('btn', 'border-0', 'm-0', 'p-0');
-            btnZoomIn.onclick = (ev) => {
+            btnZoomIn.onclick = () => {
                 this.Presenter.OnScaleForward(i);
             };
-            let imgZoomIn = document.createElement('img');
+            const imgZoomIn = document.createElement('img');
             imgZoomIn.src = '../images/icons8-zoom-in-50.png';
             imgZoomIn.width = 20;
             imgZoomIn.height = 20;
@@ -20882,8 +20881,8 @@ class MainView {
     }
     DrawHeader(idx, s, isMain) {
         return __awaiter(this, void 0, void 0, function* () {
-            let table = document.getElementsByTagName('table')[0];
-            let row = document.createElement('tr');
+            const table = document.getElementsByTagName('table')[0];
+            const row = document.createElement('tr');
             row.id = "row-header-" + idx;
             let td = document.createElement('td');
             if (isMain) {
@@ -20902,9 +20901,9 @@ class MainView {
             td.ondragover = (ev) => {
                 ev.preventDefault();
             };
-            td.ondrop = this.create_drop_handler(idx, -1);
+            td.ondrop = this.createDrophandler(idx, -1);
             td.colSpan = this.Presenter.MainLineCount - 1;
-            let txt = document.createTextNode(s);
+            const txt = document.createTextNode(s);
             td.append(txt);
             row.append(td);
             td = document.createElement('td');
@@ -20914,7 +20913,7 @@ class MainView {
         });
     }
     CreateDropDown(header, mas) {
-        let btnMenu = document.createElement('button');
+        const btnMenu = document.createElement('button');
         btnMenu.type = 'button';
         btnMenu.setAttribute('data-toggle', 'dropdown');
         btnMenu.classList.add('btn');
@@ -20922,17 +20921,17 @@ class MainView {
         btnMenu.classList.add('btn-block');
         btnMenu.classList.add('dropdown-toggle');
         btnMenu.textContent = header;
-        let divGroup = document.createElement('div');
+        const divGroup = document.createElement('div');
         divGroup.classList.add('dropdown-menu');
-        for (let item of mas) {
-            let newMenuItem = document.createElement('a');
+        for (const item of mas) {
+            const newMenuItem = document.createElement('a');
             newMenuItem.classList.add('dropdown-item');
             newMenuItem.textContent = item.header;
             newMenuItem.href = '#';
             newMenuItem.onclick = item.handler;
             divGroup.append(newMenuItem);
         }
-        let divDropDown = document.createElement('div');
+        const divDropDown = document.createElement('div');
         divDropDown.classList.add('dropdown');
         divDropDown.append(btnMenu);
         divDropDown.append(divGroup);
@@ -20942,31 +20941,31 @@ class MainView {
         return this.CreateDropDown('>>', [
             {
                 header: 'Добавить',
-                handler: (ev) => __awaiter(this, void 0, void 0, function* () {
+                handler: () => __awaiter(this, void 0, void 0, function* () {
                     yield this.Presenter.OnAddPeriod(idx);
                 })
             },
             {
                 header: 'Сохранить',
-                handler: (ev) => __awaiter(this, void 0, void 0, function* () {
+                handler: () => __awaiter(this, void 0, void 0, function* () {
                     yield this.Presenter.OnSave(idx);
                 })
             },
             {
                 header: 'В файл',
-                handler: (ev) => __awaiter(this, void 0, void 0, function* () {
+                handler: () => __awaiter(this, void 0, void 0, function* () {
                     yield this.Presenter.OnSaveToFile(idx);
                 })
             },
             {
                 header: 'Свернуть',
-                handler: (ev) => __awaiter(this, void 0, void 0, function* () {
+                handler: () => __awaiter(this, void 0, void 0, function* () {
                     yield this.Presenter.OnCollapse(idx);
                 })
             },
             {
                 header: 'Показать все',
-                handler: (ev) => __awaiter(this, void 0, void 0, function* () {
+                handler: () => __awaiter(this, void 0, void 0, function* () {
                     yield this.Presenter.OnShowAll(idx);
                 })
             }
@@ -20974,19 +20973,19 @@ class MainView {
     }
     DrawEventsRow(idx, items) {
         let Id;
-        let row = document.createElement('tr');
+        const row = document.createElement('tr');
         row.classList.add('row-data-' + idx);
         let i = 0, last = -1;
         while (i < items.length) {
             Id = items[i].item.Id;
-            if (items[i].il - last != 1) {
-                let td = document.createElement('td');
+            if (items[i].il - last !== 1) {
+                const td = document.createElement('td');
                 td.classList.add('hidden_cell');
                 td.colSpan = items[i].il - last - 1;
                 last = items[i].il - 1;
                 row.append(td);
             }
-            let td = document.createElement('td');
+            const td = document.createElement('td');
             td.id = 'cell-' + idx + '-' + Id;
             td.draggable = true;
             td.colSpan = items[i].ir - items[i].il + 1;
@@ -20994,7 +20993,7 @@ class MainView {
             if (items[i].item.Count > 0) {
                 td.classList.add('note');
             }
-            td.ondragstart = this.create_dragstart_handler(idx, Id);
+            td.ondragstart = this.createDragstarthandler(idx, Id);
             td.ondragenter = (ev) => {
                 ev.preventDefault();
                 ev.target.classList.add('period_cell_drop');
@@ -21005,28 +21004,28 @@ class MainView {
             td.ondragover = (ev) => {
                 ev.preventDefault();
             };
-            td.ondrop = this.create_drop_handler(idx, Id);
-            td.oncontextmenu = this.create_contextmenu_handler(idx, Id);
+            td.ondrop = this.createDrophandler(idx, Id);
+            td.oncontextmenu = this.createContextmenuhandler(idx, Id);
             last = items[i].ir;
-            let txt = document.createTextNode(items[i].item.Name);
+            const txt = document.createTextNode(items[i].item.Name);
             td.append(txt);
             row.append(td);
             i++;
         }
-        let header = document.getElementById('row-header-' + idx);
+        const header = document.getElementById('row-header-' + idx);
         header.after(row);
     }
-    create_drop_handler(idx, id) {
+    createDrophandler(idx, id) {
         return (ev) => {
             this.Presenter.OnDrop(ev, idx, id);
         };
     }
-    create_dragstart_handler(idx, id) {
+    createDragstarthandler(idx, id) {
         return (ev) => {
             this.Presenter.OnDragStart(ev, idx, id);
         };
     }
-    create_contextmenu_handler(idx, id) {
+    createContextmenuhandler(idx, id) {
         return (ev) => {
             ev.preventDefault();
             this.Presenter.OnPeriodContextMenu(ev, idx, id);
@@ -21037,7 +21036,7 @@ class MainView {
      * @param idx
      */
     RemoveHeader(idx) {
-        let row = this.mainTable.querySelector('#row-header-' + idx);
+        const row = this.mainTable.querySelector('#row-header-' + idx);
         this.mainTable.removeChild(row);
     }
     /**
@@ -21045,8 +21044,8 @@ class MainView {
      * @param idx
      */
     RemoveDataRows(idx) {
-        let rows = this.mainTable.querySelectorAll('tr.row-data-' + idx);
-        for (let el of rows) {
+        const rows = this.mainTable.querySelectorAll('tr.row-data-' + idx);
+        for (const el of rows) {
             this.mainTable.removeChild(el);
         }
     }
@@ -21130,38 +21129,38 @@ class RegisterModel {
         this.Password2 = '';
     }
     get Login() {
-        return this.m_Login;
+        return this.mLogin;
     }
     set Login(value) {
-        if (value !== this.m_Login) {
-            this.m_Login = value;
+        if (value !== this.mLogin) {
+            this.mLogin = value;
             this.e_ChangeLogin.dispatch(value);
         }
     }
     get Email() {
-        return this.m_Email;
+        return this.mEmail;
     }
     set Email(value) {
-        if (value !== this.m_Email) {
-            this.m_Email = value;
+        if (value !== this.mEmail) {
+            this.mEmail = value;
             this.e_ChangeEmail.dispatch(value);
         }
     }
     get Password1() {
-        return this.m_Password1;
+        return this.mPassword1;
     }
     set Password1(value) {
-        if (value !== this.m_Password1) {
-            this.m_Password1 = value;
+        if (value !== this.mPassword1) {
+            this.mPassword1 = value;
             this.e_ChangePassword1.dispatch(value);
         }
     }
     get Password2() {
-        return this.m_Password2;
+        return this.mPassword2;
     }
     set Password2(value) {
-        if (value !== this.m_Password2) {
-            this.m_Password2 = value;
+        if (value !== this.mPassword2) {
+            this.mPassword2 = value;
             this.e_ChangePassword2.dispatch(value);
         }
     }
@@ -21208,57 +21207,57 @@ class RegisterPresenter {
         this.model = model;
         this.view = view;
         this.model.evChangeLogin.subscribe((login) => {
-            if (login !== this.m_Login) {
+            if (login !== this.mLogin) {
                 this.view.SetLogin(login);
             }
         });
         this.model.evChangeEmail.subscribe((email) => {
-            if (email !== this.m_Email) {
+            if (email !== this.mEmail) {
                 this.view.SetEmail(email);
             }
         });
         this.model.evChangePassword1.subscribe((password) => {
-            if (password !== this.m_Password1) {
+            if (password !== this.mPassword1) {
                 this.view.SetPassword1(password);
             }
         });
         this.model.evChangePassword2.subscribe((password) => {
-            if (password !== this.m_Password2) {
+            if (password !== this.mPassword2) {
                 this.view.SetPassword2(password);
             }
         });
-        this.m_Login = model.Login;
-        this.m_Email = model.Email;
-        this.m_Password1 = model.Password1;
-        this.m_Password2 = model.Password2;
+        this.mLogin = model.Login;
+        this.mEmail = model.Email;
+        this.mPassword1 = model.Password1;
+        this.mPassword2 = model.Password2;
         this.view.SetLogin(model.Login);
         this.view.SetEmail(model.Email);
         this.view.SetPassword1(model.Password1);
         this.view.SetPassword2(model.Password2);
     }
     get Login() {
-        return this.m_Login;
+        return this.mLogin;
     }
     // обработчики вызовов из View
     OnChangeLoginInView() {
-        this.m_Login = this.view.GetLogin();
-        this.model.Login = this.m_Login;
+        this.mLogin = this.view.GetLogin();
+        this.model.Login = this.mLogin;
     }
     OnChangeEmailInView() {
-        this.m_Email = this.view.GetEmail();
-        this.model.Email = this.m_Email;
+        this.mEmail = this.view.GetEmail();
+        this.model.Email = this.mEmail;
     }
     OnChangePassword1InView() {
-        this.m_Password1 = this.view.GetPassword1();
-        this.model.Password1 = this.m_Password1;
+        this.mPassword1 = this.view.GetPassword1();
+        this.model.Password1 = this.mPassword1;
     }
     OnChangePassword2InView() {
-        this.m_Password2 = this.view.GetPassword2();
-        this.model.Password2 = this.m_Password2;
+        this.mPassword2 = this.view.GetPassword2();
+        this.model.Password2 = this.mPassword2;
     }
     DoRegister() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield ApiClient_1.ApiClient.getInstance().DoRegister(this.m_Login, this.m_Email, this.m_Password1, this.m_Password2);
+            return yield ApiClient_1.ApiClient.getInstance().DoRegister(this.mLogin, this.mEmail, this.mPassword1, this.mPassword2);
         });
     }
 }
@@ -21319,7 +21318,7 @@ class RegisterView {
             this.btnOk.onclick = () => __awaiter(this, void 0, void 0, function* () {
                 if (!Globals_1.Globals.ValidateElements(this.dlg))
                     return;
-                let err = yield this.Presenter.DoRegister();
+                const err = yield this.Presenter.DoRegister();
                 if (err === '') {
                     $('#tmRegisterModal').modal('hide');
                     resolve(true);
@@ -22052,23 +22051,23 @@ class TlistPresenter {
     constructor(view, model) {
         this.model = model;
         this.view = view;
-        this.m_Value = model[0];
+        this.mValue = model[0];
         //this.view.SetValue(model[0])
     }
     get Login() {
-        return this.m_Value;
+        return this.mValue;
     }
     // обработчики вызовов из View
     OnChangeValueInView() {
-        this.m_Value = this.view.GetSelectedValue();
+        this.mValue = this.view.GetSelectedValue();
     }
     DoSelect() {
         return __awaiter(this, void 0, void 0, function* () {
-            if ((this.m_Value || '').trim() === '') {
+            if ((this.mValue || '').trim() === '') {
                 this.view.SetError('Не выбрано значение');
                 return null;
             }
-            let tline = yield ApiClient_1.ApiClient.getInstance().GetTL(this.m_Value);
+            const tline = yield ApiClient_1.ApiClient.getInstance().GetTL(this.mValue);
             if (typeof tline === 'string') {
                 this.view.SetError(tline);
                 return null;
@@ -22116,10 +22115,10 @@ class TlistView {
             this.Presenter.OnChangeValueInView();
         };
         this.Presenter = new TlistPresenter_1.TlistPresenter(this, model);
-        let files_list = $('#files_list');
-        files_list.find('option').remove();
+        const filesList = $('#files_list');
+        filesList.find('option').remove();
         for (let i = 0; i < model.length; i++) {
-            files_list.append($('<option></option>', { value: model[i], text: model[i] }));
+            filesList.append($('<option></option>', { value: model[i], text: model[i] }));
         }
     }
     ShowDialog() {
@@ -22130,7 +22129,7 @@ class TlistView {
                 this.btnOk.onclick = () => __awaiter(this, void 0, void 0, function* () {
                     if (!Globals_1.Globals.ValidateElements(this.dlg))
                         return;
-                    let tlModel = yield this.Presenter.DoSelect();
+                    const tlModel = yield this.Presenter.DoSelect();
                     if (tlModel) {
                         $('#tmLoadModal').modal('hide');
                         resolve(tlModel);
