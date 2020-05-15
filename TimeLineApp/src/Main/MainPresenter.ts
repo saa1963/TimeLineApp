@@ -17,6 +17,7 @@ import { AddPeriodView } from "../AddPeriod/AddPeriodView";
 import { AddPeriodModel } from "../AddPeriod/AddPeriodModel";
 import { UploadFileView } from "../UploadFileView";
 import { PeriodContextMenu } from "../PeriodContextMenu";
+import { UploadPictureView } from "../UploadPictureView";
 
 export interface InterfaceExTLPeriod { il: number; ir: number; item: TLPeriod }
 
@@ -126,14 +127,25 @@ export class MainPresenter {
   public async UploadFile() {
     try {
       const view = new UploadFileView()
-      //let value = await ApiClient.getInstance().GetUsersList()
-      //let view = new TlistView(value)
       view.ShowDialog()
         .then(async (value) => {
           this.model.Add(value)
         })
         .catch()
     } catch(err) {
+      await new BoxView(err).Show()
+    }
+  }
+
+  public async UploadPicture(idx: number, idx0: number) {
+    try {
+      const view = new UploadPictureView()
+      view.ShowDialog()
+        .then(async (value) => {
+          this.model.AddPicture(idx, idx0, value)
+        })
+        .catch()
+    } catch (err) {
       await new BoxView(err).Show()
     }
   }
@@ -237,6 +249,9 @@ export class MainPresenter {
           break;
         case 'del':
           this.model.Item(idx).Remove(idx0)
+          break;
+        case 'uploadpicture':
+          await this.UploadPicture(idx, id)
           break;
       }
     })
@@ -441,6 +456,9 @@ export class MainPresenter {
     this.model.evRemovePeriod.subscribe((t) => {
       this.view.RemoveDataRows(t)
       this.DrawTL(t, this.model.Item(t))
+    })
+    this.model.evAddPicture.subscribe(([idx, idx0]) => {
+      view.SetPhotoLabel(idx, idx0)
     })
     const kvo = Math.floor((document.documentElement.clientWidth - 2) / 120)
     this.mainLine = new Array(kvo)

@@ -47,6 +47,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="src\UploadPictureView.ts" />
     <None Remove="tests\DateUtilsTest.ts" />
     <None Remove="tests\TLPeriodTest.ts" />
   </ItemGroup>
@@ -108,6 +109,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="src\UploadPictureView.ts" />
     <TypeScriptCompile Include="tests\DateUtilsTest.ts" />
     <TypeScriptCompile Include="tests\TLPeriodTest.ts" />
     <TypeScriptCompile Include="src\AddPeriod\AddPeriodModel.ts" />

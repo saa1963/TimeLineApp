@@ -12,6 +12,7 @@ export class TLPeriod {
   Periods: TLPeriod[] = []
   Parent: TLPeriod
   IsShowAll = false
+  Pictures: ArrayBuffer[] = []
 
 
   public toJSON() {

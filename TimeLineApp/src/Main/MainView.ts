@@ -153,6 +153,11 @@ export class MainView {
     table.append(row)
   }
 
+  public SetPhotoLabel(idx: number, idx0: number) {
+    const td = document.getElementById('cell-' + idx + '-' + idx0) as HTMLTableDataCellElement
+    td.classList.add('photo')
+  }
+
   private CreateDropDown(header: string, mas: { header: string; handler: (ev) => void }[]) {
     const btnMenu = document.createElement('button') as HTMLButtonElement
     btnMenu.type = 'button'

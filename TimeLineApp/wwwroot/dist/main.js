@@ -19935,6 +19935,7 @@ class MainModel {
         this.e_RemoveTimeLine = new ste_simple_events_1.SimpleEventDispatcher();
         this.e_AddPeriod = new ste_simple_events_1.SimpleEventDispatcher();
         this.e_RemovePeriod = new ste_simple_events_1.SimpleEventDispatcher();
+        this.e_AddPicture = new ste_simple_events_1.SimpleEventDispatcher();
     }
     static getInstance() {
         if (!MainModel.instance) {
@@ -19982,6 +19983,9 @@ class MainModel {
     get evRemovePeriod() {
         return this.e_RemovePeriod.asEvent();
     }
+    get evAddPicture() {
+        return this.e_AddPicture.asEvent();
+    }
     validIndex(i) {
         if (!this.models)
             return false;
@@ -20004,6 +20008,13 @@ class MainModel {
         }
         items1.sort((a, b) => a.mBeginDay - b.mBeginDay);
         return items1;
+    }
+    AddPicture(idx, idx0, value) {
+        const period = this.models[idx].Periods.find((element) => {
+            return element.Id === idx0;
+        });
+        period.Pictures.push(value);
+        this.e_AddPicture.dispatch([idx, idx0, value]);
     }
 }
 exports.MainModel = MainModel;
@@ -20046,6 +20057,7 @@ const AddPeriodView_1 = __webpack_require__(/*! ../AddPeriod/AddPeriodView */ ".
 const AddPeriodModel_1 = __webpack_require__(/*! ../AddPeriod/AddPeriodModel */ "./AddPeriod/AddPeriodModel.ts");
 const UploadFileView_1 = __webpack_require__(/*! ../UploadFileView */ "./UploadFileView.ts");
 const PeriodContextMenu_1 = __webpack_require__(/*! ../PeriodContextMenu */ "./PeriodContextMenu.ts");
+const UploadPictureView_1 = __webpack_require__(/*! ../UploadPictureView */ "./UploadPictureView.ts");
 class MainPresenter {
     constructor(view, model) {
         this.isAuthenticated = false;
@@ -20070,6 +20082,9 @@ class MainPresenter {
         this.model.evRemovePeriod.subscribe((t) => {
             this.view.RemoveDataRows(t);
             this.DrawTL(t, this.model.Item(t));
+        });
+        this.model.evAddPicture.subscribe(([idx, idx0]) => {
+            view.SetPhotoLabel(idx, idx0);
         });
         const kvo = Math.floor((document.documentElement.clientWidth - 2) / 120);
         this.mainLine = new Array(kvo);
@@ -20147,11 +20162,24 @@ class MainPresenter {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const view = new UploadFileView_1.UploadFileView();
-                //let value = await ApiClient.getInstance().GetUsersList()
-                //let view = new TlistView(value)
                 view.ShowDialog()
                     .then((value) => __awaiter(this, void 0, void 0, function* () {
                     this.model.Add(value);
+                }))
+                    .catch();
+            }
+            catch (err) {
+                yield new BoxView_1.BoxView(err).Show();
+            }
+        });
+    }
+    UploadPicture(idx, idx0) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const view = new UploadPictureView_1.UploadPictureView();
+                view.ShowDialog()
+                    .then((value) => __awaiter(this, void 0, void 0, function* () {
+                    this.model.AddPicture(idx, idx0, value);
                 }))
                     .catch();
             }
@@ -20263,9 +20291,11 @@ class MainPresenter {
                 case 'del':
                     this.model.Item(idx).Remove(idx0);
                     break;
+                case 'uploadpicture':
+                    yield this.UploadPicture(idx, id);
+                    break;
             }
         }));
-        //menu.reload()
         menu.display(ev);
     }
     EditPeriod(idx, idx0, period) {
@@ -20912,6 +20942,10 @@ class MainView {
             table.append(row);
         });
     }
+    SetPhotoLabel(idx, idx0) {
+        const td = document.getElementById('cell-' + idx + '-' + idx0);
+        td.classList.add('photo');
+    }
     CreateDropDown(header, mas) {
         const btnMenu = document.createElement('button');
         btnMenu.type = 'button';
@@ -21097,6 +21131,7 @@ class PeriodContextMenu {
         menuitems.push(new contextmenu_1.MenuItem('edit', 'Изменить'));
         menuitems.push(new contextmenu_1.MenuItem('del', 'Удалить'));
         menuitems.push(new contextmenu_1.MenuItem('expand', 'Развернуть'));
+        menuitems.push(new contextmenu_1.MenuItem('uploadpicture', 'Загрузить изображение'));
         menuitems.push(new contextmenu_1.MenuItemDivider());
         return new contextmenu_1.ContextMenu(menuitems);
     }
@@ -21585,6 +21620,7 @@ class TLPeriod {
         this.Name = "Новый";
         this.Periods = [];
         this.IsShowAll = false;
+        this.Pictures = [];
         this.e_AddPeriod = new ste_simple_events_1.SimpleEventDispatcher();
         this.e_RemovePeriod = new ste_simple_events_1.SimpleEventDispatcher();
     }
@@ -22193,6 +22229,7 @@ class UploadFileView {
             };
             reader.readAsText(f);
         };
+        this.tbName.setAttribute('accept', '');
     }
     ShowDialog() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -22224,6 +22261,74 @@ class UploadFileView {
     }
 }
 exports.UploadFileView = UploadFileView;
+
+
+/***/ }),
+
+/***/ "./UploadPictureView.ts":
+/*!******************************!*\
+  !*** ./UploadPictureView.ts ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
+class UploadPictureView {
+    constructor() {
+        this.btnUploadFile = document.getElementById('btnUploadFile');
+        this.btnCancelUploadFile = document.getElementById('btnCancelUploadFile');
+        this.tbName = document.getElementById('uploadfile_input');
+        this.tbModal = $('#tmUploadFile');
+        this.tbName.onchange = (ev) => {
+            const f = ev.target.files[0];
+            const reader = new FileReader();
+            reader.onload = () => {
+                this.value = reader.result;
+            };
+            reader.readAsArrayBuffer(f);
+        };
+        this.tbName.setAttribute('accept', '.png, .jpg, .jpeg');
+    }
+    ShowDialog() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve) => {
+                this.tbModal.modal();
+                this.btnUploadFile.onclick = () => __awaiter(this, void 0, void 0, function* () {
+                    if (this.value) {
+                        this.tbModal.modal('hide');
+                        try {
+                            resolve(this.value);
+                        }
+                        catch (err) {
+                            alert('Неправильный формат файла');
+                            return;
+                        }
+                    }
+                    else {
+                        return;
+                    }
+                });
+                this.btnCancelUploadFile.onclick = () => __awaiter(this, void 0, void 0, function* () {
+                    this.tbModal.modal('hide');
+                    resolve(null);
+                });
+            });
+        });
+    }
+}
+exports.UploadPictureView = UploadPictureView;
 
 
 /***/ }),

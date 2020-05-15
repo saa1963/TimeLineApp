@@ -115,19 +115,35 @@ table {
 
 .note {
     position: relative;
+    &:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 0;
+        height: 0;
+        display: block;
+        border-left: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        border-top: 10px solid #f00;
+    }
 }
 
-.note:after { /* Magic Happens Here!!! */
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 0;
-    height: 0;
-    display: block;
-    border-left: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-top: 10px solid #f00;
+.photo {
+    position: relative;
+
+    &:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 0;
+        height: 0;
+        display: block;
+        border-left: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        border-top: 10px solid #f00;
+    }
 }
 /* </magic> */
 

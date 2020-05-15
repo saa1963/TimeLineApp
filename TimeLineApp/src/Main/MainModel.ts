@@ -63,6 +63,11 @@ export class MainModel {
     return this.e_RemovePeriod.asEvent();
   }
 
+  private e_AddPicture = new SimpleEventDispatcher<[number, number, ArrayBuffer]>();
+  public get evAddPicture(): ISimpleEvent<[number, number, ArrayBuffer]> {
+    return this.e_AddPicture.asEvent();
+  }
+
   private validIndex(i: number): boolean {
     if (!this.models) return false
     if (this.models.length === 0) return false
@@ -83,5 +88,13 @@ export class MainModel {
     }
     items1.sort((a, b) => a.mBeginDay - b.mBeginDay)
     return items1
+  }
+
+  AddPicture(idx: number, idx0: number, value: ArrayBuffer) {
+    const period = this.models[idx].Periods.find((element) => {
+      return element.Id === idx0
+    })
+    period.Pictures.push(value)
+    this.e_AddPicture.dispatch([idx, idx0, value])
   }
 }

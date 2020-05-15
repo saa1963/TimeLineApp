@@ -1,12 +1,11 @@
 ﻿import * as $ from 'jquery'
-import { TLPeriod } from './TLPeriod';
 
-export class UploadFileView {
+export class UploadPictureView {
   private btnUploadFile: HTMLButtonElement
   private btnCancelUploadFile: HTMLButtonElement
   private tbName: HTMLInputElement
   private tbModal: JQuery
-  private value: string
+  private value: ArrayBuffer
 
   public constructor() {
     this.btnUploadFile = document.getElementById('btnUploadFile') as HTMLButtonElement
@@ -17,23 +16,21 @@ export class UploadFileView {
       const f = (ev.target as HTMLInputElement).files[0]
       const reader = new FileReader()
       reader.onload = () => {
-        this.value = reader.result as string
+        this.value = reader.result as ArrayBuffer
       }
-      reader.readAsText(f);
+      reader.readAsArrayBuffer(f);
     }
-    this.tbName.setAttribute('accept', '')
+    this.tbName.setAttribute('accept', '.png, .jpg, .jpeg')
   }
 
-  public async ShowDialog(): Promise<TLPeriod> {
-    return new Promise<TLPeriod>((resolve) => {
+  public async ShowDialog(): Promise<ArrayBuffer> {
+    return new Promise<ArrayBuffer>((resolve) => {
       this.tbModal.modal()
       this.btnUploadFile.onclick = async () => {
         if (this.value) {
           this.tbModal.modal('hide')
           try {
-            const tl = TLPeriod.CreateTLPeriod(JSON.parse(this.value))
-            tl.Parent = null
-            resolve(tl)
+            resolve(this.value)
           }
           catch (err) {
             alert('Неправильный формат файла')
