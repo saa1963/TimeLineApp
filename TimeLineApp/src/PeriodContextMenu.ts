@@ -1,4 +1,5 @@
 ﻿import { ContextMenu, MenuItem, MenuItemDivider } from "./contextmenu";
+import { MenuOptions } from "./MenuOptions";
 
 export class PeriodContextMenu {
   public static Create(): ContextMenu {
@@ -8,6 +9,7 @@ export class PeriodContextMenu {
     menuitems.push(new MenuItem('expand', 'Развернуть'))
     menuitems.push(new MenuItem('uploadpicture', 'Загрузить изображение'))
     menuitems.push(new MenuItemDivider())
-    return new ContextMenu(menuitems)
+    const menuOptions = new MenuOptions()
+    return new ContextMenu(menuitems, menuOptions)
   }
 }

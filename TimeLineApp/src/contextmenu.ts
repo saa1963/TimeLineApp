@@ -28,14 +28,14 @@ export class ContextMenu {
   }
 
   private onresize() {
-    if (this.options.close_on_resize) {
+    if (this.options.closeOnResize) {
       this.hide()
     }
   }
 
   public hide() {
     document.getElementById('cm_' + ContextMenu.count).classList.remove('display')
-    window.removeEventListener('click', () => this.documentClick())
+    window.removeEventListener('mousedown', () => this.documentClick())
   }
 
   public setOptions(_options: MenuOptions) {
@@ -70,7 +70,7 @@ export class ContextMenu {
         if (item.icon !== '') {
           iconSpan.innerHTML = item.icon
         } else {
-          iconSpan.innerHTML = this.options.default_icon
+          iconSpan.innerHTML = this.options.defaultIcon
         }
 
         const textSpan = document.createElement('span')
@@ -79,15 +79,15 @@ export class ContextMenu {
         if (item.text !== '') {
           textSpan.innerHTML = item.text
         } else {
-          textSpan.innerHTML = this.options.default_text
+          textSpan.innerHTML = this.options.defaultText
         }
 
         const subSpan = document.createElement('span')
         subSpan.className = 'cm_sub_span'
 
         if (item.sub !== null) {
-          if (this.options.sub_icon !== null) {
-            subSpan.innerHTML = this.options.sub_icon
+          if (this.options.subIcon !== null) {
+            subSpan.innerHTML = this.options.subIcon
           } else {
             subSpan.innerHTML = '&#155;'
           }
@@ -100,7 +100,8 @@ export class ContextMenu {
         if (!item.enabled) {
           li.setAttribute('disabled', '')
         } else {
-          li.addEventListener('click', () => {
+          li.addEventListener('click', (ev) => {
+            ev.stopPropagation()
             this.e_Select.dispatch(item.id)
           })
 
@@ -140,7 +141,7 @@ export class ContextMenu {
     const windowWidth = window.innerWidth
     const windowHeight = window.innerHeight
 
-    const mouseOffset = this.options.mouse_offset
+    const mouseOffset = this.options.mouseOffset
 
     if ((windowWidth - clickCoordsX) < menuWidth) {
       menu.style.left = windowWidth - menuWidth + 'px'
@@ -170,10 +171,9 @@ export class ContextMenu {
 
     menu.classList.add('display')
 
-    if (this.options.close_on_click) {
-      window.addEventListener('click', () => { this.documentClick() })
+    if (this.options.closeOnClick) {
+      window.addEventListener('mousedown', () => { this.documentClick() })
     }
-
     e.preventDefault()
   }
 

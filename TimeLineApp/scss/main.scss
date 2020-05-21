@@ -132,17 +132,17 @@ table {
 .photo {
     position: relative;
 
-    &:after {
+    &:before {
         content: "";
         position: absolute;
-        top: 0;
+        bottom: 0;
         right: 0;
         width: 0;
         height: 0;
         display: block;
         border-left: 10px solid transparent;
-        border-bottom: 10px solid transparent;
-        border-top: 10px solid #f00;
+        border-bottom: 10px solid #ffd800;
+        border-top: 10px solid transparent;
     }
 }
 /* </magic> */

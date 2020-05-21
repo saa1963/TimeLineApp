@@ -21101,12 +21101,11 @@ exports.MainView = MainView;
 Object.defineProperty(exports, "__esModule", { value: true });
 class MenuOptions {
     constructor() {
-        this.default_icon = '';
-        this.default_text = 'item';
-        this.sub_icon = '<i class="far fa-arrow-alt-circle-right"></i>';
-        this.mouse_offset = 2;
-        this.close_on_click = true;
-        this.close_on_resize = true;
+        this.defaultIcon = '';
+        this.defaultText = 'item';
+        this.subIcon = '<i class="far fa-arrow-alt-circle-right"></i>';
+        this.mouseOffset = 2;
+        this.closeOnClick = true;
     }
 }
 exports.MenuOptions = MenuOptions;
@@ -21125,6 +21124,7 @@ exports.MenuOptions = MenuOptions;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const contextmenu_1 = __webpack_require__(/*! ./contextmenu */ "./contextmenu.ts");
+const MenuOptions_1 = __webpack_require__(/*! ./MenuOptions */ "./MenuOptions.ts");
 class PeriodContextMenu {
     static Create() {
         const menuitems = [];
@@ -21133,7 +21133,8 @@ class PeriodContextMenu {
         menuitems.push(new contextmenu_1.MenuItem('expand', 'Развернуть'));
         menuitems.push(new contextmenu_1.MenuItem('uploadpicture', 'Загрузить изображение'));
         menuitems.push(new contextmenu_1.MenuItemDivider());
-        return new contextmenu_1.ContextMenu(menuitems);
+        const menuOptions = new MenuOptions_1.MenuOptions();
+        return new contextmenu_1.ContextMenu(menuitems, menuOptions);
     }
 }
 exports.PeriodContextMenu = PeriodContextMenu;
@@ -22368,13 +22369,13 @@ class ContextMenu {
         return this.e_Select.asEvent();
     }
     onresize() {
-        if (this.options.close_on_resize) {
+        if (this.options.closeOnResize) {
             this.hide();
         }
     }
     hide() {
         document.getElementById('cm_' + ContextMenu.count).classList.remove('display');
-        window.removeEventListener('click', () => this.documentClick());
+        window.removeEventListener('mousedown', () => this.documentClick());
     }
     setOptions(_options) {
         this.options = _options;
@@ -22402,7 +22403,7 @@ class ContextMenu {
                     iconSpan.innerHTML = item.icon;
                 }
                 else {
-                    iconSpan.innerHTML = this.options.default_icon;
+                    iconSpan.innerHTML = this.options.defaultIcon;
                 }
                 const textSpan = document.createElement('span');
                 textSpan.className = 'cm_text';
@@ -22410,13 +22411,13 @@ class ContextMenu {
                     textSpan.innerHTML = item.text;
                 }
                 else {
-                    textSpan.innerHTML = this.options.default_text;
+                    textSpan.innerHTML = this.options.defaultText;
                 }
                 const subSpan = document.createElement('span');
                 subSpan.className = 'cm_sub_span';
                 if (item.sub !== null) {
-                    if (this.options.sub_icon !== null) {
-                        subSpan.innerHTML = this.options.sub_icon;
+                    if (this.options.subIcon !== null) {
+                        subSpan.innerHTML = this.options.subIcon;
                     }
                     else {
                         subSpan.innerHTML = '&#155;';
@@ -22429,7 +22430,8 @@ class ContextMenu {
                     li.setAttribute('disabled', '');
                 }
                 else {
-                    li.addEventListener('click', () => {
+                    li.addEventListener('click', (ev) => {
+                        ev.stopPropagation();
                         this.e_Select.dispatch(item.id);
                     });
                     if (item.sub !== null) {
@@ -22461,7 +22463,7 @@ class ContextMenu {
         const menuHeight = menu.offsetHeight + 4;
         const windowWidth = window.innerWidth;
         const windowHeight = window.innerHeight;
-        const mouseOffset = this.options.mouse_offset;
+        const mouseOffset = this.options.mouseOffset;
         if ((windowWidth - clickCoordsX) < menuWidth) {
             menu.style.left = windowWidth - menuWidth + 'px';
         }
@@ -22488,8 +22490,8 @@ class ContextMenu {
             menu.classList.remove('cm_border_bottom');
         }
         menu.classList.add('display');
-        if (this.options.close_on_click) {
-            window.addEventListener('click', () => { this.documentClick(); });
+        if (this.options.closeOnClick) {
+            window.addEventListener('mousedown', () => { this.documentClick(); });
         }
         e.preventDefault();
     }
