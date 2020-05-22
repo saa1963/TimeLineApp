@@ -20,7 +20,7 @@ export class UploadPictureView {
       }
       reader.readAsArrayBuffer(f);
     }
-    this.tbName.setAttribute('accept', '.png, .jpg, .jpeg')
+    this.tbName.setAttribute('accept', '.jpg, .jpeg')
   }
 
   public async ShowDialog(): Promise<ArrayBuffer> {

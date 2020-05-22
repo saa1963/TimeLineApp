@@ -12,6 +12,7 @@ export class ContextMenu {
   public menu: MenuItem[]
   private contextTarget: EventTarget = null
   static readonly DIVIDER: string = 'cm_divider'
+  private container: HTMLDivElement
 
   constructor(menu: MenuItem[], options?: MenuOptions) {
     ContextMenu.count++
@@ -35,7 +36,7 @@ export class ContextMenu {
 
   public hide() {
     document.getElementById('cm_' + ContextMenu.count).classList.remove('display')
-    window.removeEventListener('mousedown', () => this.documentClick())
+    window.removeEventListener('mousedown', (ev) => this.documentClick(ev))
   }
 
   public setOptions(_options: MenuOptions) {
@@ -51,10 +52,10 @@ export class ContextMenu {
       document.body.appendChild(cnt)
     }
 
-    const container = document.getElementById('cm_' + ContextMenu.count)
-    container.innerHTML = ''
+    this.container = document.getElementById('cm_' + ContextMenu.count) as HTMLDivElement
+    this.container.innerHTML = ''
 
-    container.appendChild(this.renderLevel(this.menu))
+    this.container.appendChild(this.renderLevel(this.menu))
   }
 
   private renderLevel(level: MenuItem[]) {
@@ -101,7 +102,6 @@ export class ContextMenu {
           li.setAttribute('disabled', '')
         } else {
           li.addEventListener('click', (ev) => {
-            ev.stopPropagation()
             this.e_Select.dispatch(item.id)
           })
 
@@ -172,13 +172,15 @@ export class ContextMenu {
     menu.classList.add('display')
 
     if (this.options.closeOnClick) {
-      window.addEventListener('mousedown', () => { this.documentClick() })
+      window.addEventListener('mousedown', (ev) => { this.documentClick(ev) })
     }
-    e.preventDefault()
   }
 
-  private documentClick() {
-    this.hide()
+  private documentClick(ev: MouseEvent) {
+    const elem = document.elementFromPoint(ev.clientX, ev.clientY)
+    if (!this.container.contains(elem)) {
+      this.hide()
+    }
   }
 }
 

@@ -7,6 +7,7 @@ export class PeriodContextMenu {
     menuitems.push(new MenuItem('edit', 'Изменить'))
     menuitems.push(new MenuItem('del', 'Удалить'))
     menuitems.push(new MenuItem('expand', 'Развернуть'))
+    menuitems.push(new MenuItem('showpictures', 'Показать изображения'))
     menuitems.push(new MenuItem('uploadpicture', 'Загрузить изображение'))
     menuitems.push(new MenuItemDivider())
     const menuOptions = new MenuOptions()

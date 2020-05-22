@@ -253,6 +253,9 @@ export class MainPresenter {
         case 'uploadpicture':
           await this.UploadPicture(idx, id)
           break;
+        case 'showpictures':
+          this.view.ShowPictures(period.Pictures)
+          break;
       }
     })
     menu.display(ev)
@@ -422,11 +425,6 @@ export class MainPresenter {
       s.append(li)
     }
     new BoxViewHtml(s).Show()
-  }
-
-  public OnContextMenu(e: MouseEvent) {
-    this.menuCtx.reload()
-    this.menuCtx.display(e)
   }
 
   public get Count(): number {

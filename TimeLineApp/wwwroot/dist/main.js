@@ -20294,6 +20294,9 @@ class MainPresenter {
                 case 'uploadpicture':
                     yield this.UploadPicture(idx, id);
                     break;
+                case 'showpictures':
+                    this.view.ShowPictures(period.Pictures);
+                    break;
             }
         }));
         menu.display(ev);
@@ -20421,10 +20424,6 @@ class MainPresenter {
             s.append(li);
         }
         new BoxView_1.BoxViewHtml(s).Show();
-    }
-    OnContextMenu(e) {
-        this.menuCtx.reload();
-        this.menuCtx.display(e);
     }
     get Count() {
         return this.model.Count;
@@ -20851,6 +20850,21 @@ class MainView {
             this.Presenter.Draw();
         };
     }
+    ShowPictures(pictures) {
+        const placeForInsert = document.getElementById('carousel-inner-id');
+        while (placeForInsert.firstChild) {
+            placeForInsert.removeChild(placeForInsert.firstChild);
+        }
+        for (const pict of pictures) {
+            const blob = new Blob([pict], { type: 'image/jpeg' });
+            const imageUrl = window.URL.createObjectURL(blob);
+            const elem = document.createElement('image');
+            elem.src = imageUrl;
+            elem.className = 'd-block w-100';
+            placeForInsert.appendChild(elem);
+        }
+        $('#tmShowPictures').modal();
+    }
     ClearContent() {
         if (this.mainTable) {
             this.tls.removeChild(this.mainTable);
@@ -21131,6 +21145,7 @@ class PeriodContextMenu {
         menuitems.push(new contextmenu_1.MenuItem('edit', 'Изменить'));
         menuitems.push(new contextmenu_1.MenuItem('del', 'Удалить'));
         menuitems.push(new contextmenu_1.MenuItem('expand', 'Развернуть'));
+        menuitems.push(new contextmenu_1.MenuItem('showpictures', 'Показать изображения'));
         menuitems.push(new contextmenu_1.MenuItem('uploadpicture', 'Загрузить изображение'));
         menuitems.push(new contextmenu_1.MenuItemDivider());
         const menuOptions = new MenuOptions_1.MenuOptions();
@@ -22300,7 +22315,7 @@ class UploadPictureView {
             };
             reader.readAsArrayBuffer(f);
         };
-        this.tbName.setAttribute('accept', '.png, .jpg, .jpeg');
+        this.tbName.setAttribute('accept', '.jpg, .jpeg');
     }
     ShowDialog() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -22375,7 +22390,7 @@ class ContextMenu {
     }
     hide() {
         document.getElementById('cm_' + ContextMenu.count).classList.remove('display');
-        window.removeEventListener('mousedown', () => this.documentClick());
+        window.removeEventListener('mousedown', (ev) => this.documentClick(ev));
     }
     setOptions(_options) {
         this.options = _options;
@@ -22387,9 +22402,9 @@ class ContextMenu {
             cnt.id = 'cm_' + ContextMenu.count;
             document.body.appendChild(cnt);
         }
-        const container = document.getElementById('cm_' + ContextMenu.count);
-        container.innerHTML = '';
-        container.appendChild(this.renderLevel(this.menu));
+        this.container = document.getElementById('cm_' + ContextMenu.count);
+        this.container.innerHTML = '';
+        this.container.appendChild(this.renderLevel(this.menu));
     }
     renderLevel(level) {
         const ulOuter = document.createElement('ul');
@@ -22431,7 +22446,6 @@ class ContextMenu {
                 }
                 else {
                     li.addEventListener('click', (ev) => {
-                        ev.stopPropagation();
                         this.e_Select.dispatch(item.id);
                     });
                     if (item.sub !== null) {
@@ -22491,12 +22505,14 @@ class ContextMenu {
         }
         menu.classList.add('display');
         if (this.options.closeOnClick) {
-            window.addEventListener('mousedown', () => { this.documentClick(); });
+            window.addEventListener('mousedown', (ev) => { this.documentClick(ev); });
         }
-        e.preventDefault();
     }
-    documentClick() {
-        this.hide();
+    documentClick(ev) {
+        const elem = document.elementFromPoint(ev.clientX, ev.clientY);
+        if (!this.container.contains(elem)) {
+            this.hide();
+        }
     }
 }
 exports.ContextMenu = ContextMenu;

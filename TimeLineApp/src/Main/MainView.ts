@@ -54,6 +54,22 @@ export class MainView {
     }
   }
 
+  public ShowPictures(pictures: ArrayBuffer[]) {
+    const placeForInsert = document.getElementById('carousel-inner-id')
+    while (placeForInsert.firstChild) {
+      placeForInsert.removeChild(placeForInsert.firstChild)
+    }
+    for (const pict of pictures) {
+      const blob = new Blob([pict], { type: 'image/jpeg' })
+      const imageUrl = window.URL.createObjectURL(blob)
+      const elem = document.createElement('image') as HTMLImageElement
+      elem.src = imageUrl
+      elem.className = 'd-block w-100'
+      placeForInsert.appendChild(elem)
+    }
+    $('#tmShowPictures').modal()
+  }
+
   public ClearContent() {
     if (this.mainTable) {
       this.tls.removeChild(this.mainTable)
