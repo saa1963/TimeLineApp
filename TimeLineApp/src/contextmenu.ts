@@ -34,10 +34,7 @@ export class ContextMenu {
     }
   }
 
-  public hide() {
-    document.getElementById('cm_' + ContextMenu.count).classList.remove('display')
-    window.removeEventListener('mousedown', (ev) => this.documentClick(ev))
-  }
+ 
 
   public setOptions(_options: MenuOptions) {
       this.options = _options
@@ -101,7 +98,7 @@ export class ContextMenu {
         if (!item.enabled) {
           li.setAttribute('disabled', '')
         } else {
-          li.addEventListener('click', (ev) => {
+          li.addEventListener('click', () => {
             this.e_Select.dispatch(item.id)
           })
 
@@ -172,7 +169,7 @@ export class ContextMenu {
     menu.classList.add('display')
 
     if (this.options.closeOnClick) {
-      window.addEventListener('mousedown', (ev) => { this.documentClick(ev) })
+      window.addEventListener('mousedown', (ev) => this.documentClick(ev))
     }
   }
 
@@ -181,6 +178,11 @@ export class ContextMenu {
     if (!this.container.contains(elem)) {
       this.hide()
     }
+  }
+
+  public hide() {
+    document.getElementById('cm_' + ContextMenu.count).classList.remove('display')
+    window.removeEventListener('mousedown', (ev) => this.documentClick(ev))
   }
 }
 

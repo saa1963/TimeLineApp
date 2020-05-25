@@ -22445,7 +22445,7 @@ class ContextMenu {
                     li.setAttribute('disabled', '');
                 }
                 else {
-                    li.addEventListener('click', (ev) => {
+                    li.addEventListener('click', () => {
                         this.e_Select.dispatch(item.id);
                     });
                     if (item.sub !== null) {
@@ -22505,7 +22505,7 @@ class ContextMenu {
         }
         menu.classList.add('display');
         if (this.options.closeOnClick) {
-            window.addEventListener('mousedown', (ev) => { this.documentClick(ev); });
+            window.addEventListener('mousedown', (ev) => this.documentClick(ev));
         }
     }
     documentClick(ev) {
