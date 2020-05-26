@@ -22379,6 +22379,11 @@ class ContextMenu {
             this.options = options;
         window.addEventListener('resize', () => this.onresize());
         this.reload();
+        if (ContextMenu.currentMenu !== null) {
+            ContextMenu.currentMenu.hide.bind(ContextMenu.currentMenu);
+            ContextMenu.currentMenu.hide();
+        }
+        ContextMenu.currentMenu = this;
     }
     get evSelect() {
         return this.e_Select.asEvent();
@@ -22387,10 +22392,6 @@ class ContextMenu {
         if (this.options.closeOnResize) {
             this.hide();
         }
-    }
-    hide() {
-        document.getElementById('cm_' + ContextMenu.count).classList.remove('display');
-        window.removeEventListener('mousedown', (ev) => this.documentClick(ev));
     }
     setOptions(_options) {
         this.options = _options;
@@ -22504,19 +22505,26 @@ class ContextMenu {
             menu.classList.remove('cm_border_bottom');
         }
         menu.classList.add('display');
-        if (this.options.closeOnClick) {
-            window.addEventListener('mousedown', (ev) => this.documentClick(ev));
-        }
+        //if (this.options.closeOnClick) {
+        //  window.addEventListener('mousedown', (ev) => this.documentClick(ev))
+        //}
     }
     documentClick(ev) {
-        const elem = document.elementFromPoint(ev.clientX, ev.clientY);
-        if (!this.container.contains(elem)) {
-            this.hide();
-        }
+        //const elem = document.elementFromPoint(ev.clientX, ev.clientY)
+        //if (!this.container.contains(elem)) { // ����
+        //  console.log(this.container)
+        //  this.hide()
+        //}
+        this.hide();
+    }
+    hide() {
+        document.getElementById('cm_' + ContextMenu.count).classList.remove('display');
+        //window.removeEventListener('mousedown', (ev) => this.documentClick(ev))
     }
 }
 exports.ContextMenu = ContextMenu;
 ContextMenu.count = 0;
+ContextMenu.currentMenu = null;
 ContextMenu.DIVIDER = 'cm_divider';
 class MyHTMLLIElement extends HTMLLIElement {
 }

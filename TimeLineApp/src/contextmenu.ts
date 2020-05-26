@@ -8,6 +8,7 @@ export enum MenuItemType {
 
 export class ContextMenu {
   private static count = 0
+  private static currentMenu: ContextMenu = null
   private options: MenuOptions
   public menu: MenuItem[]
   private contextTarget: EventTarget = null
@@ -21,6 +22,11 @@ export class ContextMenu {
     else this.options = options
     window.addEventListener('resize', () => this.onresize())
     this.reload()
+     if (ContextMenu.currentMenu !== null) {
+       ContextMenu.currentMenu.hide.bind(ContextMenu.currentMenu)
+       ContextMenu.currentMenu.hide()
+    }
+    ContextMenu.currentMenu = this
   }
 
   private e_Select = new SimpleEventDispatcher<string>();
@@ -33,8 +39,6 @@ export class ContextMenu {
       this.hide()
     }
   }
-
- 
 
   public setOptions(_options: MenuOptions) {
       this.options = _options
@@ -168,21 +172,23 @@ export class ContextMenu {
 
     menu.classList.add('display')
 
-    if (this.options.closeOnClick) {
-      window.addEventListener('mousedown', (ev) => this.documentClick(ev))
-    }
+    //if (this.options.closeOnClick) {
+    //  window.addEventListener('mousedown', (ev) => this.documentClick(ev))
+    //}
   }
 
   private documentClick(ev: MouseEvent) {
-    const elem = document.elementFromPoint(ev.clientX, ev.clientY)
-    if (!this.container.contains(elem)) {
-      this.hide()
-    }
+    //const elem = document.elementFromPoint(ev.clientX, ev.clientY)
+    //if (!this.container.contains(elem)) { // мимо
+    //  console.log(this.container)
+    //  this.hide()
+    //}
+    this.hide()
   }
 
   public hide() {
     document.getElementById('cm_' + ContextMenu.count).classList.remove('display')
-    window.removeEventListener('mousedown', (ev) => this.documentClick(ev))
+    //window.removeEventListener('mousedown', (ev) => this.documentClick(ev))
   }
 }
 
