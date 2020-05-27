@@ -16,11 +16,17 @@ interface ContextMenuAnimation {
   hide: 'fadeOut' | 'slideUp';
 }
 
+interface OptionsItem {
+  name: string;
+  isHtmlName?: boolean;
+  callback?: (itemKey: string, opt?: ContextMenuOptions) => boolean;
+}
+
 interface ContextMenuOptions {
   selector: string;
-  items: ContextMenuItem[];
+  items: object;
   appendTo?: string | HTMLElement;
-  trigger?: string;
+  trigger?: 'right' | 'left' | 'hover';
   hideOnSecondTrigger?: boolean;
   selectableSubMenu?: boolean;
   reposition?: boolean;
@@ -34,9 +40,13 @@ interface ContextMenuOptions {
   position?: (menu: JQuery, x: PositionXY, y: PositionXY) => boolean;
   determinePosition?: (menu: JQuery) => void;
   callback?: (itemKey: string, opt: ContextMenuOptions) => boolean;
+  build?: ($triggerElement: JQuery, e: MouseEvent) => ContextMenuOptions;
+  itemClickEvent?: string;
 }
 
 interface ContextMenuItem {
+  name: string;
+
 }
 
 export interface JQuery {
