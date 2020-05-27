@@ -11,7 +11,6 @@ export class ContextMenu {
   private static currentMenu: ContextMenu = null
   private options: MenuOptions
   public menu: MenuItem[]
-  private contextTarget: EventTarget = null
   static readonly DIVIDER: string = 'cm_divider'
   private container: HTMLDivElement
 
@@ -123,12 +122,7 @@ export class ContextMenu {
     return ulOuter
   }
 
-  public display(e: MouseEvent, target?: EventTarget) {
-    if (typeof target !== 'undefined') {
-      this.contextTarget = target
-    } else {
-      this.contextTarget = e.target
-    }
+  public display(e: MouseEvent) {
 
     const menu = document.getElementById('cm_' + ContextMenu.count)
 
@@ -177,7 +171,7 @@ export class ContextMenu {
     //}
   }
 
-  private documentClick(ev: MouseEvent) {
+  private documentClick() {
     //const elem = document.elementFromPoint(ev.clientX, ev.clientY)
     //if (!this.container.contains(elem)) { // мимо
     //  console.log(this.container)

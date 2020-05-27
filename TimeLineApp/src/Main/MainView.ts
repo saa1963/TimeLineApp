@@ -1,5 +1,6 @@
 ﻿import { MainPresenter, InterfaceExTLPeriod } from "./MainPresenter";
 import { MainModel } from "./MainModel";
+import * as $ from 'jquery'
 
 export class MainView {
   // private свойства
@@ -272,7 +273,7 @@ export class MainView {
         ev.preventDefault();
       }
       td.ondrop = this.createDrophandler(idx, Id)
-      td.oncontextmenu = this.createContextmenuhandler(idx, Id)
+      //td.oncontextmenu = this.createContextmenuhandler(idx, Id)
       last = items[i].ir
       const txt = document.createTextNode(items[i].item.Name)
       td.append(txt)

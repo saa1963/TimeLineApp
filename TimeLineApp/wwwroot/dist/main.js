@@ -20803,6 +20803,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const MainPresenter_1 = __webpack_require__(/*! ./MainPresenter */ "./Main/MainPresenter.ts");
+const $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
 class MainView {
     constructor(model) {
         // элементы страницы
@@ -21053,7 +21054,7 @@ class MainView {
                 ev.preventDefault();
             };
             td.ondrop = this.createDrophandler(idx, Id);
-            td.oncontextmenu = this.createContextmenuhandler(idx, Id);
+            //td.oncontextmenu = this.createContextmenuhandler(idx, Id)
             last = items[i].ir;
             const txt = document.createTextNode(items[i].item.Name);
             td.append(txt);
@@ -22369,7 +22370,6 @@ var MenuItemType;
 })(MenuItemType = exports.MenuItemType || (exports.MenuItemType = {}));
 class ContextMenu {
     constructor(menu, options) {
-        this.contextTarget = null;
         this.e_Select = new ste_simple_events_1.SimpleEventDispatcher();
         ContextMenu.count++;
         this.menu = menu;
@@ -22463,13 +22463,7 @@ class ContextMenu {
         });
         return ulOuter;
     }
-    display(e, target) {
-        if (typeof target !== 'undefined') {
-            this.contextTarget = target;
-        }
-        else {
-            this.contextTarget = e.target;
-        }
+    display(e) {
         const menu = document.getElementById('cm_' + ContextMenu.count);
         const clickCoords = { x: e.clientX, y: e.clientY };
         const clickCoordsX = clickCoords.x;
@@ -22509,7 +22503,7 @@ class ContextMenu {
         //  window.addEventListener('mousedown', (ev) => this.documentClick(ev))
         //}
     }
-    documentClick(ev) {
+    documentClick() {
         //const elem = document.elementFromPoint(ev.clientX, ev.clientY)
         //if (!this.container.contains(elem)) { // ����
         //  console.log(this.container)
