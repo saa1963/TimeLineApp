@@ -19,7 +19,7 @@ namespace TimeLineApp.services
         {
             try
             {
-                using (var db = new LiteDatabase(dbName))
+                using (var db = new LiteDatabase($"filename={dbName};upgrade=true"))
                 {
                     var col = db.GetCollection<User>("users");
                     return col.Exists(s => s.Login == login.ToLower());
@@ -35,7 +35,7 @@ namespace TimeLineApp.services
         {
             try
             {
-                using (var db = new LiteDatabase(dbName))
+                using (var db = new LiteDatabase($"filename={dbName};upgrade=true"))
                 {
                     var col = db.GetCollection<User>("users");
                     return col.Exists(s => s.Login == login.ToLower() && s.Password == password);
@@ -51,7 +51,7 @@ namespace TimeLineApp.services
         {
             try
             {
-                using (var db = new LiteDatabase(dbName))
+                using (var db = new LiteDatabase($"filename={dbName};upgrade=true"))
                 {
                     var col = db.GetCollection<User>("users");
                     return col.Delete(s => s.Login == login.ToLower()) == 1;
@@ -67,7 +67,7 @@ namespace TimeLineApp.services
         {
             try
             {
-                using (var db = new LiteDatabase(dbName))
+                using (var db = new LiteDatabase($"filename={dbName};upgrade=true"))
                 {
                     var col = db.GetCollection<User>("users");
                     if (!col.Exists(s => s.Login == login.ToLower()))

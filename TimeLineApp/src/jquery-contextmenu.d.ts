@@ -1,7 +1,6 @@
-﻿import * as $ from 'jquery'
-
-type ZIndexFunction = (x: JQuery, y?: ContextMenuOptions) => number
+﻿type ZIndexFunction = (x: JQuery, y?: ContextMenuOptions) => number
 type PositionXY = number | 'maintain' | undefined
+type IconFunction = (opt: ContextMenuOptions, $itemElement: JQuery, itemKey?: string, item?: OptionsItem) => string
 
 interface ContextMenuEvents {
   preShow?: (o: ContextMenuOptions) => boolean;
@@ -24,10 +23,23 @@ interface OptionsItem {
   name: string;
   isHtmlName?: boolean;
   callback?: (itemKey: string, opt?: ContextMenuOptions, rootMenu?: JQuery) => boolean;
+  className?: string;
+  icon?: string | IconFunction;
+  disabled?: boolean;
+  visible?: boolean;
+  type?: null | undefined | '' | 'text' | 'textarea' | 'checkbox' | 'radio' | 'select' | 'html';
+  events?: object;
+  value?: string;
+  selected?: string | boolean;
+  radio?: string;
+  options?: object;
+  height?: number;
+  items?: OptionsItemBag;
+  accesskey?: string;
 }
 
 interface ContextMenuOptions {
-  selector: string;
+  selector?: string;
   items: OptionsItemBag;
   appendTo?: string | HTMLElement;
   trigger?: 'right' | 'left' | 'hover';
@@ -48,11 +60,6 @@ interface ContextMenuOptions {
   itemClickEvent?: string;
 }
 
-interface ContextMenuItem {
-  name: string;
-
-}
-
-export interface JQuery {
+interface JQuery {
   contextMenu(operation: string | ContextMenuOptions, options?: ContextMenuOptions): any;
 }

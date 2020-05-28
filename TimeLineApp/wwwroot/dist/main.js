@@ -21055,6 +21055,15 @@ class MainView {
             };
             td.ondrop = this.createDrophandler(idx, Id);
             //td.oncontextmenu = this.createContextmenuhandler(idx, Id)
+            $(td).contextMenu({
+                items: {
+                    item1: { name: 'Изменить' },
+                    item2: { name: 'Удалить' },
+                    item3: { name: 'Развернуть' },
+                    item4: { name: 'Показать изображение' },
+                    item5: { name: 'Загрузить изображение' }
+                }
+            });
             last = items[i].ir;
             const txt = document.createTextNode(items[i].item.Name);
             td.append(txt);
@@ -21151,6 +21160,8 @@ class PeriodContextMenu {
         menuitems.push(new contextmenu_1.MenuItemDivider());
         const menuOptions = new MenuOptions_1.MenuOptions();
         return new contextmenu_1.ContextMenu(menuitems, menuOptions);
+    }
+    static Create1() {
     }
 }
 exports.PeriodContextMenu = PeriodContextMenu;

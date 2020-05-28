@@ -1,4 +1,5 @@
-﻿import { ContextMenu, MenuItem, MenuItemDivider } from "./contextmenu";
+﻿import * as $ from 'jquery'
+import { ContextMenu, MenuItem, MenuItemDivider } from "./contextmenu";
 import { MenuOptions } from "./MenuOptions";
 
 export class PeriodContextMenu {
@@ -12,5 +13,8 @@ export class PeriodContextMenu {
     menuitems.push(new MenuItemDivider())
     const menuOptions = new MenuOptions()
     return new ContextMenu(menuitems, menuOptions)
+  }
+
+  public static Create1(): void {
   }
 }
