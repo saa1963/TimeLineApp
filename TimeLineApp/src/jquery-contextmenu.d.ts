@@ -16,15 +16,19 @@ interface ContextMenuAnimation {
   hide: 'fadeOut' | 'slideUp';
 }
 
+interface OptionsItemBag {
+  [index: string]: OptionsItem | string;
+}
+
 interface OptionsItem {
   name: string;
   isHtmlName?: boolean;
-  callback?: (itemKey: string, opt?: ContextMenuOptions) => boolean;
+  callback?: (itemKey: string, opt?: ContextMenuOptions, rootMenu?: JQuery) => boolean;
 }
 
 interface ContextMenuOptions {
   selector: string;
-  items: object;
+  items: OptionsItemBag;
   appendTo?: string | HTMLElement;
   trigger?: 'right' | 'left' | 'hover';
   hideOnSecondTrigger?: boolean;
