@@ -21055,7 +21055,8 @@ class MainView {
             };
             td.ondrop = this.createDrophandler(idx, Id);
             //td.oncontextmenu = this.createContextmenuhandler(idx, Id)
-            $(td).contextMenu({
+            $.contextMenu({
+                selector: '#' + td.id,
                 items: {
                     item1: { name: 'Изменить' },
                     item2: { name: 'Удалить' },

@@ -12,6 +12,7 @@
   "dependencies": {
     "@types/bootstrap": "^4.3.1",
     "@types/jquery": "^3.3.33",
+    "@types/jquery.contextmenu": "^1.7.34",
     "bootstrap": "^4.4.1",
     "gulp-terser": "^1.2.0",
     "gulp-typescript": "^6.0.0-alpha.1",

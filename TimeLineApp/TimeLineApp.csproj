@@ -47,7 +47,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="src\jquery-contextmenu.d.ts" />
     <None Remove="src\UploadPictureView.ts" />
     <None Remove="tests\DateUtilsTest.ts" />
     <None Remove="tests\TLPeriodTest.ts" />
@@ -110,7 +109,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="src\jquery-contextmenu.d.ts" />
     <TypeScriptCompile Include="src\UploadPictureView.ts" />
     <TypeScriptCompile Include="tests\DateUtilsTest.ts" />
     <TypeScriptCompile Include="tests\TLPeriodTest.ts" />
