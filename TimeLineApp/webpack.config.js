@@ -3,12 +3,14 @@ const webpack = require('webpack')
 //const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-  entry: './index0.ts',
+  entry: {
+    app: './index0.ts',
+  },
   devtool: 'source-map',
   context: path.resolve(__dirname, 'src'),
   mode: 'development',
   output: {
-    filename: 'main.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, 'wwwroot/dist'),
     devtoolModuleFilenameTemplate: '../../src/[resource-path]'  // Removes the webpack:/// prefix
   },
