@@ -39231,7 +39231,8 @@ class TLPeriod {
         const l = Math.min(l1, l2);
         const r = Math.max(r1, r2);
         const s = r - l;
-        return s <= (r1 - l1) + (r2 - l2);
+        const newLocal = s <= (r1 - l1) + (r2 - l2);
+        return newLocal;
     }
     /**
      * Является ли интервал внутренним по отношению к другому
