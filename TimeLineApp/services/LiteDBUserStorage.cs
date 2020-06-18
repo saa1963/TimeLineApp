@@ -14,6 +14,7 @@ namespace TimeLineApp.services
         {
             env = hostingEnvironment;
             dbName = Path.Combine(env.ContentRootPath, "data", "db.dat");
+            dbName = "filename=" + dbName + ";upgrade";
         }
         public bool Contains(string login)
         {
@@ -54,7 +55,7 @@ namespace TimeLineApp.services
                 using (var db = new LiteDatabase(dbName))
                 {
                     var col = db.GetCollection<User>("users");
-                    return col.Delete(s => s.Login == login.ToLower()) == 1;
+                    return col.DeleteMany(s => s.Login == login.ToLower()) == 1;
                 }
             }
             catch (Exception e)
