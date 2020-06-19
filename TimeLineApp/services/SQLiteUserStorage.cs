@@ -12,10 +12,12 @@ namespace TimeLineApp.services
     {
         IWebHostEnvironment env;
         private string dbName;
+        private string connString;
         public SQLiteUserStorage(IWebHostEnvironment hostingEnvironment)
         {
             env = hostingEnvironment;
             dbName = Path.Combine(env.ContentRootPath, "data", "db.sqlite");
+            connString = $"Data Source={dbName};Version=3;FailIfMissing=True;";
         }
         public bool Contains(string login)
         {
@@ -26,7 +28,7 @@ namespace TimeLineApp.services
         {
             try
             {
-                using (var cn = new SQLiteConnection($"Data Source={dbName};Version=3;FailIfMissing=True;"))
+                using (var cn = new SQLiteConnection(connString))
                 {
                     cn.Open();
                     using (var cmd = new SQLiteCommand("select count(id) from users where Login = ? and Password = ?", cn))
@@ -53,7 +55,7 @@ namespace TimeLineApp.services
         {
             try
             {
-                using (var cn = new SQLiteConnection($"Data Source={dbName};Version=3;FailIfMissing=True;"))
+                using (var cn = new SQLiteConnection(connString))
                 {
                     cn.Open();
                     using (var cmd = new SQLiteCommand("insert into users (Login, Email, Password) values (?, ?, ?)", cn))

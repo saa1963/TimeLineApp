@@ -13,10 +13,12 @@ namespace TimeLineApp.services
     {
         IWebHostEnvironment env;
         private string dbName;
+        string connString;
         public SQLiteStorage(IWebHostEnvironment hostingEnvironment)
         {
             env = hostingEnvironment;
             dbName = Path.Combine(env.ContentRootPath, "data", "db.sqlite");
+            connString = $"Data Source={dbName};Version=3;FailIfMissing=True;";
         }
         public bool IsExist(HttpContext httpCtx, string name)
         {
@@ -27,7 +29,7 @@ namespace TimeLineApp.services
         {
             try
             {
-                using (var cn = new SQLiteConnection($"Data Source={dbName};Version=3;FailIfMissing=True;"))
+                using (var cn = new SQLiteConnection(connString))
                 {
                     var user = new CommonServices().getUserName(httpCtx);
                     cn.Open();
@@ -56,7 +58,7 @@ namespace TimeLineApp.services
         {
             try
             {
-                using (var cn = new SQLiteConnection($"Data Source={dbName};Version=3;FailIfMissing=True;"))
+                using (var cn = new SQLiteConnection(connString))
                 {
                     cn.Open();
                     using (var cmd = new SQLiteCommand("select body from timelines where user = ? and header = ?", cn))
@@ -90,7 +92,7 @@ namespace TimeLineApp.services
         {
             try
             {
-                using (var cn = new SQLiteConnection($"Data Source={dbName};Version=3;FailIfMissing=True;"))
+                using (var cn = new SQLiteConnection(connString))
                 {
                     cn.Open();
                     using (var cmd = new SQLiteCommand("insert into timelines (User, Header, Body) values (?, ?, ?)", cn))
