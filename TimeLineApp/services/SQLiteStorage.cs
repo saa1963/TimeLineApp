@@ -59,7 +59,7 @@ namespace TimeLineApp.services
                 using (var cn = new SQLiteConnection($"Data Source={dbName};Version=3;FailIfMissing=True;"))
                 {
                     cn.Open();
-                    using (var cmd = new SQLiteCommand("select body from timelines where login = ? and header = ?", cn))
+                    using (var cmd = new SQLiteCommand("select body from timelines where user = ? and header = ?", cn))
                     {
                         cmd.Parameters.AddWithValue(null, user.ToUpper());
                         cmd.Parameters.AddWithValue(null, name);
