@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Data.SQLite;
+using System.Diagnostics;
 
 namespace TimeLineApp.services
 {

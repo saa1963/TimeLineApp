@@ -138,6 +138,12 @@
     <TypeScriptCompile Include="src\UploadFileView.ts" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="data\db.sqlite">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptTarget>ESNext</TypeScriptTarget>
     <TypeScriptJSXEmit>None</TypeScriptJSXEmit>

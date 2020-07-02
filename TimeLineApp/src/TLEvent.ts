@@ -1,10 +1,10 @@
-﻿import { DateUtils } from './dateutils';
+﻿import { DateUtils, YearMonthDay } from './dateutils';
 
 export enum EnumPeriod {
   day = 1, month = 2, year = 3, decade = 4, century = 5
 }
 
-export abstract class TLEvent {
+export class TLEvent {
   Name: string
   Day: number
   Month: number
@@ -88,107 +88,63 @@ export abstract class TLEvent {
     }
     return rt
   }
-}
 
-export class TLEventDay extends TLEvent {
-
-  public static CreateTLEventDay(name: string, day: number, month: number, year: number, decade: number, century: number): TLEventDay {
-    const rt = new TLEventDay(name)
-    rt.Day = day
-    rt.Month = month
-    rt.Year = year
-    rt.Decade = decade
-    rt.Century = century
-    rt.Type = EnumPeriod.day
+  public static Create(
+    name: string,
+    Century: number,
+    Decade: number = null,
+    Year: number = null,
+    Month: number = null,
+    Day: number = null
+  ): TLEvent {
+    const rt = new TLEvent(name)
+    rt.Century = Century
+    rt.Decade = Decade
+    rt.Year = Year
+    rt.Month = Month
+    rt.Day = Day
+    if (Decade === null) {
+      rt.Type = EnumPeriod.century
+    } else if (Year === null) {
+      rt.Type = EnumPeriod.decade
+    } else if (Month === null) {
+      rt.Type = EnumPeriod.year
+    } else if (Day === null) {
+      rt.Type = EnumPeriod.month
+    } else {
+      rt.Type = EnumPeriod.day
+    }
     return rt
   }
 
-  public static CreateTLEventDay1(name: string, day: number): TLEventDay {
-    const ymd = DateUtils.YMDFromAD(day)
-    const month: number = DateUtils.getMonthFromYMD(ymd)
-    const year: number = DateUtils.getYearFromYMD(ymd)
-    const decade: number = DateUtils.getDecadeFromYMD(ymd)
-    const century: number = DateUtils.getCenturyFromYMD(ymd)
-    return TLEventDay.CreateTLEventDay(name, day, month, year, decade, century)
-  }
-
-  
-}
-
-export class TLEventMonth extends TLEvent {
-
-  public static CreateTLEventMonth(name: string, month: number, year: number, decade: number, century: number): TLEventDay {
-    const rt = new TLEventDay(name)
-    rt.Day = null
-    rt.Month = month
-    rt.Year = year
-    rt.Decade = decade
-    rt.Century = century
-    rt.Type = EnumPeriod.month
-    return rt
-  }
-
-  public static CreateTLEventMonth1(name: string, month: number): TLEventMonth {
-    const ymd = DateUtils.getYMDFromMonth(month)
-    const year: number = DateUtils.getYearFromYMD(ymd)
-    const decade: number = DateUtils.getDecadeFromYMD(ymd)
-    const century: number = DateUtils.getCenturyFromYMD(ymd)
-    return TLEventMonth.CreateTLEventMonth(name, month, year, decade, century)
+  public static Create1(name: string, value: number, type: EnumPeriod) {
+    let ymd: YearMonthDay
+    let month: number, year: number, decade: number, century: number;
+    switch (type) {
+      case EnumPeriod.day:
+        ymd = DateUtils.YMDFromAD(value)
+        month = DateUtils.getMonthFromYMD(ymd)
+        year = DateUtils.getYearFromYMD(ymd)
+        decade = DateUtils.getDecadeFromYMD(ymd)
+        century = DateUtils.getCenturyFromYMD(ymd)
+        return TLEvent.Create(name, century, decade, year, month, value)
+      case EnumPeriod.month:
+        ymd = DateUtils.getYMDFromMonth(value)
+        year = DateUtils.getYearFromYMD(ymd)
+        decade = DateUtils.getDecadeFromYMD(ymd)
+        century = DateUtils.getCenturyFromYMD(ymd)
+        return TLEvent.Create(name, century, decade, year, value)
+      case EnumPeriod.year:
+        ymd = DateUtils.getYMDFromYear(value)
+        decade = DateUtils.getDecadeFromYMD(ymd)
+        century = DateUtils.getCenturyFromYMD(ymd)
+        return TLEvent.Create(name, century, decade, value)
+      case EnumPeriod.decade:
+        ymd = DateUtils.getYMDFromDecade(value)
+        century = DateUtils.getCenturyFromYMD(ymd)
+        return TLEvent.Create(name, century, value)
+      case EnumPeriod.century:
+        return TLEvent.Create(name, value)
+    }
   }
 }
-
-export class TLEventYear extends TLEvent {
-
-  public static CreateTLEventYear(name: string, year: number, decade: number, century: number): TLEventDay {
-    const rt = new TLEventDay(name)
-    rt.Day = null
-    rt.Month = null
-    rt.Year = year
-    rt.Decade = decade
-    rt.Century = century
-    rt.Type = EnumPeriod.year
-    return rt
-  }
-
-  public static CreateTLEventYear1(name: string, year: number): TLEventYear {
-    const ymd = DateUtils.getYMDFromYear(year)
-    const decade: number = DateUtils.getDecadeFromYMD(ymd)
-    const century: number = DateUtils.getCenturyFromYMD(ymd)
-    return TLEventYear.CreateTLEventYear(name, year, decade, century)
-  }
-}
-
-export class TLEventDecade extends TLEvent {
-  
-  public static CreateTLEventDecade(name: string, decade: number, century: number): TLEventDay {
-    const rt = new TLEventDay(name)
-    rt.Day = null
-    rt.Month = null
-    rt.Year = null
-    rt.Decade = decade
-    rt.Century = century
-    rt.Type = EnumPeriod.decade
-    return rt
-  }
-
-  public static CreateTLEventDecade1(name: string, decade: number): TLEventYear {
-    const ymd = DateUtils.getYMDFromDecade(decade)
-    const century: number = DateUtils.getCenturyFromYMD(ymd)
-    return TLEventDecade.CreateTLEventDecade(name, decade, century)
-  }
-}
-
-export class TLEventCentury extends TLEvent {
-
-  public static CreateTLEventCentury(name: string, century: number): TLEventDay {
-    const rt = new TLEventDay(name)
-    rt.Day = null
-    rt.Month = null
-    rt.Year = null
-    rt.Decade = null
-    rt.Century = century
-    rt.Type = EnumPeriod.century
-    return rt
-  }
-}
-
