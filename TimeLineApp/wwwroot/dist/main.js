@@ -21409,15 +21409,6 @@ class TLEvent {
             Type: this.Type
         });
     }
-    DecadeFromYear(year) {
-        return year / 10 + (year / Math.abs(year));
-    }
-    CenturyFromDecade(decade) {
-        return decade / 10 + (decade / Math.abs(decade));
-    }
-    YearFromMonth(month) {
-        return (month - 1) / 12 + (month / Math.abs(month));
-    }
     static GetType(o) {
         if (o.Day !== null)
             return EnumPeriod.day;
@@ -21429,23 +21420,6 @@ class TLEvent {
             return EnumPeriod.decade;
         if (o.Century !== null)
             return EnumPeriod.century;
-    }
-    /**
-     * Попадает ли событие this в текущее значение ОВ
-     * @param period
-     * Текущая дробность отображения для ЛВ
-     * @param vl
-     * Текущее значение ОВ, которое в данный момент отрисовывается
-     */
-    static Equal(o1, o2) {
-        let rt = false;
-        if (o1.Century === o2.Century
-            && o1.Decade === o2.Decade
-            && o1.Year === o2.Year
-            && o1.Month === o2.Month
-            && o1.Day === o2.Day)
-            rt = true;
-        return rt;
     }
     Format() {
         let rt;
@@ -21615,7 +21589,7 @@ class TLPeriod {
         if (!o.Begin) {
             o.Begin = TLEvent_1.TLEvent.Create("Начало", 19);
         }
-        let type = TLEvent_1.TLEvent.GetType(o.Begin);
+        let type = o.Begin.Type; //TLEvent.GetType(o.Begin);
         if (type === TLEvent_1.EnumPeriod.day) {
             rt.Begin = TLEvent_1.TLEvent.Create(o.Begin.Name, o.Begin.Century, o.Begin.Decade, o.Begin.Year, o.Begin.Month, o.Begin.Day);
         }
@@ -21634,7 +21608,7 @@ class TLPeriod {
         if (!o.End) {
             o.End = TLEvent_1.TLEvent.Create("Конец", 21);
         }
-        type = TLEvent_1.TLEvent.GetType(o.End);
+        type = o.End.Type; //TLEvent.GetType(o.End);
         if (type === TLEvent_1.EnumPeriod.day) {
             rt.End = TLEvent_1.TLEvent.Create(o.End.Name, o.End.Century, o.End.Decade, o.End.Year, o.End.Month, o.End.Day);
         }

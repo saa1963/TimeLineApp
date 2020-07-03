@@ -154,7 +154,7 @@ export class TLPeriod {
     if (!o.Begin) {
       o.Begin = TLEvent.Create("Начало", 19)
     }
-    let type: EnumPeriod = TLEvent.GetType(o.Begin);
+    let type: EnumPeriod = o.Begin.Type //TLEvent.GetType(o.Begin);
     if (type === EnumPeriod.day) {
       rt.Begin = TLEvent.Create(
         o.Begin.Name,
@@ -180,7 +180,7 @@ export class TLPeriod {
     if (!o.End) {
       o.End = TLEvent.Create("Конец", 21)
     }
-    type = TLEvent.GetType(o.End);
+    type = o.End.Type //TLEvent.GetType(o.End);
     if (type === EnumPeriod.day) {
       rt.End = TLEvent.Create(
         o.End.Name,
