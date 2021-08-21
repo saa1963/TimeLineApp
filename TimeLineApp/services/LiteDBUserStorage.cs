@@ -54,7 +54,7 @@ namespace TimeLineApp.services
                 using (var db = new LiteDatabase($"filename={dbName};upgrade=true"))
                 {
                     var col = db.GetCollection<User>("users");
-                    return col.Delete(s => s.Login == login.ToLower()) == 1;
+                    return col.DeleteMany(s => s.Login == login.ToLower()) == 1;
                 }
             }
             catch (Exception e)

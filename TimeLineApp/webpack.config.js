@@ -16,7 +16,10 @@ module.exports = {
   },
   resolve: {
     modules: ['node_modules'],
-    extensions: [".ts", ".tsx", ".js"]
+    extensions: [".ts", ".tsx", ".js"],
+    //alias: {
+    //  "jquery-contextmenu": "jquery-contextmenu/src/jquery.contextmenu"
+    //}
   },
   module: {
     rules: [
@@ -24,23 +27,13 @@ module.exports = {
         test: /\.tsx?$/,
         use: 'ts-loader'
       }
-      //{
-      //  test: /\.scss$/,
-      //  use: [{
-      //      loader: "style-loader"
-      //  }, {
-      //      loader: "css-loader"
-      //  }, {
-      //      loader: "sass-loader",
-      //      options: {
-      //          includePaths: ["scss/bootstrap", "scss/fontawesome"]
-      //      }
-      //  }]
-      //  },
-      //  {
-      //    test: /\.(woff|woff2|eot|ttf|otf|svg)$/,
-      //    use: ['file-loader']
-      //  }
     ]
-  }
+  },
+  plugins: [
+    new webpack.ProvidePlugin({
+      $: "jquery/src/jquery",
+      jQuery: "jquery/src/jquery",
+      "window.jQuery": "jquery/src/jquery",
+      "window.$": "jquery/src/jquery"
+    })]
 };

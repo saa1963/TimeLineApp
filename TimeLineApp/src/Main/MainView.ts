@@ -1,6 +1,6 @@
 ﻿import { MainPresenter, InterfaceExTLPeriod } from "./MainPresenter";
 import { MainModel } from "./MainModel";
-import * as $ from 'jquery';
+//import * as $ from 'jquery';
 
 export class MainView {
   // private свойства
