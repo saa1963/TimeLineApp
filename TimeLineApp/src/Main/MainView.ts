@@ -275,16 +275,16 @@ export class MainView {
       td.ondrop = this.createDrophandler(idx, Id)
       //td.oncontextmenu = this.createContextmenuhandler(idx, Id)
       $.contextMenu({
-        selector: '#' + td.id,
-        items: {
-          item1: { name: 'Изменить' },
-          item2: { name: 'Удалить' },
-          item3: { name: 'Развернуть' },
-          item4: { name: 'Показать изображение' },
-          item5: { name: 'Загрузить изображение'}
-        }
-      })
-      last = items[i].ir
+        selector: '#cell-' + idx + '-' + Id,
+          items: {
+            item1: { name: 'Изменить' },
+            item2: { name: 'Удалить' },
+            item3: { name: 'Развернуть' },
+            item4: { name: 'Показать изображение' },
+            item5: { name: 'Загрузить изображение' }
+          }
+        })
+       last = items[i].ir
       const txt = document.createTextNode(items[i].item.Name)
       td.append(txt)
       row.append(td)
