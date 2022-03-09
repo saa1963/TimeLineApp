@@ -23,7 +23,7 @@ namespace TimeLineApp
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie();
             services.AddControllersWithViews();
-            services.AddSingleton<IUserStorage, LiteDBUserStorage>();
+            services.AddSingleton<IUserStorage, FileUserStorage>();
             services.AddSingleton<ITLStorage, LiteDBStorage>();
         }
 
