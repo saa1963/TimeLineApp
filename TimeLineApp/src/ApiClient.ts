@@ -1,4 +1,5 @@
 ﻿import { TLPeriod } from './TLPeriod';
+import {stringUtils } from './stringutils'
 
 export class ApiClient {
   private static instance: ApiClient;
@@ -18,13 +19,14 @@ export class ApiClient {
   }
 
   public async DoLogin(login: string, password: string): Promise<string> {
-    if ((login || '').trim() !== '' && (password || '').trim() !== '') {
+  if ((login || '').trim() !== '' && (password || '').trim() !== '') {
+      const passwordMd5 = stringUtils.md5(password)
       const response = await fetch('api/register/log', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({Login: login, Password: password})
+        body: JSON.stringify({Login: login, Password: passwordMd5})
       })
       if (response.ok) {
         return await response.text()
@@ -84,7 +86,10 @@ export class ApiClient {
   public async DoRegister(login: string, email: string, password1: string, password2: string): Promise<string> {
     if (password1 !== password2) {
       return 'Не совпадают пароли'
-    }
+      }
+      const passwordMd5 = stringUtils.md5(password1)
+      console.log(password1)
+      console.log(passwordMd5)
     const response = await fetch('api/register/reg', {
       method: 'POST',
       headers: {
@@ -94,8 +99,8 @@ export class ApiClient {
         {
           Login: login,
           Email: email,
-          Password1: password1,
-          Password2: password2
+          Password1: passwordMd5,
+          Password2: passwordMd5
         })
     })
     if (response.ok) {

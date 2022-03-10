@@ -29,7 +29,7 @@ namespace TimeLineApp.services
             return rt;
         }
 
-        public bool Logon(string login, string password)
+        public bool Logon(string login, string passwordMd5)
         {
             bool rt = false;
             if (File.Exists(path))
@@ -38,7 +38,7 @@ namespace TimeLineApp.services
                 foreach (var s in users)
                 {
                     var a = s.Split('^');
-                    if (a[0].ToUpper() == login.ToUpper() && a[2] == password)
+                    if (a[0].ToUpper() == login.ToUpper() && a[2] == passwordMd5)
                     {
                         rt = true;
                         break;

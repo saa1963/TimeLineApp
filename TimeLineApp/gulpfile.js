@@ -35,7 +35,7 @@ function replace_popper(cb) {
       if (data.indexOf(src) >= 0) {
         data = data.replace(src, dst);
         fs.writeFile(paths.popper, data, err => { });
-      }
+      }gulp
     }
   });
   cb();
