@@ -44,6 +44,8 @@
     <Content Remove="src\TlistPresenter.ts" />
     <Content Remove="src\TlistView.ts" />
     <Content Remove="src\UploadFileView.ts" />
+    <Content Remove="wwwroot\data\db5.dat" />
+    <Content Remove="wwwroot\data\users.dat" />
   </ItemGroup>
 
   <ItemGroup>
@@ -94,6 +96,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\data\db5.dat" />
+    <None Include="wwwroot\data\users.dat" />
     <None Include="wwwroot\fonts\fa-brands-400.eot" />
     <None Include="wwwroot\fonts\fa-brands-400.svg" />
     <None Include="wwwroot\fonts\fa-brands-400.ttf" />

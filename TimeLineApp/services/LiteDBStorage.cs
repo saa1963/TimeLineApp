@@ -17,7 +17,7 @@ namespace TimeLineApp.services
         public LiteDBStorage(IWebHostEnvironment hostingEnvironment)
         {
             env = hostingEnvironment;
-            dbName = Path.Combine(env.ContentRootPath, "data", "db5.dat");
+            dbName = Path.Combine(env.WebRootPath, "data", "db5.dat");
             using (var db = new LiteDatabase(dbName))
             {
                 if (!db.GetCollectionNames().Contains(timelines))

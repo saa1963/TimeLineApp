@@ -1,5 +1,6 @@
 ﻿using LiteDB;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
 using TimeLineApp.Models;
@@ -8,12 +9,10 @@ namespace TimeLineApp.services
 {
     public class LiteDBUserStorage : IUserStorage
     {
-        IWebHostEnvironment env;
         private string dbName;
-        public LiteDBUserStorage(IWebHostEnvironment hostingEnvironment)
+        public LiteDBUserStorage(IConfiguration _cfg)
         {
-            env = hostingEnvironment;
-            dbName = Path.Combine(env.ContentRootPath, "data", "db.dat");
+            dbName = _cfg.GetConnectionString("users");
         }
         public bool Contains(string login)
         {

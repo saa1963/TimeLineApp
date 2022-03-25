@@ -5,15 +5,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.IO;
 using System.Text.RegularExpressions;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 
 namespace TimeLineApp.services
 {
     public class FileUserStorage : IUserStorage
     {
         private readonly string path;
-        public FileUserStorage(IWebHostEnvironment hostingEnvironment)
+        public FileUserStorage(IConfiguration _cfg, IHostEnvironment _env, IWebHostEnvironment _web)
         {
-            path = Path.Combine(hostingEnvironment.ContentRootPath, "data", "users.dat");
+            if (!_env.IsDevelopment())
+                path = _cfg.GetConnectionString("users");
+            else
+                path = Path.Combine(_web.WebRootPath, "data", "users.dat");
         }
 
         public bool Contains(string login)
