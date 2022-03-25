@@ -20135,6 +20135,8 @@ class MainPresenter {
     OpenLoadTLDialog() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                if (!this.isAuthenticated)
+                    throw "Не выполнен вход.";
                 const value = yield ApiClient_1.ApiClient.getInstance().GetUsersList();
                 const view = new TlistView_1.TlistView(value);
                 view.ShowDialog()
@@ -20168,11 +20170,13 @@ class MainPresenter {
     OnSave(idx) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                if (!this.isAuthenticated)
+                    throw "Не выполнен вход. Сохранение невозможно.";
                 yield ApiClient_1.ApiClient.getInstance().SaveTL(this.model.Item(idx));
                 yield new BoxView_1.BoxView('Данные сохранены').Show();
             }
             catch (err) {
-                yield new BoxView_1.BoxView(Globals_1.Globals.ResponseErrorText(err)).Show();
+                yield new BoxView_1.BoxView(err).Show();
             }
         });
     }
@@ -20394,6 +20398,8 @@ class MainPresenter {
             li.textContent = txtPeriod + ' ' + o.Name;
             s.append(li);
         }
+        if (s.childNodes.length === 0)
+            s.append('Нет событий.');
         new BoxView_1.BoxViewHtml(s).Show();
     }
     OnContextMenu(e) {
@@ -20786,6 +20792,7 @@ class MainView {
         this.btnNewTL = document.getElementById('newTimeline');
         this.lblUser = document.getElementById('lblUser');
         this.btnUploadFile = document.getElementById('load_file');
+        this.btnLoadFromBD = document.getElementById('load');
         this.tls = document.getElementById('tls');
         this.Presenter = new MainPresenter_1.MainPresenter(this, model);
         this.aLogin.onclick = () => __awaiter(this, void 0, void 0, function* () {
@@ -20803,7 +20810,7 @@ class MainView {
         this.btnNewTL.onclick = () => {
             this.Presenter.OpenNewTLDialog();
         };
-        document.getElementById('load').onclick = () => {
+        this.btnLoadFromBD.onclick = () => {
             this.Presenter.OpenLoadTLDialog();
         };
         this.btnUploadFile.onclick = () => {

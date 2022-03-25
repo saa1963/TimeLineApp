@@ -11,6 +11,7 @@ export class MainView {
   private btnNewTL = document.getElementById('newTimeline') as HTMLButtonElement
   private lblUser = document.getElementById('lblUser') as HTMLLabelElement
   private btnUploadFile = document.getElementById('load_file') as HTMLButtonElement
+  private btnLoadFromBD = document.getElementById('load') as HTMLButtonElement
   private tls = document.getElementById('tls')
   private mainTable: HTMLTableElement
 
@@ -31,7 +32,7 @@ export class MainView {
     this.btnNewTL.onclick = () => {
       this.Presenter.OpenNewTLDialog()
     }
-    document.getElementById('load').onclick = () => {
+    this.btnLoadFromBD.onclick = () => {
       this.Presenter.OpenLoadTLDialog()
     }
     this.btnUploadFile.onclick = () => {

@@ -111,6 +111,7 @@ export class MainPresenter {
 
   public async OpenLoadTLDialog() {
     try {
+      if (!this.isAuthenticated) throw "Не выполнен вход."
       const value = await ApiClient.getInstance().GetUsersList()
       const view = new TlistView(value)
       view.ShowDialog()
@@ -140,10 +141,11 @@ export class MainPresenter {
 
   public async OnSave(idx: number) {
     try {
+      if (!this.isAuthenticated) throw "Не выполнен вход. Сохранение невозможно."
       await ApiClient.getInstance().SaveTL(this.model.Item(idx))
       await new BoxView('Данные сохранены').Show()
     } catch (err) {
-      await new BoxView(Globals.ResponseErrorText(err)).Show()
+      await new BoxView(err).Show()
     }
   }
 
@@ -405,7 +407,8 @@ export class MainPresenter {
       }
       li.textContent = txtPeriod + ' ' + o.Name
       s.append(li)
-    }
+      }
+      if (s.childNodes.length === 0) s.append('Нет событий.')
     new BoxViewHtml(s).Show()
   }
 
