@@ -44,8 +44,6 @@
     <Content Remove="src\TlistPresenter.ts" />
     <Content Remove="src\TlistView.ts" />
     <Content Remove="src\UploadFileView.ts" />
-    <Content Remove="wwwroot\data\db5.dat" />
-    <Content Remove="wwwroot\data\users.dat" />
   </ItemGroup>
 
   <ItemGroup>
@@ -96,8 +94,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\data\db5.dat" />
-    <None Include="wwwroot\data\users.dat" />
     <None Include="wwwroot\fonts\fa-brands-400.eot" />
     <None Include="wwwroot\fonts\fa-brands-400.svg" />
     <None Include="wwwroot\fonts\fa-brands-400.ttf" />
@@ -144,6 +140,15 @@
     <TypeScriptCompile Include="src\Tlist\TlistPresenter.ts" />
     <TypeScriptCompile Include="src\Tlist\TlistView.ts" />
     <TypeScriptCompile Include="src\UploadFileView.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="data\db5.dat">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="data\users.dat">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">

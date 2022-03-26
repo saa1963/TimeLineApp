@@ -1,6 +1,8 @@
 ﻿using LiteDB;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,13 +13,14 @@ namespace TimeLineApp.services
 {
     public class LiteDBStorage : ITLStorage
     {
-        IWebHostEnvironment env;
-        private string dbName;
-        private string timelines = "timelines";
-        public LiteDBStorage(IWebHostEnvironment hostingEnvironment)
+        private readonly string dbName;
+        private readonly string timelines = "timelines";
+        public LiteDBStorage(IConfiguration _cfg, IHostEnvironment _env)
         {
-            env = hostingEnvironment;
-            dbName = Path.Combine(env.WebRootPath, "data", "db5.dat");
+            if (!_env.IsDevelopment())
+                dbName = _cfg.GetConnectionString("data");
+            else
+                dbName = Path.Combine(_env.ContentRootPath, "data", "db5.dat");
             using (var db = new LiteDatabase(dbName))
             {
                 if (!db.GetCollectionNames().Contains(timelines))

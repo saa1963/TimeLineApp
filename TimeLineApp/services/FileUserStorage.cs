@@ -13,12 +13,12 @@ namespace TimeLineApp.services
     public class FileUserStorage : IUserStorage
     {
         private readonly string path;
-        public FileUserStorage(IConfiguration _cfg, IHostEnvironment _env, IWebHostEnvironment _web)
+        public FileUserStorage(IConfiguration _cfg, IHostEnvironment _env)
         {
             if (!_env.IsDevelopment())
                 path = _cfg.GetConnectionString("users");
             else
-                path = Path.Combine(_web.WebRootPath, "data", "users.dat");
+                path = Path.Combine(_env.ContentRootPath, "data", "users.dat");
         }
 
         public bool Contains(string login)
