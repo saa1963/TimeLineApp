@@ -20199,6 +20199,11 @@ class MainPresenter {
             }
         });
     }
+    OnClose(idx) {
+        return __awaiter(this, void 0, void 0, function* () {
+            this.model.Remove(idx);
+        });
+    }
     OnShowAll(idx) {
         return __awaiter(this, void 0, void 0, function* () {
             const source = this.model.Item(idx);
@@ -20969,15 +20974,15 @@ class MainView {
                 })
             },
             {
-                header: 'Свернуть',
-                handler: () => __awaiter(this, void 0, void 0, function* () {
-                    yield this.Presenter.OnCollapse(idx);
-                })
-            },
-            {
                 header: 'Показать все',
                 handler: () => __awaiter(this, void 0, void 0, function* () {
                     yield this.Presenter.OnShowAll(idx);
+                })
+            },
+            {
+                header: 'Закрыть',
+                handler: () => __awaiter(this, void 0, void 0, function* () {
+                    yield this.Presenter.OnClose(idx);
                 })
             }
         ]);

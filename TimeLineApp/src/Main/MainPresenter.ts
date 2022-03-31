@@ -165,6 +165,10 @@ export class MainPresenter {
     }
   }
 
+  public async OnClose(idx: number) {
+      this.model.Remove(idx)
+  }
+
   public async OnShowAll(idx: number) {
     const source = this.model.Item(idx)
     const target = TLPeriod.CreateTLPeriod(source)

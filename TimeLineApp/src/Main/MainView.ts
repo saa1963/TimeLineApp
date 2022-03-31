@@ -204,15 +204,15 @@ export class MainView {
         }
       },
       {
-        header: 'Свернуть',
-        handler: async () => {
-          await this.Presenter.OnCollapse(idx)
-        }
-      },
-      {
         header: 'Показать все',
         handler: async () => {
           await this.Presenter.OnShowAll(idx)
+        }
+      },
+      {
+        header: 'Закрыть',
+        handler: async () => {
+          await this.Presenter.OnClose(idx)
         }
       }
     ])
